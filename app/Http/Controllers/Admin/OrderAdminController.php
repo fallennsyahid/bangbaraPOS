@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 
 class OrderAdminController extends Controller
 {
@@ -14,9 +18,13 @@ class OrderAdminController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::with('products')->get();
         $statusOptions = ['Pending', 'Processed', 'Cancelled', 'Completed'];
         return view('admin.orders.index', compact('orders', 'statusOptions'));
+    }
+
+    public function export() {
+        return Excel::download(new OrderExport, 'orders.xlsx');
     }
 
     /**

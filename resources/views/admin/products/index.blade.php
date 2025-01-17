@@ -20,10 +20,8 @@
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4 dark:border-slate-950">
                         <h1 class="text-2xl font-semibold">Manage Products</h1>
-                        <a href="https://github.com/Kamona-WD/kwd-dashboard" target="_blank"
-                            class="px-4 py-2 text-sm text-white rounded-md bg-amber-300 dark:bg-red-700 hover:bg-amber-400 hover:dark:bg-red-800 focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
-                            View on github
-                        </a>
+                        <x-admin.waButton></x-admin.waButton>
+
                     </div>
 
 
@@ -200,7 +198,17 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <script>
-        let table = new DataTable('#myTable');
+        if ($.fn.DataTable.isDataTable('#myTable')) {
+            $('#myTable').DataTable().destroy();
+        }
+        $('#myTable').DataTable({
+            columnDefs: [{
+                targets: 0,
+                render: function(data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            }]
+        });
     </script>
 
 </body>

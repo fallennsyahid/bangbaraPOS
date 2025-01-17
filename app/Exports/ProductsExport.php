@@ -16,7 +16,19 @@ class ProductsExport implements FromCollection, WithHeadings
     public function collection()
     {
         // Mengambil semua produk dari database
-        return Product::all(['id', 'nama_menu', 'category_id', 'status_produk', 'harga_menu', 'created_at']);
+        return Product::with('category:id,nama_kategori')
+        ->get()
+        ->map(function ($product) {
+            return [
+                $product->id,
+                $product->nama_menu,
+                $product->category->nama_kategori,
+                $product->status_produk,
+                $product->harga_menu,
+                $product->created_at,
+            ];
+        })
+        ;
     }
 
     /**

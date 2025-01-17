@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
 // Export Excel
 Route::get('products/export', [ProductController::class, 'export'])->name('products.export');
 Route::get('categories/export', [CategoryController::class, 'export'])->name('categories.export');
+Route::get('orders/export', [OrderAdminController::class, 'export'])->name('orders.export');
 
 // Category Routes
 Route::resource('/admin/categories', CategoryController::class);

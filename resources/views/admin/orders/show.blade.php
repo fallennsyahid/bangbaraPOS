@@ -20,10 +20,7 @@
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4 dark:border-slate-950">
                         <h1 class="text-2xl font-semibold">Order Items</h1>
-                        <a href="https://github.com/Kamona-WD/kwd-dashboard" target="_blank"
-                            class="px-4 py-2 text-sm text-white rounded-md bg-amber-300 dark:bg-red-700 hover:bg-amber-400 hover:dark:bg-red-800 focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
-                            View on github
-                        </a>
+                        <x-admin.waButton></x-admin.waButton>
                     </div>
 
 
@@ -36,22 +33,24 @@
                         </h2>
                         <!-- Tabel -->
                         <div class="w-full max-w-4xl">
-                            <div class="mb-4 mt-3">
+                            {{-- <div class="mb-4 mt-3">
                                 <a href="{{ route('products.export') }}"
                                     class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600">
                                     Export Excel
                                 </a>
-                            </div>
+                            </div> --}}
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
                                 id="myTable">
                                 <!-- Header -->
                                 <thead class="bg-[#D4B131] text-white shadow-md">
                                     <tr>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">ID</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Products</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Product</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Picture</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Category</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Price</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">QTY</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Total</th>
                                         {{-- <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">
                                             Aksi</th> --}}
                                     </tr>
@@ -74,6 +73,12 @@
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm">
                                                 Rp {{ number_format($order->products->harga_menu, 2) }}
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-sm">
+                                                {{ $order->quantity }}
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-sm">
+                                                Rp {{ number_format($order->total_price, 2) }}
                                             </td>
                                             {{-- <td class="px-6 py-4 flex gap-3 mt-4">
                                                 <form id="delete-form-{{ $product->id }}"

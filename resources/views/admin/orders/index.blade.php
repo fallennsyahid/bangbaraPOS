@@ -20,10 +20,7 @@
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4 dark:border-slate-950">
                         <h1 class="text-2xl font-semibold">Manage Orders</h1>
-                        <a href="https://github.com/Kamona-WD/kwd-dashboard" target="_blank"
-                            class="px-4 py-2 text-sm text-white rounded-md bg-amber-300 dark:bg-red-700 hover:bg-amber-400 hover:dark:bg-red-800 focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
-                            View on github
-                        </a>
+                        <x-admin.waButton></x-admin.waButton>
                     </div>
 
 
@@ -32,7 +29,8 @@
                         <!-- Tombol View on GitHub -->
                         <!-- Tabel -->
                         <div class="mb-4 mt-3">
-                            <a href="" class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600">
+                            <a href="{{ route('orders.export') }}"
+                                class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600">
                                 Export Excel
                             </a>
                         </div>
@@ -81,6 +79,16 @@
                                                 {{ $order->payment_photo }}
                                             </td>
                                             <td class="px-6 py-4 flex gap-3 mt-4">
+                                                <button onclick="openModal({{ $order->id }})"
+                                                    class="bg-yellow-800 text-white text-sm px-4 py-2 rounded-md shadow-md hover:bg-yellow-900 focus:ring-2 focus:ring-yellow-700 focus:outline-none">
+                                                    Update
+                                                </button>
+                                                <button
+                                                    class="bg-green-500 text-white text-sm px-4 py-2 rounded-md shadow-md hover:bg-green-600 focus:ring-2 focus:ring-yellow-700 focus:outline-none">
+                                                    <a href="{{ route('orders.show', $order->id) }}">
+                                                        Detail
+                                                    </a>
+                                                </button>
                                                 <form id="delete-form-{{ $order->id }}"
                                                     action="{{ route('orders.destroy', $order->id) }}" method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this category?');">
@@ -92,17 +100,6 @@
                                                         Delete
                                                     </button>
                                                 </form>
-
-                                                <button onclick="openModal({{ $order->id }})"
-                                                    class="bg-yellow-800 text-white text-sm px-4 py-2 rounded-md shadow-md hover:bg-yellow-900 focus:ring-2 focus:ring-yellow-700 focus:outline-none">
-                                                    Update
-                                                </button>
-                                                <button
-                                                    class="bg-green-500 text-white text-sm px-4 py-2 rounded-md shadow-md hover:bg-green-600 focus:ring-2 focus:ring-yellow-700 focus:outline-none">
-                                                    <a href="{{ route('orders.show', $order->id) }}">
-                                                        Detail
-                                                    </a>
-                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -157,7 +154,10 @@
                 <h3 class="text-xl font-normal text-gray-500 mt-5 mb-6">Change Status: </h3>
                 @foreach ($statusOptions as $status)
                     <button onclick="updateStatus('{{ $status }}', orderId)"
-                        class="bg-red-700 hover:bg-red-600 focus:ring-4 focus:ring-amber-300 font-medium inline-flex items-center rounded-md px-2 py-3 text-white">
+                        class="{{ $status == 'Processed' ? 'bg-yellow-800 hover:bg-yellow-700 focus:ring-4 focus:ring-amber-300 font-medium inline-flex items-center rounded-md px-2 py-3 text-white' : '' }}
+                                {{ $status == 'Pending' ? 'bg-amber-300 hover:bg-amber-200 focus:ring-4 focus:ring-amber-300 font-medium inline-flex items-center rounded-md px-2 py-3 text-white' : '' }}
+                                {{ $status == 'Cancelled' ? 'bg-red-700 hover:bg-red-600 focus:ring-4 focus:ring-amber-300 font-medium inline-flex items-center rounded-md px-2 py-3 text-white' : '' }}
+                                {{ $status == 'Completed' ? 'bg-green-500 hover:bg-green-400 focus:ring-4 focus:ring-amber-300 font-medium inline-flex items-center rounded-md px-2 py-3 text-white' : '' }}">
                         {{ $status }}
                     </button>
                 @endforeach
@@ -256,20 +256,40 @@
                 .then(data => {
                     console.log(data); // Debugging: lihat apa yang dikembalikan
                     if (data.message) {
-                        alert(data.message); // Tampilkan pesan sukses jika ada
+                        // Menggunakan SweetAlert untuk menampilkan pesan sukses
+                        Swal.fire({
+                            title: 'Success',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#fcd34d',
+                        });
+
                         // Update status di UI
                         const statusElement = document.getElementById(`order-status-${orderId}`);
                         if (statusElement) {
                             statusElement.innerText = status; // Ganti status di UI
                         }
                     } else {
-                        alert('Status update failed'); // Pesan default jika tidak ada message
+                        // Menggunakan SweetAlert untuk menampilkan pesan gagal
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Status update failed',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
                     }
                     closeModal('modalConfirm'); // Menutup modal
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert(error.message); // Tampilkan pesan error jika ada
+                    // Menggunakan SweetAlert untuk menampilkan pesan error
+                    Swal.fire({
+                        title: 'Error',
+                        text: error.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 });
         }
     </script>
