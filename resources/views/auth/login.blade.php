@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('asset-admin/public/img/logo_bangbara.png') }}" type="image/x-icon">
 
-    <title>BangbaraPos - Auth</title>
+    <title>BangbaraPost - Auth</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -61,13 +61,13 @@
 
                     <!-- Submit -->
                     <button type="submit"
-                        class="w-full py-2 px-4 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 focus:ring-2 focus:ring-purple-500">
+                        class="w-full py-2 px-4 bg-red-700 text-white font-bold rounded-lg hover:bg-purple-700 focus:ring-2 focus:ring-purple-500">
                         Login
                     </button>
 
                     <!-- Forgot Password -->
                     <div class="mt-4 text-center">
-                        <a href="{{ route('password.request') }}" class="text-sm text-purple-400 hover:underline">Forgot
+                        <a href="{{ route('password.request') }}" class="text-sm text-amber-300 hover:underline">Forgot
                             your Password?</a>
                     </div>
                 </form>

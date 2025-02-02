@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<aside class="flex-shrink-0 hidden w-64 bg-white dark:bg-zinc-900 md:block">
+<aside class="flex-shrink-0 hidden w-64 bg-white dark:bg-[#000000] md:block">
     <div class="flex flex-col h-full">
         <img src="{{ asset('asset-admin/public/img/logo_bangbara-nobg.png') }}" height="50" class="p-4"
             alt="">
@@ -81,7 +81,7 @@
                 </div>
             </div>
 
-            <!-- Pages links -->
+            <!-- Orders links -->
             <div x-data="{ isActive: false, open: false }">
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a href="#" @click="$event.preventDefault(); open = !open"
@@ -101,7 +101,7 @@
                             </path>
                         </svg>
                     </span>
-                    <span class="ml-2 text-sm"> Pesanan </span>
+                    <span class="ml-2 text-sm"> Orders </span>
                     <span aria-hidden="true" class="ml-auto">
                         <!-- active class 'rotate-180' -->
                         <svg class="w-4 h-4 transition-transform transform" :class="{ 'rotate-180': open }"
@@ -115,7 +115,7 @@
                     <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
                     <a href="{{ route('orders.index') }}" role="menuitem"
                         class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700">
-                        Pesanan Masuk
+                        Manage Orders
                     </a>
                 </div>
             </div>
@@ -155,7 +155,7 @@
                 <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" aria-label="Authentication">
                     <!-- active & hover classes 'text-gray-700 dark:text-light' -->
                     <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
-                    <a href="" role="menuitem"
+                    <a href="{{ route('histories.index') }}" role="menuitem"
                         class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700">
                         Manage History
                     </a>
@@ -201,6 +201,45 @@
                     <a href="{{ route('categories.index') }}" role="menuitem"
                         class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700">
                         Manage Category
+                    </a>
+                </div>
+            </div>
+
+            {{-- Staff Links --}}
+            <div x-data="{ isActive: false, open: false }">
+                <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
+                <a href="#" @click="$event.preventDefault(); open = !open"
+                    class="flex items-center p-2 text-gray-800 transition-colors rounded-md dark:text-light hover:bg-amber-200 dark:hover:bg-red-500"
+                    :class="{ 'bg-amber-300 dark:bg-red-700': isActive || open }" role="button" aria-haspopup="true"
+                    :aria-expanded="(open || isActive) ? 'true' : 'false'">
+                    <span aria-hidden="true">
+                        {{-- <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                                    </svg> --}}
+                        <img src="{{ asset('asset-admin/public/img/icon/group.svg') }}" alt="Staff Logo"
+                            class="w-5 h-5">
+
+
+                    </span>
+                    <span class="ml-2 text-sm"> Staffs </span>
+                    <span aria-hidden="true" class="ml-auto">
+                        <!-- active class 'rotate-180' -->
+                        <svg class="w-4 h-4 transition-transform transform" :class="{ 'rotate-180': open }"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </a>
+                <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" aria-label="Layouts">
+                    <!-- active & hover classes 'text-gray-700 dark:text-light' -->
+                    <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
+                    <a href="{{ route('staffs.index') }}" role="menuitem"
+                        class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700">
+                        Manage Staffs
                     </a>
                 </div>
             </div>

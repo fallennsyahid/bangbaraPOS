@@ -16,42 +16,42 @@
                 <x-admin.navbar></x-admin.navbar>
 
                 <!-- Main content -->
-                <main class="dark:bg-zinc-950">
+                <main class="bg-prime">
                     <!-- Content header -->
-                    <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4 dark:border-slate-950">
-                        <h1 class="text-2xl font-semibold">Manage Categories</h1>
+                    <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
+                        <h1 class="text-2xl font-semibold text-zinc-950">Detail Product</h1>
                         <x-admin.waButton></x-admin.waButton>
 
                     </div>
 
                     {{-- Content --}}
-                    <div class="min-h-screen flex items-center justify-center dark:bg-zinc-950 py-10">
-                        <div class="bg-[#CAAC44] p-6 rounded-lg shadow-lg max-w-lg w-full">
-                            <div class="bg-[#D4B131] p-4 rounded-md">
-                                <h1 class="text-2xl font-bold text-white mb-4">Detail Products</h1>
+                    <div class="min-h-screen flex items-center justify-center bg-prime py-10">
+                        <div class="bg-thead p-6 rounded-lg shadow-lg max-w-lg w-full">
+                            <div class="bg-tbody p-4 rounded-md">
+                                <h1 class="text-2xl font-bold text-zinc-950 mb-4">Detail Products</h1>
                                 <div class="space-y-3">
                                     <!-- Field: Title -->
                                     <div>
-                                        <h2 class="text-lg font-semibold text-white">Products Name:</h2>
-                                        <p class="text-white">{{ $product->nama_menu }}</p>
+                                        <h2 class="text-lg font-semibold text-zinc-950">Products Name:</h2>
+                                        <p class="text-zinc-950">{{ $product->nama_menu }}</p>
                                     </div>
                                     <!-- Field: Category -->
                                     <div>
-                                        <h2 class="text-lg font-semibold text-white">Products Name:</h2>
-                                        <p class="text-white">{{ $product->category->nama_kategori }}</p>
+                                        <h2 class="text-lg font-semibold text-zinc-950">Products Name:</h2>
+                                        <p class="text-zinc-950">{{ $product->category->nama_kategori }}</p>
                                     </div>
                                     <!-- Field: Description -->
                                     <div>
-                                        <h2 class="text-lg font-semibold text-white">Description:</h2>
-                                        <p class="text-white">{{ $product->deskripsi_menu }}</p>
+                                        <h2 class="text-lg font-semibold text-zinc-950">Description:</h2>
+                                        <p class="text-zinc-950">{{ $product->deskripsi_menu }}</p>
                                     </div>
                                     <!-- Field: Date -->
                                     <div>
-                                        <h2 class="text-lg font-semibold text-white">Created At:</h2>
-                                        <p class="text-white">{{ $product->created_at->format('d/m/y') }}</p>
+                                        <h2 class="text-lg font-semibold text-zinc-950">Created At:</h2>
+                                        <p class="text-zinc-950">{{ $product->created_at->format('d/m/y') }}</p>
                                     </div>
                                     <div>
-                                        <h2 class="text-lg font-semibold text-white">Product Image:</h2>
+                                        <h2 class="text-lg font-semibold text-zinc-950">Product Image:</h2>
                                         <img src="{{ Storage::url($product->gambar_menu) }}" alt="Product Image"
                                             class="w-48b h-48 object-cover rounded-lg" />
                                     </div>

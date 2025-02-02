@@ -16,16 +16,16 @@
                 <x-admin.navbar></x-admin.navbar>
 
                 <!-- Main content -->
-                <main class="dark:bg-zinc-950">
+                <main class="bg-prime">
                     <!-- Content header -->
-                    <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4 dark:border-slate-950">
-                        <h1 class="text-2xl font-semibold">Manage Orders</h1>
+                    <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
+                        <h1 class="text-2xl font-semibold text-zinc-950">Manage Orders</h1>
                         <x-admin.waButton></x-admin.waButton>
                     </div>
 
 
                     <!-- Content -->
-                    <div class="flex flex-col items-center justify-center min-h-screen dark:bg-black px-4 py-4">
+                    <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
                         <!-- Tombol View on GitHub -->
                         <!-- Tabel -->
                         <div class="mb-4 mt-3">
@@ -40,45 +40,66 @@
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
                                 id="myTable">
                                 <!-- Header -->
-                                <thead class="bg-[#D4B131] text-white shadow-md">
+                                <thead class="bg-thead text-white shadow-md">
                                     <tr>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">ID</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Costumer</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Phone</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Status</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Price</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Method</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Photo</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">ID
+                                        </th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Costumer</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Phone</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Status</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Price</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Method</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Photo</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Aksi</th>
                                     </tr>
                                 </thead>
 
                                 <!-- Body -->
-                                <tbody class="bg-[#CAAC44]" id="productTable">
+                                <tbody class="bg-tbody" id="productTable">
                                     @foreach ($orders as $index => $order)
-                                        <tr class="hover:bg-yellow-300" data-category="{{ $order->id }}">
-                                            <td class="px-6 py-4 font-medium text-sm">#{{ $index + 1 }}</td>
-                                            <td class="px-6 py-4 font-medium text-sm">
+                                        <tr class="hover:bg-thead" data-category="{{ $order->id }}">
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">#{{ $index + 1 }}
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $order->customer_name }}
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm">
-                                                {{ $order->customer_phone }}
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
+                                                <a href="https://wa.me/{{ $order->customer_phone }}"
+                                                    class="hover:text-blue-400 hover:underline"
+                                                    target="_blank">{{ $order->customer_phone }}</a>
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm"
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950"
                                                 id="order-status-{{ $order->id }}">
-                                                {{ $order->status }}
+                                                <h5
+                                                    class="{{ $order->status == 'Processed' ? 'bg-yellow-800 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                            {{ $order->status == 'Pending' ? 'bg-amber-300 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                             {{ $order->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                             {{ $order->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                    ">
+                                                    {{ $order->status }}</h4>
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm">
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 Rp {{ number_format($order->total_price, 2) }}
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm">
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $order->payment_method }}
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm">
-                                                {{ $order->payment_photo }}
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
+                                                <a href="">
+                                                    <button
+                                                        class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
+                                                        <h6>File</h6>
+                                                    </button>
+                                                </a>
                                             </td>
-                                            <td class="px-6 py-4 flex gap-3 mt-4">
+                                            {{-- <td class="px-6 py-4 flex gap-3 mt-4">
                                                 <button onclick="openModal({{ $order->id }})"
                                                     class="bg-yellow-800 text-white text-sm px-4 py-2 rounded-md shadow-md hover:bg-yellow-900 focus:ring-2 focus:ring-yellow-700 focus:outline-none">
                                                     Update
@@ -100,6 +121,42 @@
                                                         Delete
                                                     </button>
                                                 </form>
+                                            </td> --}}
+                                            <td class="px-6 py-4 flex gap-3 mt-4">
+
+                                                <a href="{{ route('orders.show', $order->id) }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                                                        height="30" viewBox="0 0 24 24">
+                                                        <path fill="#6c80e4" fill-rule="evenodd"
+                                                            d="M12 17.8c4.034 0 7.686-2.25 9.648-5.8C19.686 8.45 16.034 6.2 12 6.2S4.314 8.45 2.352 12c1.962 3.55 5.614 5.8 9.648 5.8M12 5c4.808 0 8.972 2.848 11 7c-2.028 4.152-6.192 7-11 7s-8.972-2.848-11-7c2.028-4.152 6.192-7 11-7m0 9.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8" />
+                                                    </svg>
+                                                </a>
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                    viewBox="0 0 24 24" onclick="openModal({{ $order->id }})">
+                                                    <g fill="none" stroke="#28A745" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2">
+                                                        <path
+                                                            d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" />
+                                                        <path
+                                                            d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" />
+                                                    </g>
+                                                </svg>
+
+                                                <form id="delete-form-{{ $order->id }}"
+                                                    action="{{ route('orders.destroy', $order->id) }}" method="POST"
+                                                    onsubmit="return confirm('Are you sure you want to delete this category?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                                                        height="30" viewBox="0 0 24 24"
+                                                        class="cursor-pointer hover:fill-red-700 transition duration-200"
+                                                        onclick="confirmDelete({{ $order->id }})">
+                                                        <path fill="red"
+                                                            d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z" />
+                                                    </svg>
+                                                </form>
+
                                             </td>
                                         </tr>
                                     @endforeach

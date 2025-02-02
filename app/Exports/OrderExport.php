@@ -26,6 +26,7 @@ class OrderExport implements FromCollection, WithHeadings
                 $order->status,
                 $order->total_price,
                 $order->payment_method,
+                $order->request,
                 $order->created_at,
             ];
         })
@@ -40,6 +41,6 @@ class OrderExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         // Headings saat di excel nya
-        return ['ID', 'Costumer Name', 'Customer Name', 'Product Name', 'QTY', 'Status', 'total_price', 'Payment Method', 'Created At'];
+        return ['ID', 'Costumer Name', 'Customer Name', 'Product Name', 'QTY', 'Status', 'total_price', 'Payment Method', 'Request', 'Created At'];
     }
 }

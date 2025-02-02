@@ -16,22 +16,22 @@
                 <x-admin.navbar></x-admin.navbar>
 
                 <!-- Main content -->
-                <main class="dark:bg-zinc-950">
+                <main class="bg-prime">
                     <!-- Content header -->
-                    <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4 dark:border-slate-950">
-                        <h1 class="text-2xl font-semibold">Manage Categories</h1>
+                    <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
+                        <h1 class="text-2xl font-semibold text-zinc-950">Manage Categories</h1>
                         <x-admin.waButton></x-admin.waButton>
 
                     </div>
 
 
                     <!-- Content -->
-                    <div class="flex flex-col items-center justify-center min-h-screen dark:bg-black px-4">
+                    <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4">
                         <!-- Tombol View on GitHub -->
                         <div class="mb-6">
                             <a href="{{ route('categories.create') }}"
-                                class="px-4 py-2 text-sm text-white rounded-md bg-amber-300 dark:bg-red-700 hover:bg-amber-400 hover:dark:bg-red-800 focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
-                                Create Category
+                                class="px-4 py-2 shadow-xl text-sm text-zinc-950 font-semibold rounded-md bg-[#B0B0B0] hover:bg-tbody focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
+                                Create +
                             </a>
                         </div>
 
@@ -45,48 +45,63 @@
                             </div>
                             <table class="table-auto border-collapse w-full text-left shadow-lg" id="myTable">
                                 <!-- Header -->
-                                <thead class="bg-[#D4B131] text-white shadow-md">
+                                <thead class="bg-thead text-white shadow-md">
                                     <tr>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">ID</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Nama Kategori
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">ID
                                         </th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Total Products
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Nama Kategori
                                         </th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide">Aksi</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Total Products
+                                        </th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Aksi</th>
                                     </tr>
                                 </thead>
 
                                 <!-- Body -->
-                                <tbody class="bg-[#CAAC44]">
+                                <tbody class="bg-tbody">
                                     @foreach ($categories as $index => $category)
-                                        <tr class="hover:bg-yellow-300">
-                                            <td class="px-6 py-4 font-medium text-smb">#{{ $index + 1 }}</td>
-                                            <td class="px-6 py-4 font-medium text-sm text-slate-700">
+                                        <tr class="hover:bg-thead">
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">#{{ $index + 1 }}
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $category->nama_kategori }}
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-slate-700">
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $category->products->count() }}
                                             </td>
-                                            <td class="px-6 py-4 flex gap-3">
+                                            <td class="px-6 py-4 flex gap-3 mt-4">
+
+                                                <a href="{{ route('categories.edit', $category->id) }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                                                        height="30" viewBox="0 0 24 24">
+                                                        <g fill="none" stroke="#28A745" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="2">
+                                                            <path
+                                                                d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" />
+                                                            <path
+                                                                d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" />
+                                                        </g>
+                                                    </svg>
+                                                </a>
+
                                                 <form id="delete-form-{{ $category->id }}"
                                                     action="{{ route('categories.destroy', $category->id) }}"
                                                     method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this category?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button"
-                                                        class="bg-red-600 text-white text-sm px-4 py-2 rounded-md shadow-md hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:outline-none"
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                                                        height="30" viewBox="0 0 24 24"
+                                                        class="cursor-pointer hover:fill-red-700 transition duration-200"
                                                         onclick="confirmDelete({{ $category->id }})">
-                                                        Delete
-                                                    </button>
+                                                        <path fill="red"
+                                                            d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z" />
+                                                    </svg>
                                                 </form>
 
-                                                <button
-                                                    class="bg-yellow-800 text-white text-sm px-4 py-2 rounded-md shadow-md hover:bg-yellow-900 focus:ring-2 focus:ring-yellow-700 focus:outline-none">
-                                                    <a href="{{ route('categories.edit', $category->id) }}">
-                                                        Update
-                                                    </a>
-                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach

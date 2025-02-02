@@ -60,7 +60,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('asset-admin/public/img/logo_bangbara.png') }}" type="image/x-icon">
 
-    <title>BangbaraPos - Auth</title>
+    <title>BangbaraPost - Auth</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

@@ -16,24 +16,25 @@
                 <x-admin.navbar></x-admin.navbar>
 
                 <!-- Main content -->
-                <main class="dark:bg-zinc-950">
+                <main class="bg-prime">
                     <!-- Content header -->
-                    <div class="flex items-center justify-between px-4 py-4 border-b lg:py-6 dark:border-slate-950">
-                        <h1 class="text-2xl font-semibold">Dashboard</h1>
+                    <div class="flex items-center justify-between px-4 py-4 border-b lg:py-6">
+                        <h1 class="text-2xl text-zinc-950 font-semibold">Dashboard</h1>
                         <x-admin.waButton></x-admin.waButton>
                     </div>
 
                     <!-- Content -->
                     <div class="mt-2">
                         <!-- State cards -->
-                        <div class="grid grid-cols-1 gap-8 p-4 lg:grid-cols-2 xl:grid-cols-4">
+                        <div class="grid grid-cols-1 gap-8 p-4 lg:grid-cols-2 xl:grid-cols-2">
                             <!-- Value card -->
-                            <div class="flex items-center justify-between p-4 bg-red-700 dark:bg-amber-300 rounded-md">
+                            <div class="flex items-center justify-between p-4 bg-[#D11C1C] rounded-md shadow-lg">
                                 <div>
                                     <h6 class="text-xs font-medium leading-none tracking-wider text-white uppercase">
                                         Total Pemasukkan
                                     </h6>
-                                    <span class="text-xl font-semibold text-white">Rp.700.000</span>
+                                    <span class="text-xl font-semibold text-white">Rp
+                                        {{ number_format($totalIncome) }}</span>
                                     <span
                                         class="inline-block px-2 py-px ml-2 text-xs text-green-500 bg-green-100 rounded-md">
                                         +4.4%
@@ -51,16 +52,12 @@
                             </div>
 
                             <!-- Users card -->
-                            <div class="flex items-center justify-between p-4 bg-red-700 dark:bg-amber-300 rounded-md">
+                            <div class="flex items-center justify-between p-4 bg-[#D11C1C] rounded-md shadow-lg">
                                 <div>
                                     <h6 class="text-xs font-medium leading-none tracking-wider text-white uppercase">
                                         Total Penjualan
                                     </h6>
-                                    <span class="text-xl font-semibold text-white">50,021</span>
-                                    <span
-                                        class="inline-block px-2 py-px ml-2 text-xs text-green-500 bg-green-100 rounded-md">
-                                        +2.6%
-                                    </span>
+                                    <span class="text-xl font-semibold text-white">{{ $histories }} sold</span>
                                 </div>
                                 <div>
                                     <span>
@@ -71,7 +68,7 @@
                             </div>
 
                             <!-- Orders card -->
-                            <div class="flex items-center justify-between p-4 bg-red-700 dark:bg-amber-300 rounded-md">
+                            <div class="flex items-center justify-between p-4 bg-[#D11C1C] rounded-md shadow-lg">
                                 <div>
                                     <h6 <h6
                                         class="text-xs font-medium leading-none tracking-wider text-white uppercase">
@@ -88,13 +85,14 @@
                             </div>
 
                             <!-- Product card -->
-                            <div class="flex items-center justify-between p-4 bg-red-700 dark:bg-amber-300 rounded-md">
+                            <div class="flex items-center justify-between p-4 bg-[#D11C1C] rounded-md shadow-lg">
                                 <div>
                                     <h6 <h6
                                         class="text-xs font-medium leading-none tracking-wider text-white uppercase">
                                         Total Product
                                     </h6>
-                                    <span class="text-xl font-semibold text-white">{{ $products }} products</span>
+                                    <span class="text-xl font-semibold text-white">{{ $products }}
+                                        products</span>
 
                                 </div>
                                 <div>
@@ -134,11 +132,11 @@
                         <!-- Charts -->
                         <div class="grid grid-cols-1 p-4 space-y-8 lg:gap-8 lg:space-y-0 lg:grid-cols-3">
                             <!-- Bar chart card -->
-                            <div class="col-span-2 bg-white rounded-md border border-bg-amber-300 dark:bg-zinc-950"
+                            <div class="col-span-2 bg-[#D3D3D3] rounded-md border border-bg-amber-300 shadow-xl"
                                 x-data="{ isOn: false }">
                                 <!-- Card header -->
                                 <div class="flex items-center justify-between p-4 border-b dark:border-amber-300">
-                                    <h4 class="text-lg font-semibold text-gray-500 dark:text-light">Total
+                                    <h4 class="text-lg font-semibold text-gray-900">Total
                                         Penjualan
                                     </h4>
                                     <div class="flex items-center space-x-2">
@@ -163,83 +161,7 @@
                                     <canvas id="orderChart"></canvas>
                                 </div>
                             </div>
-
-                            <!-- Doughnut chart card -->
-                            {{-- <div class="bg-white rounded-md dark:bg-darker" x-data="{ isOn: false }">
-                                <!-- Card header -->
-                                <div class="flex items-center justify-between p-4 border-b dark:border-primary">
-                                    <h4 class="text-lg font-semibold text-gray-500 dark:text-light">Doughnut Chart</h4>
-                                    <div class="flex items-center">
-                                        <button class="relative focus:outline-none" x-cloak
-                                            @click="isOn = !isOn; $parent.updateDoughnutChart(isOn)">
-                                            <div
-                                                class="w-12 h-6 transition rounded-full outline-none bg-primary-100 dark:bg-primary-darker">
-                                            </div>
-                                            <div class="absolute top-0 left-0 inline-flex items-center justify-center w-6 h-6 transition-all duration-200 ease-in-out transform scale-110 rounded-full shadow-sm"
-                                                :class="{
-                                                    'translate-x-0  bg-white dark:bg-primary-100': !
-                                                        isOn,
-                                                    'translate-x-6 bg-primary-light dark:bg-primary': isOn
-                                                }">
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- Chart -->
-                                <div class="relative p-4 h-72">
-                                    <canvas id="doughnutChart"></canvas>
-                                </div>
-                            </div> --}}
                         </div>
-
-                        <!-- Two grid columns -->
-                        {{-- <div class="grid grid-cols-1 p-4 space-y-8 lg:gap-8 lg:space-y-0 lg:grid-cols-3">
-                            <!-- Active users chart -->
-                            <div class="col-span-1 bg-white rounded-md dark:bg-darker">
-                                <!-- Card header -->
-                                <div class="p-4 border-b dark:border-primary">
-                                    <h4 class="text-lg font-semibold text-gray-500 dark:text-light">Active users right
-                                        now</h4>
-                                </div>
-                                <p class="p-4">
-                                    <span class="text-2xl font-medium text-gray-500 dark:text-light"
-                                        id="usersCount">0</span>
-                                    <span class="text-sm font-medium text-gray-500 dark:text-primary">Users</span>
-                                </p>
-                                <!-- Chart -->
-                                <div class="relative p-4">
-                                    <canvas id="activeUsersChart"></canvas>
-                                </div>
-                            </div>
-
-                            <!-- Line chart card -->
-                            <div class="col-span-2 bg-white rounded-md dark:bg-darker" x-data="{ isOn: false }">
-                                <!-- Card header -->
-                                <div class="flex items-center justify-between p-4 border-b dark:border-primary">
-                                    <h4 class="text-lg font-semibold text-gray-500 dark:text-light">Line Chart</h4>
-                                    <div class="flex items-center">
-                                        <button class="relative focus:outline-none" x-cloak
-                                            @click="isOn = !isOn; $parent.updateLineChart()">
-                                            <div
-                                                class="w-12 h-6 transition rounded-full outline-none bg-primary-100 dark:bg-primary-darker">
-                                            </div>
-                                            <div class="absolute top-0 left-0 inline-flex items-center justify-center w-6 h-6 transition-all duration-200 ease-in-out transform scale-110 rounded-full shadow-sm"
-                                                :class="{
-                                                    'translate-x-0  bg-white dark:bg-primary-100': !
-                                                        isOn,
-                                                    'translate-x-6 bg-primary-light dark:bg-primary': isOn
-                                                }">
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- Chart -->
-                                <div class="relative p-4 h-72">
-                                    <canvas id="lineChart"></canvas>
-                                </div>
-                            </div>
-                        </div> --}}
-                    </div>
                 </main>
                 {{-- Chart Order --}}
                 <script>
@@ -257,13 +179,13 @@
                             datasets: [{
                                 label: '# of Votes',
                                 data: totals,
-                                backgroundColor: '#dc2626',
-                                borderColor: '#dc2626',
+                                backgroundColor: '#D3A200',
+                                borderColor: '#D3A200',
                                 borderWidth: 1
                             }]
                         },
                         options: {
-                            maintainAspectRatio: true, // Agar bisa diatur lebar-tinggi manual
+                            maintainAspectRatio: false, // Agar bisa diatur lebar-tinggi manual
                             scales: {
                                 y: {
                                     ticks: {

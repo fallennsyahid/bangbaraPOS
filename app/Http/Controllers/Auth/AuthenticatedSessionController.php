@@ -25,12 +25,16 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
-        if($request->user()->usertype == 'admin') {
+
+        if(Auth::user()->usertype == 'admin') {
             return redirect('/admin/dashboard');
-        } else {
-            return redirect('admin.dashboard');
+        } else if (Auth::user()->usertype == 'staff') {
+            return redirect('/staff/dashboard');
+        } 
+        else {
+            auth()->Auth::logout();
+            return redirect()->route('login')->withErrors(['error' => 'Login gagal']);
         }
 
     }

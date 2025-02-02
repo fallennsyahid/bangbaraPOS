@@ -62,6 +62,10 @@ module.exports = {
                 kuning: "#FFC600",
                 text: "#722F37",
                 price: "#4E2A2A",
+                prime: "#E3E3E3",
+                thead: "#D5D5D5",
+                tbody: "#CCCCCC",
+                ijal: "#00000",
 
                 primary: {
                     DEFAULT: "var(--color-primary)",

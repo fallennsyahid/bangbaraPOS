@@ -16,10 +16,15 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->usertype != 'admin')
-        {
-            return redirect('dashboard');
+        if (!Auth::check()) {
+            return redirect('/login')->with('error', 'You must Login First.');
         }
+
+        if (Auth::user()->usertype !== 'admin') {
+        return redirect('/error')->with('error', 'Accsess Denied.');
+        }
+
         return $next($request);
     }
+
 }

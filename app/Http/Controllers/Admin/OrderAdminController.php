@@ -18,7 +18,7 @@ class OrderAdminController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('products')->get();
+        $orders = Order::with('product')->get();
         $statusOptions = ['Pending', 'Processed', 'Cancelled', 'Completed'];
         return view('admin.orders.index', compact('orders', 'statusOptions'));
     }
@@ -48,7 +48,7 @@ class OrderAdminController extends Controller
      */
     public function show(Order $order)
     {
-        $order->load('products');
+        $order->load('product');
         return view('admin.orders.show', compact('order'));
     }
 
@@ -84,8 +84,10 @@ class OrderAdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Order $order)
     {
-        //
+        $order->delete();
+
+        return redirect()->route('orders.index')->with('success', 'Order Successfully Deleted');
     }
 }

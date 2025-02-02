@@ -10,33 +10,32 @@
                 Loading.....
             </div>
 
-            <x-admin.sidebar></x-admin.sidebar>(
+            <x-admin.sidebar></x-admin.sidebar>
 
             <div class="flex-1 h-full overflow-x-hidden overflow-y-auto">
                 <x-admin.navbar></x-admin.navbar>
 
                 <!-- Main content -->
-                <main class="dark:bg-zinc-950">
+                <main class="bg-prime">
                     <!-- Content header -->
-                    <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4 dark:border-slate-950">
-                        <h1 class="text-2xl font-semibold">Edit Product</h1>
+                    <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
+                        <h1 class="text-2xl font-semibold text-zinc-950">Edit Product</h1>
                         <x-admin.waButton></x-admin.waButton>
 
                     </div>
 
                     <!-- Content -->
-                    <div
-                        class="min-h-screen mb-4 py-5 flex flex-col items-center justify-center bg-gray-100 dark:bg-black px-4">
+                    <div class="min-h-screen mb-4 py-5 flex flex-col items-center justify-center bg-prime px-4">
                         <h2 class="mb-4"><a href="{{ route('products.index') }}"
                                 class="text-amber-400 hover:underline">Back </a>/
-                            <a href="/admin/dashboard" class="hover:underline">Home</a>
+                            <a href="/admin/dashboard" class="hover:underline text-zinc-900">Home</a>
                         </h2>
                         <form action="{{ route('products.update', $product->id) }}" method="POST"
                             enctype="multipart/form-data"
-                            class="w-full max-w-md bg-white dark:bg-zinc-900 text-gray-900 dark:text-white p-6 rounded-lg shadow-lg">
+                            class="w-full max-w-md bg-thead text-gray-900 p-6 rounded-lg shadow-lg">
                             @csrf
                             @method('PUT')
-                            <h2 class="text-2xl font-bold text-center mb-6 text-yellow-600 dark:text-yellow-300">
+                            <h2 class="text-2xl font-bold text-center mb-6 text-zinc-900">
                                 Edit
                                 Product</h2>
 
@@ -45,7 +44,7 @@
                                 <label for="name" class="block text-sm font-medium mb-2">Product Name</label>
                                 <input type="text" id="nama_menu" name="nama_menu"
                                     value="{{ old('nama_menu', $product->nama_menu) }}"
-                                    class="w-full px-4 py-2 text-gray-900 dark:text-white bg-yellow-50 dark:bg-black border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
                                     placeholder="Enter product name" required />
                             </div>
 
@@ -55,7 +54,7 @@
                                     Description</label>
                                 <textarea id="deskripsi_menu" name="deskripsi_menu" rows="4"
                                     value="{{ old('deskripsi_menu', $product->deskripsi_menu) }}"
-                                    class="w-full px-4 py-2 text-gray-900 dark:text-white bg-yellow-50 dark:bg-black border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
                                     placeholder="Enter product description">{{ old('deskripsi_menu', $product->deskripsi_menu) }}</textarea>
                             </div>
 
@@ -64,7 +63,7 @@
                                 <label for="price" class="block text-sm font-medium mb-2">Price</label>
                                 <input type="number" id="harga_menu" name="harga_menu" step="0.01"
                                     value="{{ old('harga_menu', $product->harga_menu) }}"
-                                    class="w-full px-4 py-2 text-gray-900 dark:text-white bg-yellow-50 dark:bg-black border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                    class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
                                     placeholder="Enter product price" required />
                             </div>
 
@@ -72,7 +71,7 @@
                             <div class="mb-4">
                                 <label for="category_id" class="block text-sm font-medium mb-2">Category</label>
                                 <select id="category_id" name="category_id"
-                                    class="w-full px-4 py-2 text-gray-900 dark:text-white bg-yellow-50 dark:bg-black border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                    class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
                                     required>
                                     <option value="">Select a Category</option>
                                     @foreach ($categories as $category)
@@ -98,7 +97,7 @@
 
                                 <!-- Input File -->
                                 <input type="file" id="gambar_menu" name="gambar_menu"
-                                    class="w-full px-4 py-2 text-gray-900 dark:text-white bg-yellow-50 dark:bg-black border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none" />
+                                    class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none" />
                             </div>
 
 
@@ -106,7 +105,7 @@
                                 <label for="status_produk" class="block text-sm font-medium mb-2">Product
                                     Status</label>
                                 <select id="status_produk" name="status_produk"
-                                    class="w-full px-4 py-2 text-gray-900 dark:text-white bg-yellow-50 dark:bg-black border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none">
+                                    class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none">
                                     <option value="active"
                                         {{ old('status_produk', $product->status_produk) === 'active' ? 'selected' : '' }}>
                                         Active

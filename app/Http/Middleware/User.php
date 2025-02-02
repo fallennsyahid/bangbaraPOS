@@ -19,7 +19,7 @@ class User
     {
         if(Auth::user()->usertype != 'user')
         {
-            return redirect('home');
+            return redirect('welcome');
         }
         return $next($request);
     }
