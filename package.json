@@ -17,6 +17,7 @@
         "vite": "^6.0"
     },
     "dependencies": {
+        "@tailwindcss/vite": "^4.0.3",
         "color": "^4.2.3",
         "tailwindcss-multi-theme": "^1.0.4"
     }
