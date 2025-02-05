@@ -1,8 +1,7 @@
 <!-- Sidebar -->
 <aside class="flex-shrink-0 hidden w-64 bg-white dark:bg-[#000000] md:block">
     <div class="flex flex-col h-full">
-        <img src="{{ asset('asset-admin/public/img/logo_bangbara-nobg.png') }}" height="50" class="p-4"
-            alt="">
+        <img src="{{ asset('assets/svg/logo-navbar.svg') }}" height="50" class="p-4" alt="">
         <!-- Sidebar links -->
         <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
             <!-- Dashboards links -->
@@ -43,15 +42,11 @@
             <div x-data="{ isActive: false, open: false }">
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a href="#" @click="$event.preventDefault(); open = !open"
-                    class="flex items-center p-2 text-gray-800 transition-colors rounded-md dark:text-light hover:bg-amber-200 dark:hover:bg-red-500"
+                    class="flex items-center p-2 text-gray-800 transition-colors rounded-md dark:text-light hover:bg-amber-200 dark:hover:bg-red-500
+                    {{ request()->routeIs('staffOrders.index') ? 'bg-red-700 text-white' : '' }}"
                     :class="{ 'bg-amber-300 dark:bg-red-700': isActive || open }" role="button" aria-haspopup="true"
                     :aria-expanded="(open || isActive) ? 'true' : 'false'">
                     <span aria-hidden="true">
-                        {{-- <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                    </svg> --}}
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" class="h-5 w-5" fill="none"
                             stroke="currentColor" viewBox="0 0 48 48">
                             <path
@@ -61,7 +56,6 @@
                     </span>
                     <span class="ml-2 text-sm"> Orders </span>
                     <span aria-hidden="true" class="ml-auto">
-                        <!-- active class 'rotate-180' -->
                         <svg class="w-4 h-4 transition-transform transform" :class="{ 'rotate-180': open }"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -74,6 +68,40 @@
                     <a href="{{ route('staffOrders.index') }}" role="menuitem"
                         class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700">
                         Manage Orders
+                    </a>
+                </div>
+            </div>
+
+            <!-- Histories links -->
+            <div x-data="{ isActive: false, open: false }">
+                <!-- active classes 'bg-primary-100 dark:bg-primary' -->
+                <a href="#" @click="$event.preventDefault(); open = !open"
+                    class="flex items-center p-2 text-gray-800 transition-colors rounded-md dark:text-light hover:bg-amber-200 dark:hover:bg-red-500
+                    {{ request()->routeIs('staffHistories.index') ? 'bg-red-700 text-white' : '' }}"
+                    :class="{ 'bg-amber-300 dark:bg-red-700': isActive || open }" role="button" aria-haspopup="true"
+                    :aria-expanded="(open || isActive) ? 'true' : 'false'">
+                    <span aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" class="w-5 h-5" fill="none"
+                            stroke="currentColor" viewBox="0 0 48 48">
+                            <path
+                                d="M 24 4 C 17.46415 4 11.651148 7.1491633 8 12.011719 L 8 8.5 A 1.50015 1.50015 0 0 0 6.4765625 6.9785156 A 1.50015 1.50015 0 0 0 5 8.5 L 5 15.5 A 1.50015 1.50015 0 0 0 6.5 17 L 13.5 17 A 1.50015 1.50015 0 1 0 13.5 14 L 10.25 14 C 13.339079 9.7581979 18.339176 7 24 7 C 33.406292 7 41 14.593708 41 24 C 41 33.406292 33.406292 41 24 41 C 14.593708 41 7 33.406292 7 24 A 1.50015 1.50015 0 1 0 4 24 C 4 35.027708 12.972292 44 24 44 C 35.027708 44 44 35.027708 44 24 C 44 12.972292 35.027708 4 24 4 z M 23.476562 12.978516 A 1.50015 1.50015 0 0 0 22 14.5 L 22 26.5 A 1.50015 1.50015 0 0 0 23.5 28 L 31.5 28 A 1.50015 1.50015 0 1 0 31.5 25 L 25 25 L 25 14.5 A 1.50015 1.50015 0 0 0 23.476562 12.978516 z">
+                            </path>
+                        </svg>
+                    </span>
+                    <span class="ml-2 text-sm"> History </span>
+                    <span aria-hidden="true" class="ml-auto">
+                        <svg class="w-4 h-4 transition-transform transform" :class="{ 'rotate-180': open }"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </a>
+                <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" arial-label="Pages">
+                    <!-- active & hover classes 'text-gray-700 dark:text-light' -->
+                    <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
+                    <a href="{{ route('staffHistories.index') }}" role="menuitem"
+                        class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700">
+                        Manage History
                     </a>
                 </div>
             </div>

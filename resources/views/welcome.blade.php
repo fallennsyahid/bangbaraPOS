@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bangbara - Post</title>
+<<<<<<< HEAD
 
     <!-- CSS -->
     @vite('resources/css/app.css')
@@ -13,6 +14,11 @@
 
     <!-- ICON -->
     <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
+=======
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" href="{{ asset('assets/png/logo_bangbara.png') }}" type="image/x-icon">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+>>>>>>> 46866ba906da649230b0dade4813bcfcb3f54687
 
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

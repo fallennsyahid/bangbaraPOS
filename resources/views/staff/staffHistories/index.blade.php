@@ -1,4 +1,4 @@
-<x-admin.header></x-admin.header>
+<x-staff.header></x-staff.header>
 
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
@@ -10,17 +10,17 @@
                 Loading.....
             </div>
 
-            <x-admin.sidebar></x-admin.sidebar>
+            <x-staff.sidebar></x-staff.sidebar>
 
             <div class="flex-1 h-full overflow-x-hidden overflow-y-auto">
-                <x-admin.navbar></x-admin.navbar>
+                <x-staff.navbar></x-staff.navbar>
 
                 <!-- Main content -->
                 <main class="bg-prime">
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
                         <h1 class="text-2xl font-semibold text-zinc-950">Histories</h1>
-                        <x-admin.waButton></x-admin.waButton>
+                        <x-staff.waButton></x-staff.waButton>
                     </div>
 
 
@@ -28,31 +28,6 @@
                     <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
                         <!-- Tombol View on GitHub -->
                         <!-- Tabel -->
-                        <div class="flex items-center gap-3 mb-4">
-                            <select name="filter_year" id="filter_year"
-                                class="bg-[#D3CD6B] text-zinc-950 py-2 px-4 rounded-md">
-                                <option value="">Years</option>
-                                @foreach ($years as $year)
-                                    <option value="{{ $year }}">{{ $year }}</option>
-                                @endforeach
-                            </select>
-
-                            <select name="filter_month" id="filter_month"
-                                class="bg-[#D3CD6B] text-zinc-950 py-2 px-4 rounded-md">
-                                <option value="">Month</option>
-                                @foreach ($months as $month)
-                                    <option value="{{ $month }}">{{ $month }}</option>
-                                @endforeach
-                            </select>
-
-                            <select name="filter_day" id="filter_day"
-                                class="bg-[#D3CD6B] text-zinc-950 py-2 px-4 rounded-md">
-                                <option value="">Day</option>
-                                @foreach ($days as $day)
-                                    <option value="{{ $day }}">{{ $day }}</option>
-                                @endforeach
-                            </select>
-                        </div>
                         <div class="mb-4 mt-3">
                             <a href="{{ route('admin.histories.export') }}?{{ http_build_query(request()->all()) }}"
                                 id="exportExcel"
@@ -133,10 +108,8 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="7" class="text-center py-4">No data available for the
-                                                selected filters.</td>
-                                        </tr>
+                                        <p class="text-slate-950 font-semibold text-center">There is no histories today
+                                        </p>
                                     @endforelse
                                 </tbody>
 
