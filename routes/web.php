@@ -1,21 +1,24 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ErrorController;
-use App\Http\Controllers\Admin\HistoryController;
-use App\Http\Controllers\Admin\OrderAdminController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\StaffController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ErrorController;
+use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Admin\HistoryController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Staff\DashboardController;
+use App\Http\Controllers\Admin\OrderAdminController;
+use App\Http\Controllers\ProductController as Enter;
 use App\Http\Controllers\Staff\StaffOrdersController;
 use App\Http\Controllers\Staff\StaffHistoryController;
-use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::resource('/', Enter::class);
 
 Route::get('/error', [ErrorController::class, 'index']);
 
@@ -66,4 +69,4 @@ Route::get('histories/filter', [HistoryController::class, 'filter'])->name('hist
 // 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

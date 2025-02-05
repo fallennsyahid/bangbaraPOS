@@ -5,28 +5,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bangbara - Post</title>
-    <<<<<<< HEAD <!-- CSS -->
-        @vite('resources/css/app.css')
-        {{-- <link rel="stylesheet" href="css/style.css" /> --}}
-        <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
+    <!-- CSS -->
+    @vite('resources/css/app.css')
+    {{-- <link rel="stylesheet" href="css/style.css" /> --}}
+    <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
 
-        <!-- ICON -->
-        <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
-        =======
-        <link rel="stylesheet" href="css/style.css" />
-        <link rel="shortcut icon" href="{{ asset('assets/png/logo_bangbara.png') }}" type="image/x-icon">
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        >>>>>>> 46866ba906da649230b0dade4813bcfcb3f54687
+    <!-- ICON -->
+    <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
 
-        <!-- FONTS -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Euphoria+Script&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-            rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" href="{{ asset('assets/png/logo_bangbara.png') }}" type="image/x-icon">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <!-- ICONS -->
-        <script src="https://unpkg.com/feather-icons"></script>
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Euphoria+Script&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+
+    <!-- ICONS -->
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 
 <body>
@@ -103,13 +102,13 @@
                 <div class="hidden lg:flex lg:items-center lg:space-x-4">
                     <!-- Clock Icon -->
                     <a href="history.html">
-                        <img src="./assets/svg/clock.svg" alt="" width="35px"
+                        <img src="{{ asset('asset-view/assets/svg/clock.svg') }}" alt="" width="35px"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
                     </a>
 
                     <!-- Cart Icon -->
                     <a href="shoppingCart.html">
-                        <img src="./assets/svg/cart.svg" alt="Cart" width="40px"
+                        <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
                     </a>
                 </div>
@@ -153,7 +152,7 @@
             <!-- Header -->
             <div
                 class="flex items-center bg-primary mx-auto my-5 px-8 sm:px-12 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
-                <img src="assets/svg/book.svg" alt="" width="120px" class="mr-4" />
+                <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="" width="120px" class="mr-4" />
                 <h1 class="font-europhia text-shadow text-4xl sm:text-5xl lg:text-6xl text-white">
                     Menu Kami
                 </h1>
@@ -181,62 +180,37 @@
             <div id="slider" class="relative overflow-hidden w-full mt-10">
                 <div id="slider-content" class="flex transition-transform duration-500" style="width: 300%">
                     <!-- Slide 1: Makanan Start -->
-                    <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-                        <div class="flex justify-center py-5 sm:py-1">
-                            <div
-                                class="bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
-                                <a href="" id="item-modal-button" class="item-detail-button">
-                                    <div class="relative group">
-                                        <img src="./assets/png/food/1.png" alt="Food"
-                                            class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
-                                        <div
-                                            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <p class="text-white font-semibold text-base">
-                                                View More
-                                            </p>
+                    @foreach ($products as $product)
+                        <div class="w-full grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+                            <div class="flex justify-center py-5 sm:py-1">
+                                <div
+                                    class="bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
+                                    <a href="" id="item-modal-button" class="item-detail-button">
+                                        <div class="relative group">
+                                            <img src="{{ Storage::url($product->gambar_menu) }}" alt="Food"
+                                                class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
+                                            <div
+                                                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                <p class="text-white font-semibold text-base">
+                                                    View More
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                                <p class="text-text text-base text-center">
-                                    Steak Tenderloin Meltique
-                                </p>
-                                <span class="text-price font-alkatra text-sm text-center">
-                                    Rp. 38.000,00
-                                </span>
-                                <a href=""
-                                    class="text shadow text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center">
-                                    Tambahkan Ke Keranjang
-                                </a>
+                                    </a>
+                                    <p class="text-text text-base text-center">
+                                        {{ $product->nama_menu }}
+                                    </p>
+                                    <span class="text-price font-alkatra text-sm text-center">
+                                        Rp {{ $product->harga_menu }}
+                                    </span>
+                                    <a href=""
+                                        class="text shadow text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center">
+                                        Tambahkan Ke Keranjang
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <div class="flex justify-center py-5 sm:py-1">
-                            <div
-                                class="bg-white h-72 w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
-                                <a href="" id="item-modal-button" class="item-detail-button">
-                                    <div class="relative group">
-                                        <img src="./assets/png/food/1.png" alt="Food"
-                                            class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
-                                        <div
-                                            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <p class="text-white font-semibold text-base">
-                                                View More
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <p class="text-text text-sm font-marmelad text-center">
-                                    Steak Tenderloin Meltique
-                                </p>
-                                <span class="text-price font-alkatra text-sm text-center">
-                                    Rp. 38.000,00
-                                </span>
-                                <a href=""
-                                    class="font-marmelad text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white w-full sm:w-auto text-center">
-                                    Tambahkan Ke Keranjang
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                     <!-- Slide 1: Makanan End -->
 
                     <!-- Slide 2: Minuman Start -->
