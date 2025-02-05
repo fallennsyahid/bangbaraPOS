@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('asset-admin/public/img/logo_bangbara.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/png/logo_bangbara.png') }}" type="image/x-icon">
 
     <title>BangbaraPost - Auth</title>
 
@@ -61,7 +61,7 @@
 
                     <!-- Submit -->
                     <button type="submit"
-                        class="w-full py-2 px-4 bg-red-700 text-white font-bold rounded-lg hover:bg-purple-700 focus:ring-2 focus:ring-purple-500">
+                        class="w-full py-2 px-4 bg-red-700 text-white font-bold rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-amber-300">
                         Login
                     </button>
 

@@ -20,17 +20,18 @@ class OrderObserver
      */
     public function updated(Order $order): void
     {
-        if ($order->status === 'Completed') {
-            History::create([
-                'customer_name' => $order->customer_name,
-                'customer_phone' => $order->customer_phone,
-                'product_id' => $order->product_id,
-                'quantity' => $order->quantity,
-                'total_price' => $order->total_price,
-                'payment_photo' => $order->payment_photo,
-                'payment_method' => $order->payment_method,
-                'request' => $order->request,
-            ]);
+        if ($order->status === 'Completed' || $order->status === 'Cancelled') {
+        History::create([
+            'customer_name' => $order->customer_name,
+            'customer_phone' => $order->customer_phone,
+            'product_id' => $order->product_id,
+            'quantity' => $order->quantity,
+            'total_price' => $order->total_price,
+            'payment_photo' => $order->payment_photo,
+            'payment_method' => $order->payment_method,
+            'request' => $order->request,
+            'status' => $order->status,
+        ]);
         }
     }
 

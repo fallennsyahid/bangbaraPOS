@@ -47,8 +47,7 @@
                                                 ID</th>
                                             <th
                                                 class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
-                                                Costumer
-                                            </th>
+                                                Customer</th>
                                             <th
                                                 class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                                 Phone</th>
@@ -72,13 +71,12 @@
 
                                     <!-- Body -->
                                     <tbody class="bg-tbody" id="productTable">
-                                        @foreach ($orders as $index => $order)
+                                        @forelse ($orders as $index => $order)
                                             <tr class="hover:bg-thead" data-category="{{ $order->id }}">
                                                 <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                     #{{ $index + 1 }}</td>
                                                 <td class="px-6 py-4 font-medium text-sm text-zinc-950">
-                                                    {{ $order->customer_name }}
-                                                </td>
+                                                    {{ $order->customer_name }}</td>
                                                 <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                     <a href="https://wa.me/{{ $order->customer_phone }}"
                                                         class="hover:text-blue-400 hover:underline"
@@ -88,18 +86,16 @@
                                                     id="order-status-{{ $order->id }}">
                                                     <h5
                                                         class="{{ $order->status == 'Processed' ? 'bg-yellow-800 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                            {{ $order->status == 'Pending' ? 'bg-amber-300 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                             {{ $order->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                             {{ $order->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                    ">
-                                                        {{ $order->status }}</h5>
+                                                        {{ $order->status == 'Pending' ? 'bg-amber-300 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                        {{ $order->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                        {{ $order->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}">
+                                                        {{ $order->status }}
+                                                    </h5>
                                                 </td>
+                                                <td class="px-6 py-4 font-medium text-sm text-zinc-950">Rp
+                                                    {{ number_format($order->total_price, 2) }}</td>
                                                 <td class="px-6 py-4 font-medium text-sm text-zinc-950">
-                                                    Rp {{ number_format($order->total_price, 2) }}
-                                                </td>
-                                                <td class="px-6 py-4 font-medium text-sm text-zinc-950">
-                                                    {{ $order->payment_method }}
-                                                </td>
+                                                    {{ $order->payment_method }}</td>
                                                 <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                     <a href="">
                                                         <button
@@ -109,7 +105,6 @@
                                                     </a>
                                                 </td>
                                                 <td class="px-6 py-4 flex gap-3 mt-4">
-
                                                     <a href="{{ route('staffOrders.show', $order->id) }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="30"
                                                             height="30" viewBox="0 0 24 24">
@@ -117,7 +112,6 @@
                                                                 d="M12 17.8c4.034 0 7.686-2.25 9.648-5.8C19.686 8.45 16.034 6.2 12 6.2S4.314 8.45 2.352 12c1.962 3.55 5.614 5.8 9.648 5.8M12 5c4.808 0 8.972 2.848 11 7c-2.028 4.152-6.192 7-11 7s-8.972-2.848-11-7c2.028-4.152 6.192-7 11-7m0 9.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8" />
                                                         </svg>
                                                     </a>
-
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="30"
                                                         height="30" viewBox="0 0 24 24"
                                                         onclick="openModal({{ $order->id }})">
@@ -129,11 +123,12 @@
                                                                 d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" />
                                                         </g>
                                                     </svg>
-
                                                 </td>
                                             </tr>
-                                        @endforeach
-                                        <!-- Tambahkan baris lain sesuai kebutuhan -->
+                                        @empty
+                                            <p class="text-slate-950 font-semibold text-center">There is no orders today
+                                            </p>
+                                        @endforelse
                                     </tbody>
                                 </table>
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Staff\StaffOrdersController;
+use App\Http\Controllers\Staff\StaffHistoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,17 +20,12 @@ Route::get('/', function () {
 Route::get('/error', [ErrorController::class, 'index']);
 
 // Staff Route
-// Route::get('/staff/dashboard', function() {
-//     return view('staff.dashboard');
-// })->middleware(['auth', 'verified', 'staff'])->name('staff.dashboard');
-
-// Route::get('/staff/dashboard', [DashboardController::class, 'dashboard']);
-
 Route::get('/staff/dashboard', [DashboardController::class, 'dashboard'])
     ->middleware(['auth', 'verified', 'staff'])
     ->name('staff.dashboard');
 
 Route::resource('/staff/staffOrders', StaffOrdersController::class);
+Route::resource('/staff/staffHistories', StaffHistoryController::class);
 
 // Admin Route
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])

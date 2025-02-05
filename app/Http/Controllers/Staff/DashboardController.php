@@ -19,9 +19,9 @@ class DashboardController extends Controller
     public function dashboard() {
         // fungsi untuk ,enghitung jumlah data
         $products = Product::count();
-        $total_orders = Order::count();
-        $histories = History::count();
-        $totalIncome = DB::table('histories')->sum('total_price');
+        $total_orders = Order::whereDate('created_at', Carbon::today())->count();
+        $histories = History::whereDate('created_at', Carbon::today())->count();
+        $totalIncome = DB::table('histories')->whereDate('created_at', Carbon::today())->sum('total_price');
 
         // fungsi chart
          // Mengambil data total orders per bulan
