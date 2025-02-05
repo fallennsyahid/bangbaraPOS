@@ -15,7 +15,7 @@
 
         <!-- Brand -->
         <span id="real-time-clock"
-            class="inline-block text-xl font-bold tracking-wider uppercase text-primary-dark dark:text-light">
+            class="inline-block text-xl font-bold tracking-wider uppercase text-slate-950 dark:text-light">
         </span>
 
         <!-- Mobile sub menu button -->
