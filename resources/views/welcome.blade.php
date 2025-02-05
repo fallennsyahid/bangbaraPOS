@@ -9,14 +9,17 @@
     <link rel="shortcut icon" href="{{ asset('assets/png/logo_bangbara.png') }}" type="image/x-icon">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-
     <!-- CSS -->
     @vite('resources/css/app.css')
     {{-- <link rel="stylesheet" href="css/style.css" /> --}}
-    <link rel="stylesheet" href="{{ asset('css/extra.css') }}" />
+    <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
 
     <!-- ICON -->
     <link rel="icon" href="{{ asset('assets/png/logo_bangbara.png') }}" />
+    <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" href="{{ asset('assets/png/logo_bangbara.png') }}" type="image/x-icon">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,7 +40,7 @@
                 <!-- Logo -->
                 <div class="py-6">
                     <a href="#home">
-                        <img src="{{ asset('assets/svg/logo-navbar.svg') }}" alt="Logo" width="150px" />
+                        <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="Logo" width="150px" />
                     </a>
                 </div>
 
@@ -78,16 +81,15 @@
                     <div class="flex items-center space-x-4 lg:hidden">
                         <!-- Clock Icon -->
                         <a href="history.html">
-                            <img src="{{ asset('assets/svg/clock.svg') }}" alt="" width="35px"
+                            <img src="{{ asset('asset-view/assets/svg/clock.svg') }}" alt="" width="35px"
                                 class="hover:scale-110 transition duration-300 ease-in-out" />
                         </a>
 
                         <!-- Cart Icon -->
                         <a href="shoppingCart.html">
-                            <img src="{{ asset('assets/svg/cart.svg') }}" alt="Cart" width="40px"
+                            <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
                                 class="hover:scale-110 transition duration-300 ease-in-out" />
                         </a>
-
                         <!-- Hamburger Menu -->
                         <button id="hamburger" name="hamburger" type="button" class="block">
                             <span
