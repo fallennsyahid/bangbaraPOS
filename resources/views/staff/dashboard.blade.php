@@ -46,10 +46,15 @@
                                     <p class="text-2xl font-bold">{{ $total_orders }}</p>
                                 </div>
 
-                                <!-- Product card -->
+                                <!-- Completed card -->
                                 <div class="bg-red-600 text-center text-black rounded-xl shadow-lg p-6 w-80 mx-auto">
-                                    <h6 class="text-lg font-medium">Total Products</h6>
-                                    <p class="text-2xl font-bold">{{ $products }}</p>
+                                    <h6 class="text-lg font-medium">Total completed orders (Today)</h6>
+                                    <p class="text-2xl font-bold">{{ $total_orders_completed }}</p>
+                                </div>
+                                <!-- Cancelled card -->
+                                <div class="bg-red-600 text-center text-black rounded-xl shadow-lg p-6 w-80 mx-auto">
+                                    <h6 class="text-lg font-medium">Total cancelled orders (Today)</h6>
+                                    <p class="text-2xl font-bold">{{ $total_orders_cancelled }}</p>
                                 </div>
                                 <!-- Tickets card -->
                                 {{-- <div class="flex items-center justify-between p-4 bg-white rounded-md dark:bg-darker">

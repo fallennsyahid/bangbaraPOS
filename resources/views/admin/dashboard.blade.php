@@ -26,83 +26,36 @@
                     <!-- Content -->
                     <div class="mt-2">
                         <!-- State cards -->
-                        <div class="grid grid-cols-1 gap-8 p-4 lg:grid-cols-2 xl:grid-cols-2">
-                            <!-- Value card -->
-                            <div class="flex items-center justify-between p-4 bg-[#D11C1C] rounded-md shadow-lg">
-                                <div>
-                                    <h6 class="text-xs font-medium leading-none tracking-wider text-white uppercase">
-                                        Total Pemasukkan
-                                    </h6>
-                                    <span class="text-xl font-semibold text-white">Rp
-                                        {{ number_format($totalIncome) }}</span>
-                                    <span
-                                        class="inline-block px-2 py-px ml-2 text-xs text-green-500 bg-green-100 rounded-md">
-                                        +4.4%
-                                    </span>
-                                </div>
-                                <div>
-                                    <span>
-                                        <svg class="w-12 h-12 text-gray-200" xmlns="http://www.w3.org/2000/svg"
-                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </span>
-                                </div>
+                        <div class="grid grid-cols-1 gap-8 p-4 lg:grid-cols-2 xl:grid-cols-3">
+                            <!-- Income card -->
+                            <div class="bg-red-600 text-center text-black rounded-xl shadow-lg p-6 w-80 mx-auto">
+                                <h6 class="text-lg font-medium">Total Income</h6>
+                                <p class="text-2xl font-bold">Rp {{ number_format($totalIncome) }}</p>
                             </div>
 
-                            <!-- Users card -->
-                            <div class="flex items-center justify-between p-4 bg-[#D11C1C] rounded-md shadow-lg">
-                                <div>
-                                    <h6 class="text-xs font-medium leading-none tracking-wider text-white uppercase">
-                                        Total Penjualan
-                                    </h6>
-                                    <span class="text-xl font-semibold text-white">{{ $histories }} sold</span>
-                                </div>
-                                <div>
-                                    <span>
-                                        <img src="{{ asset('asset-admin/public/img/icon/order.png') }}"
-                                            fill-current="none" class="w-12 h-12 text-white" alt="">
-                                    </span>
-                                </div>
+
+                            <!-- Selling card -->
+                            <div class="bg-red-600 text-center text-black rounded-xl shadow-lg p-6 w-80 mx-auto">
+                                <h6 class="text-lg font-medium">Total Selling</h6>
+                                <p class="text-2xl font-bold">{{ $histories }}</p>
                             </div>
 
                             <!-- Orders card -->
-                            <div class="flex items-center justify-between p-4 bg-[#D11C1C] rounded-md shadow-lg">
-                                <div>
-                                    <h6 <h6
-                                        class="text-xs font-medium leading-none tracking-wider text-white uppercase">
-                                        Total Pesanan
-                                    </h6>
-                                    <span class="text-xl font-semibold text-white">{{ $total_orders }} orders</span>
-                                </div>
-                                <div>
-                                    <span>
-                                        <img src="{{ asset('asset-admin/public/img/icon/order_list.png') }}"
-                                            fill-current="none" class="w-12 h-12 text-white" alt="">
-                                    </span>
-                                </div>
+                            <div class="bg-red-600 text-center text-black rounded-xl shadow-lg p-6 w-80 mx-auto">
+                                <h6 class="text-lg font-medium">Total Orders</h6>
+                                <p class="text-2xl font-bold">{{ $total_orders }}</p>
                             </div>
 
-                            <!-- Product card -->
-                            <div class="flex items-center justify-between p-4 bg-[#D11C1C] rounded-md shadow-lg">
-                                <div>
-                                    <h6 <h6
-                                        class="text-xs font-medium leading-none tracking-wider text-white uppercase">
-                                        Total Product
-                                    </h6>
-                                    <span class="text-xl font-semibold text-white">{{ $products }}
-                                        products</span>
-
-                                </div>
-                                <div>
-                                    <span>
-                                        <img src="{{ asset('asset-admin/public/img/icon/product.png') }}"
-                                            fill-current="none" class="w-12 h-12 text-white" alt="">
-                                    </span>
-                                </div>
+                            <!-- Completed card -->
+                            <div class="bg-red-600 text-center text-black rounded-xl shadow-lg p-6 w-80 mx-auto">
+                                <h6 class="text-lg font-medium">Total completed orders</h6>
+                                <p class="text-2xl font-bold">{{ $total_orders_completed }}</p>
                             </div>
-
+                            <!-- Cancelled card -->
+                            <div class="bg-red-600 text-center text-black rounded-xl shadow-lg p-6 w-80 mx-auto">
+                                <h6 class="text-lg font-medium">Total cancelled orders</h6>
+                                <p class="text-2xl font-bold">{{ $total_orders_cancelled }}</p>
+                            </div>
                             <!-- Tickets card -->
                             {{-- <div class="flex items-center justify-between p-4 bg-white rounded-md dark:bg-darker">
                                 <div>

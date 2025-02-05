@@ -246,16 +246,29 @@
                                     <td class="px-6 py-4 font-medium text-sm text-zinc-950">${history.customer_phone}</td>
                                     <td class="px-6 py-4 font-medium text-sm text-zinc-950">Rp ${parseFloat(history.total_price).toLocaleString('id-ID', { minimumFractionDigits: 2 })}</td>
                                     <td class="px-6 py-4 font-medium text-sm text-zinc-950">${history.payment_method}</td>
+                                    <td class="px-6 py-4 font-medium text-sm text-zinc-900"
+                                                id="history-status-{{ $history->id }}">
+                                                <h5
+                                                    class="
+                                                             {{ $history->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                             {{ $history->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                    ">${history.status}</td>
                                     <td class="px-6 py-4 font-medium text-sm text-zinc-950"><a href="${history.payment_photo}">
                                                     <button class="bg-[#CA1100] rounded-md px-4 py-2">
                                                         <h5 class="text-xs font-semibold">Lihat File</h5>
                                                     </button>
                                                 </a></td>
                                     <td class="px-6 py-4 flex gap-3 mt-4">
-                                        <button class="bg-green-500 text-white text-sm px-4 py-2 rounded-md shadow-md hover:bg-green-600">
-                                            <a href="/admin/histories/${history.id}">Detail</a>
-                                        </button>
-                                    </td>
+                                                <a href="{{ route('histories.show', $history->id) }}">
+                                                    <a href="{{ route('histories.show', $history->id) }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                                                            height="30" viewBox="0 0 24 24">
+                                                            <path fill="#6c80e4" fill-rule="evenodd"
+                                                                d="M12 17.8c4.034 0 7.686-2.25 9.648-5.8C19.686 8.45 16.034 6.2 12 6.2S4.314 8.45 2.352 12c1.962 3.55 5.614 5.8 9.648 5.8M12 5c4.808 0 8.972 2.848 11 7c-2.028 4.152-6.192 7-11 7s-8.972-2.848-11-7c2.028-4.152 6.192-7 11-7m0 9.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8" />
+                                                        </svg>
+                                                    </a>
+                                                </a>
+                                            </td>
                                 </tr>
                             `;
                                 });
