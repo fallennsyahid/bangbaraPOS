@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
 
     <!-- ICON -->
+    <link rel="icon" href="{{ asset('assets/png/logo_bangbara.png') }}" />
     <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
-
     <link rel="stylesheet" href="css/style.css" />
     <link rel="shortcut icon" href="{{ asset('assets/png/logo_bangbara.png') }}" type="image/x-icon">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -102,7 +102,7 @@
                 <div class="hidden lg:flex lg:items-center lg:space-x-4">
                     <!-- Clock Icon -->
                     <a href="history.html">
-                        <img src="{{ asset('asset-view/assets/svg/clock.svg') }}" alt="" width="35px"
+                        <img src="./assets/svg/clock.svg" alt="" width="35px"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
                     </a>
 

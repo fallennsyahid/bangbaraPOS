@@ -19,6 +19,8 @@ class AdminController extends Controller
     public function dashboard() {
         // fungsi untuk ,enghitung jumlah data
         $products = Product::count();
+        $total_orders_completed = Order::where('status', 'Completed')->count();
+        $total_orders_cancelled = Order::where('status', 'Cancelled')->count();
         $total_orders = Order::count();
         $histories = History::count();
         $totalIncome = DB::table('histories')->sum('total_price');
@@ -37,6 +39,6 @@ class AdminController extends Controller
         $totals = $history->pluck('total');
 
 
-        return view('admin.dashboard', compact('products', 'total_orders', 'months', 'totals', 'histories', 'totalIncome'));
+        return view('admin.dashboard', compact('products', 'total_orders', 'months', 'totals', 'histories', 'totalIncome', 'total_orders_completed', 'total_orders_cancelled'));
     }
 }
