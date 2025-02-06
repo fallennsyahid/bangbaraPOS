@@ -1,34 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bangbara - Post</title>
-    <!-- CSS -->
-    @vite('resources/css/app.css')
-    {{-- <link rel="stylesheet" href="css/style.css" /> --}}
-    <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
-
-    <!-- ICON -->
-    <link rel="icon" href="{{ asset('assets/png/logo_bangbara.png') }}" />
-    <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="shortcut icon" href="{{ asset('assets/png/logo_bangbara.png') }}" type="image/x-icon">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Euphoria+Script&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet" />
-
-    <!-- ICONS -->
-    <script src="https://unpkg.com/feather-icons"></script>
-</head>
-
-<body>
+<x-layout-view>
     <!-- Header Start -->
     <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
         <div class="container mx-auto px-4">
@@ -76,13 +46,13 @@
                     <!-- Cart and Hamburger Menu -->
                     <div class="flex items-center space-x-4 lg:hidden">
                         <!-- Clock Icon -->
-                        <a href="history.html">
+                        <a href="{{ route('history') }}">
                             <img src="{{ asset('asset-view/assets/svg/clock.svg') }}" alt="" width="35px"
                                 class="hover:scale-110 transition duration-300 ease-in-out" />
                         </a>
 
                         <!-- Cart Icon -->
-                        <a href="shoppingCart.html">
+                        <a href="{{ route('cart') }}">
                             <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
                                 class="hover:scale-110 transition duration-300 ease-in-out" />
                         </a>
@@ -101,13 +71,13 @@
                 <!-- Cart and Clock Icon (Desktop Only) -->
                 <div class="hidden lg:flex lg:items-center lg:space-x-4">
                     <!-- Clock Icon -->
-                    <a href="history.html">
-                        <img src="./assets/svg/clock.svg" alt="" width="35px"
+                    <a href="{{ route('history') }}">
+                        <img src="{{ asset('asset-view/assets/svg/clock.svg') }}" alt="" width="35px"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
                     </a>
 
                     <!-- Cart Icon -->
-                    <a href="shoppingCart.html">
+                    <a href="{{ route('cart') }}">
                         <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
                     </a>
@@ -187,7 +157,8 @@
                                     class="bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
                                     <a href="" id="item-modal-button" class="item-detail-button">
                                         <div class="relative group">
-                                            <img src="{{ Storage::url($product->gambar_menu) }}" alt="Food"
+                                            <img src="{{ asset('storage/' . $product->gambar_menu) }}"
+                                                alt="{{ Storage::url($product->nama_menu) }}"
                                                 class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
                                             <div
                                                 class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -420,11 +391,6 @@
             </div>
         </div>
     </section>
-    <!-- POPUP END -->
-</body>
-<script src="{{ asset('asset-view/js/script.js') }}"></script>
-<script>
-    feather.replace();
-</script>
+    {{-- POP UP END --}}
 
-</html>
+</x-layout-view>

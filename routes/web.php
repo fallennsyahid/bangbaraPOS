@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ErrorController;
@@ -12,6 +14,7 @@ use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Admin\OrderAdminController;
 use App\Http\Controllers\ProductController as Enter;
 use App\Http\Controllers\Staff\StaffOrdersController;
+use App\Http\Controllers\HistoryController as History;
 use App\Http\Controllers\Staff\StaffHistoryController;
 
 // Route::get('/', function () {
@@ -19,6 +22,14 @@ use App\Http\Controllers\Staff\StaffHistoryController;
 // });
 
 Route::resource('/', Enter::class);
+
+Route::get('/#menu', [HistoryController::class, 'indexMenu'])->name('indexMenu');
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+Route::get('/history', [History::class, 'index'])->name('history');
+
+Route::get('/details', [DetailsController::class, 'index'])->name('details');
 
 Route::get('/error', [ErrorController::class, 'index']);
 
