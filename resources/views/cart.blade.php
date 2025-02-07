@@ -56,7 +56,8 @@
                     <div
                         class="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6 border-b border-gray-200 group">
                         <div class="w-full max-w-[126px] sm:justify-center">
-                            <img src="./assets/png/food/1.png" alt="" class="mx-auto rounded-xl object-cover" />
+                            <img src="{{ asset('asset-view/assets/png/food/1.png') }}" alt=""
+                                class="mx-auto rounded-xl object-cover" />
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-4 w-full">
                             <div class="md:col-span-2">
@@ -207,8 +208,8 @@
                                 </div>
 
                                 <!-- Metode Pembayaran -->
-                                <div class="mb-3">
-                                    <h3 class="font-semibold mt-6 mb-4">Metode Pembayaran</h3>
+                                <div class="mb-4">
+                                    <h3 class="font-semibold mt-6 mb-2">Metode Pembayaran</h3>
                                     <select name="metodePembayaran" id="metodePembayaran"
                                         class="w-3/4 border border-black rounded-lg font-medium py-2 px-2 focus:ring-gray-400 focus:border-gray-400">
                                         <option value="-">Pilih Opsi Pembayaran</option>
@@ -219,7 +220,7 @@
                             </div>
 
                             <!-- File (Bukti Pembayaran) -->
-                            <div class="relative">
+                            <div class="hidden relative" id="bukti-pembayaran">
                                 <label for="file-upload" class="block mt-4 mb-2 font-semibold text-base">
                                     Upload Bukti Pembayaran (Jika Non-Tunai)
                                 </label>
@@ -283,11 +284,39 @@
         </div>
     </section>
 
+
     <!-- QRCODE -->
     <section>
         <div class="hidden justify-center items-center fixed left-0 top-0 w-full h-full overflow-auto bg-black/80 z-[9999]"
             id="qrcode">
-            <img src="assets/png/maps.png" alt="" id="imagePayment" />
+            <img src="{{ asset('asset-view/assets/png/maps.png') }}" alt="" id="imagePayment" />
         </div>
     </section>
+
+    <script>
+        const metodePembayaran = document.querySelector('#metodePembayaran');
+        const buktiPembayaran = document.getElementById('bukti-pembayaran');
+        const qrCode = document.querySelector('#qrcode');
+        const imagePayment = document.querySelector('#imagePayment');
+
+        metodePembayaran.addEventListener("change", function() {
+            if (this.value === 'non-tunai') {
+                qrCode.classList.remove('hidden');
+                qrCode.classList.add('flex');
+                buktiPembayaran.classList.remove('hidden');
+                buktiPembayaran.classList.add('block');
+            } else {
+                qrCode.classList.add('hidden');
+                qrCode.classList.remove('flex');
+                buktiPembayaran.classList.add('hidden');
+                buktiPembayaran.classList.remove('block');
+            }
+        });
+
+        imagePayment.addEventListener('click', () => {
+            qrCode.classList.add('hidden');
+        });
+    </script>
+
+
 </x-layout-view>

@@ -84,8 +84,3 @@ window.onclick = (e) => {
     };
 };
 
-// File Upload
-function updateFileName(input) {
-    const fileName = input.files[0]?.name || "Tidak ada file yang dipilih";
-    document.getElementById("file-name").textContent = fileName;
-}
