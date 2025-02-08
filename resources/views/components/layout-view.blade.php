@@ -22,11 +22,6 @@
     <!-- ICONS -->
     <script src="https://unpkg.com/feather-icons"></script>
 
-    {{-- <!-- ALPINE JS -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-    <!-- SWEETALLERT -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 </head>
 
 <body>
@@ -34,9 +29,9 @@
     {{ $slot }}
 
 </body>
-<script src="{{ asset('asset-view/js/script.js') }}"></script>
-<script src="{{ asset('asset-view/js/cart.js') }}"></script>
-<script src="{{ asset('asset-view/js/history.js') }}"></script>
+{{-- <script src="{{ asset('asset-view/js/script.js') }}"></script> --}}
+{{-- <script src="{{ asset('asset-view/js/cart.js') }}"></script>
+<script src="{{ asset('asset-view/js/history.js') }}"></script> --}}
 <script>
     feather.replace();
 </script>

@@ -1,36 +1,25 @@
-// PAYMENT
+const metodePembayaran = document.querySelector('#metodePembayaran');
+const buktiPembayaran = document.getElementById('bukti-pembayaran');
+const qrCode = document.querySelector('#qrcode');
+const imagePayment = document.querySelector('#imagePayment');
 
+metodePembayaran.addEventListener("change", function () {
+    if (this.value === 'non-tunai') {
+        qrCode.classList.remove('hidden');
+        qrCode.classList.add('flex');
+        buktiPembayaran.classList.remove('hidden');
+        buktiPembayaran.classList.add('block');
+    } else {
+        qrCode.classList.add('hidden');
+        qrCode.classList.remove('flex');
+        buktiPembayaran.classList.add('hidden');
+        buktiPembayaran.classList.remove('block');
+    }
+});
 
-
-
-
-// metodePembayaran.addEventListener('change', function () {
-//     if (this.value === 'non-tunai') {
-//         qrCode.classList.remove('hidden');
-//         qrCode.classList.add('flex');
-//         buktiPembayaran.classList.remove('hidden');
-//         buktiPembayaran.classList.add('flex')
-//     } else {
-//         qrCode.classList.add('hidden');
-//         qrCode.classList.remove('flex');
-//         buktiPembayaran.classList.add('hidden');
-//         buktiPembayaran.classList.remove('flex');
-//     }
-// });
-
-
-
-// metodePembayaran.addEventListener('change', function () {
-//     const isNonTunai = this.value === 'non-tunai';
-
-//     qrCode.classList.toggle('hidden', !isNonTunai);
-//     qrCode.classList.toggle('flex', isNonTunai);
-
-//     // buktiPembayaran.classList.toggle('hidden', !isNonTunai);
-//     // buktiPembayaran.classList.toggle('flex', isNonTunai);
-
-//     // buktiPembayaran.style.display = isNonTunai ? 'block' : 'none';
-// });
+imagePayment.addEventListener('click', () => {
+    qrCode.classList.add('hidden');
+});
 
 
 

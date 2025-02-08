@@ -1,4 +1,30 @@
-<x-layout-view>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bangbara - Post</title>
+    <!-- CSS -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
+
+    <!-- ICON WEB -->
+    <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Euphoria+Script&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+
+    <!-- ICONS -->
+    {{-- <script src="https://unpkg.com/feather-icons"></script> --}}
+
+</head>
+
+<body>
     <!-- Header Start -->
     <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
         <div class="container mx-auto px-4">
@@ -122,7 +148,8 @@
             <!-- Header -->
             <div
                 class="flex items-center bg-primary mx-auto my-5 px-8 sm:px-12 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
-                <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="" width="120px" class="mr-4" />
+                <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="" width="120px"
+                    class="mr-4" />
                 <h1 class="font-europhia text-shadow text-4xl sm:text-5xl lg:text-6xl text-white">
                     Menu Kami
                 </h1>
@@ -282,26 +309,28 @@
                     Berikan Rating & Ulasan
                 </a>
             </div>
-            <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8">
+            <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8 shadow-lg">
                 <form action="#" method="POST" class="w-full lg:w-1/2">
                     <div class="bg-[#F5EB55] p-6 sm:p-9 rounded-2xl ring-1 ring-[#BBB34E]">
                         <div class="flex justify-between">
                             <h5 class="font-medium text-lg">Kualitas Produk</h5>
-                            <div class="flex gap-2">
-                                <i data-feather="star"></i>
-                                <i data-feather="star"></i>
-                                <i data-feather="star"></i>
-                                <i data-feather="star"></i>
-                                <i data-feather="star"></i>
+                            <div class="flex gap-2 text-lg">
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
                             </div>
                         </div>
                         <input type="text" name="username" id="username" placeholder="Ketik namamu disini"
-                            class="p-4 my-4 rounded-xl font-medium w-full">
+                            class="p-4 my-4 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg">
                         <textarea name="message" id="message" cols="30" rows="10" placeholder="Ketik ulasanmu disini"
-                            class="p-4 rounded-xl font-medium w-full">
-                        </textarea>
+                            class="p-4 my-4 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg"></textarea>
                         <div class="mt-6">
-                            <a href="#" class="py-2 px-12 rounded-xl font-medium bg-[#FFA500]">Kirim Pesan</a>
+                            <a href="#"
+                                class="py-2 px-12 rounded-xl font-medium bg-[#FFA500] transition duration-100 ease-linear hover:bg-[#F59F00] hover:scale-105 active:bg-[#EA9800] active:scale-110">Kirim
+                                Pesan
+                            </a>
                         </div>
                     </div>
                 </form>
@@ -315,34 +344,20 @@
     <!-- Contact Section End -->
 
     <style>
-        .carousel-container {
-            overflow: hidden;
-            width: 100%;
-            max-width: 100%;
-            /* Sesuaikan dengan kebutuhan */
-            margin: auto;
-            position: relative;
-        }
-
-        .carousel-track {
-            display: flex;
-            width: max-content;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        /* .carousel-item {
-            min-width: 100%;
-            box-sizing: border-box;
-        } */
-
-        @keyframes slide {
-            from {
+        @keyframes marquee {
+            0% {
                 transform: translateX(0);
             }
 
-            to {
+            100% {
                 transform: translateX(-100%);
             }
+        }
+
+        .animate-marquee {
+            display: flex;
+            animation: marquee 15s linear infinite;
+            white-space: normal;
         }
     </style>
 
@@ -350,93 +365,34 @@
     <section id="ulasan" class="ulasan-img">
         <div class="container">
             <h1 class="py-6 font-europhia text-white text-center text-4xl sm:text-5xl lg:text-6xl">Apa Kata Mereka</h1>
-            <div class="flex flex-col md:flex-row gap-8 mx-8 mt-10">
-                {{-- <div class="carousel-container">
-                    <div class="carousel-track"> --}}
-                <div class="carousel-item bg-white text-black rounded-lg shadow-lg max-w-sm ring-4 ring-[#D6D6D6]">
-                    <p class="text-center px-4 py-8">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <div class="px-4 py-2 border-t-2 border-[#D6D6D6]">
-                        <p class="font-semibold text-gray-500">Kunto Aji</p>
-                        <p class="flex font-semibold text-gray-500">Rating:
-                            <span class="flex items-center text-xl mx-2 gap-1 text-yellow-500">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </span>
-                        </p>
-                    </div>
+            <div class="overflow-hidden w-full" x-data="{ start() { this.$refs.track.style.animationPlayState = 'running' }, stop() { this.$refs.track.style.animationPlayState = 'paused' } }">
+                <div class="flex w-max space-x-8 animate-marquee" x-ref="track">
+                    <template x-for="i in 5" :key="i">
+                        <div
+                            class="carousel-item bg-white text-black rounded-lg shadow-lg  max-w-sm border-4 border-[##D6D6D6] w-96   overflow-hidden">
+                            <p class="text-center px-4 py-8">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua.
+                            </p>
+                            <div class="px-4 py-2 border-t-2 border-[#D6D6D6]">
+                                <p class="font-semibold text-gray-500">Kunto Aji</p>
+                                <p class="flex font-semibold text-gray-500">Rating:
+                                    <span class="flex items-center text-xl mx-2 gap-1 text-yellow-500">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </template>
                 </div>
-                <div class="carousel-item bg-white text-black rounded-lg shadow-lg max-w-sm ring-4 ring-[#D6D6D6]">
-                    <p class="text-center px-4 py-8">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <div class="px-4 py-2 border-t-2 border-[#D6D6D6]">
-                        <p class="font-semibold text-gray-500">Kunto Aji</p>
-                        <p class="flex font-semibold text-gray-500">Rating:
-                            <span class="flex items-center text-xl mx-2 gap-1 text-yellow-500">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </span>
-                        </p>
-                    </div>
-                </div>
-                <div class="carousel-item bg-white text-black rounded-lg shadow-lg max-w-sm ring-4 ring-[#D6D6D6]">
-                    <p class="text-center px-4 py-8">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <div class="px-4 py-2 border-t-2 border-[#D6D6D6]">
-                        <p class="font-semibold text-gray-500">Kunto Aji</p>
-                        <p class="flex font-semibold text-gray-500">Rating:
-                            <span class="flex items-center text-xl mx-2 gap-1 text-yellow-500">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </span>
-                        </p>
-                    </div>
-                </div>
-                {{-- </div>
-                    </div> --}}
             </div>
-        </div>
-        </div>
         </div>
     </section>
     {{-- Ulasan Section End --}}
-
-    {{-- <script>
-        const track = document.querySelector('.carousel-track');
-        const items = document.querySelectorAll('.carousel-item');
-        let index = 0;
-
-        function autoSlide() {
-            index++;
-            track.style.transition = "transform 0.5s ease-in-out";
-            track.style.transform = `translateX(-${index * 100}%)`;
-
-            if (index === items.length - 1) {
-                setTimeout(() => {
-                    track.style.transition = "none";
-                    track.style.transform = "translateX(0)";
-                    index = 0;
-                }, 500);
-            }
-        }
-
-        setInterval(autoSlide, 3000);
-    </script> --}}
 
     <!-- Footer Section Start -->
     <footer class="bg-black">
@@ -523,5 +479,10 @@
         </div>
     </section>
     {{-- POP UP END --}}
+</body>
+<script src="{{ asset('asset-view/js/script.js') }}"></script>
+<script>
+    feather.replace();
+</script>
 
-</x-layout-view>
+</html>
