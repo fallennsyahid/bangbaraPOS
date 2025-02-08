@@ -84,3 +84,24 @@ window.onclick = (e) => {
     };
 };
 
+// Rating
+const stars = document.querySelectorAll('input[name="rating"]');
+const labels = document.querySelectorAll('#star label i');
+
+stars.forEach((star, index) => {
+    star.addEventListener("change", function () {
+        // Reset semua bintang ke bentuk kosong dan abu-abu
+        labels.forEach((label, i) => {
+            label.classList.remove('text-yellow-500', 'fas');
+            label.classList.add('far'); // Kembalikan ke bintang kosong abu-abu
+        });
+
+        // Update warna bintang yang dipilih dan sebelumnya
+        for (let i = 0; i <= index; i++) {
+            const label = labels[i];
+            label.classList.remove('far');
+            label.classList.add('fas',
+                'text-yellow-500'); // Ubah ke bintang penuh kuning
+        }
+    });
+});

@@ -14,6 +14,11 @@ class HistoryController extends Controller
         return view('history');
     }
 
+    public function indexMenu()
+    {
+        return view('welcome#menu');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -27,7 +32,7 @@ class HistoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 
     }
 
     /**

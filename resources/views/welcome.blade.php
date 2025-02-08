@@ -19,6 +19,8 @@
         href="https://fonts.googleapis.com/css2?family=Euphoria+Script&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet" />
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -307,16 +309,26 @@
                 </a>
             </div>
             <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8 shadow-lg">
-                <form action="#" method="POST" class="w-full lg:w-1/2">
+                <form action="{{ route('index.store') }}" method="POST" class="w-full lg:w-1/2">
+                    @csrf
                     <div class="bg-[#F5EB55] p-6 sm:p-9 rounded-2xl ring-1 ring-[#BBB34E]">
                         <div class="flex justify-between">
-                            <h5 class="font-medium text-lg">Kualitas Produk</h5>
-                            <div class="flex gap-2 text-lg">
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
+                            <h5 class="font-medium text-xl">Kualitas Produk</h5>
+                            <div class="flex items-center gap-2 text-xl" id="star">
+                                <input type="radio" name="rating" id="star1" value="1" class="hidden">
+                                <label for="star1" class="cursor-pointer"><i class="far fa-star"></i></label>
+
+                                <input type="radio" name="rating" id="star2" value="2" class="hidden">
+                                <label for="star2" class="cursor-pointer"><i class="far fa-star"></i></label>
+
+                                <input type="radio" name="rating" id="star3" value="3" class="hidden">
+                                <label for="star3" class="cursor-pointer"><i class="far fa-star"></i></label>
+
+                                <input type="radio" name="rating" id="star4" value="4" class="hidden">
+                                <label for="star4" class="cursor-pointer"><i class="far fa-star"></i></label>
+
+                                <input type="radio" name="rating" id="star5" value="5" class="hidden">
+                                <label for="star5" class="cursor-pointer"><i class="far fa-star"></i></label>
                             </div>
                         </div>
                         <input type="text" name="username" id="username" placeholder="Ketik namamu disini"
@@ -324,10 +336,8 @@
                         <textarea name="message" id="message" cols="30" rows="10" placeholder="Ketik ulasanmu disini"
                             class="p-4 my-4 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg"></textarea>
                         <div class="mt-6">
-                            <a href="#"
-                                class="py-2 px-12 rounded-xl font-medium bg-[#FFA500] transition duration-100 ease-linear hover:bg-[#F59F00] hover:scale-105 active:bg-[#EA9800] active:scale-110">Kirim
-                                Pesan
-                            </a>
+                            <input type="submit" value="Kirim Pesan"
+                                class="py-2 px-12 rounded-xl font-medium bg-[#FFA500] cursor-pointer transition duration-100 ease-linear hover:bg-[#F59F00] hover:scale-110 active:bg-[#EA9800] active:scale-100">
                         </div>
                     </div>
                 </form>
@@ -477,6 +487,22 @@
     </section>
     {{-- POP UP END --}}
 </body>
+@stack('scripts')
+<script>
+    @if (session('berhasil'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: {!! json_encode(session('berhasil')) !!},
+            showConfirmButton: false,
+            timer: 1500,
+        });
+    @endif
+</script>
+
 <script src="{{ asset('asset-view/js/script.js') }}"></script>
+
+
+
 
 </html>

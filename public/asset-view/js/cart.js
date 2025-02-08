@@ -21,8 +21,6 @@ imagePayment.addEventListener('click', () => {
     qrCode.classList.add('hidden');
 });
 
-
-
 // File Upload
 function updateFileName(input) {
     const fileName = input.files[0]?.name || "Tidak ada file yang dipilih";

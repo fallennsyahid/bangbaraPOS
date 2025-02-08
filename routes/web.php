@@ -12,18 +12,21 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Admin\OrderAdminController;
-use App\Http\Controllers\ProductController as Enter;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Staff\StaffOrdersController;
 use App\Http\Controllers\HistoryController as History;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Staff\StaffHistoryController;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
-Route::resource('/', Enter::class);
+Route::get('/', [HomeController::class, 'index'])->name('index');
 
-Route::get('/#menu', [HistoryController::class, 'indexMenu'])->name('indexMenu');
+Route::post('/', [HomeController::class, 'store'])->name('index.store');
+
+Route::get('/#menu', [History::class, 'indexMenu'])->name('indexMenu');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
@@ -79,5 +82,7 @@ Route::get('histories/filter', [HistoryController::class, 'filter'])->name('hist
 
 // 
 
+// Reviews
+Route::resource('/admin/reviews', ReviewController::class);
 
 require __DIR__ . '/auth.php';

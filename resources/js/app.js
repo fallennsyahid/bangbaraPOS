@@ -1,5 +1,11 @@
 import './bootstrap';
 
+// SWEETALERT
+// import Swal from 'sweetalert2';
+// import 'sweetalert2/dist/sweetalert2.min.css';
+// window.Swal = Swal;
+
+
 // FONT AWESOME
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
