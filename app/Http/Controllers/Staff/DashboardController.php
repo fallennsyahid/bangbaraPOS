@@ -20,6 +20,8 @@ class DashboardController extends Controller
         // fungsi untuk ,enghitung jumlah data
         $products = Product::count();
         $total_orders = Order::whereDate('created_at', Carbon::today())->count();
+        $total_orders_completed = Order::whereDate('created_at', Carbon::today())->where('status', 'Completed')->count();
+        $total_orders_cancelled = Order::whereDate('created_at', Carbon::today())->where('status', 'Cancelled')->count();
         $histories = History::whereDate('created_at', Carbon::today())->count();
         $totalIncome = DB::table('histories')->whereDate('created_at', Carbon::today())->sum('total_price');
 
@@ -37,6 +39,6 @@ class DashboardController extends Controller
         $totals = $history->pluck('total');
 
 
-        return view('staff.dashboard', compact('products', 'total_orders', 'months', 'totals', 'histories', 'totalIncome'));
+        return view('staff.dashboard', compact('products', 'total_orders', 'months', 'totals', 'histories', 'totalIncome', 'total_orders_completed', 'total_orders_cancelled'));
     }
 }

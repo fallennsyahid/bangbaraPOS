@@ -5,20 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bangbara - Post</title>
-<<<<<<< HEAD
-
     <!-- CSS -->
-    @vite('resources/css/app.css')
-    {{-- <link rel="stylesheet" href="css/style.css" /> --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
 
-    <!-- ICON -->
-    <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
-=======
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="shortcut icon" href="{{ asset('assets/png/logo_bangbara.png') }}" type="image/x-icon">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
->>>>>>> 46866ba906da649230b0dade4813bcfcb3f54687
+    <!-- ICON WEB -->
+    <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
 
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,8 +19,8 @@
         href="https://fonts.googleapis.com/css2?family=Euphoria+Script&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet" />
 
-    <!-- ICONS -->
-    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -79,13 +71,13 @@
                     <!-- Cart and Hamburger Menu -->
                     <div class="flex items-center space-x-4 lg:hidden">
                         <!-- Clock Icon -->
-                        <a href="history.html">
+                        <a href="{{ route('history') }}">
                             <img src="{{ asset('asset-view/assets/svg/clock.svg') }}" alt="" width="35px"
                                 class="hover:scale-110 transition duration-300 ease-in-out" />
                         </a>
 
                         <!-- Cart Icon -->
-                        <a href="shoppingCart.html">
+                        <a href="{{ route('cart') }}">
                             <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
                                 class="hover:scale-110 transition duration-300 ease-in-out" />
                         </a>
@@ -104,21 +96,20 @@
                 <!-- Cart and Clock Icon (Desktop Only) -->
                 <div class="hidden lg:flex lg:items-center lg:space-x-4">
                     <!-- Clock Icon -->
-                    <a href="history.html">
-                        <img src="./assets/svg/clock.svg" alt="" width="35px"
+                    <a href="{{ route('history') }}">
+                        <img src="{{ asset('asset-view/assets/svg/clock.svg') }}" alt="" width="35px"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
                     </a>
 
                     <!-- Cart Icon -->
-                    <a href="shoppingCart.html">
-                        <img src="./assets/svg/cart.svg" alt="Cart" width="40px"
+                    <a href="{{ route('cart') }}">
+                        <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
                     </a>
                 </div>
             </div>
         </div>
     </header>
-
     <!-- Header End -->
 
     <!-- Hero Section Start -->
@@ -155,7 +146,8 @@
             <!-- Header -->
             <div
                 class="flex items-center bg-primary mx-auto my-5 px-8 sm:px-12 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
-                <img src="assets/svg/book.svg" alt="" width="120px" class="mr-4" />
+                <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="" width="120px"
+                    class="mr-4" />
                 <h1 class="font-europhia text-shadow text-4xl sm:text-5xl lg:text-6xl text-white">
                     Menu Kami
                 </h1>
@@ -180,128 +172,43 @@
             </div>
 
             <!-- Slider Container -->
-            <div id="slider" class="relative overflow-hidden w-full mt-10">
-                <div id="slider-content" class="flex transition-transform duration-500" style="width: 300%">
-                    <!-- Slide 1: Makanan Start -->
-                    <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-                        <div class="flex justify-center py-5 sm:py-1">
-                            <div
-                                class="bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
-                                <a href="" id="item-modal-button" class="item-detail-button">
-                                    <div class="relative group">
-                                        <img src="./assets/png/food/1.png" alt="Food"
-                                            class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
-                                        <div
-                                            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <p class="text-white font-semibold text-base">
-                                                View More
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <p class="text-text text-base text-center">
-                                    Steak Tenderloin Meltique
-                                </p>
-                                <span class="text-price font-alkatra text-sm text-center">
-                                    Rp. 38.000,00
-                                </span>
-                                <a href=""
-                                    class="text shadow text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center">
-                                    Tambahkan Ke Keranjang
-                                </a>
-                            </div>
-                        </div>
-                        <div class="flex justify-center py-5 sm:py-1">
-                            <div
-                                class="bg-white h-72 w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
-                                <a href="" id="item-modal-button" class="item-detail-button">
-                                    <div class="relative group">
-                                        <img src="./assets/png/food/1.png" alt="Food"
-                                            class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
-                                        <div
-                                            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <p class="text-white font-semibold text-base">
-                                                View More
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <p class="text-text text-sm font-marmelad text-center">
-                                    Steak Tenderloin Meltique
-                                </p>
-                                <span class="text-price font-alkatra text-sm text-center">
-                                    Rp. 38.000,00
-                                </span>
-                                <a href=""
-                                    class="font-marmelad text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white w-full sm:w-auto text-center">
-                                    Tambahkan Ke Keranjang
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Slide 1: Makanan End -->
+            <div id="slider" class="relative overflow-hidden w-full max-w-screen-lg mx-auto mt-10">
+                <div id="slider-content" class="flex transition-transform duration-500 justify-center"
+                    style="width: 300%">
 
-                    <!-- Slide 2: Minuman Start -->
-                    <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-                        <div class="flex justify-center py-5">
-                            <div
-                                class="bg-white h-72 w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
-                                <a href="" id="item-modal-button" class="item-detail-button">
-                                    <div class="relative group">
-                                        <img src="./assets/png/drink/1.png" alt="Drink"
-                                            class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
-                                        <div
-                                            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <p class="text-white font-semibold text-base">
-                                                View More
-                                            </p>
+                    @foreach ($categories as $category)
+                        <div
+                            class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5 justify-start">
+                            @foreach ($category->products as $product)
+                                <div
+                                    class="bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
+                                    <a href="#item-detail-modal" class="item-detail-button">
+                                        <div class="relative group">
+                                            <img src="{{ asset('storage/' . $product->gambar_menu) }}"
+                                                alt="{{ $product->nama_menu }}"
+                                                class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
+                                            <div
+                                                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                <p class="text-white font-semibold text-base">
+                                                    View More
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                                <p class="text-text text-sm font-marmelad text-center">
-                                    Air Mineral
-                                </p>
-                                <span class="text-price font-alkatra text-sm text-center">
-                                    Rp. 5.000,00
-                                </span>
-                                <a href=""
-                                    class="font-marmelad text-sm bg-[#BF0000] px-5 py-2 rounded-full text-white">Tambahkan
-                                    Ke Keranjang</a>
-                            </div>
+                                    </a>
+                                    <p class="text-text text-base text-center">
+                                        {{ $product->nama_menu }}
+                                    </p>
+                                    <span class="text-price font-alkatra text-sm text-center">
+                                        Rp {{ number_format($product->harga_menu, 0, ',', '.') }}
+                                    </span>
+                                    <a href=""
+                                        class="text shadow text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center">
+                                        Tambahkan Ke Keranjang
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
-                    </div>
-                    <!-- Slide 2: Minuman End -->
-
-                    <!-- Slide 3: Extra Start -->
-                    <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-                        <div class="flex justify-center py-5">
-                            <div
-                                class="bg-white h-72 w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
-                                <a href="" id="item-modal-button" class="item-detail-button">
-                                    <div class="relative group">
-                                        <img src="./assets/png/extra/1.png" alt="Extra"
-                                            class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
-                                        <div
-                                            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <p class="text-white font-semibold text-base">
-                                                View More
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <p class="text-text text-sm font-marmelad text-center">
-                                    Sate Dakkochi
-                                </p>
-                                <span class="text-price font-alkatra text-sm text-center">
-                                    Rp. 5.000,00
-                                </span>
-                                <a href=""
-                                    class="font-marmelad text-sm bg-[#BF0000] px-5 py-2 rounded-full text-white">Tambahkan
-                                    Ke Keranjang</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Slide 3: Extra End -->
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -331,40 +238,108 @@
     <!-- About Section End -->
 
     <!-- Contact Section Start -->
-    <section id="contact" class="bg-[#FFE8A3] min-h-screen">
+    <section id="contact" class="bg-[#FFF890] min-h-screen">
         <div class="container mx-auto px-4">
-            <h1 class="text-black font-europhia text-center text-4xl sm:text-5xl lg:text-6xl py-10">
-                Kontak Kami
-            </h1>
-            <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8">
-                <form action="#" method="post" class="w-full lg:w-1/2">
-                    <div class="bg-primary p-6 sm:p-9 rounded-2xl">
-                        <div class="flex flex-col sm:flex-row gap-y-4 sm:gap-x-5">
-                            <input type="email" placeholder="Email"
-                                class="p-4 rounded-xl h-12 flex-1 border-2 border-solid border-red-500 focus:border-red-600 focus:shadow-xl focus:ring-0 placeholder:text-[#827E7E] placeholder:text-2xl placeholder:font-europhia" />
-                            <input type="number" placeholder="No. Telepon"
-                                class="input-number p-4 rounded-xl h-12 flex-1 border-2 border-solid border-red-500 focus:outline-none focus:border-red-600 focus:shadow-xl focus:ring-0 placeholder:text-[#827E7E] placeholder:text-2xl placeholder:font-europhia" />
+            <div class="flex justify-center py-4 mb-8">
+                <a href=""
+                    class="py-4 px-12 bg-[#CC0000] rounded-full text-center text-4xl font-europhia shadow-lg text-white cursor-default sm:text-5xl lg:text-6xl">
+                    Berikan Rating & Ulasan
+                </a>
+            </div>
+            <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8 shadow-lg">
+                <form action="{{ route('index.store') }}" method="POST" class="w-full lg:w-1/2">
+                    @csrf
+                    <div class="bg-[#F5EB55] p-6 sm:p-9 rounded-2xl ring-1 ring-[#BBB34E]">
+                        <div class="flex justify-between">
+                            <h5 class="font-medium text-xl">Kualitas Produk</h5>
+                            <div class="flex items-center gap-2 text-xl" id="star">
+                                <input type="radio" name="rating" id="star1" value="1" class="hidden">
+                                <label for="star1" class="cursor-pointer"><i class="far fa-star"></i></label>
+
+                                <input type="radio" name="rating" id="star2" value="2" class="hidden">
+                                <label for="star2" class="cursor-pointer"><i class="far fa-star"></i></label>
+
+                                <input type="radio" name="rating" id="star3" value="3" class="hidden">
+                                <label for="star3" class="cursor-pointer"><i class="far fa-star"></i></label>
+
+                                <input type="radio" name="rating" id="star4" value="4" class="hidden">
+                                <label for="star4" class="cursor-pointer"><i class="far fa-star"></i></label>
+
+                                <input type="radio" name="rating" id="star5" value="5" class="hidden">
+                                <label for="star5" class="cursor-pointer"><i class="far fa-star"></i></label>
+                            </div>
                         </div>
-                        <div class="mt-5">
-                            <input type="text" placeholder="Nama"
-                                class="p-4 rounded-xl h-12 w-full border-2 border-solid text-center border-red-500 focus:outline-none focus:border-red-600 focus:shadow-xl focus:ring-0 placeholder:text-[#827E7E] placeholder:text-2xl placeholder:font-europhia" />
-                            <textarea name="message" id="message" rows="5"
-                                class="mt-5 p-4 w-full rounded-xl border-2 border-solid border-red-500 focus:outline-none focus:border-red-600 focus:shadow-xl focus:ring-0 placeholder:text-[#827E7E] placeholder:text-2xl placeholder:font-europhia"
-                                placeholder="Pesan:"></textarea>
-                            <button type="submit"
-                                class="flex mt-4 px-6 py-4 bg-red-600 justify-center items-center shadow-2xl w-full text-white font-bold text-xl rounded-3xl transition duration-300 ease-in-out hover:bg-red-700 hover:scale-105 active:opacity-80 active:scale-100">
-                                Kirim Pesan
-                            </button>
+                        <input type="text" name="username" id="username" placeholder="Ketik namamu disini"
+                            class="p-4 my-4 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg">
+                        <textarea name="message" id="message" cols="30" rows="10" placeholder="Ketik ulasanmu disini"
+                            class="p-4 mt-4 mb-2 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg"></textarea>
+                        <div class="mt-6">
+                            <input type="submit" value="Kirim Pesan"
+                                class="py-2 px-12 rounded-xl font-medium bg-[#FFA500] cursor-pointer transition duration-100 ease-linear hover:bg-[#F59F00] hover:scale-110 active:bg-[#EA9800] active:scale-100">
                         </div>
                     </div>
                 </form>
                 <div class="w-full lg:w-auto flex justify-center">
-                    <img src="assets/svg/contact.svg" alt="Contact Illustration" class="w-72 sm:w-96 lg:w-[400px]" />
+                    <img src="{{ asset('asset-view/assets/svg/contact.svg') }}" alt="Contact Illustration"
+                        class="w-72 sm:w-96 lg:w-[400px]" />
                 </div>
             </div>
         </div>
     </section>
     <!-- Contact Section End -->
+
+    <style>
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+
+        .animate-marquee {
+            display: flex;
+            animation: marquee 15s linear infinite;
+            white-space: normal;
+        }
+    </style>
+
+    {{-- Ulasan Section Start --}}
+    <section id="ulasan" class="ulasan-img">
+        <div class="container">
+            <h1 class="py-12 font-europhia text-white text-center text-4xl sm:text-5xl lg:text-6xl">Apa Kata Mereka
+            </h1>
+            <div class="overflow-hidden w-full" x-data="{ start() { this.$refs.track.style.animationPlayState = 'running' }, stop() { this.$refs.track.style.animationPlayState = 'paused' } }">
+                <div class="flex w-max space-x-8 animate-marquee" x-ref="track">
+                    {{-- <template x-for="i in 1" :key="i"> --}}
+                    @foreach ($reviews as $review)
+                        <div
+                            class="carousel-item bg-white text-black rounded-lg shadow-lg  max-w-sm border-4 border-[##D6D6D6] w-96   overflow-hidden">
+                            <p class="text-center px-4 py-8">
+                                {{ $review->message }}
+                                {{-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, soluta? --}}
+                            </p>
+                            <div class="px-4 py-2 border-t-2 border-[#D6D6D6]">
+                                <p class="font-semibold text-gray-500">{{ $review->username }}</p>
+                                <p class="flex font-semibold text-gray-500">Rating:
+                                    <span class="flex items-center text-xl mx-2 gap-1 text-yellow-500">
+                                        @for ($i = 0; $i < $review->rating; $i++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
+                    {{-- </template> --}}
+                </div>
+            </div>
+        </div>
+    </section>
+    {{-- Ulasan Section End --}}
 
     <!-- Footer Section Start -->
     <footer class="bg-black">
@@ -372,7 +347,8 @@
             <div class="flex flex-wrap justify-between items-center lg:justify-between gap-y-10">
                 <!-- Logo -->
                 <a href="#navbarHeader" class="flex justify-center lg:justify-start w-full lg:w-auto">
-                    <img src="assets/svg/logo-navbar.svg" alt="Logo" height="" class="h-12" />
+                    <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="Logo" height=""
+                        class="h-12" />
                 </a>
 
                 <!-- Account -->
@@ -380,18 +356,19 @@
                     <h3 class="font-medium text-white text-xl pb-3">Account</h3>
                     <div class="flex justify-center gap-4">
                         <a href="https://wa.me/+6283857185413" target="_blank">
-                            <img src="assets/svg/whatsapp.svg" alt="WhatsApp"
+                            <img src="{{ asset('asset-view/assets/svg/whatsapp_new.svg') }}" alt="WhatsApp"
                                 class="h-6 transition-transform duration-300 hover:scale-110" />
                         </a>
-                        <a href="" target="_blank"><img src="assets/svg/instagram.svg" alt="Instagram"
+                        <a href="" target="_blank">
+                            <img src="{{ asset('asset-view/assets/svg/instagram.svg') }}" alt="Instagram"
                                 class="h-6 transition-transform duration-300 hover:scale-110" />
                         </a>
                         <a href="https://www.tiktok.com/@bangbarasteak" target="_blank"><img
-                                src="assets/svg/tiktok.svg" alt="TikTok"
+                                src="{{ asset('asset-view/assets/svg/tiktok.svg') }}" alt="TikTok"
                                 class="h-6 transition-transform duration-300 hover:scale-110" />
                         </a>
-                        <a href=""><img src="assets/svg/facebook.svg" alt="Facebook"
-                                class="h-6 transition-transform duration-300 hover:scale-110" />
+                        <a href=""><img src="{{ asset('asset-view/assets/svg/facebook.svg') }}"
+                                alt="Facebook" class="h-6 transition-transform duration-300 hover:scale-110" />
                         </a>
                     </div>
                 </div>
@@ -409,7 +386,7 @@
                 <div class="w-full sm:w-auto text-center mt-6">
                     <h3 class="font-bold text-white text-xl pb-3">Maps</h3>
                     <a href="https://maps.app.goo.gl/QJJSghdQJtVT7pj77" target="_blank" class="inline-block">
-                        <img src="assets/svg/maps.svg" alt="Google Maps" width=""
+                        <img src="{{ asset('asset-view/assets/svg/maps.svg') }}" alt="Google Maps" width=""
                             class="h-16 transition duration-300 ease-in-out hover:scale-110" />
                     </a>
                 </div>
@@ -433,8 +410,7 @@
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
                 </a>
-                <img src="./assets/png/food/1.png" alt="Food" width=""
-                    class="rounded-t-lg overflow-hidden" />
+                <img src="" alt="Food" width="" class="rounded-t-lg overflow-hidden" />
                 <h1 class="text-center font-alatsi text-2xl pb-2">Product 1</h1>
                 <p class="text-center font-alatsi text-base px-4">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error
@@ -448,11 +424,24 @@
             </div>
         </div>
     </section>
-    <!-- POPUP END -->
+    {{-- POP UP END --}}
 </body>
-<script src="js/script.js"></script>
+@stack('scripts')
 <script>
-    feather.replace();
+    @if (session('berhasil'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: {!! json_encode(session('berhasil')) !!},
+            showConfirmButton: false,
+            timer: 1500,
+        });
+    @endif
 </script>
+
+<script src="{{ asset('asset-view/js/script.js') }}"></script>
+
+
+
 
 </html>

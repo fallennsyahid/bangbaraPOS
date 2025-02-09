@@ -1,21 +1,37 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ErrorController;
-use App\Http\Controllers\Admin\HistoryController;
-use App\Http\Controllers\Admin\OrderAdminController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\StaffController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Staff\DashboardController;
-use App\Http\Controllers\Staff\StaffOrdersController;
-use App\Http\Controllers\Staff\StaffHistoryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\DetailsController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ErrorController;
+use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Admin\HistoryController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Staff\DashboardController;
+use App\Http\Controllers\Admin\OrderAdminController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Staff\StaffOrdersController;
+use App\Http\Controllers\HistoryController as History;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Staff\StaffHistoryController;
+use App\Models\Product;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [HomeController::class, 'index'])->name('index');
+
+Route::post('/', [HomeController::class, 'store'])->name('index.store');
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+Route::get('/history', [History::class, 'index'])->name('history');
+
+Route::get('/details', [DetailsController::class, 'index'])->name('details');
 
 Route::get('/error', [ErrorController::class, 'index']);
 
@@ -65,5 +81,7 @@ Route::get('histories/filter', [HistoryController::class, 'filter'])->name('hist
 
 // 
 
+// Reviews
+Route::resource('/admin/reviews', ReviewController::class);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

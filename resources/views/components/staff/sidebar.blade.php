@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <aside class="flex-shrink-0 hidden w-64 bg-white dark:bg-[#000000] md:block">
     <div class="flex flex-col h-full">
-        <img src="{{ asset('assets/svg/logo-navbar.svg') }}" height="50" class="p-4" alt="">
+        <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" height="50" class="p-4" alt="">
         <!-- Sidebar links -->
         <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
             <!-- Dashboards links -->
