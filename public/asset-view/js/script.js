@@ -57,42 +57,33 @@ function changeSlide(index) {
 }
 
 // POPUP
-const itemDetailModal = document.getElementById('item-detail-modal');
+const itemDetailModal = document.querySelector('#item-detail-modal');
 const itemDetailButtons = document.querySelectorAll('.item-detail-button');
 
 itemDetailButtons.forEach((btn) => {
-    btn.addEventListener("click", function (e) {
-        e.preventDefault();
-
-        // Ambil data dari atribut `data-*`
-        const productName = this.getAttribute("data-name");
-        const productImage = this.getAttribute("data-image");
-        const productDescription = this.getAttribute("data-description");
-        const productPrice = this.getAttribute("data-price");
-
-        // Set data ke dalam modal
-        document.getElementById("modal-product-image").src = productImage;
-        document.getElementById("modal-product-name").innerText = productName;
-        document.getElementById("modal-product-description").innerText = productDescription;
-        document.getElementById("modal-product-price").innerText = productPrice;
-
-        // Tampilkan modal
+    btn.onclick = (e) => {
         itemDetailModal.style.display = 'flex';
-    });
+        e.preventDefault();
+    };
 });
 
-// Tutup modal saat tombol close diklik
+itemDetailButtons.onclick = (e) => {
+    itemDetailModal.style.display = 'flex';
+    e.preventDefault();
+};
+
+
 document.querySelector('.close-icon').onclick = (e) => {
     itemDetailModal.style.display = 'none';
     e.preventDefault();
 };
 
-// Tutup modal saat klik di luar modal
 window.onclick = (e) => {
     if (e.target === itemDetailModal) {
         itemDetailModal.style.display = 'none';
-    }
+    };
 };
+
 
 // Rating
 const stars = document.querySelectorAll('input[name="rating"]');

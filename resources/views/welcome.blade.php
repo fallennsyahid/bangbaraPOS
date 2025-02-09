@@ -110,7 +110,6 @@
             </div>
         </div>
     </header>
-
     <!-- Header End -->
 
     <!-- Hero Section Start -->
@@ -173,18 +172,17 @@
             </div>
 
             <!-- Slider Container -->
-            <div id="slider" class="relative overflow-hidden w-full mt-10">
-                <div id="slider-content" class="flex transition-transform duration-500 " style="width: 300%">
+            <div id="slider" class="relative overflow-hidden w-full max-w-screen-lg mx-auto mt-10">
+                <div id="slider-content" class="flex transition-transform duration-500 justify-center"
+                    style="width: 300%">
+
                     @foreach ($categories as $category)
-                        <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5">
+                        <div
+                            class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5 justify-start">
                             @foreach ($category->products as $product)
                                 <div
                                     class="bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
-                                    <a href="#item-detail-modal" class="item-detail-button"
-                                        data-id="{{ $product->id }}" data-name="{{ $product->nama_menu }}"
-                                        data-image="{{ asset('storage/' . $product->gambar_menu) }}"
-                                        data-description="{{ $product->deskripsi }}"
-                                        data-price="Rp {{ number_format($product->harga_menu, 0, ',', '.') }}">
+                                    <a href="#item-detail-modal" class="item-detail-button">
                                         <div class="relative group">
                                             <img src="{{ asset('storage/' . $product->gambar_menu) }}"
                                                 alt="{{ $product->nama_menu }}"
@@ -328,11 +326,9 @@
                                 <p class="font-semibold text-gray-500">{{ $review->username }}</p>
                                 <p class="flex font-semibold text-gray-500">Rating:
                                     <span class="flex items-center text-xl mx-2 gap-1 text-yellow-500">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
+                                        @for ($i = 0; $i < $review->rating; $i++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
                                     </span>
                                 </p>
                             </div>
