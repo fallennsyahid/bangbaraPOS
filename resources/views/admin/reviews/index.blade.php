@@ -68,7 +68,7 @@
                                             </td>
                                             <td class="px-6 py-4 flex items-center">
                                                 <form id="delete-form-{{ $row->id }}"
-                                                    action="{{ route('reviews.destroy', $row->id) }}" method="POST"
+                                                    action="{{ route('reviews.destroy', $row) }}" method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this category?');">
                                                     @csrf
                                                     @method('DELETE')
@@ -83,7 +83,6 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
                                 </tbody>
                             </table>
 

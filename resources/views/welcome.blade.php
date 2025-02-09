@@ -174,17 +174,20 @@
 
             <!-- Slider Container -->
             <div id="slider" class="relative overflow-hidden w-full mt-10">
-                <div id="slider-content" class="flex transition-transform duration-500" style="width: 300%">
-                    <!-- Slide 1: Makanan Start -->
-                    @foreach ($products as $product)
-                        <div class="w-full grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-                            <div class="flex justify-center py-5 sm:py-1">
+                <div id="slider-content" class="flex transition-transform duration-500 " style="width: 300%">
+                    @foreach ($categories as $category)
+                        <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5">
+                            @foreach ($category->products as $product)
                                 <div
                                     class="bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
-                                    <a href="" id="item-modal-button" class="item-detail-button">
+                                    <a href="#item-detail-modal" class="item-detail-button"
+                                        data-id="{{ $product->id }}" data-name="{{ $product->nama_menu }}"
+                                        data-image="{{ asset('storage/' . $product->gambar_menu) }}"
+                                        data-description="{{ $product->deskripsi }}"
+                                        data-price="Rp {{ number_format($product->harga_menu, 0, ',', '.') }}">
                                         <div class="relative group">
                                             <img src="{{ asset('storage/' . $product->gambar_menu) }}"
-                                                alt="{{ Storage::url($product->nama_menu) }}"
+                                                alt="{{ $product->nama_menu }}"
                                                 class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
                                             <div
                                                 class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -198,79 +201,16 @@
                                         {{ $product->nama_menu }}
                                     </p>
                                     <span class="text-price font-alkatra text-sm text-center">
-                                        Rp {{ $product->harga_menu }}
+                                        Rp {{ number_format($product->harga_menu, 0, ',', '.') }}
                                     </span>
                                     <a href=""
                                         class="text shadow text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center">
                                         Tambahkan Ke Keranjang
                                     </a>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
                     @endforeach
-                    <!-- Slide 1: Makanan End -->
-
-                    <!-- Slide 2: Minuman Start -->
-                    <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-                        <div class="flex justify-center py-5">
-                            <div
-                                class="bg-white h-72 w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
-                                <a href="" id="item-modal-button" class="item-detail-button">
-                                    <div class="relative group">
-                                        <img src="./assets/png/drink/1.png" alt="Drink"
-                                            class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
-                                        <div
-                                            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <p class="text-white font-semibold text-base">
-                                                View More
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <p class="text-text text-sm font-marmelad text-center">
-                                    Air Mineral
-                                </p>
-                                <span class="text-price font-alkatra text-sm text-center">
-                                    Rp. 5.000,00
-                                </span>
-                                <a href=""
-                                    class="font-marmelad text-sm bg-[#BF0000] px-5 py-2 rounded-full text-white">Tambahkan
-                                    Ke Keranjang</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Slide 2: Minuman End -->
-
-                    <!-- Slide 3: Extra Start -->
-                    <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-                        <div class="flex justify-center py-5">
-                            <div
-                                class="bg-white h-72 w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
-                                <a href="" id="item-modal-button" class="item-detail-button">
-                                    <div class="relative group">
-                                        <img src="./assets/png/extra/1.png" alt="Extra"
-                                            class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
-                                        <div
-                                            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <p class="text-white font-semibold text-base">
-                                                View More
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <p class="text-text text-sm font-marmelad text-center">
-                                    Sate Dakkochi
-                                </p>
-                                <span class="text-price font-alkatra text-sm text-center">
-                                    Rp. 5.000,00
-                                </span>
-                                <a href=""
-                                    class="font-marmelad text-sm bg-[#BF0000] px-5 py-2 rounded-full text-white">Tambahkan
-                                    Ke Keranjang</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Slide 3: Extra End -->
                 </div>
             </div>
         </div>
@@ -334,7 +274,7 @@
                         <input type="text" name="username" id="username" placeholder="Ketik namamu disini"
                             class="p-4 my-4 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg">
                         <textarea name="message" id="message" cols="30" rows="10" placeholder="Ketik ulasanmu disini"
-                            class="p-4 my-4 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg"></textarea>
+                            class="p-4 mt-4 mb-2 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg"></textarea>
                         <div class="mt-6">
                             <input type="submit" value="Kirim Pesan"
                                 class="py-2 px-12 rounded-xl font-medium bg-[#FFA500] cursor-pointer transition duration-100 ease-linear hover:bg-[#F59F00] hover:scale-110 active:bg-[#EA9800] active:scale-100">
@@ -361,6 +301,7 @@
             }
         }
 
+
         .animate-marquee {
             display: flex;
             animation: marquee 15s linear infinite;
@@ -371,18 +312,20 @@
     {{-- Ulasan Section Start --}}
     <section id="ulasan" class="ulasan-img">
         <div class="container">
-            <h1 class="py-6 font-europhia text-white text-center text-4xl sm:text-5xl lg:text-6xl">Apa Kata Mereka</h1>
+            <h1 class="py-12 font-europhia text-white text-center text-4xl sm:text-5xl lg:text-6xl">Apa Kata Mereka
+            </h1>
             <div class="overflow-hidden w-full" x-data="{ start() { this.$refs.track.style.animationPlayState = 'running' }, stop() { this.$refs.track.style.animationPlayState = 'paused' } }">
                 <div class="flex w-max space-x-8 animate-marquee" x-ref="track">
-                    <template x-for="i in 5" :key="i">
+                    {{-- <template x-for="i in 1" :key="i"> --}}
+                    @foreach ($reviews as $review)
                         <div
                             class="carousel-item bg-white text-black rounded-lg shadow-lg  max-w-sm border-4 border-[##D6D6D6] w-96   overflow-hidden">
                             <p class="text-center px-4 py-8">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
+                                {{ $review->message }}
+                                {{-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, soluta? --}}
                             </p>
                             <div class="px-4 py-2 border-t-2 border-[#D6D6D6]">
-                                <p class="font-semibold text-gray-500">Kunto Aji</p>
+                                <p class="font-semibold text-gray-500">{{ $review->username }}</p>
                                 <p class="flex font-semibold text-gray-500">Rating:
                                     <span class="flex items-center text-xl mx-2 gap-1 text-yellow-500">
                                         <i class="fas fa-star"></i>
@@ -394,7 +337,8 @@
                                 </p>
                             </div>
                         </div>
-                    </template>
+                    @endforeach
+                    {{-- </template> --}}
                 </div>
             </div>
         </div>
@@ -470,8 +414,7 @@
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
                 </a>
-                <img src="./assets/png/food/1.png" alt="Food" width=""
-                    class="rounded-t-lg overflow-hidden" />
+                <img src="" alt="Food" width="" class="rounded-t-lg overflow-hidden" />
                 <h1 class="text-center font-alatsi text-2xl pb-2">Product 1</h1>
                 <p class="text-center font-alatsi text-base px-4">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error

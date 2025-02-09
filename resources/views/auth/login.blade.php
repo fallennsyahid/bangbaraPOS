@@ -34,7 +34,7 @@
                     <div class="mb-4">
                         <label for="email" class="block text-sm font-medium">Email</label>
                         <input id="email" type="email" name="email" required
-                            class="mt-1 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
+                            class="mt-1 p-2 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:outline-none focus:border-2 focus:border-red-700">
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
@@ -42,7 +42,7 @@
                     <div class="mb-4 relative">
                         <label for="password" class="block text-sm font-medium">Password</label>
                         <input id="password" type="password" name="password" required
-                            class="mt-1 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
+                            class="p-2 mt-1 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:outline-none focus:border-2 focus:border-red-700">
                         <span class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
                             <svg class="h-5 w-5 text-gray-400" fill="none" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24" stroke="currentColor">
@@ -55,7 +55,7 @@
                     <!-- Remember Me -->
                     <div class="flex items-center mb-4">
                         <input id="remember_me" type="checkbox" name="remember"
-                            class="rounded text-purple-500 focus:ring-purple-400">
+                            class="rounded accent-red-500 text-purple-500 focus:ring-purple-400">
                         <label for="remember_me" class="ml-2 text-sm">Remember Me</label>
                     </div>
 

@@ -64,6 +64,6 @@ class ReviewController extends Controller
     {
         $review->delete();
 
-        return redirect()->route('reviews.destroy')->with('success', 'Ulasan berhasil dihapus');
+        return redirect()->route('reviews.index')->with('success', 'Ulasan berhasil dihapus');
     }
 }

@@ -17,6 +17,7 @@ use App\Http\Controllers\Staff\StaffOrdersController;
 use App\Http\Controllers\HistoryController as History;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Staff\StaffHistoryController;
+use App\Models\Product;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -25,8 +26,6 @@ use App\Http\Controllers\Staff\StaffHistoryController;
 Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Route::post('/', [HomeController::class, 'store'])->name('index.store');
-
-Route::get('/#menu', [History::class, 'indexMenu'])->name('indexMenu');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
