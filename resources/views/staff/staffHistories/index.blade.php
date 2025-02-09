@@ -72,7 +72,7 @@
                                                 {{ $history->customer_name }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">
-                                                {{ $history->created_at }}
+                                                {{ $history->created_at->format('d/m/y') }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">Rp
                                                 {{ number_format($history->total_price, 2) }}</td>
@@ -89,29 +89,37 @@
                                                     {{ $history->status }}</h4>
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">
-                                                <a href="">
-                                                    <button class="bg-[#CA1100] rounded-md px-4 py-2">
-                                                        <h5 class="text-xs font-semibold">Lihat File</h5>
-                                                    </button>
-                                                </a>
+                                                @if ($history->payment_method === 'nonTunai')
+                                                    <a href="">
+                                                        <button
+                                                            class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
+                                                            <h6>File</h6>
+                                                        </button>
+                                                    </a>
+                                                @else
+                                                    <p class="text-zinc-950 text-2xl text-center mr-2">-</p>
+                                                @endif
                                             </td>
                                             <td class="px-6 py-4 flex gap-3 mt-4">
-                                                <a href="{{ route('histories.show', $history->id) }}">
-                                                    <a href="{{ route('histories.show', $history->id) }}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="30"
-                                                            height="30" viewBox="0 0 24 24">
-                                                            <path fill="#6c80e4" fill-rule="evenodd"
-                                                                d="M12 17.8c4.034 0 7.686-2.25 9.648-5.8C19.686 8.45 16.034 6.2 12 6.2S4.314 8.45 2.352 12c1.962 3.55 5.614 5.8 9.648 5.8M12 5c4.808 0 8.972 2.848 11 7c-2.028 4.152-6.192 7-11 7s-8.972-2.848-11-7c2.028-4.152 6.192-7 11-7m0 9.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8" />
-                                                        </svg>
-                                                    </a>
+                                                <a href="{{ route('staffHistories.show', $history->id) }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                                                        height="30" viewBox="0 0 24 24">
+                                                        <path fill="#6c80e4" fill-rule="evenodd"
+                                                            d="M12 17.8c4.034 0 7.686-2.25 9.648-5.8C19.686 8.45 16.034 6.2 12 6.2S4.314 8.45 2.352 12c1.962 3.55 5.614 5.8 9.648 5.8M12 5c4.808 0 8.972 2.848 11 7c-2.028 4.152-6.192 7-11 7s-8.972-2.848-11-7c2.028-4.152 6.192-7 11-7m0 9.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8" />
+                                                    </svg>
                                                 </a>
+
                                             </td>
+
                                         </tr>
                                     @empty
-                                        <p class="text-slate-950 font-semibold text-center">There is no histories today
-                                        </p>
+                                        <tr>
+                                            <td colspan="7" class="text-center py-4">No data available for the
+                                                selected filters.</td>
+                                        </tr>
                                     @endforelse
                                 </tbody>
+
 
 
                             </table>

@@ -12,11 +12,14 @@ use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Staff\StaffOrdersController;
 use App\Http\Controllers\Staff\StaffHistoryController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Order;
+use Carbon\Carbon;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Error Route Page
 Route::get('/error', [ErrorController::class, 'index']);
 
 // Staff Route
@@ -43,6 +46,7 @@ Route::middleware('auth')->group(function () {
 Route::get('products/export', [ProductController::class, 'export'])->name('products.export');
 Route::get('categories/export', [CategoryController::class, 'export'])->name('categories.export');
 Route::get('orders/export', [OrderAdminController::class, 'export'])->name('orders.export');
+Route::get('users/export', [StaffController::class, 'export'])->name('users.export');
 Route::get('/admin/histories/export', [HistoryController::class, 'export'])->name('admin.histories.export');
 
 // Category Routes
@@ -63,7 +67,25 @@ Route::patch('/admin/orders/{order}/status', [OrderAdminController::class, 'upda
 // Filter History
 Route::get('histories/filter', [HistoryController::class, 'filter'])->name('histories.filter');
 
-// 
+//notif
+Route::get('/notifications', function () {
+    $orders = Order::where('status', 'Pending')->whereDate('created_at', Carbon::today())->latest()->take(5)->get([
+        'id', 'customer_name', 'status', 'total_price', 'created_at'
+    ]);
+
+    return response()->json([
+        'count' => $orders->count(),
+        'orders' => $orders->map(function ($order) {
+            return [
+                'id' => $order->id,
+                'customer_name' => $order->customer_name,
+                'status' => $order->status,
+                'total_price' => $order->total_price,
+                'created_at' => $order->created_at->diffForHumans()
+            ];
+        })
+    ]);
+});
 
 
 require __DIR__.'/auth.php';

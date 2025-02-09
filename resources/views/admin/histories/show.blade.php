@@ -78,6 +78,16 @@
                                 <input type="text" value="{{ $history->payment_method }}"
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
                             </div>
+
+                            {{-- Costumer Phone --}}
+                            <div class="mt-4">
+                                <label class="block text-gray-700 font-semibold">Phone Number:</label>
+                                <a href="https://wa.me/{{ $history->customer_phone }}" target="_blank">
+                                    <input type="text" value="{{ $history->customer_phone }}"
+                                        class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950 cursor-pointer"
+                                        readonly>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </main>

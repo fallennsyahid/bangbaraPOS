@@ -47,13 +47,13 @@
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Costumer</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
-                                            Phone</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Status</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Price</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Method</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Date</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Photo</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
@@ -70,19 +70,14 @@
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $order->customer_name }}
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
-                                                <a href="https://wa.me/{{ $order->customer_phone }}"
-                                                    class="hover:text-blue-400 hover:underline"
-                                                    target="_blank">{{ $order->customer_phone }}</a>
-                                            </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950"
                                                 id="order-status-{{ $order->id }}">
                                                 <h5
                                                     class="{{ $order->status == 'Processed' ? 'bg-yellow-800 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                            {{ $order->status == 'Pending' ? 'bg-amber-300 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                             {{ $order->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                             {{ $order->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                    ">
+                                            {{ $order->status == 'Pending' ? 'bg-amber-300 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                            {{ $order->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                            {{ $order->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                            ">
                                                     {{ $order->status }}</h4>
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
@@ -92,12 +87,22 @@
                                                 {{ $order->payment_method }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
-                                                <a href="">
-                                                    <button
-                                                        class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
-                                                        <h6>File</h6>
-                                                    </button>
-                                                </a>
+                                                {{-- <a href="https://wa.me/{{ $order->customer_phone }}"
+                                                class="hover:text-blue-400 hover:underline"
+                                                target="_blank">{{ $order->customer_phone }}</a> --}}
+                                                {{ $order->created_at->diffForHumans() }}
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
+                                                @if ($order->payment_method === 'nonTunai')
+                                                    <a href="">
+                                                        <button
+                                                            class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
+                                                            <h6>File</h6>
+                                                        </button>
+                                                    </a>
+                                                @else
+                                                    <p class="text-zinc-950 text-2xl text-center mr-2">-</p>
+                                                @endif
                                             </td>
                                             {{-- <td class="px-6 py-4 flex gap-3 mt-4">
                                                 <button onclick="openModal({{ $order->id }})"

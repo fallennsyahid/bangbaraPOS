@@ -37,7 +37,7 @@
 
                         <!-- Tabel -->
                         <div class="mt-1">
-                            <a href="{{ route('products.export') }}"
+                            <a href="{{ route('users.export') }}"
                                 class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600">
                                 Export Excel
                             </a>
@@ -54,6 +54,8 @@
                                             Name</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Email</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Role</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Since</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
@@ -74,9 +76,35 @@
                                                 {{ $user->email }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
-                                                {{ $user->created_at }}
+                                                {{ $user->usertype }}
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
+                                                {{ $user->created_at->format('d/m/y') }}
+
                                             </td>
                                             <td class="px-6 py-4 flex gap-3 mt-4">
+
+                                                <a href="{{ route('staffs.show', $user->id) }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                                                        height="30" viewBox="0 0 24 24">
+                                                        <path fill="#6c80e4" fill-rule="evenodd"
+                                                            d="M12 17.8c4.034 0 7.686-2.25 9.648-5.8C19.686 8.45 16.034 6.2 12 6.2S4.314 8.45 2.352 12c1.962 3.55 5.614 5.8 9.648 5.8M12 5c4.808 0 8.972 2.848 11 7c-2.028 4.152-6.192 7-11 7s-8.972-2.848-11-7c2.028-4.152 6.192-7 11-7m0 9.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8" />
+                                                    </svg>
+                                                </a>
+
+                                                <a href="{{ route('staffs.edit', $user->id) }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                                                        height="30" viewBox="0 0 24 24">
+                                                        <g fill="none" stroke="#28A745" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="2">
+                                                            <path
+                                                                d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" />
+                                                            <path
+                                                                d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" />
+                                                        </g>
+                                                    </svg>
+                                                </a>
+
                                                 <form id="delete-form-{{ $user->id }}"
                                                     action="{{ route('staffs.destroy', $user->id) }}" method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this category?');">

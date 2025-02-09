@@ -18,9 +18,6 @@
     {{-- <link rel="icon" href="{{ asset('assets/png/logo_bangbara.png') }}" /> --}}
     <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
     {{-- <link rel="stylesheet" href="css/style.css" /> --}}
-    {{-- <link rel="shortcut icon" href="{{ asset('assets/png/logo_bangbara.png') }}" type="image/x-icon"> --}}
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
