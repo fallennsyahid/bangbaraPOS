@@ -30,13 +30,14 @@
                         <!-- Tabel -->
                         <div class="mb-4 mt-3">
                             <a href="{{ route('orders.export') }}"
-                                class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600">
-                                Export Excel
+                                class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
+                                <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
+                                    class="w-5 h-5 inline-block mr-2">
+                                Export
                             </a>
                         </div>
-                        <div class="w-full max-w-4xl overflow-x-auto">
-                            <div class="flex mx-auto justify-between">
-                            </div>
+                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
+
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
                                 id="myTable">
                                 <!-- Header -->
@@ -53,7 +54,7 @@
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Method</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
-                                            Date</th>
+                                            Time</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Photo</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
@@ -72,13 +73,14 @@
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950"
                                                 id="order-status-{{ $order->id }}">
-                                                <h5
+                                                <h5 id="order-status-{{ $order->id }}"
                                                     class="{{ $order->status == 'Processed' ? 'bg-yellow-800 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                            {{ $order->status == 'Pending' ? 'bg-amber-300 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                            {{ $order->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                            {{ $order->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                            ">
-                                                    {{ $order->status }}</h4>
+                                                    {{ $order->status == 'Pending' ? 'bg-amber-300 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                    {{ $order->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                    {{ $order->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}">
+                                                    {{ $order->status }}
+                                                </h5>
+
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 Rp {{ number_format($order->total_price, 2) }}
@@ -360,9 +362,49 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <script>
-        let table = new DataTable('#myTable');
+        $(document).ready(function() {
+            let table = $('#myTable').DataTable({
+                "columnDefs": [{
+                    "targets": 0, // Kolom pertama (nomor urut)
+                    "render": function(data, type, row, meta) {
+                        return meta.row + 1; // Menampilkan nomor urut otomatis
+                    }
+                }],
+                "ordering": false // Nonaktifkan sorting di semua kolom (opsional)
+            });
+        });
     </script>
 
+    <script>
+        function updateOrderStatus(orderId) {
+            fetch(`/orders/${orderId}/status`)
+                .then(response => response.json())
+                .then(data => {
+                    let statusElement = document.getElementById(`order-status-${orderId}`);
+                    statusElement.textContent = data.status;
+
+                    // Hapus semua class warna
+                    statusElement.classList.remove('bg-yellow-800', 'bg-amber-300', 'bg-red-600', 'bg-green-500');
+
+                    // Tambahkan class sesuai status baru
+                    if (data.status === 'Processed') {
+                        statusElement.classList.add('bg-yellow-800', 'text-white');
+                    } else if (data.status === 'Pending') {
+                        statusElement.classList.add('bg-amber-300', 'text-white');
+                    } else if (data.status === 'Cancelled') {
+                        statusElement.classList.add('bg-red-600', 'text-white');
+                    } else if (data.status === 'Completed') {
+                        statusElement.classList.add('bg-green-500', 'text-white');
+                    }
+                })
+                .catch(error => console.error('Error updating status:', error));
+        }
+
+        // Contoh: Panggil updateOrderStatus setelah status berubah
+        setInterval(() => {
+            updateOrderStatus(1); // Ganti dengan ID order yang sesuai
+        }, 5000); // Cek perubahan setiap 5 detik
+    </script>
 </body>
 
 </html>

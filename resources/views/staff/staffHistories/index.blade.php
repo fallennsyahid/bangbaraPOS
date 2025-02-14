@@ -46,6 +46,8 @@
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">ID
                                         </th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Casier</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Costumer</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Time</th>
@@ -67,6 +69,9 @@
                                     @forelse ($histories as $index => $history)
                                         <tr class="hover:bg-thead" data-category="{{ $history->id }}">
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">#{{ $index + 1 }}
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
+                                                {{ $history->casier_name }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">
                                                 {{ $history->customer_name }}
@@ -259,7 +264,17 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <script>
-        let table = new DataTable('#myTable');
+        $(document).ready(function() {
+            let table = $('#myTable').DataTable({
+                "columnDefs": [{
+                    "targets": 0, // Kolom pertama (nomor urut)
+                    "render": function(data, type, row, meta) {
+                        return meta.row + 1; // Menampilkan nomor urut otomatis
+                    }
+                }],
+                "ordering": false // Nonaktifkan sorting di semua kolom (opsional)
+            });
+        });
     </script>
 
 </body>
