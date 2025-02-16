@@ -18,7 +18,7 @@ class OrderAdminController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('product')->get();
+        $orders = Order::with('product')->orderBy('created_at', 'desc')->get();
         $statusOptions = ['Pending', 'Processed', 'Cancelled', 'Completed'];
         return view('admin.orders.index', compact('orders', 'statusOptions'));
     }

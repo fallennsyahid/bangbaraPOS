@@ -19,7 +19,7 @@
                 <main class="bg-prime">
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
-                        <h1 class="text-2xl font-semibold text-zinc-950">Manage Products</h1>
+                        <h1 class="text-2xl font-semibold text-zinc-950">Reviews</h1>
                         <x-admin.waButton></x-admin.waButton>
                     </div>
 
@@ -45,7 +45,7 @@
                                             Rating
                                         </th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
-                                            Aksi
+                                            Time
                                         </th>
                                     </tr>
                                 </thead>
@@ -66,20 +66,8 @@
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $row->rating }} Bintang
                                             </td>
-                                            <td class="px-6 py-4 flex items-center">
-                                                <form id="delete-form-{{ $row->id }}"
-                                                    action="{{ route('reviews.destroy', $row) }}" method="POST"
-                                                    onsubmit="return confirm('Are you sure you want to delete this category?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
-                                                        height="30" viewBox="0 0 24 24"
-                                                        class="cursor-pointer hover:fill-red-700 transition duration-200"
-                                                        onclick="confirmDelete({{ $row->id }})">
-                                                        <path fill="red"
-                                                            d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z" />
-                                                    </svg>
-                                                </form>
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
+                                                {{ $row->created_at->diffForHumans() }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -158,7 +146,17 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <script>
-        let table = new DataTable('#myTable');
+        $(document).ready(function() {
+            let table = $('#myTable').DataTable({
+                "columnDefs": [{
+                    "targets": 0, // Kolom pertama (nomor urut)
+                    "render": function(data, type, row, meta) {
+                        return meta.row + 1; // Menampilkan nomor urut otomatis
+                    }
+                }],
+                "ordering": false // Nonaktifkan sorting di semua kolom (opsional)
+            });
+        });
     </script>
 
 

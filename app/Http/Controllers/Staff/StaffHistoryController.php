@@ -37,11 +37,11 @@ class StaffHistoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $history = History::findOrFail($id);
+        return view('staff.staffHistories.show', compact('history'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */

@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Order;
 use App\Models\History;
+use Illuminate\Support\Facades\Auth;
 
 class OrderObserver
 {
@@ -22,6 +23,7 @@ class OrderObserver
     {
         if ($order->status === 'Completed' || $order->status === 'Cancelled') {
         History::create([
+            'casier_name' => Auth::user()->name,
             'customer_name' => $order->customer_name,
             'customer_phone' => $order->customer_phone,
             'product_id' => $order->product_id,

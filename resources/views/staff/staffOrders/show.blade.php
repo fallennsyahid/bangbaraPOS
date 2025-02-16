@@ -77,6 +77,12 @@
                                 <input type="text" value="{{ $order->payment_method }}"
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
                             </div>
+                            <!-- No Telp -->
+                            <div class="mt-4">
+                                <label class="block text-gray-700 font-semibold">No Telp:</label>
+                                <input type="text" value="{{ $order->customer_phone }}"
+                                    class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
+                            </div>
                         </div>
                     </div>
 
