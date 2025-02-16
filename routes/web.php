@@ -16,8 +16,8 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Staff\StaffOrdersController;
 use App\Http\Controllers\HistoryController as History;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Staff\StaffHistoryController;
-use App\Models\Product;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -27,13 +27,24 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Route::post('/', [HomeController::class, 'store'])->name('index.store');
 
-Route::get('/cart', [CartController::class, 'index'])->name('cart');
-
 Route::get('/history', [History::class, 'index'])->name('history');
 
 Route::get('/details', [DetailsController::class, 'index'])->name('details');
 
 Route::get('/error', [ErrorController::class, 'index']);
+
+// CART
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
+Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
+
+
+// ORDER CART
+Route::post('/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
+Route::get('/order-success', function () {
+    return view('order-success');
+})->name('order.success');
 
 // Staff Route
 Route::get('/staff/dashboard', [DashboardController::class, 'dashboard'])

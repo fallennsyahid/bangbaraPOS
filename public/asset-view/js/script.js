@@ -57,32 +57,52 @@ function changeSlide(index) {
 }
 
 // POPUP
-const itemDetailModal = document.querySelector('#item-detail-modal');
-const itemDetailButtons = document.querySelectorAll('.item-detail-button');
+document.addEventListener("DOMContentLoaded", function () {
+    const itemDetailModal = document.querySelector("#item-detail-modal");
+    const itemDetailButtons = document.querySelectorAll(".item-detail-button");
+    const closeButton = document.querySelector(".close-icon");
 
-itemDetailButtons.forEach((btn) => {
-    btn.onclick = (e) => {
-        itemDetailModal.style.display = 'flex';
+    itemDetailButtons.forEach((btn) => {
+        btn.onclick = (e) => {
+            e.preventDefault();
+
+            // Ambil elemen produk terdekat
+            const productCard = btn.closest("div");
+            const productImage = productCard.querySelector("img").src;
+            const productName = productCard.querySelector("p").innerText;
+            const productDescription = productCard.querySelector("h6").innerText; // Ubah jika ada deskripsi produk
+            const productPrice = productCard.querySelector("span").innerText;
+
+            // Update isi modal
+            itemDetailModal.querySelector("img").src = productImage;
+            itemDetailModal.querySelector("h1").innerText = productName;
+            itemDetailModal.querySelector("p").innerText = productDescription;
+
+            // Tampilkan modal
+            itemDetailModal.classList.remove("hidden");
+            itemDetailModal.classList.add("flex");
+        };
+    });
+
+    // Tutup modal saat tombol close diklik
+    closeButton.onclick = (e) => {
         e.preventDefault();
+        closeModal();
     };
+
+    // Tutup modal jika klik di luar modal-container
+    itemDetailModal.onclick = (e) => {
+        if (e.target === itemDetailModal) {
+            closeModal();
+        }
+    };
+
+    function closeModal() {
+        itemDetailModal.classList.add("hidden");
+        itemDetailModal.classList.remove("flex");
+    }
 });
 
-itemDetailButtons.onclick = (e) => {
-    itemDetailModal.style.display = 'flex';
-    e.preventDefault();
-};
-
-
-document.querySelector('.close-icon').onclick = (e) => {
-    itemDetailModal.style.display = 'none';
-    e.preventDefault();
-};
-
-window.onclick = (e) => {
-    if (e.target === itemDetailModal) {
-        itemDetailModal.style.display = 'none';
-    };
-};
 
 
 // Rating
