@@ -43,7 +43,7 @@
                             <!-- Orders card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total Orders</h6>
-                                <p class="text-3xl font-bold">{{ $total_orders }}</p>
+                                <p class="text-3xl font-bold" id="totalOrders">{{ $total_orders }}</p>
                             </div>
 
                             <!-- Completed card -->
@@ -197,6 +197,18 @@
 
     <!-- All javascript code in this project for now is just for demo DON'T RELY ON IT  -->
     <x-admin.js></x-admin.js>
+    <script>
+        function fetchOrders() {
+            fetch('/get-total-orders-today')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('totalOrders').innerText = data.total_orders;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        setInterval(fetchOrders, 5000);
+    </script>
 </body>
 
 </html>

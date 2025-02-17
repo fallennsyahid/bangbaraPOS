@@ -63,7 +63,7 @@
                                 </thead>
 
                                 <!-- Body -->
-                                <tbody class="bg-tbody" id="productTable">
+                                <tbody class="bg-tbody" id="orderTableBody">
                                     @foreach ($orders as $index => $order)
                                         <tr class="hover:bg-thead" data-category="{{ $order->id }}">
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">#{{ $index + 1 }}
@@ -71,8 +71,7 @@
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $order->customer_name }}
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950"
-                                                id="order-status-{{ $order->id }}">
+                                            <td class="px-6 py-4 font-medium text-sm">
                                                 <h5 id="order-status-{{ $order->id }}"
                                                     class="{{ $order->status == 'Processed' ? 'bg-yellow-800 rounded-md px-3 py-2 text-center text-white' : '' }}
                                                     {{ $order->status == 'Pending' ? 'bg-amber-300 rounded-md px-3 py-2 text-center text-white' : '' }}
@@ -332,7 +331,27 @@
                         // Update status di UI
                         const statusElement = document.getElementById(`order-status-${orderId}`);
                         if (statusElement) {
-                            statusElement.innerText = status; // Ganti status di UI
+                            // Hapus semua class status lama
+                            statusElement.classList.remove('bg-yellow-800', 'bg-amber-300', 'bg-red-600',
+                                'bg-green-500');
+
+                            // Tambahkan class status baru
+                            if (status === 'Processed') {
+                                statusElement.classList.add('bg-yellow-800', 'rounded-md', 'px-3', 'py-2',
+                                    'text-center', 'text-white');
+                            } else if (status === 'Pending') {
+                                statusElement.classList.add('bg-amber-300', 'rounded-md', 'px-3', 'py-2', 'text-center',
+                                    'text-white');
+                            } else if (status === 'Cancelled') {
+                                statusElement.classList.add('bg-red-600', 'rounded-md', 'px-3', 'py-2', 'text-center',
+                                    'text-white');
+                            } else if (status === 'Completed') {
+                                statusElement.classList.add('bg-green-500', 'rounded-md', 'px-3', 'py-2', 'text-center',
+                                    'text-white');
+                            }
+
+                            // Update status text
+                            statusElement.innerText = status;
                         }
                     } else {
                         // Menggunakan SweetAlert untuk menampilkan pesan gagal
@@ -375,36 +394,7 @@
         });
     </script>
 
-    <script>
-        function updateOrderStatus(orderId) {
-            fetch(`/orders/${orderId}/status`)
-                .then(response => response.json())
-                .then(data => {
-                    let statusElement = document.getElementById(`order-status-${orderId}`);
-                    statusElement.textContent = data.status;
 
-                    // Hapus semua class warna
-                    statusElement.classList.remove('bg-yellow-800', 'bg-amber-300', 'bg-red-600', 'bg-green-500');
-
-                    // Tambahkan class sesuai status baru
-                    if (data.status === 'Processed') {
-                        statusElement.classList.add('bg-yellow-800', 'text-white');
-                    } else if (data.status === 'Pending') {
-                        statusElement.classList.add('bg-amber-300', 'text-white');
-                    } else if (data.status === 'Cancelled') {
-                        statusElement.classList.add('bg-red-600', 'text-white');
-                    } else if (data.status === 'Completed') {
-                        statusElement.classList.add('bg-green-500', 'text-white');
-                    }
-                })
-                .catch(error => console.error('Error updating status:', error));
-        }
-
-        // Contoh: Panggil updateOrderStatus setelah status berubah
-        setInterval(() => {
-            updateOrderStatus(1); // Ganti dengan ID order yang sesuai
-        }, 5000); // Cek perubahan setiap 5 detik
-    </script>
 </body>
 
 </html>

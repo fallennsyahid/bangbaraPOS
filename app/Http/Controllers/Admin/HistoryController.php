@@ -49,8 +49,30 @@ class HistoryController extends Controller
 
     public function export(Request $request)
 {
+    $periode_awal = $request->query('periode_awal');
+    $periode_akhir = $request->query('periode_akhir');
 
-    return Excel::download(new HistoriesExport($request), 'histories.xlsx');
+       // Validasi apakah kedua tanggal diisi
+    if (!$periode_awal || !$periode_akhir) {
+        return redirect()->back()->with('error', 'Pilih rentang tanggal terlebih dahulu.');
+    }
+
+    // Konversi ke format Y-m-d agar sesuai dengan created_at di database
+    try {
+        $periode_awal = Carbon::parse($periode_awal)->startOfDay(); 
+        $periode_akhir = Carbon::parse($periode_akhir)->endOfDay();
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Format tanggal tidak valid.');
+    }
+
+    // Ambil data berdasarkan rentang tanggal
+    $histories = History::whereBetween('created_at', [$periode_awal, $periode_akhir])->get();
+
+    if ($histories->isEmpty()) {
+        return redirect()->back()->with('error', 'Tidak ada data dalam rentang tanggal yang dipilih.');
+    }
+
+    return Excel::download(new HistoriesExport($histories), 'histories.xlsx');
 }
 
     /**
@@ -74,7 +96,7 @@ class HistoryController extends Controller
      */
     public function show(History $history)
     {
-        $history->load('products');
+        $history->load('product');
         return view('admin.histories.show', compact('history'));
     }
 

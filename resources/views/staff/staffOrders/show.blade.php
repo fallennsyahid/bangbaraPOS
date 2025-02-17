@@ -28,12 +28,12 @@
                     <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
                         <!-- Navigasi -->
                         <h2 class="mb-4">
-                            <a href="{{ route('staffOrders.index') }}" class="text-amber-400 hover:underline">Back</a> /
-                            <a href="/staff/dashboard" class="hover:underline text-zinc-950">Home</a>
+                            <a href="{{ route('orders.index') }}" class="text-amber-400 hover:underline">Back</a> /
+                            <a href="/admin/dashboard" class="hover:underline text-zinc-950">Home</a>
                         </h2>
 
                         <!-- Kontainer Tabel -->
-                        <div class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+                        <div id="printArea" class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
                             <!-- Detail Pemesan -->
                             <div class="mb-4">
                                 <label class="block text-gray-700 font-semibold">Nama Pemesan:</label>
@@ -68,7 +68,7 @@
                             <!-- Catatan -->
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Catatan:</label>
-                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>{{ $order->request }}</textarea>
+                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>Steaknya jangan terlalu matang, potatonya banyakin.</textarea>
                             </div>
 
                             <!-- Metode Pembayaran -->
@@ -77,14 +77,29 @@
                                 <input type="text" value="{{ $order->payment_method }}"
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
                             </div>
-                            <!-- No Telp -->
+
                             <div class="mt-4">
-                                <label class="block text-gray-700 font-semibold">No Telp:</label>
-                                <input type="text" value="{{ $order->customer_phone }}"
-                                    class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
+                                <label class="block text-gray-700 font-semibold">Phone Number:</label>
+                                <a href="https://wa.me/{{ $order->customer_phone }}" target="_blank">
+                                    <input type="text" value="{{ $order->customer_phone }}"
+                                        class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950 cursor-pointer"
+                                        readonly>
+                                </a>
+                            </div>
+                            <div class="mt-11 flex justify-items-end">
+                                <a href="#" id="printButton"
+                                    class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
+                                    <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
+                                        class="w-5 h-5 inline-block mr-2">
+                                    Print
+                                </a>
                             </div>
                         </div>
                     </div>
+
+
+
+
 
                 </main>
 
@@ -107,9 +122,17 @@
     <!-- All javascript code in this project for now is just for demo DON'T RELY ON IT  -->
     <x-admin.js></x-admin.js>
     {{-- Confirm Alert --}}
-    {{-- DataTables --}}
 
+    <script>
+        document.getElementById('printButton').addEventListener('click', function() {
+            var printContents = document.getElementById('printArea').innerHTML;
+            var originalContents = document.body.innerHTML;
 
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        });
+    </script>
 </body>
 
 </html>
