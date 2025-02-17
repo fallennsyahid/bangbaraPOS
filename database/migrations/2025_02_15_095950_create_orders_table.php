@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('customer_name');
             $table->string('customer_phone');
-            $table->foreignId('product_id')->constrained('products');
-            $table->integer('quantity');
-            $table->enum('status', ['Pending', 'Processed', 'Completed', 'Cancelled'])->default('Pending');
+            $table->text('request')->nullable();
+            $table->json('products');
             $table->decimal('total_price', 10, 2);
-            $table->string('payment_photo');
+            $table->enum('status', ['Pending', 'Processed', 'Completed', 'Cancelled'])->default('Pending');
             $table->enum('payment_method', ['Tunai', 'nonTunai']);
+            $table->string('payment_photo')->nullable();
             $table->timestamps();
         });
     }

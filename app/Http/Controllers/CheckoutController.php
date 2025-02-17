@@ -5,19 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
-class HistoryController extends Controller
+class CheckoutController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('history');
-    }
-
-    public function indexMenu()
-    {
-        return view('welcome#menu');
+        //
     }
 
     /**
@@ -52,8 +47,7 @@ class HistoryController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
+    /** 
      */
     public function update(Request $request, string $id)
     {

@@ -1,0 +1,86 @@
+/* :root {
+    --items-count: {{ count($reviews) }};
+    --width: 370px;
+    --height: 200px;
+    --duration:8s;
+}
+
+.review-slider {
+    width: 100%;
+    height: var(--height);
+    overflow: hidden;
+    position: relative;
+}
+
+.review-slider:hover .review-wrapper{
+    animation-play-state: paused !important;
+}
+
+.review-wrapper {
+    display: flex;
+    gap: 20px; 
+    white-space: normal;
+    animation: autoRunSlider var(--duration) linear infinite;
+}
+
+.review-slider-item {
+    flex: 0 0 auto;
+    width: var(--width);
+    height: var(--height);
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes autoRunSlider {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(calc(-100% - 20px * var(--items-count)));
+    }
+}
+ */
+
+:root {
+    --items-count: 6;
+    --width: 370px;
+    --duration: 10s;
+    --height: 400px;
+}
+
+.slider {
+    width: 100%;
+    height: var(--height);
+    position: relative;
+    overflow: hidden;
+    gap: 0.8rem;
+}
+
+.review {
+    position: absolute;
+    width: var(--width);
+    /* height: var(--height); */
+    object-fit: contain;
+    left: 100%;
+    animation: autoRunSlider var(--duration) linear infinite;
+    -webkit-animation: autoRunSlider var(--duration) linear infinite;
+
+    animation-delay: calc(
+        (var(--pos) - 1) * (var(--duration) / var(--items-count))
+    );
+}
+
+.slider:hover .review {
+    animation-play-state: paused !important;
+}
+
+@keyframes autoRunSlider {
+    from {
+        left: 100%;
+    }
+    to {
+        /* left: calc(var(--width) * -1); */
+        left: -100%;
+    }
+}
