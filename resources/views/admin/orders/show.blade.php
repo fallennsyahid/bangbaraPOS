@@ -33,7 +33,7 @@
                         </h2>
 
                         <!-- Kontainer Tabel -->
-                        <div class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+                        <div id="printArea" class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
                             <!-- Detail Pemesan -->
                             <div class="mb-4">
                                 <label class="block text-gray-700 font-semibold">Nama Pemesan:</label>
@@ -86,6 +86,14 @@
                                         readonly>
                                 </a>
                             </div>
+                            <div class="mt-11 flex justify-items-end">
+                                <a href="#" id="printButton"
+                                    class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
+                                    <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
+                                        class="w-5 h-5 inline-block mr-2">
+                                    Print
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -115,6 +123,16 @@
     <x-admin.js></x-admin.js>
     {{-- Confirm Alert --}}
 
+    <script>
+        document.getElementById('printButton').addEventListener('click', function() {
+            var printContents = document.getElementById('printArea').innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        });
+    </script>
 </body>
 
 </html>

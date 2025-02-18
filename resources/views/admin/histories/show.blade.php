@@ -33,11 +33,17 @@
                         </h2>
 
                         <!-- Kontainer Tabel -->
-                        <div class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+                        <div id="printArea" class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
                             <!-- Detail Pemesan -->
                             <div class="mb-4">
                                 <label class="block text-gray-700 font-semibold">Nama Pemesan:</label>
                                 <input type="text" value="{{ $history->customer_name }}"
+                                    class="w-full p-2 border rounded-md bg-gray-100 text-zinc-900" readonly>
+                            </div>
+                            <!-- Detail Kasir -->
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-semibold">Nama Kasir:</label>
+                                <input type="text" value="{{ $history->casier_name }}"
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-900" readonly>
                             </div>
 
@@ -48,16 +54,16 @@
                                         <tr class="hover:bg-gray-200">
                                             <td class="px-6 py-4 text-sm text-gray-900">#{{ $history->id }}</td>
                                             <td class="px-6 py-4 text-sm">
-                                                <img src="{{ Storage::url($history->products->gambar_menu) }}"
-                                                    class="w-20 h-20 object-cover rounded-md" alt="Gambar Products">
+                                                <img src="{{ Storage::url($history->product->gambar_menu) }}"
+                                                    class="w-20 h-20 object-cover rounded-md" alt="Gambar Product">
                                             </td>
                                             <td class="px-6 py-4 text-sm text-gray-900">
-                                                {{ $history->products->nama_menu }}
+                                                {{ $history->product->nama_menu }}
                                             </td>
                                             <td class="px-6 py-4 text-sm text-gray-900">
-                                                {{ $history->products->category->nama_kategori }}</td>
+                                                {{ $history->product->category->nama_kategori }}</td>
                                             <td class="px-6 py-4 text-sm text-gray-900">
-                                                {{ $history->products->harga_menu }}
+                                                {{ $history->product->harga_menu }}
                                             </td>
                                             <td class="px-6 py-4 text-sm text-gray-900">{{ $history->quantity }}X</td>
                                             <td class="px-6 py-4 text-sm text-gray-900">{{ $history->total_price }}</td>
@@ -88,6 +94,14 @@
                                         readonly>
                                 </a>
                             </div>
+                            <div class="mt-11">
+                                <a href="#" id="printButton"
+                                    class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
+                                    <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
+                                        class="w-5 h-5 inline-block mr-2">
+                                    Print
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </main>
@@ -112,6 +126,18 @@
     <x-admin.js></x-admin.js>
     {{-- Confirm Alert --}}
     {{-- DataTables --}}
+
+    <script>
+        document.getElementById('printButton').addEventListener('click', function() {
+            var printContents = document.getElementById('printArea').innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload();
+        });
+    </script>
 </body>
 
 </html>

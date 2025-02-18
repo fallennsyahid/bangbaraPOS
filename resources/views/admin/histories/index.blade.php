@@ -58,15 +58,14 @@
 
                         </div>
                         <div class="mb-4 mt-3">
-                            <a href="{{ route('admin.histories.export') }}?{{ http_build_query(request()->all()) }}"
-                                id="exportExcel"
+                            <a href="#" id="exportExcel"
                                 class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
                                 <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
                                     class="w-5 h-5 inline-block mr-2">
                                 Export
                             </a>
                         </div>
-                        <div class="w-full max-w-4xl overflow-x-auto">
+                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
                             <div class="flex mx-auto justify-between">
                             </div>
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
@@ -234,89 +233,24 @@
             window.location.href = url;
         });
     </script> --}}
+    <script>
+        document.getElementById('exportExcel').addEventListener('click', (e) => {
+            e.preventDefault();
 
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const filters = document.querySelectorAll('#filter_year, #filter_month, #filter_day');
-            const exportButton = document.getElementById('exportExcel');
+            const periode_awal = document.getElementById('periode_awal').value;
+            const periode_akhir = document.getElementById('periode_akhir').value;
 
-            filters.forEach(filter => {
-                filter.addEventListener('change', () => {
-                    const year = document.getElementById('filter_year').value;
-                    const month = document.getElementById('filter_month').value;
-                    const day = document.getElementById('filter_day').value;
+            if (!periode_awal || !periode_akhir) {
+                alert('Please select the date range first');
+                return;
+            }
 
-                    // Membuat URLSearchParams untuk query
-                    const params = new URLSearchParams();
-                    if (year) params.append('filter_year', year);
-                    if (month) params.append('filter_month', month);
-                    if (day) params.append('filter_day', day);
-
-                    // Update URL untuk tombol export
-                    const exportUrl = `/admin/histories/export?${params.toString()}`;
-                    exportButton.setAttribute('href', exportUrl);
-
-                    // Update data di tabel
-                    const url = `/admin/histories?${params.toString()}`;
-
-                    fetch(url, {
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest'
-                            }
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            const tableBody = document.getElementById('productTable');
-                            tableBody.innerHTML = ''; // Kosongkan tabel
-
-                            if (data.histories && data.histories.length > 0) {
-                                data.histories.forEach((history, index) => {
-                                    tableBody.innerHTML += `
-                                <tr class="hover:bg-thead" data-category="${history.id}">
-                                    <td class="px-6 py-4 font-medium text-sm text-zinc-950">#${index + 1}</td>
-                                    <td class="px-6 py-4 font-medium text-sm text-zinc-950">${history.customer_name}</td>
-                                    <td class="px-6 py-4 font-medium text-sm text-zinc-950">${history.customer_phone}</td>
-                                    <td class="px-6 py-4 font-medium text-sm text-zinc-950">Rp ${parseFloat(history.total_price).toLocaleString('id-ID', { minimumFractionDigits: 2 })}</td>
-                                    <td class="px-6 py-4 font-medium text-sm text-zinc-950">${history.payment_method}</td>
-                                    <td class="px-6 py-4 font-medium text-sm text-zinc-900"
-                                                id="history-status-{{ $history->id }}">
-                                                <h5
-                                                    class="
-                                                             {{ $history->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                             {{ $history->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                    ">${history.status}</td>
-                                    <td class="px-6 py-4 font-medium text-sm text-zinc-950"><a href="${history.payment_photo}">
-                                                    <button class="bg-[#CA1100] rounded-md px-4 py-2">
-                                                        <h5 class="text-xs font-semibold">Lihat File</h5>
-                                                    </button>
-                                                </a></td>
-                                    <td class="px-6 py-4 flex gap-3 mt-4">
-                                                <a href="{{ route('histories.show', $history->id) }}">
-                                                    <a href="{{ route('histories.show', $history->id) }}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="30"
-                                                            height="30" viewBox="0 0 24 24">
-                                                            <path fill="#6c80e4" fill-rule="evenodd"
-                                                                d="M12 17.8c4.034 0 7.686-2.25 9.648-5.8C19.686 8.45 16.034 6.2 12 6.2S4.314 8.45 2.352 12c1.962 3.55 5.614 5.8 9.648 5.8M12 5c4.808 0 8.972 2.848 11 7c-2.028 4.152-6.192 7-11 7s-8.972-2.848-11-7c2.028-4.152 6.192-7 11-7m0 9.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8" />
-                                                        </svg>
-                                                    </a>
-                                                </a>
-                                            </td>
-                                </tr>
-                            `;
-                                });
-                            } else {
-                                tableBody.innerHTML = `
-                            <tr>
-                                <td colspan="7" class="text-center py-4">No data available for the selected filters.</td>
-                            </tr>
-                        `;
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                });
-            });
+            const url = `/export-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}` +
+                `?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}`;
+            window.location.href = url;
         });
-    </script> --}}
+    </script>
+
 
     <script>
         document.getElementById('filterForm').addEventListener('submit', function(event) {

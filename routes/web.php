@@ -77,7 +77,7 @@ Route::get('products/export', [ProductController::class, 'export'])->name('produ
 Route::get('categories/export', [CategoryController::class, 'export'])->name('categories.export');
 Route::get('orders/export', [OrderAdminController::class, 'export'])->name('orders.export');
 Route::get('users/export', [StaffController::class, 'export'])->name('users.export');
-Route::get('/admin/histories/export', [HistoryController::class, 'export'])->name('admin.histories.export');
+Route::get('/export-histories', [HistoryController::class, 'export'])->name('admin.histories.export');
 
 // Category Routes
 Route::resource('/admin/categories', CategoryController::class);
@@ -136,6 +136,23 @@ Route::get('/orders/{id}/status', function ($id) {
 
 // Table history route
 Route::get('/get-histories', [HistoryController::class, 'getHistories']);
+
+// Total Orders API
+Route::get('/get-total-orders', function () {
+    return response()->json([
+        'total_orders' => Order::count(),
+    ]);
+});
+Route::get('/get-total-orders-today', function () {
+    return response()->json([
+        'total_orders' => Order::whereDate('created_at', Carbon::today())->count(),
+    ]);
+});
+
+Route::get('/get-orders', function () {
+    $orders = Order::with('product')->orderBy('created_at', 'desc')->get();
+    return response()->json($orders);
+});
 
 
 require __DIR__ . '/auth.php';

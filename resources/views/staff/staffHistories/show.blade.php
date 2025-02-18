@@ -20,7 +20,7 @@
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
                         <h1 class="text-2xl font-semibold text-zinc-950">Order Details</h1>
-                        <x-admin.waButton></x-admin.waButton>
+                        <x-staff.waButton></x-staff.waButton>
                     </div>
 
 
@@ -34,11 +34,17 @@
                         </h2>
 
                         <!-- Kontainer Tabel -->
-                        <div class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+                        <div id="printArea" class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
                             <!-- Detail Pemesan -->
                             <div class="mb-4">
                                 <label class="block text-gray-700 font-semibold">Nama Pemesan:</label>
                                 <input type="text" value="{{ $history->customer_name }}"
+                                    class="w-full p-2 border rounded-md bg-gray-100 text-zinc-900" readonly>
+                            </div>
+                            <!-- Detail Kasir -->
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-semibold">Nama Kasir:</label>
+                                <input type="text" value="{{ $history->casier_name }}"
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-900" readonly>
                             </div>
 
@@ -89,6 +95,14 @@
                                         readonly>
                                 </a>
                             </div>
+                            <div class="mt-11">
+                                <a href="#" id="printButton"
+                                    class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
+                                    <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
+                                        class="w-5 h-5 inline-block mr-2">
+                                    Print
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </main>
@@ -113,6 +127,18 @@
     <x-admin.js></x-admin.js>
     {{-- Confirm Alert --}}
     {{-- DataTables --}}
+
+    <script>
+        document.getElementById('printButton').addEventListener('click', function() {
+            var printContents = document.getElementById('printArea').innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            // No need to reload the page
+        });
+    </script>
 </body>
 
 </html>
