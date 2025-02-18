@@ -51,7 +51,8 @@ class OrderController extends Controller
 
         $products = $cartItems->map(fn($item) => [
             'product_id' => $item->product_id,
-            'name' => $item->product->name,
+            'nama_menu' => $item->product->nama_menu,
+            'gambar_menu' => $item->product->gambar_menu,
             'quantity' => $item->quantity,
             'price' => $item->product->harga_menu,
         ])->toArray();

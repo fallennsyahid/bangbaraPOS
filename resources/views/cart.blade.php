@@ -88,7 +88,8 @@
                                     <div class="md:col-span-2">
                                         <div class="flex flex-col max-[500px]:items-center gap-3">
                                             <h6 class="font-semibold text-base leading-7 text-black">
-                                                {{ $item->product->nama_menu }}</h6>
+                                                {{ $item->product->nama_menu }}
+                                            </h6>
                                             <h6
                                                 class="font-medium text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-red-700">
                                                 Rp {{ number_format($item->product->harga_menu, 2) }}
