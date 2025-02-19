@@ -95,7 +95,8 @@
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 @if ($order->payment_method === 'nonTunai')
-                                                    <a href="">
+                                                    <a href="{{ Storage::url($order->payment_photo) }}"
+                                                        target="_blank">
                                                         <button
                                                             class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
                                                             <h6>File</h6>

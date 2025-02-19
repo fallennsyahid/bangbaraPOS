@@ -40,7 +40,7 @@
                                 <input type="text" value="{{ $history->customer_name }}"
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-900" readonly>
                             </div>
-                            <!-- Detail Kasir -->
+
                             <div class="mb-4">
                                 <label class="block text-gray-700 font-semibold">Nama Kasir:</label>
                                 <input type="text" value="{{ $history->casier_name }}"
@@ -51,31 +51,37 @@
                             <div class="overflow-x-auto shadow-md">
                                 <table class="table-auto border-collapse w-full text-left shadow-md rounded-md">
                                     <tbody class="bg-gray-50">
-                                        <tr class="hover:bg-gray-200">
-                                            <td class="px-6 py-4 text-sm text-gray-900">#{{ $history->id }}</td>
-                                            <td class="px-6 py-4 text-sm">
-                                                <img src="{{ Storage::url($history->product->gambar_menu) }}"
-                                                    class="w-20 h-20 object-cover rounded-md" alt="Gambar Product">
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">
-                                                {{ $history->product->nama_menu }}
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">
-                                                {{ $history->product->category->nama_kategori }}</td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">
-                                                {{ $history->product->harga_menu }}
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">{{ $history->quantity }}X</td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">{{ $history->total_price }}</td>
-                                        </tr>
+                                        @foreach ($products as $product)
+                                            <tr class="hover:bg-gray-200">
+                                                <td class="px-6 py-4 text-sm text-gray-900">#{{ $history->id }}</td>
+                                                <td class="px-6 py-4 text-sm">
+                                                    <img src="{{ Storage::url($product['gambar_menu']) }}"
+                                                        class="w-20 h-20 object-cover rounded-md" alt="Gambar Product">
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-gray-900">
+                                                    {{ $product['nama_menu'] }}
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-gray-900">
+                                                    Rp{{ number_format($product['price'], 0, ',', '.') }}
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-gray-900">{{ $product['quantity'] }}X
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
+                            </div>
+
+                            <!-- Total Price -->
+                            <div class="mt-4">
+                                <label class="block text-gray-700 font-semibold">Total:</label>
+                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>Rp {{ number_format($history->total_price, 0, ',', '.') }}</textarea>
                             </div>
 
                             <!-- Catatan -->
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Catatan:</label>
-                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>Steaknya jangan terlalu matang, potatonya banyakin.</textarea>
+                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>{{ $history->request }}</textarea>
                             </div>
 
                             <!-- Metode Pembayaran -->
@@ -85,7 +91,6 @@
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
                             </div>
 
-                            {{-- Costumer Phone --}}
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Phone Number:</label>
                                 <a href="https://wa.me/{{ $history->customer_phone }}" target="_blank">
@@ -94,7 +99,7 @@
                                         readonly>
                                 </a>
                             </div>
-                            <div class="mt-11">
+                            <div class="mt-11 flex justify-items-end">
                                 <a href="#" id="printButton"
                                     class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
                                     <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
@@ -104,6 +109,11 @@
                             </div>
                         </div>
                     </div>
+
+
+
+
+
                 </main>
 
                 <!-- Main footer -->
@@ -125,7 +135,6 @@
     <!-- All javascript code in this project for now is just for demo DON'T RELY ON IT  -->
     <x-admin.js></x-admin.js>
     {{-- Confirm Alert --}}
-    {{-- DataTables --}}
 
     <script>
         document.getElementById('printButton').addEventListener('click', function() {
@@ -135,7 +144,6 @@
             document.body.innerHTML = printContents;
             window.print();
             document.body.innerHTML = originalContents;
-            location.reload();
         });
     </script>
 </body>

@@ -45,30 +45,37 @@
                             <div class="overflow-x-auto shadow-md">
                                 <table class="table-auto border-collapse w-full text-left shadow-md rounded-md">
                                     <tbody class="bg-gray-50">
-                                        <tr class="hover:bg-gray-200">
-                                            <td class="px-6 py-4 text-sm text-gray-900">#{{ $order->id }}</td>
-                                            <td class="px-6 py-4 text-sm">
-                                                <img src="{{ Storage::url($order->product->gambar_menu) }}"
-                                                    class="w-20 h-20 object-cover rounded-md" alt="Gambar Product">
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">{{ $order->product->nama_menu }}
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">
-                                                {{ $order->product->category->nama_kategori }}</td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">
-                                                {{ $order->product->harga_menu }}
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">{{ $order->quantity }}X</td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">{{ $order->total_price }}</td>
-                                        </tr>
+                                        @foreach ($products as $product)
+                                            <tr class="hover:bg-gray-200">
+                                                <td class="px-6 py-4 text-sm text-gray-900">#{{ $order->id }}</td>
+                                                <td class="px-6 py-4 text-sm">
+                                                    <img src="{{ Storage::url($product['gambar_menu']) }}"
+                                                        class="w-20 h-20 object-cover rounded-md" alt="Gambar Product">
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-gray-900">
+                                                    {{ $product['nama_menu'] }}
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-gray-900">
+                                                    Rp{{ number_format($product['price'], 0, ',', '.') }}
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-gray-900">{{ $product['quantity'] }}X
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
+                            </div>
+
+                            <!-- Total Price -->
+                            <div class="mt-4">
+                                <label class="block text-gray-700 font-semibold">Total:</label>
+                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>Rp {{ number_format($order->total_price, 0, ',', '.') }}</textarea>
                             </div>
 
                             <!-- Catatan -->
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Catatan:</label>
-                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>Steaknya jangan terlalu matang, potatonya banyakin.</textarea>
+                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>{{ $order->request }}</textarea>
                             </div>
 
                             <!-- Metode Pembayaran -->

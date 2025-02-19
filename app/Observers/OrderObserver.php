@@ -26,13 +26,12 @@ class OrderObserver
             'casier_name' => Auth::user()->name,
             'customer_name' => $order->customer_name,
             'customer_phone' => $order->customer_phone,
-            'product_id' => $order->product_id,
-            'quantity' => $order->quantity,
             'total_price' => $order->total_price,
             'payment_photo' => $order->payment_photo,
             'payment_method' => $order->payment_method,
             'request' => $order->request,
             'status' => $order->status,
+            'products' => json_encode($order->products),
         ]);
         }
     }

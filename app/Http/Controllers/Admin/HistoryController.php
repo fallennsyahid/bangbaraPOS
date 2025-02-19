@@ -26,7 +26,7 @@ class HistoryController extends Controller
     }
 
 
-        $histories = $query->get(); // Ambil data hasil filter
+        $histories = $query->orderBy('created_at', 'desc')->get(); // Ambil data hasil filter
 
         return view('admin.histories.index', compact('histories')); // Pastikan `history.index` adalah view yang benar
     }
@@ -96,8 +96,12 @@ class HistoryController extends Controller
      */
     public function show(History $history)
     {
-        $history->load('product');
-        return view('admin.histories.show', compact('history'));
+        $products = json_decode($history->products, true);
+
+        if (is_string($products)) {
+            $products = json_decode($products, true);
+        }
+        return view('admin.histories.show', compact('history', 'products'));
     }
 
     /**

@@ -35,7 +35,7 @@
                                 Export Excel
                             </a>
                         </div>
-                        <div class="w-full max-w-4xl overflow-x-auto">
+                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
                             <div class="flex mx-auto justify-between">
                             </div>
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"

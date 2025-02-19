@@ -126,7 +126,8 @@
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">
                                                 @if ($history->payment_method === 'nonTunai')
-                                                    <a href="">
+                                                    <a href="{{ Storage::url($history->payment_photo) }}"
+                                                        target="_blank">
                                                         <button
                                                             class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
                                                             <h6>File</h6>
@@ -267,6 +268,12 @@
 
                     if (data.length > 0) {
                         data.forEach((history, index) => {
+                            let paymentPhoto = history.payment_method === 'nonTunai' ?
+                                `<a href="{{ Storage::url($history->payment_photo) }}" target="_blank">
+                                    <button class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
+                                        <h6>File</h6>
+                                    </button>
+                                </a>` : '-';
                             let row = `
                         <tr>
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">#${index + 1}</td>
@@ -281,15 +288,7 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">
-                                @if ($history->payment_method === 'nonTunai')
-                                    <a href="">
-                                        <button class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
-                                            <h6>File</h6>
-                                        </button>
-                                    </a>
-                                @else
-                                    <p class="text-zinc-950 text-2xl text-center mr-2">-</p>
-                                @endif
+                                ${paymentPhoto}
                             </td>
                                    <td class="px-6 py-4 flex gap-3 mt-4">
                                                 <a href="{{ route('histories.show', $history->id) }}">
