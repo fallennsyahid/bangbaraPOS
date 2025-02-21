@@ -19,7 +19,7 @@
                 <main class="bg-prime">
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
-                        <h1 class="text-2xl font-semibold text-zinc-950">Add Staff</h1>
+                        <h1 class="text-2xl font-semibold text-zinc-950">Edit Profile</h1>
                         <x-admin.waButton></x-admin.waButton>
 
                     </div>
@@ -28,7 +28,7 @@
                     <div class="min-h-screen mb-4 py-5 flex flex-col items-center justify-center bg-prime">
                         <h2 class="mb-4">
                             <a href="{{ route('staffs.index') }}" class="text-amber-400 hover:underline">Back </a>/
-                            <a href="/admin/dashboard" class="hover:underline text-zinc">Home</a>
+                            <a href="/admin/dashboard" class="hover:underline text-zinc-950">Home</a>
                         </h2>
                         <form action="{{ route('staffs.update', $user->id) }}" method="POST"
                             enctype="multipart/form-data"
@@ -37,7 +37,7 @@
                             @method('PUT')
 
 
-                            <h2 class="text-2xl font-bold text-center mb-6 text-zinc-950">Edit Staff</h2>
+                            <h2 class="text-2xl font-bold text-center mb-6 text-zinc-950">Edit Profile</h2>
 
                             <!-- Input Nama Staff -->
                             <div class="mb-4">

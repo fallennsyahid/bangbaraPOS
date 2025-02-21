@@ -233,8 +233,8 @@
                                     <select name="payment_method" id="metodePembayaran"
                                         class="payment_method w-3/4 border border-black rounded-lg font-medium py-2 px-2 focus:ring-gray-400 focus:border-gray-400">
                                         <option value="-">Pilih Opsi Pembayaran</option>
-                                        <option value="tunai">Tunai</option>
-                                        <option value="non-tunai">Non-Tunai</option>
+                                        <option value="Tunai">Tunai</option>
+                                        <option value="nonTunai">Non-Tunai</option>
                                     </select>
                                 </div>
                             </div>
@@ -283,7 +283,7 @@
     <section>
         <div class="hidden justify-center items-center fixed left-0 top-0 w-full h-full overflow-auto bg-black/80 z-[9999]"
             id="qrcode">
-            <img src="{{ asset('asset-view/assets/png/maps.png') }}" alt="" id="imagePayment" />
+            <img src="{{ asset('asset-view/assets/png/qr-code.jpg') }}" alt="" id="imagePayment" />
         </div>
     </section>
 

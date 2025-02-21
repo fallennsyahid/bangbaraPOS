@@ -28,7 +28,7 @@
                     <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
                         <!-- Tombol View on GitHub -->
                         <!-- Tabel -->
-                        <div class="mb-4 mt-3">
+                        <div class="mb-4 mt-3 flex justify-end w-full max-w-4xl">
                             <a href="{{ route('orders.export') }}"
                                 class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
                                 <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
@@ -95,7 +95,8 @@
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 @if ($order->payment_method === 'nonTunai')
-                                                    <a href="">
+                                                    <a href="{{ Storage::url($order->payment_photo) }}"
+                                                        target="_blank">
                                                         <button
                                                             class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
                                                             <h6>File</h6>

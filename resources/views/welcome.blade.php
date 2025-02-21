@@ -67,7 +67,7 @@
                             <li class="group">
                                 <a href="#contact"
                                     class="text-base text-white py-2 mx-4 flex font-medium relative group-hover:text-primary after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 after:transform after:-translate-x-1/2 group-hover:after:w-3/4">
-                                    Contact
+                                    Reviews
                                 </a>
                             </li>
                         </ul>

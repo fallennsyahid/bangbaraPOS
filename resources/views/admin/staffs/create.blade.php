@@ -28,7 +28,7 @@
                     <div class="min-h-screen mb-4 py-5 flex flex-col items-center justify-center bg-prime">
                         <h2 class="mb-4">
                             <a href="{{ route('staffs.index') }}" class="text-amber-400 hover:underline">Back </a>/
-                            <a href="/admin/dashboard" class="hover:underline text-zinc">Home</a>
+                            <a href="/admin/dashboard" class="hover:underline text-zinc-950">Home</a>
                         </h2>
                         <form action="{{ route('staffs.store') }}" method="POST" enctype="multipart/form-data"
                             class="w-full max-w-md bg-thead text-gray-900 p-6 rounded-lg shadow-lg">

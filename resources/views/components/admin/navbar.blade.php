@@ -82,14 +82,16 @@
                             <p class="text-gray-500 text-sm">Tidak ada notifikasi baru.</p>
                         </template>
                         <template x-for="notif in notifications" :key="notif.id">
-                            <div class="p-2 border-b">
+                            <a :href="'{{ route('orders.show', '') }}' + '/' + notif.id"
+                                class="block p-2 border-b hover:bg-slate-100">
+                                {{-- <a href="{{ route('notification.index') }}" class="block p-2 border-b hover:bg-slate-100"> --}}
                                 <p class="text-sm font-semibold text-gray-400">Order #<span x-text="notif.id"></span>
                                 </p>
                                 <p class="text-xs text-gray-600">Nama: <span x-text="notif.customer_name"></span></p>
                                 <p class="text-xs text-gray-600">Status: <span x-text="notif.status"></span></p>
                                 <p class="text-xs text-gray-600">Total: Rp<span x-text="notif.total_price"></span></p>
                                 <p class="text-xs text-gray-400" x-text="notif.created_at"></p>
-                            </div>
+                            </a>
                         </template>
                     </div>
                 </div>

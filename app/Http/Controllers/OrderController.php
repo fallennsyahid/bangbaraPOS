@@ -28,7 +28,7 @@ class OrderController extends Controller
             'customer_name' => 'required|',
             'customer_phone' => 'required|',
             'request' => 'nullable',
-            'payment_method' => 'required',
+            'payment_method' => 'required|in:Tunai,nonTunai',
             'payment_photo' => 'nullable',
         ]);
 
