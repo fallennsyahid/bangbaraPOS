@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log as Anjay;
 
 class CartController extends Controller
 {
@@ -20,41 +22,30 @@ class CartController extends Controller
     // Tambah produk ke keranjang
     public function addToCart(Request $request)
     {
-        // $request->validate([
-        //     'product_id' => 'required|exists:products,id',
-        //     'quantity' => 'required|integer|min:1',
-        // ]);
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1'
+        ]);
 
-        // $product = Product::findOrFail($request->product_id);
-        // $cart = Cart::where('product_id', $product->id)->first();
+        $product_id = $request->product_id;
+        $quantity = $request->quantity;
 
-        // if ($cart) {
-        //     $cart->increment('quantity', $request->quantity);
-        // } else {
-        //     Cart::create([
-        //         'product_id' => $product->id,
-        //         'quantity' => $request->quantity,
-        //     ]);
-        // }
+        // Cek apakah produk sudah ada di cart
+        $cartItem = Cart::where('product_id', $product_id)->first();
 
-        // return redirect()->route('index')->with('success', 'Produk ditambahkan ke keranjang');
-
-        $product = Product::findOrFail($request->product_id);
-
-        $cart = Cart::where('product_id', $product->id)->first();
-
-        if ($cart) {
-            $cart->increment('quantity', $request->quantity ?? 1);
+        if ($cartItem) {
+            // Jika sudah ada, tambah quantity
+            $cartItem->increment('quantity', $quantity);
         } else {
+            // Jika belum ada, buat entri baru
             Cart::create([
-                'product_id' => $product->id,
-                'quantity' => $request->quantity ?? 1, // Ambil quantity dari request
+                'product_id' => $product_id,
+                'quantity' => $quantity,
             ]);
         }
 
-        return redirect()->route('index')->with('success', 'Produk ditambahkan ke keranjang');
+        return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke keranjang!');
     }
-
 
     // Hapus produk dari keranjang
     public function removeFromCart($id)

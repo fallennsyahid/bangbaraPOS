@@ -2,16 +2,16 @@
 window.onscroll = function () {
     const header = document.querySelector('header');
     const fixedNav = header.offsetTop;
-    const toTop = document.querySelector('#to-top');
+    // const toTop = document.querySelector('#to-top');
 
     if (window.scrollY > fixedNav) {
         header.classList.add('navbar-fixed');
-        toTop.classList.remove('hidden');
-        toTop.classList.add('flex');
+        // toTop.classList.remove('hidden');
+        // toTop.classList.add('flex');
     } else {
         header.classList.remove('navbar-fixed');
-        toTop.classList.remove('flex');
-        toTop.classList.add('hidden');
+        // toTop.classList.remove('flex');
+        // toTop.classList.add('hidden');
     }
 };
 
@@ -57,51 +57,51 @@ function changeSlide(index) {
 }
 
 // POPUP
-document.addEventListener("DOMContentLoaded", function () {
-    const itemDetailModal = document.querySelector("#item-detail-modal");
-    const itemDetailButtons = document.querySelectorAll(".item-detail-button");
-    const closeButton = document.querySelector(".close-icon");
+// document.addEventListener("DOMContentLoaded", function () {
+//     const itemDetailModal = document.querySelector("#item-detail-modal");
+//     const itemDetailButtons = document.querySelectorAll(".item-detail-button");
+//     const closeButton = document.querySelector(".close-icon");
 
-    itemDetailButtons.forEach((btn) => {
-        btn.onclick = (e) => {
-            e.preventDefault();
+//     itemDetailButtons.forEach((btn) => {
+//         btn.onclick = (e) => {
+//             e.preventDefault();
 
-            // Ambil elemen produk terdekat
-            const productCard = btn.closest("div");
-            const productImage = productCard.querySelector("img").src;
-            const productName = productCard.querySelector("p").innerText;
-            const productDescription = productCard.querySelector("h6").innerText; // Ubah jika ada deskripsi produk
-            const productPrice = productCard.querySelector("span").innerText;
+//             // Ambil elemen produk terdekat
+//             const productCard = btn.closest("div");
+//             const productImage = productCard.querySelector("img").src;
+//             const productName = productCard.querySelector("p").innerText;
+//             const productDescription = productCard.querySelector("h6").innerText; // Ubah jika ada deskripsi produk
+//             const productPrice = productCard.querySelector("span").innerText;
 
-            // Update isi modal
-            itemDetailModal.querySelector("img").src = productImage;
-            itemDetailModal.querySelector("h1").innerText = productName;
-            itemDetailModal.querySelector("p").innerText = productDescription;
+//             // Update isi modal
+//             itemDetailModal.querySelector("img").src = productImage;
+//             itemDetailModal.querySelector("h1").innerText = productName;
+//             itemDetailModal.querySelector("p").innerText = productDescription;
 
-            // Tampilkan modal
-            itemDetailModal.classList.remove("hidden");
-            itemDetailModal.classList.add("flex");
-        };
-    });
+//             // Tampilkan modal
+//             itemDetailModal.classList.remove("hidden");
+//             itemDetailModal.classList.add("flex");
+//         };
+//     });
 
-    // Tutup modal saat tombol close diklik
-    closeButton.onclick = (e) => {
-        e.preventDefault();
-        closeModal();
-    };
+//     // Tutup modal saat tombol close diklik
+//     closeButton.onclick = (e) => {
+//         e.preventDefault();
+//         closeModal();
+//     };
 
-    // Tutup modal jika klik di luar modal-container
-    itemDetailModal.onclick = (e) => {
-        if (e.target === itemDetailModal) {
-            closeModal();
-        }
-    };
+//     // Tutup modal jika klik di luar modal-container
+//     itemDetailModal.onclick = (e) => {
+//         if (e.target === itemDetailModal) {
+//             closeModal();
+//         }
+//     };
 
-    function closeModal() {
-        itemDetailModal.classList.add("hidden");
-        itemDetailModal.classList.remove("flex");
-    }
-});
+//     function closeModal() {
+//         itemDetailModal.classList.add("hidden");
+//         itemDetailModal.classList.remove("flex");
+//     }
+// });
 
 
 

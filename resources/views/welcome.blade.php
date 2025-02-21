@@ -75,12 +75,6 @@
 
                     <!-- Cart and Hamburger Menu -->
                     <div class="flex items-center space-x-4 lg:hidden">
-                        <!-- Clock Icon -->
-                        <a href="{{ route('history') }}" class="hidden">
-                            <img src="{{ asset('asset-view/assets/svg/clock.svg') }}" alt="" width="35px"
-                                class="hover:scale-110 transition duration-300 ease-in-out" />
-                        </a>
-
                         <!-- Cart Icon -->
                         <a href="{{ route('cart') }}">
                             <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
@@ -98,16 +92,11 @@
                     </div>
                 </div>
 
-                <!-- Cart and Clock Icon (Desktop Only) -->
                 <div class="hidden lg:block lg:items-center lg:space-x-4">
                     <!-- Cart Icon -->
-                    <a href="{{ route('cart') }}" class="relative">
+                    <a href="{{ route('cart') }}" class=" relative">
                         <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
-                        {{-- <span id="cart-count"
-                            class="absolute -top-2 -right-2 bg-red-600 text-white text-center text-xs px-2 py-1 rounded-full">
-                            {{ session('cart') ? count(session('cart')) : 0 }}
-                        </span> --}}
                     </a>
                 </div>
             </div>
@@ -184,7 +173,7 @@
                             class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5 justify-start">
                             @foreach ($category->products as $product)
                                 <div
-                                    class="bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
+                                    class="product-card bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
                                     <a href="#item-detail-modal" class="item-detail-button">
                                         <div class="relative group">
                                             <img src="{{ asset('storage/' . $product->gambar_menu) }}"
@@ -200,6 +189,7 @@
                                     <h6 class="hidden">{{ $product->deskripsi_menu }}</h6>
                                     <span class="text-price font-alkatra text-sm text-center">Rp
                                         {{ number_format($product->harga_menu, 0, ',', '.') }}</span>
+
 
                                     <form action="{{ route('cart.add') }}" method="POST">
                                         @csrf
@@ -234,34 +224,33 @@
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
                 </a>
+                <input type="hidden" id="modal-product-id" name="product_id" value="">
                 <img id="modal-image" src="" alt="Food" class="rounded-t-lg overflow-hidden" />
                 <h1 id="modal-title" class="text-center font-alatsi text-2xl pb-2"></h1>
                 <p id="modal-description" class="text-center font-alatsi text-base px-4"></p>
 
                 <div class="flex justify-center items-center flex-row my-4">
-                    {{-- Decrease Quantity --}}
+                    <!-- Decrease Quantity -->
                     <button id="decrease-qty" class="group rounded-l-sm border border-black/80 px-2 py-2">
-                        <span class="inline-block transform transition-transform duration-200 group-hover:scale-125">
-                            -
+                        <span class="inline-block transform transition-transform duration-200 group-hover:scale-125"> -
                         </span>
                     </button>
 
-                    {{-- Display Quantity --}}
+                    <!-- Display Quantity -->
                     <input type="text" id="modal-quantity"
                         class="border-y border-black/80 px-2 py-2 text-center w-1/4 focus:outline-none" value="1"
                         readonly>
 
-                    {{-- Increase Quantity --}}
+                    <!-- Increase Quantity -->
                     <button id="increase-qty" class="group rounded-r-sm border border-black/80 px-2 py-2">
-                        <span class="inline-block transform transition-transform duration-200 group-hover:scale-125">
-                            +
+                        <span class="inline-block transform transition-transform duration-200 group-hover:scale-125"> +
                         </span>
                     </button>
                 </div>
 
-                <!-- Tombol berada di bawah -->
-                <button id="add-to-cart-modal" data-url="{{ route('cart.add') }}"
-                    class="bg-[#BF0000] w-full px-4 py-2 font-marmelad text-white rounded-b-md mt-auto">
+                <button id="add-to-cart-modal"
+                    class="bg-[#BF0000] w-full px-4 py-2 font-marmelad text-white rounded-b-md mt-auto"
+                    data-url="{{ route('cart.add') }}" data-id="">
                     Tambahkan Ke Keranjang
                 </button>
 
@@ -280,25 +269,32 @@
             const decreaseQtyButton = document.querySelector("#decrease-qty");
             const increaseQtyButton = document.querySelector("#increase-qty");
 
-            let csrfToken = document.querySelector('meta[name="csrf-token"]').content; // Ambil CSRF Token
+            // Pastikan CSRF token tersedia
+            let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
+            // Event saat tombol "View More" diklik
             itemDetailButtons.forEach((btn) => {
                 btn.onclick = (e) => {
                     e.preventDefault();
 
-                    // Ambil elemen produk terdekat
-                    const productCard = btn.closest("div");
+                    const productCard = btn.closest(".product-card");
+                    const productId = productCard.querySelector("input[name='product_id']").value;
                     const productImage = productCard.querySelector("img").src;
                     const productName = productCard.querySelector("p").innerText;
                     const productDescription = productCard.querySelector("h6").innerText;
-                    const productId = productCard.querySelector("input[name='product_id']").value;
+
+                    if (!productId) {
+                        alert("Produk tidak ditemukan!");
+                        return;
+                    }
 
                     // Update isi modal
                     itemDetailModal.querySelector("img").src = productImage;
                     itemDetailModal.querySelector("h1").innerText = productName;
                     itemDetailModal.querySelector("p").innerText = productDescription;
-                    addToCartButton.dataset.id = productId; // Simpan ID produk di button
-                    quantityInput.value = 1; // Reset quantity setiap buka modal
+
+                    // Set product ID di input hidden dalam modal
+                    document.querySelector("#modal-product-id").value = productId;
 
                     // Tampilkan modal
                     itemDetailModal.classList.remove("hidden");
@@ -307,16 +303,9 @@
             });
 
             // Tutup modal saat tombol close diklik
-            closeButton.onclick = (e) => {
-                e.preventDefault();
-                closeModal();
-            };
-
-            // Tutup modal jika klik di luar modal-container
+            closeButton.onclick = () => closeModal();
             itemDetailModal.onclick = (e) => {
-                if (e.target === itemDetailModal) {
-                    closeModal();
-                }
+                if (e.target === itemDetailModal) closeModal();
             };
 
             function closeModal() {
@@ -324,26 +313,33 @@
                 itemDetailModal.classList.remove("flex");
             }
 
-            // Fitur Quantity dalam Modal
+            // Fitur tambah/kurang quantity dalam modal
             increaseQtyButton.onclick = () => {
-                let currentQty = parseInt(quantityInput.value);
-                quantityInput.value = currentQty + 1;
+                quantityInput.value = parseInt(quantityInput.value) + 1;
             };
 
             decreaseQtyButton.onclick = () => {
                 let currentQty = parseInt(quantityInput.value);
-                if (currentQty > 1) {
-                    quantityInput.value = currentQty - 1;
-                }
+                if (currentQty > 1) quantityInput.value = currentQty - 1;
             };
 
             // Event untuk menambahkan produk ke keranjang
-            addToCartButton.onclick = () => {
-                let productId = addToCartButton.dataset.id;
+            addToCartButton.onclick = function() {
+                let productId = itemDetailModal.querySelector("input[name='product_id']").value;
                 let quantity = quantityInput.value;
-                let url = addToCartButton.dataset.url; // Ambil URL dari data-attribute
+                let url = this.dataset.url;
 
-                // Buat form secara dinamis dan submit ke server
+                // Cek apakah productId dan URL benar
+                console.log("Product ID:", productId);
+                console.log("Quantity:", quantity);
+                console.log("URL:", url);
+
+                if (!productId) {
+                    alert("Produk tidak valid! ID tidak ditemukan.");
+                    return;
+                }
+
+                // Buat form untuk dikirim ke Laravel
                 let form = document.createElement("form");
                 form.method = "POST";
                 form.action = url;
@@ -369,7 +365,6 @@
                 quantityInputField.value = quantity;
                 form.appendChild(quantityInputField);
 
-                // Tambahkan form ke body dan submit
                 document.body.appendChild(form);
                 form.submit();
             };
@@ -377,25 +372,6 @@
     </script>
 
     <!-- About Section Start -->
-    {{-- <section id="about" class="about-img">
-        <div class="container flex justify-end sm:px-8 lg:px-16">
-            <div class="flex flex-col items-center sm:items-start">
-                <h1
-                    class="font-europhia text-5xl sm:text-6xl lg:text-7xl text-white py-8 sm:py-12 lg:py-16 px-4 sm:px-8 lg:px-14 max-w-[20rem] sm:max-w-[30rem] lg:max-w-[33rem] text-center sm:text-left">
-                    Tentang Kami
-                </h1>
-                <p
-                    class="text-base sm:text-lg lg:text-xl font-normal text-shadow text-white px-4 sm:px-8 lg:px-14 max-w-[28rem] sm:max-w-[40rem] lg:max-w-[45rem]">
-                    Bangbara adalah tempat makan yang menghadirkan steak dan chicken
-                    katsu dengan cita rasa istimewa. Dengan bahan berkualitas dan harga
-                    yang terjangkau, Bangbara menjadi pilihan tepat untuk menikmati
-                    hidangan lezat bersama keluarga atau teman. Suasana yang nyaman dan
-                    pelayanan ramah membuat setiap kunjungan menjadi pengalaman yang
-                    menyenangkan.
-                </p>
-            </div>
-        </div>
-    </section> --}}
     <section id="about" class="bg-red-600 flex justify-center items-center min-h-screen">
         <div class="text-center p-6 bg-red-600">
             <div class="flex flex-col items-center md:flex-row md:items-start">
