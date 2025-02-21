@@ -84,6 +84,7 @@
                         <template x-for="notif in notifications" :key="notif.id">
                             <a :href="'{{ route('orders.show', '') }}' + '/' + notif.id"
                                 class="block p-2 border-b hover:bg-slate-100">
+                                {{-- <a href="{{ route('notification.index') }}" class="block p-2 border-b hover:bg-slate-100"> --}}
                                 <p class="text-sm font-semibold text-gray-400">Order #<span x-text="notif.id"></span>
                                 </p>
                                 <p class="text-xs text-gray-600">Nama: <span x-text="notif.customer_name"></span></p>

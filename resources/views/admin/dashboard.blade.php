@@ -111,6 +111,37 @@
                                     <canvas id="orderChart"></canvas>
                                 </div>
                             </div>
+                            {{-- Best seller chart --}}
+                            <div class="col-span-1 bg-[#D3D3D3] rounded-md border border-white shadow-xl p-4">
+                                <!-- Card header -->
+                                <div class="border-b border-white pb-2 mb-4">
+                                    <h4 class="text-lg font-semibold text-gray-900">Best Seller</h4>
+                                </div>
+                                <!-- Chart -->
+                                <div class="relative h-72">
+                                    <canvas id="bestSellerChart"></canvas>
+                                </div>
+                            </div>
+                            {{-- Orders Method Chart --}}
+                            <div class="flex justify-center mt-4 py-4">
+                                <select name="filter_year" id="filter_year"
+                                    class="bg-[#FFFFFF] text-zinc-950 py-4 px-11 rounded-md shadow-lg">
+                                    @foreach ($years as $y)
+                                        <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>
+                                            {{ $y }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-span-3 bg-[#D3D3D3] rounded-md border border-white shadow-xl p-4 mt-8">
+                                <!-- Card header -->
+                                <div class="border-b border-white pb-2 mb-4">
+                                    <h4 class="text-lg font-semibold text-gray-900">Orders Method</h4>
+                                </div>
+                                <!-- Chart -->
+                                <div class="relative h-72">
+                                    <canvas id="ordersLineChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                 </main>
                 {{-- Chart Order --}}
@@ -209,6 +240,109 @@
         }
 
         setInterval(fetchOrders, 5000);
+    </script>
+    {{-- best seller data --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const ctxBestSeller = document.getElementById('bestSellerChart').getContext('2d');
+
+            fetch('/best-seller-chart')
+                .then(response => response.json())
+                .then(data => {
+                    const bestSellerChart = new Chart(ctxBestSeller, {
+                        type: 'doughnut',
+                        data: {
+                            labels: data.products, // Nama produk
+                            datasets: [{
+                                label: 'Total Sold',
+                                data: data.totals, // Jumlah produk terjual
+                                backgroundColor: [
+                                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'
+                                ],
+                                borderColor: '#FFFFFF',
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+    {{-- Method Orders data --}}
+    <script>
+        // Inisialisasi label bulan secara statis
+        const staticMonths = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        // Inisialisasi chart line dengan data awal yang dikirim dari controller
+        const ctxLine = document.getElementById('ordersLineChart').getContext('2d');
+        let ordersLineChart = new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: staticMonths,
+                datasets: [{
+                        label: 'Tunai',
+                        data: @json($tunaiData),
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        fill: true,
+                        tension: 0.4,
+                    },
+                    {
+                        label: 'nonTunai',
+                        data: @json($nonTunaiData),
+                        borderColor: '#FF6384',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        fill: true,
+                        tension: 0.4,
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Event listener untuk dropdown tahun
+        document.getElementById('filter_year').addEventListener('change', function() {
+            const selectedYear = this.value;
+            fetch(`/orders-stats?year=${selectedYear}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Update data chart line
+                    ordersLineChart.data.datasets[0].data = data.tunai;
+                    ordersLineChart.data.datasets[1].data = data.non_tunai;
+                    ordersLineChart.update();
+                })
+                .catch(error => console.error('Error:', error));
+        });
     </script>
 </body>
 

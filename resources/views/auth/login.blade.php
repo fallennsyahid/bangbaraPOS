@@ -43,12 +43,15 @@
                         <label for="password" class="block text-sm font-medium">Password</label>
                         <input id="password" type="password" name="password" required
                             class="p-2 mt-1 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:outline-none focus:border-2 focus:border-red-700">
-                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        <span class="absolute inset-y-0 right-0 pr-3 mt-5 flex items-center cursor-pointer">
+                            {{-- <svg class="h-5 w-5 text-gray-400" fill="none" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-7.293-2.293a8 8 0 0110.586 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                            </svg> --}}
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABkklEQVR4nO2WvUoDQRSFPwsjoomk8wHEUpNgL9aKnVjYii/hT2FEIwgS8hBKgp1gY6ddYpGHWPNjKRKrRAZuYBj3zu5iRIs9cJs7557D3Duzs5AixT/AGlAGHoEOMJDoSO4UKE3ScBt4AUYxowls/cRwGXhIYOjGPbCU1HQX+AgR6wGHQAGYkygCR7Lm8t+BnTiGU8A5MAwRqQNZT61Za4TUGa0z0VZNa0rb6r5CRyPMfARUNY0rpaAXsVMXOaCvaF265APPITEztZERgVcgACqSs3Hs0dsfk1aBTw/RrNuohHBMzkbRozcAVgypFXEt3DYHIRyTs5GN0GwZUvsXjHMRmm1D2lCuzzgKMVp9kaDVQ2B9TKx6iObjYCMj5oHncJ149K5dsecJXacF4E3RegKm3YK8Z96NBB+QO89c81rhorwumnkuYqeaaVO0vZgFbhWBvnwczLs7L1GSmWrtvRHNWDAt21OuTtwIRCPOiL4hKy+LthutK+WEB1LFDLApr5c5/V3r16cruZpwDDdFCv4MXw/YJO5+W1zLAAAAAElFTkSuQmCC"
+                                alt="visible--v1" class="h-5 w-5 text-gray-400" fill="currentColor"
+                                stroke="currentColor">
                         </span>
                     </div>
 

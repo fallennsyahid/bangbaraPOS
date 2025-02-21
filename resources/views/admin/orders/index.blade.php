@@ -28,7 +28,7 @@
                     <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
                         <!-- Tombol View on GitHub -->
                         <!-- Tabel -->
-                        <div class="mb-4 mt-3">
+                        <div class="mb-4 mt-3 flex justify-end w-full max-w-4xl">
                             <a href="{{ route('orders.export') }}"
                                 class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
                                 <img src="{{ asset('asset-view/assets/svg/export.svg') }}"

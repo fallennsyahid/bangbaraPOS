@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Bangbara - Post</title>
     <!-- CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -13,9 +13,7 @@
     <link rel="stylesheet" href="{{ asset('asset-view/css/slider.css') }}">
 
     <!-- ICON -->
-    {{-- <link rel="icon" href="{{ asset('assets/png/logo_bangbara.png') }}" /> --}}
     <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
-    {{-- <link rel="stylesheet" href="css/style.css" /> --}}
     <!-- ICON WEB -->
     <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
 
@@ -69,7 +67,7 @@
                             <li class="group">
                                 <a href="#contact"
                                     class="text-base text-white py-2 mx-4 flex font-medium relative group-hover:text-primary after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 after:transform after:-translate-x-1/2 group-hover:after:w-3/4">
-                                    Contact
+                                    Reviews
                                 </a>
                             </li>
                         </ul>
@@ -101,21 +99,15 @@
                 </div>
 
                 <!-- Cart and Clock Icon (Desktop Only) -->
-                <div class="hidden lg:flex lg:items-center lg:space-x-4">
-                    <!-- Clock Icon -->
-                    <a href="{{ route('history') }}" class="relative hidden">
-                        <img src="{{ asset('asset-view/assets/svg/clock.svg') }}" alt="" width="35px"
-                            class="hover:scale-110 transition duration-300 ease-in-out" />
-                    </a>
-
+                <div class="hidden lg:block lg:items-center lg:space-x-4">
                     <!-- Cart Icon -->
                     <a href="{{ route('cart') }}" class="relative">
                         <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
-                        <span id="cart-count"
+                        {{-- <span id="cart-count"
                             class="absolute -top-2 -right-2 bg-red-600 text-white text-center text-xs px-2 py-1 rounded-full">
-                            0
-                        </span>
+                            {{ session('cart') ? count(session('cart')) : 0 }}
+                        </span> --}}
                     </a>
                 </div>
             </div>
@@ -247,15 +239,20 @@
                 <p id="modal-description" class="text-center font-alatsi text-base px-4"></p>
 
                 <div class="flex justify-center items-center flex-row my-4">
-                    <button class="group rounded-l-sm border border-black/80 px-2 py-2">
+                    {{-- Decrease Quantity --}}
+                    <button id="decrease-qty" class="group rounded-l-sm border border-black/80 px-2 py-2">
                         <span class="inline-block transform transition-transform duration-200 group-hover:scale-125">
                             -
                         </span>
                     </button>
-                    <input type="text"
+
+                    {{-- Display Quantity --}}
+                    <input type="text" id="modal-quantity"
                         class="border-y border-black/80 px-2 py-2 text-center w-1/4 focus:outline-none" value="1"
                         readonly>
-                    <button class="group rounded-r-sm border border-black/80 px-2 py-2">
+
+                    {{-- Increase Quantity --}}
+                    <button id="increase-qty" class="group rounded-r-sm border border-black/80 px-2 py-2">
                         <span class="inline-block transform transition-transform duration-200 group-hover:scale-125">
                             +
                         </span>
@@ -263,9 +260,11 @@
                 </div>
 
                 <!-- Tombol berada di bawah -->
-                <button class="bg-[#BF0000] w-full px-4 py-2 font-marmelad text-white rounded-b-md mt-auto">
+                <button id="add-to-cart-modal" data-url="{{ route('cart.add') }}"
+                    class="bg-[#BF0000] w-full px-4 py-2 font-marmelad text-white rounded-b-md mt-auto">
                     Tambahkan Ke Keranjang
                 </button>
+
             </div>
         </div>
     </section>
@@ -276,6 +275,12 @@
             const itemDetailModal = document.querySelector("#item-detail-modal");
             const itemDetailButtons = document.querySelectorAll(".item-detail-button");
             const closeButton = document.querySelector(".close-icon");
+            const addToCartButton = document.querySelector("#add-to-cart-modal");
+            const quantityInput = document.querySelector("#modal-quantity");
+            const decreaseQtyButton = document.querySelector("#decrease-qty");
+            const increaseQtyButton = document.querySelector("#increase-qty");
+
+            let csrfToken = document.querySelector('meta[name="csrf-token"]').content; // Ambil CSRF Token
 
             itemDetailButtons.forEach((btn) => {
                 btn.onclick = (e) => {
@@ -285,14 +290,15 @@
                     const productCard = btn.closest("div");
                     const productImage = productCard.querySelector("img").src;
                     const productName = productCard.querySelector("p").innerText;
-                    const productDescription = productCard.querySelector("h6")
-                        .innerText; // Ubah jika ada deskripsi produk
-                    const productPrice = productCard.querySelector("span").innerText;
+                    const productDescription = productCard.querySelector("h6").innerText;
+                    const productId = productCard.querySelector("input[name='product_id']").value;
 
                     // Update isi modal
                     itemDetailModal.querySelector("img").src = productImage;
                     itemDetailModal.querySelector("h1").innerText = productName;
                     itemDetailModal.querySelector("p").innerText = productDescription;
+                    addToCartButton.dataset.id = productId; // Simpan ID produk di button
+                    quantityInput.value = 1; // Reset quantity setiap buka modal
 
                     // Tampilkan modal
                     itemDetailModal.classList.remove("hidden");
@@ -317,6 +323,56 @@
                 itemDetailModal.classList.add("hidden");
                 itemDetailModal.classList.remove("flex");
             }
+
+            // Fitur Quantity dalam Modal
+            increaseQtyButton.onclick = () => {
+                let currentQty = parseInt(quantityInput.value);
+                quantityInput.value = currentQty + 1;
+            };
+
+            decreaseQtyButton.onclick = () => {
+                let currentQty = parseInt(quantityInput.value);
+                if (currentQty > 1) {
+                    quantityInput.value = currentQty - 1;
+                }
+            };
+
+            // Event untuk menambahkan produk ke keranjang
+            addToCartButton.onclick = () => {
+                let productId = addToCartButton.dataset.id;
+                let quantity = quantityInput.value;
+                let url = addToCartButton.dataset.url; // Ambil URL dari data-attribute
+
+                // Buat form secara dinamis dan submit ke server
+                let form = document.createElement("form");
+                form.method = "POST";
+                form.action = url;
+
+                // Tambahkan CSRF token
+                let csrfInput = document.createElement("input");
+                csrfInput.type = "hidden";
+                csrfInput.name = "_token";
+                csrfInput.value = csrfToken;
+                form.appendChild(csrfInput);
+
+                // Tambahkan product_id
+                let productInput = document.createElement("input");
+                productInput.type = "hidden";
+                productInput.name = "product_id";
+                productInput.value = productId;
+                form.appendChild(productInput);
+
+                // Tambahkan quantity
+                let quantityInputField = document.createElement("input");
+                quantityInputField.type = "hidden";
+                quantityInputField.name = "quantity";
+                quantityInputField.value = quantity;
+                form.appendChild(quantityInputField);
+
+                // Tambahkan form ke body dan submit
+                document.body.appendChild(form);
+                form.submit();
+            };
         });
     </script>
 

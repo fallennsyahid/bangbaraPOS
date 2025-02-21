@@ -88,7 +88,8 @@
                                     <div class="md:col-span-2">
                                         <div class="flex flex-col max-[500px]:items-center gap-3">
                                             <h6 class="font-semibold text-base leading-7 text-black">
-                                                {{ $item->product->nama_menu }}</h6>
+                                                {{ $item->product->nama_menu }}
+                                            </h6>
                                             <h6
                                                 class="font-medium text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-red-700">
                                                 Rp {{ number_format($item->product->harga_menu, 2) }}
@@ -282,7 +283,7 @@
     <section>
         <div class="hidden justify-center items-center fixed left-0 top-0 w-full h-full overflow-auto bg-black/80 z-[9999]"
             id="qrcode">
-            <img src="{{ asset('asset-view/assets/png/maps.png') }}" alt="" id="imagePayment" />
+            <img src="{{ asset('asset-view/assets/png/qr-code.jpg') }}" alt="" id="imagePayment" />
         </div>
     </section>
 

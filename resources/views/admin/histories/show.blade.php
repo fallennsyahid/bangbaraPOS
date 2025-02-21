@@ -108,6 +108,57 @@
                                 </a>
                             </div>
                         </div>
+
+
+                        {{-- Print Display --}}
+                        <div id="printDisplay" class="hidden">
+                            <div class="flex justify-center items-center h-screen m-0 bg-gray-200 text-gray-900">
+                                <div class="rounded-md relative w-72 shadow-2xl p-3 bg-white">
+                                    <div class="py-2">
+                                        <div class="text-center text-xl font-bold">ORDER</div>
+                                        <div class="text-center text-xs font-bold">Order details</div>
+                                    </div>
+                                    <div class="text-center text-xs font-bold mb-1">~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div>
+                                    <div class="text-xs pl-2">
+                                        <div class="text-xs mb-1">Customer：{{ $history->customer_name }}</div>
+                                        <div class="text-xs mb-1">TelePhone：{{ $history->customer_phone }}</div>
+                                        <div class="text-xs mb-1">Casier：{{ $history->casier_name }}</div>
+                                        <div>OrderNumber：#{{ $history->id }}</div>
+                                    </div>
+                                    <div class="border-double border-t-4 border-b-4 border-gray-900 my-3">
+                                        <div class="flex text-sm pt-1 px-1">
+                                            <span class="w-2/6">Name</span>
+                                            <span class="w-2/6 text-right">Price</span>
+                                            <span class="w-2/6 text-right">QTY</span>
+                                        </div>
+                                        <div
+                                            class="border-dashed border-t border-b border-gray-900 mt-1 my-2 py-2 px-1">
+                                            @foreach ($products as $product)
+                                                <div class="flex justify-between text-sm">
+                                                    <span class="w-2/6 truncate">{{ $product['nama_menu'] }}</span>
+                                                    <span class="w-2/6 text-right">
+                                                        Rp{{ number_format($product['price'], 0, ',', '.') }}
+                                                    </span>
+                                                    <span class="w-2/6 text-right">{{ $product['quantity'] }}</span>
+                                                </div>
+                                            @endforeach
+                                            <!-- Jika ada produk lain, tambahkan di sini -->
+                                        </div>
+                                    </div>
+                                    <div class="text-xs">
+                                        <div class="mb-1">Discount：Rp0</div>
+                                        <div class="mb-52">Remark：--</div>
+                                        <div class="text-right">
+                                            <div>Time： {{ $history->created_at->format('d/m/y') }}
+                                            </div>
+                                            <div class="font-bold text-sm">Total：
+                                                Rp{{ number_format($history->total_price, 0, ',', '.') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
 
@@ -137,13 +188,19 @@
     {{-- Confirm Alert --}}
 
     <script>
-        document.getElementById('printButton').addEventListener('click', function() {
-            var printContents = document.getElementById('printArea').innerHTML;
-            var originalContents = document.body.innerHTML;
+        document.getElementById('printButton').addEventListener('click', function(event) {
+            event.preventDefault();
 
-            document.body.innerHTML = printContents;
+            // Hide web display
+            document.getElementById('printArea').classList.add('hidden');
+            document.getElementById('printDisplay').classList.remove('hidden')
+
+            // Print
             window.print();
-            document.body.innerHTML = originalContents;
+
+            // return web display
+            document.getElementById('printArea').classList.remove('hidden');
+            document.getElementById('printDisplay').classList.add('hidden');
         });
     </script>
 </body>

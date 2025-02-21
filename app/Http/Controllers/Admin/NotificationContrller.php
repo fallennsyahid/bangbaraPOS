@@ -1,28 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Staff;
+namespace App\Http\Controllers\Admin;
 
-use App\Exports\HistoryTodayExport;
-use Carbon\Carbon;
 use App\Http\Controllers\Controller;
-use App\Models\History;
+use App\Models\Order;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
-class StaffHistoryController extends Controller
+class NotificationContrller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $histories = History::with('product')->whereDate('created_at', Carbon::today())->get();
-        return view('staff.staffHistories.index', compact('histories'));
+        $orders = Order::take(4)->latest()->get();
+        $products = $orders->map(function($order) {
+            return json_decode($order->products, true);
+        })->flatten(1)->count();
+        return view('admin.notification.index', compact('orders', 'products'));
     }
 
-    public function exportToday() {
-        return Excel::download(new HistoryTodayExport, 'histories-today.xlsx');
-    }
     /**
      * Show the form for creating a new resource.
      */
@@ -42,16 +39,11 @@ class StaffHistoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(string $id)
     {
-        $history = History::findOrFail($id);
-        $products = $products = json_decode($history->products, true);
-
-        if (is_string($products)) {
-            $products = json_decode($products, true);
-        }
-        return view('staff.staffHistories.show', compact('history', 'products'));
+        //
     }
+
     /**
      * Show the form for editing the specified resource.
      */

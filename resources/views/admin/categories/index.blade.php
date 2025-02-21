@@ -26,7 +26,7 @@
 
 
                     <!-- Content -->
-                    <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4">
+                    <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 text-zinc-950">
                         <!-- Tombol View on GitHub -->
 
                         <!-- Tabel -->
@@ -63,7 +63,7 @@
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $category->nama_kategori }}
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950 text-center">
                                                 {{ $category->products->count() }}
                                             </td>
                                             <td class="px-6 py-4 flex gap-3 mt-4">

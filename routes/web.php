@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\HistoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\NotificationContrller;
 use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Admin\OrderAdminController;
 use App\Http\Controllers\Admin\ReviewController;
@@ -78,6 +79,8 @@ Route::get('categories/export', [CategoryController::class, 'export'])->name('ca
 Route::get('orders/export', [OrderAdminController::class, 'export'])->name('orders.export');
 Route::get('users/export', [StaffController::class, 'export'])->name('users.export');
 Route::get('/export-histories', [HistoryController::class, 'export'])->name('admin.histories.export');
+Route::get('/export-orders-today', [StaffOrdersController::class, 'exportToday'])->name('orders.today');
+Route::get('/export-histories-today', [StaffHistoryController::class, 'exportToday'])->name('histories.today');
 
 // Category Routes
 Route::resource('/admin/categories', CategoryController::class);
@@ -122,11 +125,17 @@ Route::get('/notifications', function () {
     ]);
 });
 
+Route::resource('/admin/notification', NotificationContrller::class);
+
 // Reviews
 Route::resource('/admin/reviews', ReviewController::class);
 
 // Chart Route
 Route::get('/chart-data', [AdminController::class, 'getChartData']);
+Route::get('/best-seller-chart', [AdminController::class, 'getBestSellerChartData']);
+Route::get('/orders-stats', [AdminController::class, 'getOrdersStats']);
+// Filter method chart
+Route::get('/orders-stats', [AdminController::class, 'getOrdersStats']);
 
 // Update status
 Route::get('/orders/{id}/status', function ($id) {

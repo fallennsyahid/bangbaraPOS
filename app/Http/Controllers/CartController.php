@@ -20,21 +20,41 @@ class CartController extends Controller
     // Tambah produk ke keranjang
     public function addToCart(Request $request)
     {
+        // $request->validate([
+        //     'product_id' => 'required|exists:products,id',
+        //     'quantity' => 'required|integer|min:1',
+        // ]);
+
+        // $product = Product::findOrFail($request->product_id);
+        // $cart = Cart::where('product_id', $product->id)->first();
+
+        // if ($cart) {
+        //     $cart->increment('quantity', $request->quantity);
+        // } else {
+        //     Cart::create([
+        //         'product_id' => $product->id,
+        //         'quantity' => $request->quantity,
+        //     ]);
+        // }
+
+        // return redirect()->route('index')->with('success', 'Produk ditambahkan ke keranjang');
+
         $product = Product::findOrFail($request->product_id);
 
         $cart = Cart::where('product_id', $product->id)->first();
 
         if ($cart) {
-            $cart->increment('quantity');
+            $cart->increment('quantity', $request->quantity ?? 1);
         } else {
             Cart::create([
                 'product_id' => $product->id,
-                'quantity' => 1,
+                'quantity' => $request->quantity ?? 1, // Ambil quantity dari request
             ]);
         }
 
         return redirect()->route('index')->with('success', 'Produk ditambahkan ke keranjang');
     }
+
 
     // Hapus produk dari keranjang
     public function removeFromCart($id)
