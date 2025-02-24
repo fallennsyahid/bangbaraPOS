@@ -75,10 +75,10 @@
         @apply bg-gray-200;
     }
     .toggle:checked:disabled + span {
-        @apply shadow-none bg-primary-lighter;
+        /* @apply shadow-none bg-primary-lighter; */
     }
     .toggle:focus + span {
-        @apply ring ring-primary-lighter;
+        /* @apply ring ring-primary-lighter; */
     }
 
     input:invalid.invalid,

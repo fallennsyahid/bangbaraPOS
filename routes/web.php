@@ -32,9 +32,15 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Route::post('/', [HomeController::class, 'store'])->name('index.store');
 
+Route::get('/#menu', [HomeController::class, 'menu'])->name('index#menu');
+
 Route::get('/history', [History::class, 'index'])->name('history');
 
 Route::get('/details', [DetailsController::class, 'index'])->name('details');
+
+Route::get('/testing', function () {
+    return view('testing');
+});
 
 // Error Route Page
 Route::get('/error', [ErrorController::class, 'index']);
@@ -44,6 +50,7 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('/cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
+Route::get('/cart/total', [CartController::class, 'getTotal'])->name('cart.total');
 
 
 // ORDER CART

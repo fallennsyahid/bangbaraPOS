@@ -44,7 +44,7 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke keranjang!');
+        return redirect()->route('index#menu')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
     }
 
     // Hapus produk dari keranjang

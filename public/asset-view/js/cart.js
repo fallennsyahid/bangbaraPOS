@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     ).textContent = `${data.totalItems} Items`;
                     document.getElementById(
                         "cart-total-price"
-                    ).textContent = `Total: Rp ${data.totalPrice.toLocaleString(
+                    ).textContent = `Rp ${data.totalPrice.toLocaleString(
                         "id-ID",
                         { minimumFractionDigits: 2 }
                     )}`;

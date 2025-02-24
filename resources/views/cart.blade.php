@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Bangbara - Post</title>
+    <title>BangbaraPos</title>
     <!-- CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
@@ -146,12 +146,12 @@
 
 
                     <!-- Total Price -->
-                    <div class="flex justify-end mt-4">
+                    {{-- <div class="flex justify-end mt-4">
                         <h3 id="cart-total-price" class="font-bold text-xl">
                             Total: Rp
                             {{ number_format($cartItems->sum(fn($item) => $item->quantity * $item->product->harga_menu), 2) }}
                         </h3>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <!-- Order Summary Section -->
@@ -163,7 +163,7 @@
 
                     <!-- Order Details -->
                     <div class="mt-8">
-                        <div class="flex items-center justify-between pb-6">
+                        {{-- <div class="flex items-center justify-between pb-6">
                             <p class="font-normal text-lg leading-8 text-black" id="cart-total-items-2">
                                 {{ $cartItems->sum('quantity') }} Items
                             </p>
@@ -171,7 +171,7 @@
                                 Rp.
                                 {{ number_format($cartItems->sum(fn($item) => $item->quantity * $item->product->harga_menu), 2) }}
                             </p>
-                        </div>
+                        </div> --}}
 
                         {{-- <form action="" id="checkout-form" method="POST" enctype="multipart/form-data"> --}}
                         <form action="{{ route('order.checkout') }}" method="POST" enctype="multipart/form-data">
@@ -202,11 +202,12 @@
                                     class="w-full border border-gray-300 rounded-lg px-3 py-3 mb-4 focus:ring-1 focus:ring-gray-400 focus:border-gray-400"></textarea>
 
                                 <!-- Subtotal -->
-                                <div class="flex justify-between pb-4 font-semibold">
+                                {{-- <div class="flex justify-between pb-4 font-semibold">
                                     <span>Subtotal</span>
                                     <span class="text-shadow-2" id="subtotal">
                                         Rp.
-                                        {{ number_format($cartItems->sum(fn($item) => $item->quantity * $item->product->harga_menu), 2) }}</span>
+                                        {{ number_format($cartItems->sum(fn($item) => $item->quantity * $item->product->harga_menu), 2) }}
+                                    </span>
                                 </div>
                                 <hr class="border-[1.5px] rounded-full border-black" />
 
@@ -214,16 +215,18 @@
                                 <div class="flex justify-between py-4 font-semibold">
                                     <span>Potongan Harga</span>
                                     <span></span>
-                                </div>
+                                </div> --}}
                                 <hr class="border-[1.5px] rounded-full border-black" />
 
                                 <!-- Total -->
                                 <div class="flex justify-between py-3 font-semibold">
                                     <span>Total</span>
-                                    <span class="text-shadow-2" id="total-all">
+                                    <span class="text-shadow-2" id="cart-total-price">
                                         Rp.
-                                        {{ number_format($cartItems->sum(fn($item) => $item->quantity * $item->product->harga_menu), 2) }}</span>
+                                        {{ number_format($cartItems->sum(fn($item) => $item->quantity * $item->product->harga_menu), 2) }}
+                                    </span>
                                 </div>
+                                <hr class="border-[1.5px] rounded-full border-black" />
 
                                 <!-- Metode Pembayaran -->
                                 <div class="mb-4 flex flex-col">
@@ -292,6 +295,5 @@
 <script></script>
 
 <script src="{{ asset('asset-view/js/cart.js') }}"></script>
-{{-- <script src="{{ asset('asset-view/js/checkout.js') }}"></script> --}}
 
 </html>

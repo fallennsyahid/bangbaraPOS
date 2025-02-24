@@ -56,55 +56,6 @@ function changeSlide(index) {
     sliderContent.style.transform = `translateX(-${index * slideWidth}px)`; // Menggeser sesuai index
 }
 
-// POPUP
-// document.addEventListener("DOMContentLoaded", function () {
-//     const itemDetailModal = document.querySelector("#item-detail-modal");
-//     const itemDetailButtons = document.querySelectorAll(".item-detail-button");
-//     const closeButton = document.querySelector(".close-icon");
-
-//     itemDetailButtons.forEach((btn) => {
-//         btn.onclick = (e) => {
-//             e.preventDefault();
-
-//             // Ambil elemen produk terdekat
-//             const productCard = btn.closest("div");
-//             const productImage = productCard.querySelector("img").src;
-//             const productName = productCard.querySelector("p").innerText;
-//             const productDescription = productCard.querySelector("h6").innerText; // Ubah jika ada deskripsi produk
-//             const productPrice = productCard.querySelector("span").innerText;
-
-//             // Update isi modal
-//             itemDetailModal.querySelector("img").src = productImage;
-//             itemDetailModal.querySelector("h1").innerText = productName;
-//             itemDetailModal.querySelector("p").innerText = productDescription;
-
-//             // Tampilkan modal
-//             itemDetailModal.classList.remove("hidden");
-//             itemDetailModal.classList.add("flex");
-//         };
-//     });
-
-//     // Tutup modal saat tombol close diklik
-//     closeButton.onclick = (e) => {
-//         e.preventDefault();
-//         closeModal();
-//     };
-
-//     // Tutup modal jika klik di luar modal-container
-//     itemDetailModal.onclick = (e) => {
-//         if (e.target === itemDetailModal) {
-//             closeModal();
-//         }
-//     };
-
-//     function closeModal() {
-//         itemDetailModal.classList.add("hidden");
-//         itemDetailModal.classList.remove("flex");
-//     }
-// });
-
-
-
 // Rating
 const stars = document.querySelectorAll('input[name="rating"]');
 const labels = document.querySelectorAll('#star label i');
