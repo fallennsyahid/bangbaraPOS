@@ -106,13 +106,13 @@
                                     Status</label>
                                 <select id="status_produk" name="status_produk"
                                     class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none">
-                                    <option value="active"
-                                        {{ old('status_produk', $product->status_produk) === 'active' ? 'selected' : '' }}>
+                                    <option value="Active"
+                                        {{ old('status_produk', $product->status_produk) === 'Active' ? 'selected' : '' }}>
                                         Active
                                     </option>
-                                    <option value="unactive"
-                                        {{ old('status_produk', $product->status_produk) === 'unactive' ? 'selected' : '' }}>
-                                        Unactive
+                                    <option value="Non-active"
+                                        {{ old('status_produk', $product->status_produk) === 'Non-active' ? 'selected' : '' }}>
+                                        Non-active
                                     </option>
                                 </select>
                             </div>

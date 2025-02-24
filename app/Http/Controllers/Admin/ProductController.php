@@ -47,7 +47,7 @@ class ProductController extends Controller
             'deskripsi_menu' => 'required',
             'gambar_menu' => 'image|required|mimes:jpg,jpeg,png,svg|max:2048',
             'category_id' => 'required|exists:categories,id',
-            'status_produk' => 'required|in:active,unactive',
+            'status_produk' => 'required|in:Active,Non-active',
         ]);
 
         $path = $request->file('gambar_menu')->store('products', 'public');
@@ -93,7 +93,7 @@ class ProductController extends Controller
             'deskripsi_menu' => 'string',
             'gambar_menu' => 'image|mimes:jpg,jpeg,png,svg|max:2048',
             'category_id' => 'exists:categories,id',
-            'status_produk' => 'in:active,unactive',
+            'status_produk' => 'in:Active,Non-active',
         ]);
 
         $data = ([

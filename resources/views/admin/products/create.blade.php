@@ -69,7 +69,8 @@
                                     required>
                                     <option value="">Select a Category</option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" c {{ $category->nama_kategori }}</option>
+                                        <option value="{{ $category->id }}" class="text-zinc-950">
+                                            {{ $category->nama_kategori }}</option>
                                     @endforeach
                                 </select>
                             </div>
