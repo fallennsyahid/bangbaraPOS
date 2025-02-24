@@ -23,7 +23,8 @@ class ProductController extends Controller
         return view('admin.products.index', compact('products', 'categories'));
     }
 
-    public function export() {
+    public function export()
+    {
         return Excel::download(new ProductsExport, 'products.xlsx');
     }
 
@@ -62,7 +63,6 @@ class ProductController extends Controller
         ]);
 
         return redirect()->route('products.index')->with('success', 'Berhasil Menambahkan Produk');
-
     }
 
     /**
@@ -107,7 +107,7 @@ class ProductController extends Controller
         // Update Gambar Jika Ada
         if ($request->hasFile('gambar_menu')) {
             // hapus gambar lama
-            if($product->gambar_menu) {
+            if ($product->gambar_menu) {
                 Storage::delete($product->gambar_menu);
             }
             $data['gambar_menu'] = $request->file('gambar_menu')->store('products', 'public');
@@ -115,7 +115,6 @@ class ProductController extends Controller
 
         $product->update($data);
         return redirect()->route('products.index')->with('success', 'Berhasil Mengubah Produk');
-
     }
 
     /**

@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Bangbara - Post</title>
+    <title>BangbaraPos</title>
     <!-- CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
@@ -28,7 +28,7 @@
 
 </head>
 
-<body>
+<body class="">
     <!-- Header Start -->
     <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
         <div class="container mx-auto px-4">
@@ -164,52 +164,77 @@
             </div>
 
             <!-- Slider Container -->
-            <div id="slider" class="relative overflow-hidden w-full max-w-screen-lg mx-auto mt-10">
-                <div id="slider-content" class="flex transition-transform duration-500 justify-center"
-                    style="width: 300%">
+            <div id="slider" class="w-full overflow-hidden max-w-screen-lg mx-auto mt-10">
+                <div id="slider-content" class="flex transition-transform duration-500 ml-10" style="width: 300%">
 
                     @foreach ($categories as $category)
-                        <div
-                            class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5 justify-start">
+                        <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5">
                             @foreach ($category->products as $product)
+                                @php
+                                    $isNonActive = $product->status_produk === 'Non-active';
+                                @endphp
+
                                 <div
-                                    class="product-card bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
-                                    <a href="#item-detail-modal" class="item-detail-button">
+                                    class="product-card flex flex-col items-center 
+                bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md gap-3 
+                transition duration-200 ease-in 
+                {{ $isNonActive ? 'bg-gray-300 pointer-events-none' : 'hover:-translate-y-2' }}">
+
+                                    <!-- Bagian Gambar -->
+                                    <a href="{{ $isNonActive ? '#' : '#item-detail-modal' }}"
+                                        class="item-detail-button {{ $isNonActive ? 'pointer-events-none' : '' }}">
                                         <div class="relative group">
                                             <img src="{{ asset('storage/' . $product->gambar_menu) }}"
                                                 alt="{{ $product->nama_menu }}"
-                                                class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
-                                            <div
-                                                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                <span class="text-white font-semibold text-base">View More</span>
-                                            </div>
+                                                class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out 
+                            group-hover:brightness-75 {{ $isNonActive ? 'opacity-50' : '' }}" />
+                                            @if ($isNonActive)
+                                                <div
+                                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                                                    <span class="text-white font-semibold text-base">Tidak
+                                                        Tersedia</span>
+                                                </div>
+                                            @else
+                                                <div
+                                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                    <span class="text-white font-semibold text-base">View More</span>
+                                                </div>
+                                            @endif
                                         </div>
                                     </a>
+
                                     <p class="text-text text-base text-center">{{ $product->nama_menu }}</p>
                                     <h6 class="hidden">{{ $product->deskripsi_menu }}</h6>
-                                    <span class="text-price font-alkatra text-sm text-center">Rp
-                                        {{ number_format($product->harga_menu, 0, ',', '.') }}</span>
+                                    <span class="text-price font-alkatra text-sm text-center">
+                                        Rp {{ number_format($product->harga_menu, 0, ',', '.') }}
+                                    </span>
 
-
+                                    <!-- Tombol Tambahkan ke Keranjang -->
                                     <form action="{{ route('cart.add') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="quantity" value="1">
                                         <button type="submit"
-                                            class="text shadow text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center">
-                                            Tambahkan Ke Keranjang
+                                            class="text shadow text-sm sm:text-sm 
+                        bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center 
+                        {{ $isNonActive ? 'bg-gray-500 cursor-not-allowed' : '' }}"
+                                            {{ $isNonActive ? 'disabled' : '' }}>
+                                            {{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan Ke Keranjang' }}
                                         </button>
                                     </form>
                                 </div>
                             @endforeach
                         </div>
                     @endforeach
+
+
                 </div>
             </div>
         </div>
     </section>
     <!-- Menu Section End -->
 
-    <!-- POPUP START -->
+    <!-- Popup Start -->
     <section id="popup">
         <div class="hidden fixed z-[9999] left-0 top-0 w-full h-full overflow-auto justify-center items-center bg-[rgba(0,0,0,0.6)]"
             id="item-detail-modal" name="modal">
@@ -257,119 +282,7 @@
             </div>
         </div>
     </section>
-    {{-- POP UP END --}}
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const itemDetailModal = document.querySelector("#item-detail-modal");
-            const itemDetailButtons = document.querySelectorAll(".item-detail-button");
-            const closeButton = document.querySelector(".close-icon");
-            const addToCartButton = document.querySelector("#add-to-cart-modal");
-            const quantityInput = document.querySelector("#modal-quantity");
-            const decreaseQtyButton = document.querySelector("#decrease-qty");
-            const increaseQtyButton = document.querySelector("#increase-qty");
-
-            // Pastikan CSRF token tersedia
-            let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-            // Event saat tombol "View More" diklik
-            itemDetailButtons.forEach((btn) => {
-                btn.onclick = (e) => {
-                    e.preventDefault();
-
-                    const productCard = btn.closest(".product-card");
-                    const productId = productCard.querySelector("input[name='product_id']").value;
-                    const productImage = productCard.querySelector("img").src;
-                    const productName = productCard.querySelector("p").innerText;
-                    const productDescription = productCard.querySelector("h6").innerText;
-
-                    if (!productId) {
-                        alert("Produk tidak ditemukan!");
-                        return;
-                    }
-
-                    // Update isi modal
-                    itemDetailModal.querySelector("img").src = productImage;
-                    itemDetailModal.querySelector("h1").innerText = productName;
-                    itemDetailModal.querySelector("p").innerText = productDescription;
-
-                    // Set product ID di input hidden dalam modal
-                    document.querySelector("#modal-product-id").value = productId;
-
-                    // Tampilkan modal
-                    itemDetailModal.classList.remove("hidden");
-                    itemDetailModal.classList.add("flex");
-                };
-            });
-
-            // Tutup modal saat tombol close diklik
-            closeButton.onclick = () => closeModal();
-            itemDetailModal.onclick = (e) => {
-                if (e.target === itemDetailModal) closeModal();
-            };
-
-            function closeModal() {
-                itemDetailModal.classList.add("hidden");
-                itemDetailModal.classList.remove("flex");
-            }
-
-            // Fitur tambah/kurang quantity dalam modal
-            increaseQtyButton.onclick = () => {
-                quantityInput.value = parseInt(quantityInput.value) + 1;
-            };
-
-            decreaseQtyButton.onclick = () => {
-                let currentQty = parseInt(quantityInput.value);
-                if (currentQty > 1) quantityInput.value = currentQty - 1;
-            };
-
-            // Event untuk menambahkan produk ke keranjang
-            addToCartButton.onclick = function() {
-                let productId = itemDetailModal.querySelector("input[name='product_id']").value;
-                let quantity = quantityInput.value;
-                let url = this.dataset.url;
-
-                // Cek apakah productId dan URL benar
-                console.log("Product ID:", productId);
-                console.log("Quantity:", quantity);
-                console.log("URL:", url);
-
-                if (!productId) {
-                    alert("Produk tidak valid! ID tidak ditemukan.");
-                    return;
-                }
-
-                // Buat form untuk dikirim ke Laravel
-                let form = document.createElement("form");
-                form.method = "POST";
-                form.action = url;
-
-                // Tambahkan CSRF token
-                let csrfInput = document.createElement("input");
-                csrfInput.type = "hidden";
-                csrfInput.name = "_token";
-                csrfInput.value = csrfToken;
-                form.appendChild(csrfInput);
-
-                // Tambahkan product_id
-                let productInput = document.createElement("input");
-                productInput.type = "hidden";
-                productInput.name = "product_id";
-                productInput.value = productId;
-                form.appendChild(productInput);
-
-                // Tambahkan quantity
-                let quantityInputField = document.createElement("input");
-                quantityInputField.type = "hidden";
-                quantityInputField.name = "quantity";
-                quantityInputField.value = quantity;
-                form.appendChild(quantityInputField);
-
-                document.body.appendChild(form);
-                form.submit();
-            };
-        });
-    </script>
+    <!-- Popup End -->
 
     <!-- About Section Start -->
     <section id="about" class="bg-red-600 flex justify-center items-center min-h-screen">
@@ -446,7 +359,6 @@
     </section>
     <!-- Contact Section End -->
 
-
     {{-- Ulasan Section Start --}}
     <section id="ulasan" class="ulasan-img">
         <div class="container">
@@ -455,9 +367,8 @@
             </h1>
             <div class="slider">
                 @foreach ($reviews as $index => $review)
-                    <div class="review bg-white text-black rounded-lg shadow-lg max-w-sm ring-4 ring-[#D6D6D6] p-4 overflow-hidden"
-                        style="--pos: {{ $index + 1 }}">
-                        <p class="text-center px-4 py-8">
+                    <div class="review" style="--pos: {{ $index + 1 }}" id="review">
+                        <p class="text-center px-4 py-8 text-sm md:text-base">
                             {{ $review->message }}
                         </p>
                         <div class="px-4 py-2 border-t-2 border-[#D6D6D6]">
@@ -546,5 +457,6 @@
 </script>
 
 <script src="{{ asset('asset-view/js/script.js') }}"></script>
+<script src="{{ asset('asset-view/js/popup.js') }}"></script>
 
 </html>

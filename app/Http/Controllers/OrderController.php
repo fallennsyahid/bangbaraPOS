@@ -39,15 +39,16 @@ class OrderController extends Controller
 
         $totalPrice = $cartItems->sum(fn($item) => $item->quantity * $item->product->harga_menu);
 
-        $paymentPhotoPath = null;
+        $paymentPhotoPath = 'default.png'; // Default value untuk pembayaran tunai
+
         if ($request->hasFile('payment_photo')) {
             $paymentPhotoPath = $request->file('payment_photo')->store('payment_receipts', 'public');
         }
 
-        if ($request->payment_method === 'tunai') {
-            $paymentPhotoPath = 'default.png'; // atau string lain yang tidak NULL
+        // Jika payment_method bukan tunai, tidak mengubah nilai yang sudah di-set
+        if ($request->payment_method !== 'Tunai' && !$request->hasFile('payment_photo')) {
+            $paymentPhotoPath = null;
         }
-
 
         $products = $cartItems->map(fn($item) => [
             'product_id' => $item->product_id,
@@ -56,6 +57,8 @@ class OrderController extends Controller
             'quantity' => $item->quantity,
             'price' => $item->product->harga_menu,
         ])->toArray();
+
+        // dd($request->payment_method, $paymentPhotoPath);
 
         Order::create([
             'customer_name' => $request->customer_name,
