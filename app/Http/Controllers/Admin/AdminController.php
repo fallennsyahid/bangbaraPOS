@@ -183,4 +183,106 @@ class AdminController extends Controller
 
 
     }
+
+    public function getHourlyPaymentStats(Request $request)
+{
+    // Ambil input tanggal, default ke hari ini jika tidak ada input
+    $date = $request->input('date', date('Y-m-d'));
+
+    // Query untuk metode Tunai
+    $tunai = History::selectRaw('HOUR(created_at) as hour, COUNT(*) as total')
+        ->whereDate('created_at', $date)
+        ->where('payment_method', 'Tunai')
+        ->groupBy('hour')
+        ->orderBy('hour')
+        ->get();
+
+    // Query untuk metode nonTunai (misalnya selain Tunai)
+    $nonTunai = History::selectRaw('HOUR(created_at) as hour, COUNT(*) as total')
+        ->whereDate('created_at', $date)
+        ->where('payment_method', '<>', 'Tunai')
+        ->groupBy('hour')
+        ->orderBy('hour')
+        ->get();
+
+    // Inisialisasi array untuk 24 jam (0-23) dengan default 0
+    $tunaiData = array_fill(0, 24, 0);
+    $nonTunaiData = array_fill(0, 24, 0);
+
+    foreach ($tunai as $item) {
+        $index = (int)$item->hour;
+        $tunaiData[$index] = (int)$item->total;
+    }
+
+    foreach ($nonTunai as $item) {
+        $index = (int)$item->hour;
+        $nonTunaiData[$index] = (int)$item->total;
+    }
+
+    // Buat label untuk 24 jam (00:00, 01:00, dst.)
+    $labels = [];
+    for ($i = 0; $i < 24; $i++) {
+        $labels[] = sprintf("%02d:00", $i);
+    }
+
+    return response()->json([
+        'labels' => $labels,
+        'tunai' => $tunaiData,
+        'non_tunai' => $nonTunaiData,
+    ]);
+}
+
+public function getBestSellerChartDataFilter(Request $request)
+{
+    // Tangkap parameter tanggal (bisa pakai 'start_date' dan 'end_date' dari request)
+    $startDate = $request->input('start_date');
+    $endDate = $request->input('end_date');
+
+    // Query dasar
+    $query = Order::where('status', 'Completed');
+
+    // Jika ada parameter tanggal, terapkan filter
+    if ($startDate && $endDate) {
+        // Pastikan format tanggal valid sesuai kolom di database
+        $query->whereBetween('created_at', [$startDate, $endDate]);
+    }
+
+    // Eksekusi query
+    $orders = $query->get();
+
+    $productTotals = [];
+
+    foreach ($orders as $order) {
+        // Mengubah data JSON menjadi array
+        $products = json_decode($order->products, true);
+
+        if (is_array($products)) {
+            foreach ($products as $product) {
+                // Gunakan nama produk
+                $key = $product['nama_menu'];
+                // Tambahkan quantity produk
+                $productTotals[$key] = isset($productTotals[$key])
+                    ? $productTotals[$key] + (int)$product['quantity']
+                    : (int)$product['quantity'];
+            }
+        }
+    }
+
+    // Urutkan berdasarkan total sold (descending)
+    arsort($productTotals);
+
+    // Ambil 5 produk teratas (jika ingin lebih, silakan ubah angka 5)
+    $bestSellers = array_slice($productTotals, 0, 5, true);
+
+    // Siapkan data untuk Chart.js
+    $products = array_keys($bestSellers);
+    $totals = array_values($bestSellers);
+
+    return response()->json([
+        'products' => $products,
+        'totals' => $totals,
+    ]);
+}
+
+
 }

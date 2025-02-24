@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StaffCredentials;
 
 class StaffController extends Controller
 {
@@ -39,15 +43,21 @@ class StaffController extends Controller
             'name' => 'required|string|max:225',
             'email' => 'required|email|min:0',
             'usertype' => 'required|in:staff',
-            'password' => 'required',
         ]);
 
+        // Generate Password
+        $password = Str::random(8);
+        $user =
         User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'usertype' => $request->input('usertype'),
-            'password' => $request->input('password'),
+            'password' => Hash::make($password),
         ]);
+
+        // Kirim email ke staff
+        Mail::to($user->email)->send(new StaffCredentials($user->name, $user->email, $password));
+
         return redirect()->route('staffs.index')->with('success', 'Succcessfully added staff');
     }
 
