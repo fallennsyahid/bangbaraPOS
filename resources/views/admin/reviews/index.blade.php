@@ -47,6 +47,9 @@
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Time
                                         </th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Aksi
+                                        </th>
                                     </tr>
                                 </thead>
 
@@ -69,11 +72,25 @@
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $row->created_at->diffForHumans() }}
                                             </td>
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
+                                                <form id="delete-form-{{ $row->id }}"
+                                                    action="{{ route('reviews.destroy', $row->id) }}" method="POST"
+                                                    onsubmit="return confirm('Are you sure you want to delete this category?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                                                        height="30" viewBox="0 0 24 24"
+                                                        class="cursor-pointer hover:fill-red-700 transition duration-200"
+                                                        onclick="confirmDelete({{ $row->id }})">
+                                                        <path fill="red"
+                                                            d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z" />
+                                                    </svg>
+                                                </form>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-
 
                             <x-admin.success-alert></x-admin.success-alert>
                         </div>
