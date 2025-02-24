@@ -62,13 +62,6 @@
                                     <option value="staff">Staff</option>
                                 </select>
                             </div>
-
-                            <!-- Input Gambar Produk (Opsional) -->
-                            <div class="mb-4">
-                                <label for="image" class="block text-sm font-medium mb-2">Password</label>
-                                <input type="password" id="password" name="password" placeholder="Enter staff password"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none" />
-                            </div>
                             <!-- Tombol Submit -->
                             <button type="submit"
                                 class="w-full bg-yellow-500 mt-5 text-white font-bold py-2 px-4 rounded-md hover:bg-yellow-600 dark:hover:bg-yellow-400 focus:ring-2 focus:ring-yellow-500 focus:outline-none">

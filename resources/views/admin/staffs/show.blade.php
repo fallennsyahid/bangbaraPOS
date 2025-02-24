@@ -65,13 +65,6 @@
                                     <p class="text-gray-900 font-medium">{{ $user->usertype }}</p>
                                 </div>
                             </div>
-                            <div class="flex items-end mt-6">
-                                <a href="{{ route('staffs.edit', $user->id) }}">
-                                    <button
-                                        class="bg-red-700 text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-red-600 transition">Ubah
-                                        Profile</button>
-                                </a>
-                            </div>
                         </div>
                     </div>
 

@@ -133,9 +133,10 @@ Route::resource('/admin/reviews', ReviewController::class);
 // Chart Route
 Route::get('/chart-data', [AdminController::class, 'getChartData']);
 Route::get('/best-seller-chart', [AdminController::class, 'getBestSellerChartData']);
+Route::get('/best-seller-chart-filter', [AdminController::class, 'getBestSellerChartDataFilter']);
 Route::get('/orders-stats', [AdminController::class, 'getOrdersStats']);
 // Filter method chart
-Route::get('/orders-stats', [AdminController::class, 'getOrdersStats']);
+Route::get('/hourly-orders-stats', [AdminController::class, 'getHourlyPaymentStats']);
 
 // Update status
 Route::get('/orders/{id}/status', function ($id) {
