@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class HistoryController extends Controller
@@ -32,7 +33,7 @@ class HistoryController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        //
     }
 
     /**

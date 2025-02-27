@@ -57,7 +57,7 @@
                             <div class="mb-4">
                                 <label for="price" class="block text-sm font-medium mb-2">Price</label>
                                 <input type="number" id="harga_menu" name="harga_menu" step="0.01"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                    class="input-number w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
                                     placeholder="Enter product price" required />
                             </div>
 
@@ -69,7 +69,8 @@
                                     required>
                                     <option value="">Select a Category</option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" c {{ $category->nama_kategori }}</option>
+                                        <option value="{{ $category->id }}" class="text-zinc-950">
+                                            {{ $category->nama_kategori }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -87,8 +88,8 @@
                                         Status</label>
                                     <select id="status_produk" name="status_produk"
                                         class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none">
-                                        <option value="active">Active</option>
-                                        <option value="unactive">Unactive</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Non-active">Non-active</option>
                                     </select>
                                 </div>
 

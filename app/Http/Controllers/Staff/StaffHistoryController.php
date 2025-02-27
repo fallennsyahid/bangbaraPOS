@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Staff;
 
+use App\Exports\HistoryTodayExport;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\History;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StaffHistoryController extends Controller
 {
@@ -18,6 +20,9 @@ class StaffHistoryController extends Controller
         return view('staff.staffHistories.index', compact('histories'));
     }
 
+    public function exportToday() {
+        return Excel::download(new HistoryTodayExport, 'histories-today.xlsx');
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -37,11 +42,16 @@ class StaffHistoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
-    }
+        $history = History::findOrFail($id);
+        $products = $products = json_decode($history->products, true);
 
+        if (is_string($products)) {
+            $products = json_decode($products, true);
+        }
+        return view('staff.staffHistories.show', compact('history', 'products'));
+    }
     /**
      * Show the form for editing the specified resource.
      */

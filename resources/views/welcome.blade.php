@@ -4,11 +4,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bangbara - Post</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>BangbaraPos</title>
     <!-- CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
 
+    <link rel="stylesheet" href="{{ asset('asset-view/css/slider.css') }}">
+
+    <!-- ICON -->
+    <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
     <!-- ICON WEB -->
     <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
 
@@ -23,7 +28,7 @@
 
 </head>
 
-<body>
+<body class="">
     <!-- Header Start -->
     <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
         <div class="container mx-auto px-4">
@@ -62,7 +67,7 @@
                             <li class="group">
                                 <a href="#contact"
                                     class="text-base text-white py-2 mx-4 flex font-medium relative group-hover:text-primary after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 after:transform after:-translate-x-1/2 group-hover:after:w-3/4">
-                                    Contact
+                                    Reviews
                                 </a>
                             </li>
                         </ul>
@@ -70,12 +75,6 @@
 
                     <!-- Cart and Hamburger Menu -->
                     <div class="flex items-center space-x-4 lg:hidden">
-                        <!-- Clock Icon -->
-                        <a href="{{ route('history') }}">
-                            <img src="{{ asset('asset-view/assets/svg/clock.svg') }}" alt="" width="35px"
-                                class="hover:scale-110 transition duration-300 ease-in-out" />
-                        </a>
-
                         <!-- Cart Icon -->
                         <a href="{{ route('cart') }}">
                             <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
@@ -93,16 +92,9 @@
                     </div>
                 </div>
 
-                <!-- Cart and Clock Icon (Desktop Only) -->
-                <div class="hidden lg:flex lg:items-center lg:space-x-4">
-                    <!-- Clock Icon -->
-                    <a href="{{ route('history') }}">
-                        <img src="{{ asset('asset-view/assets/svg/clock.svg') }}" alt="" width="35px"
-                            class="hover:scale-110 transition duration-300 ease-in-out" />
-                    </a>
-
+                <div class="hidden lg:block lg:items-center lg:space-x-4">
                     <!-- Cart Icon -->
-                    <a href="{{ route('cart') }}">
+                    <a href="{{ route('cart') }}" class=" relative">
                         <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
                     </a>
@@ -172,66 +164,145 @@
             </div>
 
             <!-- Slider Container -->
-            <div id="slider" class="relative overflow-hidden w-full max-w-screen-lg mx-auto mt-10">
-                <div id="slider-content" class="flex transition-transform duration-500 justify-center"
-                    style="width: 300%">
+            <div id="slider" class="w-full overflow-hidden max-w-screen-lg mx-auto mt-10">
+                <div id="slider-content" class="flex transition-transform duration-500 ml-10" style="width: 300%">
 
                     @foreach ($categories as $category)
-                        <div
-                            class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5 justify-start">
+                        <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5">
                             @foreach ($category->products as $product)
+                                @php
+                                    $isNonActive = $product->status_produk === 'Non-active';
+                                @endphp
+
                                 <div
-                                    class="bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md flex flex-col items-center gap-3">
-                                    <a href="#item-detail-modal" class="item-detail-button">
+                                    class="product-card flex flex-col items-center 
+                bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md gap-3 
+                transition duration-200 ease-in 
+                {{ $isNonActive ? 'bg-gray-300 pointer-events-none' : 'hover:-translate-y-2' }}">
+
+                                    <!-- Bagian Gambar -->
+                                    <a href="{{ $isNonActive ? '#' : '#item-detail-modal' }}"
+                                        class="item-detail-button {{ $isNonActive ? 'pointer-events-none' : '' }}">
                                         <div class="relative group">
                                             <img src="{{ asset('storage/' . $product->gambar_menu) }}"
                                                 alt="{{ $product->nama_menu }}"
-                                                class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out group-hover:brightness-75" />
-                                            <div
-                                                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                <p class="text-white font-semibold text-base">
-                                                    View More
-                                                </p>
-                                            </div>
+                                                class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out 
+                            group-hover:brightness-75 {{ $isNonActive ? 'opacity-50' : '' }}" />
+                                            @if ($isNonActive)
+                                                <div
+                                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                                                    <span class="text-white font-semibold text-base">Tidak
+                                                        Tersedia</span>
+                                                </div>
+                                            @else
+                                                <div
+                                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                    <span class="text-white font-semibold text-base">View More</span>
+                                                </div>
+                                            @endif
                                         </div>
                                     </a>
-                                    <p class="text-text text-base text-center">
-                                        {{ $product->nama_menu }}
-                                    </p>
+
+                                    <p class="text-text text-base text-center">{{ $product->nama_menu }}</p>
+                                    <h6 class="hidden">{{ $product->deskripsi_menu }}</h6>
                                     <span class="text-price font-alkatra text-sm text-center">
                                         Rp {{ number_format($product->harga_menu, 0, ',', '.') }}
                                     </span>
-                                    <a href=""
-                                        class="text shadow text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center">
-                                        Tambahkan Ke Keranjang
-                                    </a>
+
+                                    <!-- Tombol Tambahkan ke Keranjang -->
+                                    <form action="{{ route('cart.add') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit"
+                                            class="text shadow text-sm sm:text-sm 
+                        bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center 
+                        {{ $isNonActive ? 'bg-gray-500 cursor-not-allowed' : '' }}"
+                                            {{ $isNonActive ? 'disabled' : '' }}>
+                                            {{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan Ke Keranjang' }}
+                                        </button>
+                                    </form>
                                 </div>
                             @endforeach
                         </div>
                     @endforeach
+
+
                 </div>
             </div>
         </div>
     </section>
     <!-- Menu Section End -->
 
+    <!-- Popup Start -->
+    <section id="popup">
+        <div class="hidden fixed z-[9999] left-0 top-0 w-full h-full overflow-auto justify-center items-center bg-[rgba(0,0,0,0.6)]"
+            id="item-detail-modal" name="modal">
+            <div class="flex flex-col bg-white h-3/4 w-[90%] md:w-1/2 lg:w-1/3 xl:w-1/4 rounded-lg gap-2 overflow-hidden"
+                name="modal-container">
+                <a href="#"
+                    class="close-icon absolute bg-white w-8 h-8 m-2 rounded-full flex items-center justify-center hover:scale-125 hover:rotate-90 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-x text-primary">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </a>
+                <input type="hidden" id="modal-product-id" name="product_id" value="">
+                <img id="modal-image" src="" alt="Food" class="rounded-t-lg overflow-hidden" />
+                <h1 id="modal-title" class="text-center font-alatsi text-2xl pb-2"></h1>
+                <p id="modal-description" class="text-center font-alatsi text-base px-4"></p>
+
+                <div class="flex justify-center items-center flex-row my-4">
+                    <!-- Decrease Quantity -->
+                    <button id="decrease-qty" class="group rounded-l-sm border border-black/80 px-2 py-2">
+                        <span class="inline-block transform transition-transform duration-200 group-hover:scale-125"> -
+                        </span>
+                    </button>
+
+                    <!-- Display Quantity -->
+                    <input type="text" id="modal-quantity"
+                        class="border-y border-black/80 px-2 py-2 text-center w-1/4 focus:outline-none" value="1"
+                        readonly>
+
+                    <!-- Increase Quantity -->
+                    <button id="increase-qty" class="group rounded-r-sm border border-black/80 px-2 py-2">
+                        <span class="inline-block transform transition-transform duration-200 group-hover:scale-125"> +
+                        </span>
+                    </button>
+                </div>
+
+                <button id="add-to-cart-modal"
+                    class="bg-[#BF0000] w-full px-4 py-2 font-marmelad text-white rounded-b-md mt-auto"
+                    data-url="{{ route('cart.add') }}" data-id="">
+                    Tambahkan Ke Keranjang
+                </button>
+
+            </div>
+        </div>
+    </section>
+    <!-- Popup End -->
+
     <!-- About Section Start -->
-    <section id="about" class="about-img">
-        <div class="container flex justify-end sm:px-8 lg:px-16">
-            <div class="flex flex-col items-center sm:items-start">
-                <h1
-                    class="font-europhia text-5xl sm:text-6xl lg:text-7xl text-white py-8 sm:py-12 lg:py-16 px-4 sm:px-8 lg:px-14 max-w-[20rem] sm:max-w-[30rem] lg:max-w-[33rem] text-center sm:text-left">
-                    Tentang Kami
-                </h1>
-                <p
-                    class="text-base sm:text-lg lg:text-xl font-normal text-shadow text-white px-4 sm:px-8 lg:px-14 max-w-[28rem] sm:max-w-[40rem] lg:max-w-[45rem]">
-                    Bangbara adalah tempat makan yang menghadirkan steak dan chicken
-                    katsu dengan cita rasa istimewa. Dengan bahan berkualitas dan harga
-                    yang terjangkau, Bangbara menjadi pilihan tepat untuk menikmati
-                    hidangan lezat bersama keluarga atau teman. Suasana yang nyaman dan
-                    pelayanan ramah membuat setiap kunjungan menjadi pengalaman yang
-                    menyenangkan.
-                </p>
+    <section id="about" class="bg-red-600 flex justify-center items-center min-h-screen">
+        <div class="text-center p-6 bg-red-600">
+            <div class="flex flex-col items-center md:flex-row md:items-start">
+                <img src="{{ asset('asset-view/assets/svg/steak.svg') }}"
+                    alt="A plate with steak, fries, and vegetables" class="" height="40%" width="40%" />
+                <div class="mt-6 md:mt-0 md:ml-6 text-white">
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-europhia text-shadow mb-4">
+                        Tentang Kami
+                    </h1>
+                    <p class="leading-relaxed text-shadow-2 pt-6 text-lg sm:text-xl md:text-xl lg:text-2xl">
+                        Bangbara adalah tempat makan yang menghadirkan steak dan chicken
+                        katsu dengan cita rasa istimewa. Dengan bahan berkualitas dan harga
+                        yang terjangkau, Bangbara menjadi pilihan tepat untuk menikmati
+                        hidangan lezat bersama keluarga atau teman. Suasana yang nyaman dan
+                        pelayanan ramah membuat setiap kunjungan menjadi pengalaman yang
+                        menyenangkan.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -288,54 +359,30 @@
     </section>
     <!-- Contact Section End -->
 
-    <style>
-        @keyframes marquee {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-
-
-        .animate-marquee {
-            display: flex;
-            animation: marquee 15s linear infinite;
-            white-space: normal;
-        }
-    </style>
-
     {{-- Ulasan Section Start --}}
     <section id="ulasan" class="ulasan-img">
         <div class="container">
-            <h1 class="py-12 font-europhia text-white text-center text-4xl sm:text-5xl lg:text-6xl">Apa Kata Mereka
+            <h1 class="py-12 font-europhia text-white text-center text-4xl sm:text-5xl lg:text-6xl">
+                Apa Kata Mereka
             </h1>
-            <div class="overflow-hidden w-full" x-data="{ start() { this.$refs.track.style.animationPlayState = 'running' }, stop() { this.$refs.track.style.animationPlayState = 'paused' } }">
-                <div class="flex w-max space-x-8 animate-marquee" x-ref="track">
-                    {{-- <template x-for="i in 1" :key="i"> --}}
-                    @foreach ($reviews as $review)
-                        <div
-                            class="carousel-item bg-white text-black rounded-lg shadow-lg  max-w-sm border-4 border-[##D6D6D6] w-96   overflow-hidden">
-                            <p class="text-center px-4 py-8">
-                                {{ $review->message }}
-                                {{-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, soluta? --}}
+            <div class="slider">
+                @foreach ($reviews as $index => $review)
+                    <div class="review" style="--pos: {{ $index + 1 }}" id="review">
+                        <p class="text-center px-4 py-8 text-sm md:text-base">
+                            {{ $review->message }}
+                        </p>
+                        <div class="px-4 py-2 border-t-2 border-[#D6D6D6]">
+                            <p class="font-semibold text-gray-500">{{ $review->username }}</p>
+                            <p class="flex font-semibold text-gray-500">Rating:
+                                <span class="flex items-center text-xl mx-2 gap-1 text-yellow-500">
+                                    @for ($i = 0; $i < $review->rating; $i++)
+                                        <i class="fas fa-star"></i>
+                                    @endfor
+                                </span>
                             </p>
-                            <div class="px-4 py-2 border-t-2 border-[#D6D6D6]">
-                                <p class="font-semibold text-gray-500">{{ $review->username }}</p>
-                                <p class="flex font-semibold text-gray-500">Rating:
-                                    <span class="flex items-center text-xl mx-2 gap-1 text-yellow-500">
-                                        @for ($i = 0; $i < $review->rating; $i++)
-                                            <i class="fas fa-star"></i>
-                                        @endfor
-                                    </span>
-                                </p>
-                            </div>
                         </div>
-                    @endforeach
-                    {{-- </template> --}}
-                </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -395,44 +442,14 @@
     </footer>
     <!-- Footer Section End -->
 
-    <!-- POPUP START -->
-    <section id="popup">
-        <div class="hidden fixed z-[9999] left-0 top-0 w-full h-full overflow-auto justify-center items-center bg-[rgba(0,0,0,0.6)]"
-            id="item-detail-modal" name="modal">
-            <div class="flex flex-col bg-white h-3/4 w-[90%] md:w-1/2 lg:w-1/3 xl:w-1/4 rounded-lg gap-2"
-                name="modal-container">
-                <a href="#"
-                    class="close-icon absolute bg-white w-8 h-8 m-2 rounded-full flex items-center justify-center hover:scale-125 hover:rotate-90 transition duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" class="feather feather-x text-primary">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </a>
-                <img src="" alt="Food" width="" class="rounded-t-lg overflow-hidden" />
-                <h1 class="text-center font-alatsi text-2xl pb-2">Product 1</h1>
-                <p class="text-center font-alatsi text-base px-4">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error
-                    tenetur vitae ducimus facilis non obcaecati veniam dolore, esse
-                    consectetur fuga.
-                </p>
-                <a href="#"
-                    class="bg-[#BF0000] px-4 py-2 font-marmelad text-white rounded-md my-4 mx-auto w-3/4 text-center">
-                    Tambahkan Ke Keranjang
-                </a>
-            </div>
-        </div>
-    </section>
-    {{-- POP UP END --}}
 </body>
 @stack('scripts')
 <script>
-    @if (session('berhasil'))
+    @if (session('success'))
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: {!! json_encode(session('berhasil')) !!},
+            text: {!! json_encode(session('success')) !!},
             showConfirmButton: false,
             timer: 1500,
         });
@@ -440,8 +457,6 @@
 </script>
 
 <script src="{{ asset('asset-view/js/script.js') }}"></script>
-
-
-
+<script src="{{ asset('asset-view/js/popup.js') }}"></script>
 
 </html>

@@ -5,12 +5,11 @@
         <!-- Sidebar links -->
         <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
             <!-- Dashboards links -->
-            <div x-data="{ isActive: true, open: true }">
-                <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
-                <a href="#" @click="$event.preventDefault(); open = !open"
-                    class="flex items-center p-2 text-gray-800 transition-colors rounded-md dark:text-light hover:bg-amber-200 dark:hover:bg-red-500"
-                    :class="{ 'bg-amber-300 dark:bg-red-700': isActive || open }" role="button" aria-haspopup="true"
-                    :aria-expanded="(open || isActive) ? 'true' : 'false'">
+            <div x-data="{ isActive: false }">
+                <a href="{{ route('staff.dashboard') }}"
+                    class="flex items-center p-2 text-gray-800 transition-colors rounded-md dark:text-light hover:bg-amber-200 dark:hover:bg-red-500
+        {{ request()->routeIs('staff.dashboard') ? 'bg-red-700 text-white' : '' }}"
+                    :class="{ 'bg-amber-300 dark:bg-red-700': isActive }">
                     <span aria-hidden="true">
                         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -18,34 +17,16 @@
                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
                     </span>
-                    <span class="ml-2 text-sm"> Dashboards </span>
-                    <span class="ml-auto" aria-hidden="true">
-                        <!-- active class 'rotate-180' -->
-                        <svg class="w-4 h-4 transition-transform transform" :class="{ 'rotate-180': open }"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </span>
+                    <span class="ml-2 text-sm"> Dashboard </span>
                 </a>
-                <div role="menu" x-show="open" class="mt-2 space-y-2 px-7" aria-label="Dashboards">
-                    <!-- active & hover classes 'text-gray-700 dark:text-light' -->
-                    <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
-                    <a href="/staff/dashboard" role="menuitem"
-                        class="block p-2 text-sm text-gray-700 transition-colors duration-200 rounded-md dark:text-light dark:hover:text-light hover:text-gray-700">
-                        Home
-                    </a>
-
-                </div>
             </div>
 
             <!-- Orders links -->
-            <div x-data="{ isActive: false, open: false }">
-                <!-- active classes 'bg-primary-100 dark:bg-primary' -->
-                <a href="#" @click="$event.preventDefault(); open = !open"
+            <div x-data="{ isActive: false }">
+                <a href="{{ route('staffOrders.index') }}"
                     class="flex items-center p-2 text-gray-800 transition-colors rounded-md dark:text-light hover:bg-amber-200 dark:hover:bg-red-500
                     {{ request()->routeIs('staffOrders.index') ? 'bg-red-700 text-white' : '' }}"
-                    :class="{ 'bg-amber-300 dark:bg-red-700': isActive || open }" role="button" aria-haspopup="true"
-                    :aria-expanded="(open || isActive) ? 'true' : 'false'">
+                    :class="{ 'bg-amber-300 dark:bg-red-700': isActive }">
                     <span aria-hidden="true">
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" class="h-5 w-5" fill="none"
                             stroke="currentColor" viewBox="0 0 48 48">
@@ -55,31 +36,15 @@
                         </svg>
                     </span>
                     <span class="ml-2 text-sm"> Orders </span>
-                    <span aria-hidden="true" class="ml-auto">
-                        <svg class="w-4 h-4 transition-transform transform" :class="{ 'rotate-180': open }"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </span>
                 </a>
-                <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" arial-label="Pages">
-                    <!-- active & hover classes 'text-gray-700 dark:text-light' -->
-                    <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
-                    <a href="{{ route('staffOrders.index') }}" role="menuitem"
-                        class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700">
-                        Manage Orders
-                    </a>
-                </div>
             </div>
 
-            <!-- Histories links -->
-            <div x-data="{ isActive: false, open: false }">
-                <!-- active classes 'bg-primary-100 dark:bg-primary' -->
-                <a href="#" @click="$event.preventDefault(); open = !open"
+            <!-- History links -->
+            <div x-data="{ isActive: false }">
+                <a href="{{ route('staffHistories.index') }}"
                     class="flex items-center p-2 text-gray-800 transition-colors rounded-md dark:text-light hover:bg-amber-200 dark:hover:bg-red-500
                     {{ request()->routeIs('staffHistories.index') ? 'bg-red-700 text-white' : '' }}"
-                    :class="{ 'bg-amber-300 dark:bg-red-700': isActive || open }" role="button" aria-haspopup="true"
-                    :aria-expanded="(open || isActive) ? 'true' : 'false'">
+                    :class="{ 'bg-amber-300 dark:bg-red-700': isActive }">
                     <span aria-hidden="true">
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" class="w-5 h-5" fill="none"
                             stroke="currentColor" viewBox="0 0 48 48">
@@ -88,38 +53,60 @@
                             </path>
                         </svg>
                     </span>
-                    <span class="ml-2 text-sm"> History </span>
-                    <span aria-hidden="true" class="ml-auto">
-                        <svg class="w-4 h-4 transition-transform transform" :class="{ 'rotate-180': open }"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </span>
+                    <span class="ml-2 text-sm"> Histories </span>
                 </a>
-                <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" arial-label="Pages">
-                    <!-- active & hover classes 'text-gray-700 dark:text-light' -->
-                    <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
-                    <a href="{{ route('staffHistories.index') }}" role="menuitem"
-                        class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700">
-                        Manage History
-                    </a>
-                </div>
             </div>
         </nav>
 
         <!-- Sidebar footer -->
-        <div class="flex-shrink-0 px-2 py-4 space-y-2">
-            <button @click="openSettingsPanel" type="button"
-                class="flex items-center justify-center w-full px-4 py-2 text-sm text-white rounded-md bg-amber-300 dark:bg-red-700 hover:bg-amber-400 hover:dark:bg-red-800 focus:outline-none focus:ring focus:ring-primary-dark focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
+        <hr>
+        <div class="p-4 flex-shrink-0 px-2 py-4 space-y-2">
+            <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                @csrf
+                <a href="#" onclick="confirmLogout()"
+                    class="flex items-center p-2 text-gray-800 transition-colors rounded-md dark:text-light hover:bg-amber-200 dark:hover:bg-red-500">
+                    <span aria-hidden="true">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H4a3 3 0 01-3-3V7a3 3 0 013-3h6a3 3 0 013 3v1">
+                            </path>
+                        </svg>
+                    </span>
+                    <span class="ml-2 text-sm"> Logout </span>
+                </a>
+            </form>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                function confirmLogout() {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'You will be logged out. Do you want to proceed?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#b91c1c',
+                        cancelButtonColor: '#facc15',
+                        confirmButtonText: 'Yes, logout',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById('logout-form').submit();
+                        }
+                    });
+                }
+            </script>
+
+            <a href="https://drive.google.com/file/d/1fyqcyXIvo7CwPJUxBFGByKUIOf-efGWJ/view?usp=sharing" target="_blank"
+                class="flex items-center p-2 text-gray-800 transition-colors rounded-md dark:text-light hover:bg-amber-200 dark:hover:bg-red-500">
                 <span aria-hidden="true">
-                    <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                            d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM12 8v4m0 4h.01"></path>
                     </svg>
                 </span>
-                <span>Customize</span>
-            </button>
+                <span class="ml-2 text-sm"> Guide </span>
+            </a>
         </div>
     </div>
 </aside>

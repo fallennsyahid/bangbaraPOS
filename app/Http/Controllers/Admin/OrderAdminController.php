@@ -18,7 +18,7 @@ class OrderAdminController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('product')->get();
+        $orders = Order::orderBy('created_at', 'desc')->get();
         $statusOptions = ['Pending', 'Processed', 'Cancelled', 'Completed'];
         return view('admin.orders.index', compact('orders', 'statusOptions'));
     }
@@ -48,8 +48,8 @@ class OrderAdminController extends Controller
      */
     public function show(Order $order)
     {
-        $order->load('product');
-        return view('admin.orders.show', compact('order'));
+        $products = json_decode($order->products, true);
+        return view('admin.orders.show', compact('order', 'products'));
     }
 
     /**

@@ -28,7 +28,7 @@
                     <div class="min-h-screen mb-4 py-5 flex flex-col items-center justify-center bg-prime">
                         <h2 class="mb-4">
                             <a href="{{ route('staffs.index') }}" class="text-amber-400 hover:underline">Back </a>/
-                            <a href="/admin/dashboard" class="hover:underline text-zinc">Home</a>
+                            <a href="/admin/dashboard" class="hover:underline text-zinc-950">Home</a>
                         </h2>
                         <form action="{{ route('staffs.store') }}" method="POST" enctype="multipart/form-data"
                             class="w-full max-w-md bg-thead text-gray-900 p-6 rounded-lg shadow-lg">
@@ -61,13 +61,6 @@
                                     <option value="">Select a Role</option>
                                     <option value="staff">Staff</option>
                                 </select>
-                            </div>
-
-                            <!-- Input Gambar Produk (Opsional) -->
-                            <div class="mb-4">
-                                <label for="image" class="block text-sm font-medium mb-2">Password</label>
-                                <input type="password" id="password" name="password" placeholder="Enter staff password"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none" />
                             </div>
                             <!-- Tombol Submit -->
                             <button type="submit"

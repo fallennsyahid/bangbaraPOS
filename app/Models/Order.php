@@ -3,13 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
-    protected $guarded = [];
 
-   public function product() {
-    return $this->belongsTo(Product::class, 'product_id');
-   }
+    use HasFactory;
 
+    protected $fillable = [
+        'customer_name',
+        'customer_phone',
+        'request',
+        'products',
+        'total_price',
+        'status',
+        'payment_method',
+        'payment_photo',
+    ];
+
+    protected $casts = [
+        'products' => 'array',
+    ];
 }

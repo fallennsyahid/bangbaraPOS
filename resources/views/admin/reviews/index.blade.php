@@ -19,14 +19,14 @@
                 <main class="bg-prime">
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
-                        <h1 class="text-2xl font-semibold text-zinc-950">Manage Products</h1>
+                        <h1 class="text-2xl font-semibold text-zinc-950">Reviews</h1>
                         <x-admin.waButton></x-admin.waButton>
                     </div>
 
 
                     <!-- Content -->
                     <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
-                        <div class="w-full max-w-4xl overflow-x-auto">
+                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
                                 id="myTable">
                                 <!-- Header -->
@@ -43,6 +43,9 @@
                                         </th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Rating
+                                        </th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Time
                                         </th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Aksi
@@ -66,9 +69,12 @@
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $row->rating }} Bintang
                                             </td>
-                                            <td class="px-6 py-4 flex items-center">
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
+                                                {{ $row->created_at->diffForHumans() }}
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 <form id="delete-form-{{ $row->id }}"
-                                                    action="{{ route('reviews.destroy', $row) }}" method="POST"
+                                                    action="{{ route('reviews.destroy', $row->id) }}" method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this category?');">
                                                     @csrf
                                                     @method('DELETE')
@@ -85,7 +91,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-
 
                             <x-admin.success-alert></x-admin.success-alert>
                         </div>
@@ -158,7 +163,17 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <script>
-        let table = new DataTable('#myTable');
+        $(document).ready(function() {
+            let table = $('#myTable').DataTable({
+                "columnDefs": [{
+                    "targets": 0, // Kolom pertama (nomor urut)
+                    "render": function(data, type, row, meta) {
+                        return meta.row + 1; // Menampilkan nomor urut otomatis
+                    }
+                }],
+                "ordering": false // Nonaktifkan sorting di semua kolom (opsional)
+            });
+        });
     </script>
 
 

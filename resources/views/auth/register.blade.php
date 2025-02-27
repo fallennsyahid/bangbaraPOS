@@ -87,7 +87,7 @@
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium">Username</label>
                         <input id="name" type="name" name="name" required
-                            class="mt-1 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
+                            class="mt-1 p-2 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:outline-none focus:border-2 focus:border-red-700">
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
 
@@ -95,7 +95,7 @@
                     <div class="mb-4">
                         <label for="email" class="block text-sm font-medium">Email</label>
                         <input id="email" type="email" name="email" required
-                            class="mt-1 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
+                            class="mt-1 p-2 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:outline-none focus:border-2 focus:border-red-700">
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
@@ -103,35 +103,30 @@
                     <div class="mb-4 relative">
                         <label for="password" class="block text-sm font-medium">Password</label>
                         <input id="password" type="password" name="password" required
-                            class="mt-1 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
-                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-7.293-2.293a8 8 0 0110.586 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                            class="mt-1 p-2 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:outline-none focus:border-2 focus:border-red-700">
+                        <span
+                            class="show-password absolute inset-y-0 right-0 pr-3 mt-6 flex items-center cursor-pointer">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABkklEQVR4nO2WvUoDQRSFPwsjoomk8wHEUpNgL9aKnVjYii/hT2FEIwgS8hBKgp1gY6ddYpGHWPNjKRKrRAZuYBj3zu5iRIs9cJs7557D3Duzs5AixT/AGlAGHoEOMJDoSO4UKE3ScBt4AUYxowls/cRwGXhIYOjGPbCU1HQX+AgR6wGHQAGYkygCR7Lm8t+BnTiGU8A5MAwRqQNZT61Za4TUGa0z0VZNa0rb6r5CRyPMfARUNY0rpaAXsVMXOaCvaF265APPITEztZERgVcgACqSs3Hs0dsfk1aBTw/RrNuohHBMzkbRozcAVgypFXEt3DYHIRyTs5GN0GwZUvsXjHMRmm1D2lCuzzgKMVp9kaDVQ2B9TKx6iObjYCMj5oHncJ149K5dsecJXacF4E3RegKm3YK8Z96NBB+QO89c81rhorwumnkuYqeaaVO0vZgFbhWBvnwczLs7L1GSmWrtvRHNWDAt21OuTtwIRCPOiL4hKy+LthutK+WEB1LFDLApr5c5/V3r16cruZpwDDdFCv4MXw/YJO5+W1zLAAAAAElFTkSuQmCC"
+                                alt="visible--v1" class="h-5 w-5 text-gray-400">
                         </span>
-                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
 
-                    <!--Confirm Password -->
+                    <!-- Confirm Password -->
                     <div class="mb-4 relative">
-                        <label for="pasword_confirmation" class="block text-sm font-medium">Confirm Password</label>
+                        <label for="password_confirmation" class="block text-sm font-medium">Confirm Password</label>
                         <input id="password_confirmation" type="password" name="password_confirmation" required
-                            class="mt-1 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
-                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-7.293-2.293a8 8 0 0110.586 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                            class="mt-1 p-2 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:outline-none focus:border-2 focus:border-red-700">
+                        <span
+                            class="show-password absolute inset-y-0 right-0 pr-3 mt-6 flex items-center cursor-pointer">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABkklEQVR4nO2WvUoDQRSFPwsjoomk8wHEUpNgL9aKnVjYii/hT2FEIwgS8hBKgp1gY6ddYpGHWPNjKRKrRAZuYBj3zu5iRIs9cJs7557D3Duzs5AixT/AGlAGHoEOMJDoSO4UKE3ScBt4AUYxowls/cRwGXhIYOjGPbCU1HQX+AgR6wGHQAGYkygCR7Lm8t+BnTiGU8A5MAwRqQNZT61Za4TUGa0z0VZNa0rb6r5CRyPMfARUNY0rpaAXsVMXOaCvaF265APPITEztZERgVcgACqSs3Hs0dsfk1aBTw/RrNuohHBMzkbRozcAVgypFXEt3DYHIRyTs5GN0GwZUvsXjHMRmm1D2lCuzzgKMVp9kaDVQ2B9TKx6iObjYCMj5oHncJ149K5dsecJXacF4E3RegKm3YK8Z96NBB+QO89c81rhorwumnkuYqeaaVO0vZgFbhWBvnwczLs7L1GSmWrtvRHNWDAt21OuTtwIRCPOiL4hKy+LthutK+WEB1LFDLApr5c5/V3r16cruZpwDDdFCv4MXw/YJO5+W1zLAAAAAElFTkSuQmCC"
+                                alt="visible--v1" class="h-5 w-5 text-gray-400">
                         </span>
-                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                        <p id="password-error" class="text-red-500 mt-1 text-sm hidden">Password tidak cocok</p>
                     </div>
 
                     <!-- Submit -->
                     <button type="submit"
-                        class="w-full py-2 px-4 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 focus:ring-2 focus:ring-purple-500">
+                        class="w-full mt-4 py-2 px-4 bg-red-700 text-white font-bold rounded-lg transition-all duration-200 hover:bg-red-600 hover:scale-110 focus:ring-2 focus:ring-amber-300 active:bg-red-700 active:scale-100">
                         Register
                     </button>
                 </form>
@@ -139,6 +134,34 @@
         </div>
     </div>
 </body>
+
+<script>
+    document.querySelectorAll('.show-password').forEach((toggle) => {
+        toggle.addEventListener('click', () => {
+            const passwordInput = toggle.previousElementSibling;
+            if (passwordInput && passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+    });
+
+    const password = document.querySelector('#password');
+    const passwordConfirmation = document.querySelector('#password_confirmation');
+    const passwordError = document.querySelector('#password-error');
+
+    const validatePasswords = () => {
+        if (password.value !== passwordConfirmation.value) {
+            passwordError.classList.remove('hidden');
+        } else {
+            passwordError.classList.add('hidden');
+        }
+    }
+
+    password.addEventListener('input', validatePasswords);
+    passwordConfirmation.addEventListener('input', validatePasswords);
+</script>
 
 </html>
 

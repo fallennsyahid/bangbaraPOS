@@ -27,16 +27,12 @@
                     <!-- Content -->
                     <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
                         <!-- Tombol View on GitHub -->
-                        <div class="mb-6">
-                            <a href="{{ route('products.create') }}"
-                                class="px-4 py-2 text-sm text-zinc-950 font-semibold shadow-xl rounded-md bg-[#B0B0B0] hover:bg-thead focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
-                                Create +
-                            </a>
-                        </div>
 
                         <!-- Tabel -->
-                        <div class="flex mx-auto space-x-5 justify-between">
-                            <div class="">
+                        {{-- <div class="flex mx-auto space-x-10 justify-between w-full max-w-4xl mb-6"> --}}
+                        <div class="flex justify-between items-center w-full max-w-4xl">
+                            <!-- Filter Category di ujung kiri -->
+                            <div>
                                 <select id="categoryFilter"
                                     class="bg-[#D3CD6B] text-white rounded-lg px-4 py-2 shadow-lg focus:ring-2 focus:ring-amber-300 focus:outline-none transition duration-300 transform hover:shadow-2xl">
                                     <option value="">Filter by Category</option>
@@ -47,18 +43,35 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="mt-1">
-                                <a href="{{ route('products.export') }}"
-                                    class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600">
-                                    Export Excel
+
+                            <!-- Tombol Export & Create di ujung kanan -->
+                            <div class="flex space-x-3">
+                                <form action="{{ route('products.import') }}" method="POST"
+                                    enctype="multipart/form-data" class="flex items-center">
+                                    @csrf
+                                    <label for="file_upload"
+                                        class="cursor-pointer bg-green-600 text-white flex items-center py-2 px-4 rounded-md hover:bg-green-500 shadow-lg">
+                                        <img src="{{ asset('asset-view/assets/svg/export.svg') }}" class="w-5 h-5 mr-2">
+                                        Import
+                                    </label>
+                                    <input id="file_upload" type="file" name="file" class="hidden"
+                                        accept=".xlsx, .xls" onchange="this.form.submit();">
+                                </form>
+
+
+                                <a href="{{ route('products.create') }}"
+                                    class="px-4 py-2 flex items-center text-sm text-gray-900 font-semibold shadow-md rounded-md bg-gray-300 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                                    Create +
                                 </a>
                             </div>
                         </div>
-                        <div class="w-full max-w-4xl overflow-x-auto">
+
+
+                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
                                 id="myTable">
                                 <!-- Header -->
-                                <thead class="bg-thead text-white shadow-md">
+                                <thead class="bg-thead shadow-md">
                                     <tr>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">ID
                                         </th>
@@ -95,8 +108,8 @@
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 <h4
-                                                    class="{{ $product->status_produk == 'active' ? 'bg-green-400 text-white text-center px-4 py-2 rounded-md' : '' }}
-                                                           {{ $product->status_produk == 'unactive' ? 'bg-red-600 text-white text-center px-4 py-2 rounded-md' : '' }}
+                                                    class="{{ $product->status_produk == 'Active' ? 'bg-green-400 text-white text-center px-4 py-2 rounded-md' : '' }}
+                                                           {{ $product->status_produk == 'Non-active' ? 'bg-red-600 text-white text-center px-4 py-2 rounded-md' : '' }}
                                                     ">
                                                     {{ $product->status_produk }}</h4>
                                             </td>
@@ -220,7 +233,17 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <script>
-        let table = new DataTable('#myTable');
+        $(document).ready(function() {
+            let table = $('#myTable').DataTable({
+                "columnDefs": [{
+                    "targets": 0, // Kolom pertama (nomor urut)
+                    "render": function(data, type, row, meta) {
+                        return meta.row + 1; // Menampilkan nomor urut otomatis
+                    }
+                }],
+                "ordering": false // Nonaktifkan sorting di semua kolom (opsional)
+            });
+        });
     </script>
 
 

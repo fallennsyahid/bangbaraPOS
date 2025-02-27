@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Staff;
 
+use App\Exports\OrderTodayExport;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+
 
 class StaffOrdersController extends Controller
 {
@@ -14,13 +17,18 @@ class StaffOrdersController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('product')->whereDate('created_at', Carbon::today())->get();
+        $orders = Order::whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->get();
         $statusOptions = ['Pending', 'Processed', 'Cancelled', 'Completed'];
         return view('staff.staffOrders.index', compact('orders', 'statusOptions'));    }
 
     /**
      * Show the form for creating a new resource.
      */
+    public function exportToday() {
+        return Excel::download(new OrderTodayExport, 'orders-today.xlsx');
+    }
+
+
     public function create()
     {
         //
@@ -40,8 +48,8 @@ class StaffOrdersController extends Controller
    public function show($id)
     {
         $order = Order::findOrFail($id);
-
-        return view('staff.staffOrders.show', compact('order'));
+        $products = json_decode($order->products, true);
+        return view('staff.staffOrders.show', compact('order', 'products'));
     }
 
     /**

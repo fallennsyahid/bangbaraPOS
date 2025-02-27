@@ -32,7 +32,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('assets/png/logo_bangbara.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
 
     <title>BangbaraPost - Forgot Password</title>
 
@@ -46,18 +46,23 @@
 
 <body class="font-sans antialiased bg-black text-white">
     <div class="flex justify-center items-center min-h-screen">
-        <div class="bg-zinc-900 p-8 rounded-sm shadow-lg flex flex-row items-center space-x-8 max-w-4xl">
+        <div class="bg-zinc-900 p-8 rounded-sm shadow-lg flex flex-row items-center space-x-8 max-w-4xl relative">
+            <!-- Arrow di kiri atas container -->
+            <a href="{{ route('login') }}" class="absolute top-0 left-0 mt-4 ml-4">
+                <img src="{{ asset('asset-view/assets/svg/arrow-left.svg') }}" alt="Arrow Left"
+                    class="hover:scale-125 transition duration-300">
+            </a>
+
             <!-- Illustration -->
             <div>
                 <img src="{{ asset('asset-admin/public/img/guest.png') }}" alt="Illustration" class="w-80 h-90">
             </div>
 
             <!-- Login Form -->
-            <div class="w-full
-                    max-w-sm">
-                <h1 class="text-sm font-light mb-6">Forgot your password? No problem. Just let us know
-                    your
-                    email address and we will email you a password reset link that will allow you to choose a new one.
+            <div class="w-full max-w-sm">
+                <h1 class="text-sm font-light mb-6">
+                    Forgot your password? No problem. Just let us know your email address and we will email you a
+                    password reset link that will allow you to choose a new one.
                 </h1>
                 <!-- Session Status -->
                 <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -67,7 +72,7 @@
                     <div class="mb-4">
                         <label for="email" class="block text-sm font-medium">Email</label>
                         <input id="email" type="email" name="email" required
-                            class="mt-1 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
+                            class="mt-1 p-2 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
@@ -80,6 +85,7 @@
             </div>
         </div>
     </div>
+
 </body>
 
 </html>

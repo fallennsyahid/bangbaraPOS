@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProductsExport;
-
+use App\Imports\ProductsImport;
 
 class ProductController extends Controller
 {
@@ -23,9 +23,27 @@ class ProductController extends Controller
         return view('admin.products.index', compact('products', 'categories'));
     }
 
-    public function export() {
+    public function export()
+    {
         return Excel::download(new ProductsExport, 'products.xlsx');
     }
+
+  public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls',
+    ]);
+
+    // Simpan file ke storage/app/public/imports/
+    $path = $request->file('file')->store('imports', 'public');
+
+
+    // Gunakan storage_path untuk mengambil file yang benar
+    Excel::import(new ProductsImport, storage_path("app/public/" . $path));
+
+    return back()->with('success', 'Produk berhasil diimport!');
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -47,7 +65,7 @@ class ProductController extends Controller
             'deskripsi_menu' => 'required',
             'gambar_menu' => 'image|required|mimes:jpg,jpeg,png,svg|max:2048',
             'category_id' => 'required|exists:categories,id',
-            'status_produk' => 'required|in:active,unactive',
+            'status_produk' => 'required|in:Active,Non-active',
         ]);
 
         $path = $request->file('gambar_menu')->store('products', 'public');
@@ -62,7 +80,6 @@ class ProductController extends Controller
         ]);
 
         return redirect()->route('products.index')->with('success', 'Berhasil Menambahkan Produk');
-
     }
 
     /**
@@ -93,7 +110,7 @@ class ProductController extends Controller
             'deskripsi_menu' => 'string',
             'gambar_menu' => 'image|mimes:jpg,jpeg,png,svg|max:2048',
             'category_id' => 'exists:categories,id',
-            'status_produk' => 'in:active,unactive',
+            'status_produk' => 'in:Active,Non-active',
         ]);
 
         $data = ([
@@ -107,7 +124,7 @@ class ProductController extends Controller
         // Update Gambar Jika Ada
         if ($request->hasFile('gambar_menu')) {
             // hapus gambar lama
-            if($product->gambar_menu) {
+            if ($product->gambar_menu) {
                 Storage::delete($product->gambar_menu);
             }
             $data['gambar_menu'] = $request->file('gambar_menu')->store('products', 'public');
@@ -115,7 +132,6 @@ class ProductController extends Controller
 
         $product->update($data);
         return redirect()->route('products.index')->with('success', 'Berhasil Mengubah Produk');
-
     }
 
     /**

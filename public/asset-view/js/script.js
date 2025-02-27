@@ -2,16 +2,16 @@
 window.onscroll = function () {
     const header = document.querySelector('header');
     const fixedNav = header.offsetTop;
-    const toTop = document.querySelector('#to-top');
+    // const toTop = document.querySelector('#to-top');
 
     if (window.scrollY > fixedNav) {
         header.classList.add('navbar-fixed');
-        toTop.classList.remove('hidden');
-        toTop.classList.add('flex');
+        // toTop.classList.remove('hidden');
+        // toTop.classList.add('flex');
     } else {
         header.classList.remove('navbar-fixed');
-        toTop.classList.remove('flex');
-        toTop.classList.add('hidden');
+        // toTop.classList.remove('flex');
+        // toTop.classList.add('hidden');
     }
 };
 
@@ -55,35 +55,6 @@ function changeSlide(index) {
     const slideWidth = sliderContent.clientWidth / 3; // Menghitung lebar satu slide
     sliderContent.style.transform = `translateX(-${index * slideWidth}px)`; // Menggeser sesuai index
 }
-
-// POPUP
-const itemDetailModal = document.querySelector('#item-detail-modal');
-const itemDetailButtons = document.querySelectorAll('.item-detail-button');
-
-itemDetailButtons.forEach((btn) => {
-    btn.onclick = (e) => {
-        itemDetailModal.style.display = 'flex';
-        e.preventDefault();
-    };
-});
-
-itemDetailButtons.onclick = (e) => {
-    itemDetailModal.style.display = 'flex';
-    e.preventDefault();
-};
-
-
-document.querySelector('.close-icon').onclick = (e) => {
-    itemDetailModal.style.display = 'none';
-    e.preventDefault();
-};
-
-window.onclick = (e) => {
-    if (e.target === itemDetailModal) {
-        itemDetailModal.style.display = 'none';
-    };
-};
-
 
 // Rating
 const stars = document.querySelectorAll('input[name="rating"]');

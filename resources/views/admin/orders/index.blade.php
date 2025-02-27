@@ -28,15 +28,16 @@
                     <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
                         <!-- Tombol View on GitHub -->
                         <!-- Tabel -->
-                        <div class="mb-4 mt-3">
+                        <div class="mb-4 mt-3 flex justify-end w-full max-w-4xl">
                             <a href="{{ route('orders.export') }}"
-                                class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600">
-                                Export Excel
+                                class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
+                                <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
+                                    class="w-5 h-5 inline-block mr-2">
+                                Export
                             </a>
                         </div>
-                        <div class="w-full max-w-4xl overflow-x-auto">
-                            <div class="flex mx-auto justify-between">
-                            </div>
+                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
+
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
                                 id="myTable">
                                 <!-- Header -->
@@ -47,13 +48,13 @@
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Costumer</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
-                                            Phone</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Status</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Price</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Method</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Time</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Photo</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
@@ -62,7 +63,7 @@
                                 </thead>
 
                                 <!-- Body -->
-                                <tbody class="bg-tbody" id="productTable">
+                                <tbody class="bg-tbody" id="orderTableBody">
                                     @foreach ($orders as $index => $order)
                                         <tr class="hover:bg-thead" data-category="{{ $order->id }}">
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">#{{ $index + 1 }}
@@ -70,20 +71,15 @@
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $order->customer_name }}
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
-                                                <a href="https://wa.me/{{ $order->customer_phone }}"
-                                                    class="hover:text-blue-400 hover:underline"
-                                                    target="_blank">{{ $order->customer_phone }}</a>
-                                            </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950"
-                                                id="order-status-{{ $order->id }}">
-                                                <h5
+                                            <td class="px-6 py-4 font-medium text-sm">
+                                                <h5 id="order-status-{{ $order->id }}"
                                                     class="{{ $order->status == 'Processed' ? 'bg-yellow-800 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                            {{ $order->status == 'Pending' ? 'bg-amber-300 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                             {{ $order->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                             {{ $order->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                    ">
-                                                    {{ $order->status }}</h4>
+                                                    {{ $order->status == 'Pending' ? 'bg-amber-300 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                    {{ $order->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                    {{ $order->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}">
+                                                    {{ $order->status }}
+                                                </h5>
+
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 Rp {{ number_format($order->total_price, 2) }}
@@ -92,12 +88,23 @@
                                                 {{ $order->payment_method }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
-                                                <a href="">
-                                                    <button
-                                                        class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
-                                                        <h6>File</h6>
-                                                    </button>
-                                                </a>
+                                                {{-- <a href="https://wa.me/{{ $order->customer_phone }}"
+                                                class="hover:text-blue-400 hover:underline"
+                                                target="_blank">{{ $order->customer_phone }}</a> --}}
+                                                {{ $order->created_at->diffForHumans() }}
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
+                                                @if ($order->payment_method === 'nonTunai')
+                                                    <a href="{{ Storage::url($order->payment_photo) }}"
+                                                        target="_blank">
+                                                        <button
+                                                            class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
+                                                            <h6>File</h6>
+                                                        </button>
+                                                    </a>
+                                                @else
+                                                    <p class="text-zinc-950 text-2xl text-center mr-2">-</p>
+                                                @endif
                                             </td>
                                             {{-- <td class="px-6 py-4 flex gap-3 mt-4">
                                                 <button onclick="openModal({{ $order->id }})"
@@ -325,7 +332,27 @@
                         // Update status di UI
                         const statusElement = document.getElementById(`order-status-${orderId}`);
                         if (statusElement) {
-                            statusElement.innerText = status; // Ganti status di UI
+                            // Hapus semua class status lama
+                            statusElement.classList.remove('bg-yellow-800', 'bg-amber-300', 'bg-red-600',
+                                'bg-green-500');
+
+                            // Tambahkan class status baru
+                            if (status === 'Processed') {
+                                statusElement.classList.add('bg-yellow-800', 'rounded-md', 'px-3', 'py-2',
+                                    'text-center', 'text-white');
+                            } else if (status === 'Pending') {
+                                statusElement.classList.add('bg-amber-300', 'rounded-md', 'px-3', 'py-2', 'text-center',
+                                    'text-white');
+                            } else if (status === 'Cancelled') {
+                                statusElement.classList.add('bg-red-600', 'rounded-md', 'px-3', 'py-2', 'text-center',
+                                    'text-white');
+                            } else if (status === 'Completed') {
+                                statusElement.classList.add('bg-green-500', 'rounded-md', 'px-3', 'py-2', 'text-center',
+                                    'text-white');
+                            }
+
+                            // Update status text
+                            statusElement.innerText = status;
                         }
                     } else {
                         // Menggunakan SweetAlert untuk menampilkan pesan gagal
@@ -355,9 +382,18 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <script>
-        let table = new DataTable('#myTable');
+        $(document).ready(function() {
+            let table = $('#myTable').DataTable({
+                "columnDefs": [{
+                    "targets": 0, // Kolom pertama (nomor urut)
+                    "render": function(data, type, row, meta) {
+                        return meta.row + 1; // Menampilkan nomor urut otomatis
+                    }
+                }],
+                "ordering": false // Nonaktifkan sorting di semua kolom (opsional)
+            });
+        });
     </script>
-
 </body>
 
 </html>

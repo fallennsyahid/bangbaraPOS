@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\History;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class HistoryController extends Controller
 {
@@ -16,37 +17,31 @@ class HistoryController extends Controller
      */
   public function index(Request $request)
 {
-    $years = History::selectRaw('YEAR(created_at) as year')->distinct()->pluck('year');
-    $months = History::selectRaw('MONTH(created_at) as months')->distinct()->pluck('months');
-    $days = History::selectRaw('DAY(created_at) as days')->distinct()->pluck('days');
+      $query = History::query(); // Pastikan pakai query builder dari Eloquent
 
-    // Query dengan filter
+        if ($request->filled('periode_awal') && $request->filled('periode_akhir')) {
+        $start = $request->periode_awal . " 00:00:00";
+        $end = $request->periode_akhir . " 23:59:59";
+        $query->whereBetween('created_at', [$start, $end]);
+    }
+
+
+        $histories = $query->orderBy('created_at', 'desc')->get(); // Ambil data hasil filter
+
+        return view('admin.histories.index', compact('histories')); // Pastikan `history.index` adalah view yang benar
+    }
+
+     public function getHistories(Request $request)
+{
     $query = History::query();
 
-    if ($request->has('filter_year') && $request->filter_year) {
-        $query->whereYear('created_at', $request->filter_year);
+    if ($request->filled('periode_awal') && $request->filled('periode_akhir')) {
+        $query->whereBetween('created_at', [$request->periode_awal, $request->periode_akhir]);
     }
 
-    if ($request->has('filter_month') && $request->filter_month) {
-        $query->whereMonth('created_at', $request->filter_month);
-    }
-
-    if ($request->has('filter_day') && $request->filter_day) {
-        $query->whereDay('created_at', $request->filter_day);
-    }
-
-    // Ambil data histories
-    $histories = $query->get();
-
-    // Jika permintaan AJAX, kembalikan data dalam format JSON
-    if ($request->ajax()) {
-        return response()->json([
-            'histories' => $histories,
-        ]);
-    }
-
-    return view('admin.histories.index', compact('histories', 'years', 'months', 'days'));
+    return response()->json($query->get());
 }
+
 
 
 
@@ -54,15 +49,30 @@ class HistoryController extends Controller
 
     public function export(Request $request)
 {
-$filters = [
-        'filter_year' => $request->input('filter_year'),
-        'filter_month' => $request->input('filter_month'),
-        'filter_day' => $request->input('filter_day'),
-    ];
-    // Debug log untuk memastikan filter diterapkan
-    // \Log::info('Exporting histories', ['filters' => $request->all(), 'count' => $history->count()]);
+    $periode_awal = $request->query('periode_awal');
+    $periode_akhir = $request->query('periode_akhir');
 
-    return Excel::download(new HistoriesExport($filters), 'histories.xlsx');
+       // Validasi apakah kedua tanggal diisi
+    if (!$periode_awal || !$periode_akhir) {
+        return redirect()->back()->with('error', 'Pilih rentang tanggal terlebih dahulu.');
+    }
+
+    // Konversi ke format Y-m-d agar sesuai dengan created_at di database
+    try {
+        $periode_awal = Carbon::parse($periode_awal)->startOfDay(); 
+        $periode_akhir = Carbon::parse($periode_akhir)->endOfDay();
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Format tanggal tidak valid.');
+    }
+
+    // Ambil data berdasarkan rentang tanggal
+    $histories = History::whereBetween('created_at', [$periode_awal, $periode_akhir])->get();
+
+    if ($histories->isEmpty()) {
+        return redirect()->back()->with('error', 'Tidak ada data dalam rentang tanggal yang dipilih.');
+    }
+
+    return Excel::download(new HistoriesExport($histories), 'histories.xlsx');
 }
 
     /**
@@ -86,8 +96,12 @@ $filters = [
      */
     public function show(History $history)
     {
-        $history->load('products');
-        return view('admin.histories.show', compact('history'));
+        $products = json_decode($history->products, true);
+
+        if (is_string($products)) {
+            $products = json_decode($products, true);
+        }
+        return view('admin.histories.show', compact('history', 'products'));
     }
 
     /**

@@ -33,7 +33,7 @@
                         </h2>
 
                         <!-- Kontainer Tabel -->
-                        <div class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+                        <div id="printArea" class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
                             <!-- Detail Pemesan -->
                             <div class="mb-4">
                                 <label class="block text-gray-700 font-semibold">Nama Pemesan:</label>
@@ -45,30 +45,37 @@
                             <div class="overflow-x-auto shadow-md">
                                 <table class="table-auto border-collapse w-full text-left shadow-md rounded-md">
                                     <tbody class="bg-gray-50">
-                                        <tr class="hover:bg-gray-200">
-                                            <td class="px-6 py-4 text-sm text-gray-900">#{{ $order->id }}</td>
-                                            <td class="px-6 py-4 text-sm">
-                                                <img src="{{ Storage::url($order->product->gambar_menu) }}"
-                                                    class="w-20 h-20 object-cover rounded-md" alt="Gambar Product">
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">{{ $order->product->nama_menu }}
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">
-                                                {{ $order->product->category->nama_kategori }}</td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">
-                                                {{ $order->product->harga_menu }}
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">{{ $order->quantity }}X</td>
-                                            <td class="px-6 py-4 text-sm text-gray-900">{{ $order->total_price }}</td>
-                                        </tr>
+                                        @foreach ($products as $product)
+                                            <tr class="hover:bg-gray-200">
+                                                <td class="px-6 py-4 text-sm text-gray-900">#{{ $order->id }}</td>
+                                                <td class="px-6 py-4 text-sm">
+                                                    <img src="{{ Storage::url($product['gambar_menu']) }}"
+                                                        class="w-20 h-20 object-cover rounded-md" alt="Gambar Product">
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-gray-900">
+                                                    {{ $product['nama_menu'] }}
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-gray-900">
+                                                    Rp{{ number_format($product['price'], 0, ',', '.') }}
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-gray-900">{{ $product['quantity'] }}X
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
+                            </div>
+
+                            <!-- Total Price -->
+                            <div class="mt-4">
+                                <label class="block text-gray-700 font-semibold">Total:</label>
+                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>Rp {{ number_format($order->total_price, 0, ',', '.') }}</textarea>
                             </div>
 
                             <!-- Catatan -->
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Catatan:</label>
-                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>Steaknya jangan terlalu matang, potatonya banyakin.</textarea>
+                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>{{ $order->request }}</textarea>
                             </div>
 
                             <!-- Metode Pembayaran -->
@@ -77,13 +84,73 @@
                                 <input type="text" value="{{ $order->payment_method }}"
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
                             </div>
+
+                            <div class="mt-4">
+                                <label class="block text-gray-700 font-semibold">Phone Number:</label>
+                                <a href="https://wa.me/{{ $order->customer_phone }}" target="_blank">
+                                    <input type="text" value="{{ $order->customer_phone }}"
+                                        class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950 cursor-pointer"
+                                        readonly>
+                                </a>
+                            </div>
+                            <div class="mt-11 flex justify-items-end">
+                                <a href="#" id="printButton"
+                                    class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
+                                    <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
+                                        class="w-5 h-5 inline-block mr-2">
+                                    Print
+                                </a>
+                            </div>
                         </div>
-                    </div>
 
-
-
-
-
+                        {{-- Print Display --}}
+                        <div id="printDisplay" class="hidden">
+                            <div class="flex justify-center items-center h-screen m-0 bg-gray-200 text-gray-900">
+                                <div class="rounded-md relative w-72 shadow-2xl p-3 bg-white">
+                                    <div class="py-2">
+                                        <div class="text-center text-xl font-bold">ORDER</div>
+                                        <div class="text-center text-xs font-bold">Order details</div>
+                                    </div>
+                                    <div class="text-center text-xs font-bold mb-1">~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div>
+                                    <div class="text-xs pl-2">
+                                        <div class="text-xs mb-1">Customer：{{ $order->customer_name }}</div>
+                                        <div class="text-xs mb-1">TelePhone：{{ $order->customer_phone }}</div>
+                                        <div>OrderNumber：#{{ $order->id }}</div>
+                                    </div>
+                                    <div class="border-double border-t-4 border-b-4 border-gray-900 my-3">
+                                        <div class="flex text-sm pt-1 px-1">
+                                            <span class="w-2/6">Name</span>
+                                            <span class="w-2/6 text-right">Price</span>
+                                            <span class="w-2/6 text-right">QTY</span>
+                                        </div>
+                                        <div
+                                            class="border-dashed border-t border-b border-gray-900 mt-1 my-2 py-2 px-1">
+                                            @foreach ($products as $product)
+                                                <div class="flex justify-between text-sm">
+                                                    <span class="w-2/6 truncate">{{ $product['nama_menu'] }}</span>
+                                                    <span class="w-2/6 text-right">
+                                                        Rp{{ number_format($product['price'], 0, ',', '.') }}
+                                                    </span>
+                                                    <span class="w-2/6 text-right">{{ $product['quantity'] }}</span>
+                                                </div>
+                                            @endforeach
+                                            <!-- Jika ada produk lain, tambahkan di sini -->
+                                        </div>
+                                    </div>
+                                    <div class="text-xs">
+                                        <div class="mb-1">Discount：Rp0</div>
+                                        <div class="mb-52">Remark：--</div>
+                                        <div class="text-right">
+                                            <div>Time： {{ $order->created_at->format('d/m/y') }}
+                                            </div>
+                                            <div class="font-bold text-sm">Total：
+                                                Rp{{ number_format($order->total_price, 0, ',', '.') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </main>
 
                 <!-- Main footer -->
@@ -106,6 +173,22 @@
     <x-admin.js></x-admin.js>
     {{-- Confirm Alert --}}
 
+    <script>
+        document.getElementById('printButton').addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Hide web display
+            document.getElementById('printArea').classList.add('hidden');
+            document.getElementById('printDisplay').classList.remove('hidden')
+
+            // Print
+            window.print();
+
+            // return web display
+            document.getElementById('printArea').classList.remove('hidden');
+            document.getElementById('printDisplay').classList.add('hidden');
+        });
+    </script>
 </body>
 
 </html>

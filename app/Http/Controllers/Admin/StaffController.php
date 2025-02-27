@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StaffCredentials;
+use Illuminate\Support\Facades\Auth;
 
 class StaffController extends Controller
 {
@@ -13,7 +20,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $users = User::where('usertype', 'staff')->get();
+        $users = User::where('id', '!=', Auth::user()->id)->get();
         return view('admin.staffs.index', compact('users'));
     }
 
@@ -25,6 +32,9 @@ class StaffController extends Controller
         return view('admin.staffs.create');
     }
 
+    public function export() {
+    return Excel::download(new UserExport, 'users.xlsx');
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -34,40 +44,70 @@ class StaffController extends Controller
             'name' => 'required|string|max:225',
             'email' => 'required|email|min:0',
             'usertype' => 'required|in:staff',
-            'password' => 'required',
         ]);
 
+        // Generate Password
+        $password = Str::random(8);
+        $user =
         User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'usertype' => $request->input('usertype'),
-            'password' => $request->input('password'),
+            'password' => Hash::make($password),
         ]);
+
+        // Kirim email ke staff
+        Mail::to($user->email)->send(new StaffCredentials($user->name, $user->email, $password));
+
         return redirect()->route('staffs.index')->with('success', 'Succcessfully added staff');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.staffs.show', compact('user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.staffs.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+         $user = User::findOrFail($id);
+
+         $request->validate([
+        'name' => 'nullable|string|max:255',
+        'email' => 'nullable|email|unique:users,email,' . $user->id,
+        'usertype' => 'nullable|in:staff,admin',
+        'password' => 'nullable',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->usertype = $request->usertype;
+
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+
+    // Simpan perubahan ke database
+    if ($user->save()) {
+        return redirect()->route('staffs.index')->with('success', 'Staff berhasil diperbarui!');
+    } else {
+        return back()->with('error', 'Gagal memperbarui staff, silakan coba lagi.');
+    }
     }
 
     /**
