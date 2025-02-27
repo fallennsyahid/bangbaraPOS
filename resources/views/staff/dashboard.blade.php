@@ -19,7 +19,7 @@
                 <main class="bg-prime">
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-4 border-b lg:py-6">
-                        <h1 class="text-2xl text-zinc-950 font-semibold">Dashboard</h1>
+                        <h1 class="text-2xl text-zinc-950 font-semibold">Welcome, {{ Auth::user()->name }} 👋!</h1>
                         <x-staff.waButton></x-staff.waButton>
                     </div>
 
@@ -83,78 +83,14 @@
                             </div> --}}
                         </div>
 
-                        <div class="flex justify-center mt-4 py-4">
-                            <select name="filter_year" id="filter_year"
-                                class="bg-[#FFFFFF] text-zinc-950 py-4 px-11 rounded-md shadow-lg">
-                                <option value="">All Time</option>
-                                @foreach ($years as $y)
-                                    <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>
-                                        {{ $y }}</option>
-                                @endforeach
-                            </select>
-                        </div>
 
 
                         <!-- Charts -->
-                        <div class="grid grid-cols-1 gap-4 p-4 lg:grid-cols-3 lg:gap-8">
+                        <div class="grid grid-cols-1 gap-4 p-4 lg:grid-cols-2 lg:gap-4 h-100">
                             <!-- Bar chart card (Total Income) -->
-                            <div class="bg-[#D3D3D3] rounded-md border border-gray-400 shadow-xl order-1 lg:col-span-2">
-                                <!-- Card header -->
-                                <div class="flex items-center justify-between p-4 border-b border-gray-400">
-                                    <h4 class="text-lg font-semibold text-gray-900">Total Income</h4>
-                                </div>
-                                <!-- Chart -->
-                                <div class="relative p-4 h-72">
-                                    <canvas id="orderChart"></canvas>
-                                </div>
-                            </div>
-
-                            <!-- Best Seller Chart -->
-                            <div class="bg-[#D3D3D3] rounded-md border border-gray-400 shadow-xl order-2 lg:col-span-1">
-                                <!-- Filter di luar card (di atas border) -->
-                                <div class="p-4">
-                                    <div class="mb-4 flex flex-col gap-4">
-                                        <div class="flex flex-col">
-                                            <label for="start_date" class="text-gray-700 text-sm">Dari Tanggal</label>
-                                            <input type="date" id="start_date"
-                                                class="text-zinc-950 mt-1 p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <label for="end_date" class="text-gray-700 text-sm">Sampai Tanggal</label>
-                                            <input type="date" id="end_date"
-                                                class="text-zinc-950 mt-1 p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        </div>
-                                        <button id="filterButton"
-                                            class="px-4 py-2 bg-red-700 text-white rounded hover:bg-red-600 transition mt-2 md:mt-0">
-                                            Filter
-                                        </button>
-                                    </div>
-
-                                    <!-- Card header -->
-                                    <div class="border-b border-gray-400 pb-2 mb-4">
-                                        <h4 class="text-lg font-semibold text-gray-900">Best Seller</h4>
-                                    </div>
-
-                                    <!-- Chart -->
-                                    <div class="relative h-72">
-                                        <canvas id="bestSellerChart"></canvas>
-                                        <div id="chartContainer" class="relative h-72">
-                                            <canvas id="bestSellerChart"></canvas>
-                                            <!-- Pesan error akan dimunculkan di sini bila data kosong -->
-                                            <div id="noDataMessage"
-                                                class="hidden flex items-center justify-center h-full text-gray-700 font-medium">
-                                                Tidak ada produk yang dijual di periode ini.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Filter & Orders Method Chart -->
-                            <div
-                                class="bg-[#D3D3D3] rounded-md border border-gray-400 shadow-xl order-3 p-4 lg:col-span-3">
+                            <div class="bg-[#D3D3D3] rounded-md border border-gray-400 shadow-xl p-4">
                                 <!-- Filter Orders Method -->
-                                <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                                <div class="hidden flex flex-col sm:flex-row gap-4 mb-4">
                                     <input type="date" id="filter_date"
                                         class="bg-white text-gray-900 py-2 px-4 rounded-md shadow-lg"
                                         value="{{ date('Y-m-d') }}">
@@ -165,86 +101,39 @@
 
                                 <!-- Card header -->
                                 <div class="border-b border-white pb-2 mb-4">
-                                    <h4 class="text-lg font-semibold text-gray-900">Orders Method</h4>
+                                    <h4 class="text-lg font-semibold text-gray-900">Orders Method (Today)</h4>
                                 </div>
 
                                 <!-- Chart -->
-                                <div class="relative h-72">
+                                <div class="relative h-60">
                                     <canvas id="hourlyMethodChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Best Seller Chart -->
+                            <div class="bg-[#D3D3D3] rounded-md border border-gray-400 shadow-xl p-4">
+                                <!-- Card header -->
+                                <div class="border-b border-gray-400 pb-2 mb-4">
+                                    <h4 class="text-lg font-semibold text-gray-900">Best Seller (Today)</h4>
+                                </div>
+
+                                <!-- Chart -->
+                                <div class="relative h-60">
+                                    <canvas id="bestSellerChart"></canvas>
+                                    <div id="noDataMessage"
+                                        class="hidden flex items-center justify-center h-full text-gray-700 font-medium">
+                                        Tidak ada produk yang dijual di periode ini.
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
 
 
+
+
                 </main>
                 {{-- Chart Order --}}
-                <script>
-                    const ctx = document.getElementById('orderChart').getContext('2d');
-
-
-                    let orderChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-                                'October', 'November', 'December'
-                            ],
-
-                            datasets: [{
-                                label: 'Total Income',
-                                data: @json($totals),
-                                backgroundColor: '#D3A200',
-                                borderColor: '#D3A200',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                y: {
-                                    ticks: {
-                                        callback: function(value) {
-                                            return value.toLocaleString(); // Format angka dengan pemisah ribuan
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-
-                    // Event Listener untuk Dropdown Tahun
-                    document.getElementById('filter_year').addEventListener('change', function() {
-                        const selectedYear = this.value;
-                        fetch(`/chart-data?year=${selectedYear}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                const allMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-                                    'September',
-                                    'October', 'November', 'December'
-                                ];
-
-                                // Objek Menyimpan total perbulan (default 0)
-                                let monthTotals = {};
-                                allMonths.forEach(month => {
-                                    monthTotals[month] = 0
-                                });
-
-                                // Masukkan data ke API ke dalam objek
-                                data.months.forEach((month, index) => {
-                                    monthTotals[month] = data.totals[index];
-                                });
-
-                                // Update data chart
-                                orderChart.data.labels = allMonths;
-                                orderChart.data.datasets[0].data = data.totals;
-                                orderChart.update();
-                            })
-                            .catch(error => console.error('Error:', error)); // <- titik koma hanya di akhir catch
-                    });
-                </script>
-
 
                 <!-- Main footer -->
                 <footer
@@ -266,7 +155,7 @@
     <x-admin.js></x-admin.js>
     <script>
         function fetchOrders() {
-            fetch('/get-total-orders-today')
+            fetch('/get-total-orders')
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('totalOrders').innerText = data.total_orders;
@@ -281,12 +170,11 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const ctxBestSeller = document.getElementById('bestSellerChart').getContext('2d');
-            const chartContainer = document.getElementById('chartContainer');
             const noDataMessage = document.getElementById('noDataMessage');
             let bestSellerChart; // Simpan instance chart agar bisa diperbarui
 
-            function fetchData(startDate = '', endDate = '') {
-                let url = `/best-seller-chart-filter?start_date=${startDate}&end_date=${endDate}`;
+            function fetchData() {
+                let url = `/best-seller-today`; // Fetch langsung dari route ini
 
                 fetch(url)
                     .then(response => response.json())
@@ -298,11 +186,9 @@
 
                         // Jika tidak ada produk, tampilkan pesan
                         if (!data.products || data.products.length === 0) {
-                            // Sembunyikan canvas chart dan tampilkan pesan
                             document.getElementById('bestSellerChart').classList.add('hidden');
                             noDataMessage.classList.remove('hidden');
                         } else {
-                            // Jika ada data, pastikan canvas ditampilkan dan pesan disembunyikan
                             document.getElementById('bestSellerChart').classList.remove('hidden');
                             noDataMessage.classList.add('hidden');
 
@@ -334,24 +220,17 @@
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        // Tampilkan pesan error jika perlu
                         document.getElementById('bestSellerChart').classList.add('hidden');
                         noDataMessage.textContent = 'Terjadi kesalahan saat mengambil data.';
                         noDataMessage.classList.remove('hidden');
                     });
             }
 
-            // Fetch data pertama kali tanpa filter
+            // Fetch data langsung dari `/best-seller-today`
             fetchData();
-
-            // Event listener untuk tombol filter
-            document.getElementById('filterButton').addEventListener('click', function() {
-                const startDate = document.getElementById('start_date').value;
-                const endDate = document.getElementById('end_date').value;
-                fetchData(startDate, endDate);
-            });
         });
     </script>
+
 
     {{-- Method Orders data --}}
     <script>

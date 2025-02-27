@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\StaffCredentials;
+use Illuminate\Support\Facades\Auth;
 
 class StaffController extends Controller
 {
@@ -19,7 +20,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('id', '!=', Auth::user()->id)->get();
         return view('admin.staffs.index', compact('users'));
     }
 
@@ -87,9 +88,9 @@ class StaffController extends Controller
          $user = User::findOrFail($id);
 
          $request->validate([
-        'name' => 'string|max:255',
-        'email' => 'email|unique:users,email,' . $user->id,
-        'usertype' => 'in:staff,admin',
+        'name' => 'nullable|string|max:255',
+        'email' => 'nullable|email|unique:users,email,' . $user->id,
+        'usertype' => 'nullable|in:staff,admin',
         'password' => 'nullable',
         ]);
 

@@ -60,17 +60,40 @@ class AdminProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+   public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.profile.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+         $user = User::findOrFail($id);
+
+         $request->validate([
+        'name' => 'nullable|string|max:255',
+        'email' => 'nullable|email|unique:users,email,' . $user->id,
+        'usertype' => 'nullable|in:staff,admin',
+        'password' => 'nullable',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->usertype = $request->usertype;
+
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+
+    // Simpan perubahan ke database
+    if ($user->save()) {
+        return redirect()->route('profile.edit')->with('success', 'Staff berhasil diperbarui!');
+    } else {
+        return back()->with('error', 'Gagal memperbarui staff, silakan coba lagi.');
+    }
     }
 
     /**

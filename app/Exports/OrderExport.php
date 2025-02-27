@@ -14,14 +14,13 @@ class OrderExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return Order::with('products:id,nama_menu')
-        ->get()
+        return Order::get()
         ->map(function ($order) {
             return [
-                 $order->id,
+                $order->id,
                 $order->customer_name,
                 $order->customer_phone,
-                $order->products->nama_menu ?? 'No Product', // Nama produk
+                $order->products, // Nama produk
                 $order->quantity,
                 $order->status,
                 $order->total_price,
@@ -29,8 +28,7 @@ class OrderExport implements FromCollection, WithHeadings
                 $order->request,
                 $order->created_at,
             ];
-        })
-        ;
+        });
     }
 
     /**

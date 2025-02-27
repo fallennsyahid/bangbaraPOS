@@ -89,6 +89,9 @@ Route::get('/export-histories', [HistoryController::class, 'export'])->name('adm
 Route::get('/export-orders-today', [StaffOrdersController::class, 'exportToday'])->name('orders.today');
 Route::get('/export-histories-today', [StaffHistoryController::class, 'exportToday'])->name('histories.today');
 
+// Import Excel
+Route::post('/products/import', [ProductController::class, 'import'])->name('products.import');
+
 // Category Routes
 Route::resource('/admin/categories', CategoryController::class);
 // Products Routes
@@ -140,6 +143,7 @@ Route::resource('/admin/reviews', ReviewController::class);
 // Chart Route
 Route::get('/chart-data', [AdminController::class, 'getChartData']);
 Route::get('/best-seller-chart', [AdminController::class, 'getBestSellerChartData']);
+Route::get('/best-seller-today', [DashboardController::class, 'getBestSellerChartData']);
 Route::get('/best-seller-chart-filter', [AdminController::class, 'getBestSellerChartDataFilter']);
 Route::get('/orders-stats', [AdminController::class, 'getOrdersStats']);
 // Filter method chart

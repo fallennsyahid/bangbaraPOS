@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                             <div class="flex items-end mt-6">
-                                <a href="{{ route('staffs.edit', $user->id ?? 'Guest') }}">
+                                <a href="{{ route('profile.edit', $user->id ?? 'Guest') }}">
                                     <button
                                         class="bg-red-700 text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-red-600 transition">Ubah
                                         Profile</button>

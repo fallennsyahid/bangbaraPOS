@@ -19,7 +19,7 @@
                 <main class="bg-prime">
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-4 border-b lg:py-6">
-                        <h1 class="text-2xl text-zinc-950 font-semibold">Dashboard</h1>
+                        <h1 class="text-2xl text-zinc-950 font-semibold">Welcome, {{ Auth::user()->name }} 👋!</h1>
                         <x-admin.waButton></x-admin.waButton>
                     </div>
 

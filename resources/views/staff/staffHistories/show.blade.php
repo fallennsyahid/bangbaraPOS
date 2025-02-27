@@ -28,7 +28,8 @@
                     <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
                         <!-- Navigasi -->
                         <h2 class="mb-4">
-                            <a href="{{ route('histories.index') }}" class="text-amber-400 hover:underline">Back</a> /
+                            <a href="{{ route('staffHistories.index') }}"
+                                class="text-amber-400 hover:underline">Back</a> /
                             <a href="/staff/dashboard" class="hover:underline text-zinc-950">Home</a>
                         </h2>
 
