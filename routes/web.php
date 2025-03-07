@@ -48,9 +48,12 @@ Route::get('/error', [ErrorController::class, 'index']);
 // CART
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::delete('/cart/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 Route::post('/cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
+Route::delete('/cart', [CartController::class, 'clearCart'])->name('cart.clear');
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
-Route::get('/cart/total', [CartController::class, 'getTotal'])->name('cart.total');
+// Route::get('/cart/total', [CartController::class, 'getTotal'])->name('cart.total');
+// Route::patch('/cart/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
 
 
 // ORDER CART

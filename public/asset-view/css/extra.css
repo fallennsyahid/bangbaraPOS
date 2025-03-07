@@ -104,3 +104,10 @@
 .text-shadow-2 {
     text-shadow: 0 3px 3px gray;
 }
+
+.sauce input[type="radio"]:checked + label {
+    background: #e7b800;
+    color: white;
+    box-shadow: 0 0 10px 4px rgba(211, 47, 47, 0.4);
+    transform: scale(1.02);
+}

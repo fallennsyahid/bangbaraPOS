@@ -16,7 +16,7 @@ class HomeController extends Controller
     public function index()
     {
         // $products = Product::all();
-        $categories = Category::with('products')->get();
+        $categories = Category::with(['products', 'options'])->get();
         $reviews = Review::all();
         return view('welcome', compact('categories', 'reviews'));
     }
