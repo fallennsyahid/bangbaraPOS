@@ -25,6 +25,12 @@
         rel="stylesheet" />
 </head>
 
+<style>
+    .swal2-container {
+        z-index: 999999 !important;
+    }
+</style>
+
 <body class="">
     <!-- Header Start -->
     <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
@@ -428,12 +434,13 @@
                             <img src="{{ asset('asset-view/assets/svg/instagram.svg') }}" alt="Instagram"
                                 class="h-6 transition-transform duration-300 hover:scale-110" />
                         </a>
-                        <a href="https://www.tiktok.com/@bangbarasteak" target="_blank"><img
-                                src="{{ asset('asset-view/assets/svg/tiktok.svg') }}" alt="TikTok"
+                        <a href="https://www.tiktok.com/@bangbarasteak" target="_blank">
+                            <img src="{{ asset('asset-view/assets/svg/tiktok.svg') }}" alt="TikTok"
                                 class="h-6 transition-transform duration-300 hover:scale-110" />
                         </a>
-                        <a href=""><img src="{{ asset('asset-view/assets/svg/facebook.svg') }}"
-                                alt="Facebook" class="h-6 transition-transform duration-300 hover:scale-110" />
+                        <a href="">
+                            <img src="{{ asset('asset-view/assets/svg/facebook.svg') }}" alt="Facebook"
+                                class="h-6 transition-transform duration-300 hover:scale-110" />
                         </a>
                     </div>
                 </div>
@@ -480,10 +487,11 @@
         Swal.fire({
             title: "Yeay! Pesananmu sudah terkirim",
             text: "Pesanan berhasil dibuat, silakan menuju kasir untuk pembayaran",
-            imageUrl: "{{ asset('asset-view/assets/svg/success.svg') }}",
-            imageWidth: 400,
-            imageHeight: 200,
-            imageAlt: "Success Logo",
+            icon: "success",
+            // imageUrl: "{{ asset('asset-view/assets/svg/success.svg') }}",
+            // imageWidth: 400,
+            // imageHeight: 200,
+            // imageAlt: "Success Logo",
             confirmButtonText: "OK",
             confirmButtonColor: "#CC0000",
         });
@@ -491,10 +499,11 @@
         Swal.fire({
             title: "Yeay! Pesananmu sudah terkirim",
             text: "Chef kita lagi semangat masak buat kamu. Tunggu bentar lagi ya~",
-            imageUrl: "{{ asset('asset-view/assets/svg/success.svg') }}",
-            imageWidth: 400,
-            imageHeight: 200,
-            imageAlt: "Success Logo",
+            icon: "success",
+            // imageUrl: "{{ asset('asset-view/assets/svg/success.svg') }}",
+            // imageWidth: 400,
+            // imageHeight: 200,
+            // imageAlt: "Success Logo",
             confirmButtonText: "OK",
             confirmButtonColor: "#CC0000",
         });

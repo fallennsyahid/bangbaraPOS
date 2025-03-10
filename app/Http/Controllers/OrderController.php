@@ -43,7 +43,7 @@ class OrderController extends Controller
         $paymentPhotoPath = 'default.png'; // Default value untuk pembayaran tunai
 
         if ($request->hasFile('payment_photo')) {
-            $paymentPhotoPath = $request->file('payment_photo')->store('payment_receipts', 'public');
+            $paymentPhotoPath = $request->file('payment_photo')->store('payment_photos', 'public');
         }
 
         // Jika payment_method bukan tunai, tidak mengubah nilai yang sudah di-set

@@ -34,10 +34,6 @@ Route::post('/', [HomeController::class, 'store'])->name('index.store');
 
 Route::get('/#menu', [HomeController::class, 'menu'])->name('index#menu');
 
-Route::get('/history', [History::class, 'index'])->name('history');
-
-Route::get('/details', [DetailsController::class, 'index'])->name('details');
-
 Route::get('/testing', function () {
     return view('testing');
 });

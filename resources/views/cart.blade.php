@@ -92,8 +92,15 @@
                                             </h6>
                                             @if ($item->sauce || $item->hot_ice)
                                                 <p class="text-sm text-gray-600">
-                                                    {{ $item->hot_ice ? ucfirst($item->hot_ice) . ' ' : '' }}
-                                                    {{ $item->sauce ? ucfirst($item->sauce) : '' }}
+                                                    @if ($item->hot_ice)
+                                                        Penyajian: {{ ucfirst($item->hot_ice) }}
+                                                    @endif
+                                                    @if ($item->hot_ice && $item->sauce)
+                                                        |
+                                                    @endif
+                                                    @if ($item->sauce)
+                                                        Saus: {{ ucfirst($item->sauce) }}
+                                                    @endif
                                                 </p>
                                             @endif
                                             <h6

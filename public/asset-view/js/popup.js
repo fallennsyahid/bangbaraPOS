@@ -130,22 +130,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Validasi pilihan sauce jika pilihan saus ditampilkan
         if (!pilihanSaus.classList.contains("hidden") && !selectedSauce) {
-            itemDetailModal.classList.add("hidden");
             Swal.fire({
                 icon: "warning",
                 title: "Pilih Saus",
                 text: "Silakan pilih saus terlebih dahulu sebelum melanjutkan!",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#CC0000",
             });
             return;
         }
 
         // Validasi pilihan hot/ice jika opsi ini ditampilkan
         if (!pilihanHotIce.classList.contains("hidden") && !selectedHotIce) {
-            itemDetailModal.classList.add("hidden");
             Swal.fire({
                 icon: "warning",
                 title: "Pilih Penyajian",
                 text: "Silakan pilih penyajian terlebih dahulu sebelum melanjutkan!",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#CC0000",
             });
             return;
         }
