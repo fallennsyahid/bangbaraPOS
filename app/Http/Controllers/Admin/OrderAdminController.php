@@ -21,6 +21,7 @@ class OrderAdminController extends Controller
         $orders = Order::orderBy('created_at', 'desc')->get();
         $statusOptions = ['Pending', 'Processed', 'Cancelled', 'Completed'];
         return view('admin.orders.index', compact('orders', 'statusOptions'));
+        return response()->json(["data" => $orders]);
     }
 
     public function export() {
@@ -81,6 +82,29 @@ class OrderAdminController extends Controller
     }
 
 
+    public function bulkDelete(Request $request)
+    {
+        
+        $orderIds = $request->input('orderIds');
+
+        if (!is_array($orderIds) || count($orderIds) === 0) {
+            return response()->json(['message' => 'No orders selected'], 400);
+        }
+
+        // Pastikan semua ID yang diterima ada di database
+        $existingOrders = Order::whereIn('id', $orderIds)->pluck('id')->toArray();
+        
+        if (count($existingOrders) === 0) {
+            return response()->json(['message' => 'Orders not found'], 400);
+        }
+
+        // Hapus hanya ID yang valid
+        Order::whereIn('id', $existingOrders)->delete();
+
+        return response()->json(['message' => 'Orders deleted successfully']);
+
+    }
+    
     /**
      * Remove the specified resource from storage.
      */

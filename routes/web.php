@@ -23,7 +23,7 @@ use App\Http\Controllers\Staff\StaffProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Staff\StaffHistoryController;
-
+use App\Livewire\OrdersTable;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -136,6 +136,13 @@ Route::get('/notifications', function () {
 });
 
 Route::resource('/admin/notification', NotificationContrller::class);
+// Table Orders Realtime
+// Route::get('/orders', OrdersTable::class)->name('orders.index');
+Route::get('/orders/latest', function () {
+    $latestOrder = Order::latest('created_at')->first();
+    return response()->json($latestOrder);
+});
+
 
 // Reviews
 Route::resource('/admin/reviews', ReviewController::class);
@@ -174,6 +181,9 @@ Route::get('/get-orders', function () {
     $orders = Order::with('product')->orderBy('created_at', 'desc')->get();
     return response()->json($orders);
 });
+
+// Route Bulk Delete
+// Route::delete('/admin/orders', [OrderAdminController::class, 'bulkDelete']);
 
 
 require __DIR__ . '/auth.php';

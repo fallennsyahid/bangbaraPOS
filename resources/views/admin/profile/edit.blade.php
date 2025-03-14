@@ -68,7 +68,8 @@
                                         <div class="mb-4">
                                             <label for="usertype"
                                                 class="block text-sm font-medium text-gray-700">Usertype</label>
-                                            <input type="text" value="{{ old('usertype', $user->usertype) }}"
+                                            <input type="text" name="usertype" id="usertype"
+                                                value="{{ old('usertype', $user->usertype) }}"
                                                 class="w-full px-4 py-2 text-gray-900 bg-gray-100 border border-gray-400 rounded-md focus:ring focus:ring-yellow-500"
                                                 readonly>
                                         </div>

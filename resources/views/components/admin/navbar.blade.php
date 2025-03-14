@@ -466,7 +466,7 @@
         let days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
         let dayName = days[now.getDay()];
 
-        document.getElementById('real-time-clock').innerText = `${hours}:${minutes}:${seconds}, ${dayName}`;
+        document.getElementById('real-time-clock').innerText = `${hours}:${minutes}:${seconds}`;
     }
 
     setInterval(updateClock, 1000); // Update setiap detik
