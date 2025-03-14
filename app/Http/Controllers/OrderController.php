@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use Log;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log as Enter;
 
 class OrderController extends Controller
 {
@@ -20,9 +18,9 @@ class OrderController extends Controller
 
     public function checkout(Request $request)
     {
-        if (!$request->isMethod('post')) {
-            return response()->json(['error' => 'Method not allowed'], 405);
-        }
+        // if (!$request->isMethod('post')) {
+        //     return response()->json(['error' => 'Method not allowed'], 405);
+        // }
         $request->validate([
             'customer_name' => 'required',
             'customer_phone' => 'required',
@@ -34,6 +32,7 @@ class OrderController extends Controller
         ]);
 
         $cartItems = Cart::with('product')->get();
+
         if ($cartItems->isEmpty()) {
             return redirect()->back()->with('error', 'Cart is empty!');
         }

@@ -179,7 +179,7 @@
 
                                 <div
                                     class="product-card flex flex-col items-center 
-                                    bg-white h-[21rem] w-48 sm:h-80 sm:w-56 lg:h-96 lg:w-64 rounded-md gap-3 
+                                    bg-white h-[20rem] w-48 sm:h-80 sm:w-56 md:h-[22rem] md:w-56 lg:h-96 lg:w-64 rounded-md gap-3
                                     transition duration-200 ease-in 
                                     {{ $isNonActive ? 'bg-gray-300 pointer-events-none' : 'hover:-translate-y-2' }}">
 
@@ -195,8 +195,9 @@
                                             @if ($isNonActive)
                                                 <div
                                                     class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                                                    <span class="text-white font-semibold text-base">Tidak
-                                                        Tersedia</span>
+                                                    <span class="text-white font-semibold text-base">
+                                                        Tidak Tersedia
+                                                    </span>
                                                 </div>
                                             @else
                                                 <div
@@ -207,24 +208,27 @@
                                         </div>
                                     </a>
 
-                                    <p class="text-text text-base text-center">{{ $product->nama_menu }}</p>
+                                    <p class="text-text text-base sm:text-xl text-center">{{ $product->nama_menu }}
+                                    </p>
                                     <h6 class="hidden">{{ $product->deskripsi_menu }}</h6>
                                     <span class="text-price font-alkatra text-sm text-center">
                                         Rp {{ number_format($product->harga_menu, 0, ',', '.') }}
                                     </span>
 
-                                    <button type="submit"
-                                        class="item-detail-button text-shadow text-sm sm:text-sm 
-                                        bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center 
+                                    <div class=" flex mx-2">
+                                        <button type="submit"
+                                            class="item-detail-button text-shadow text-xs lg:text-base md:text-xs
+                                        bg-[#BF0000] px-2 py-3 sm:px-4 sm:py-2 rounded-full text-white text-center
                                         {{ $isNonActive ? 'bg-gray-500 cursor-not-allowed' : '' }}"
-                                        data-product-id="{{ $product->id }}" {{ $isNonActive ? 'disabled' : '' }}>
-                                        {{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan Ke Keranjang' }}
-                                    </button>
+                                            data-product-id="{{ $product->id }}"
+                                            {{ $isNonActive ? 'disabled' : '' }}>
+                                            {{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan Ke Keranjang' }}
+                                        </button>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
                     @endforeach
-
                 </div>
             </div>
         </div>
@@ -500,10 +504,6 @@
             title: "Yeay! Pesananmu sudah terkirim",
             text: "Chef kita lagi semangat masak buat kamu. Tunggu bentar lagi ya~",
             icon: "success",
-            // imageUrl: "{{ asset('asset-view/assets/svg/success.svg') }}",
-            // imageWidth: 400,
-            // imageHeight: 200,
-            // imageAlt: "Success Logo",
             confirmButtonText: "OK",
             confirmButtonColor: "#CC0000",
         });
