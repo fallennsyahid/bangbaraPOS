@@ -75,55 +75,42 @@
                                 <!-- Body -->
                                 <tbody id="productTable" class="bg-tbody">
                                     @forelse ($histories as $index => $history)
-                                        <tr class="hover:bg-thead" data-category="{{ $history->id }}">
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">#{{ $index + 1 }}
+                                        <tr>
+                                            <td class="px-4 py-2 text-sm">#{{ $index + 1 }}</td>
+                                            <td class="px-4 py-2 text-sm">{{ $history->casier_name }}</td>
+                                            <td class="px-4 py-2 text-sm">{{ $history->customer_name }}</td>
+                                            <td class="px-4 py-2 text-sm">{{ $history->created_at->format('d/m/y') }}
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
-                                                {{ $history->casier_name }}
-                                            </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
-                                                {{ $history->customer_name }}
-                                            </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
-                                                {{ $history->created_at->format('d/m/y') }}
-                                            </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">Rp
+                                            <td class="px-4 py-2 text-sm">Rp
                                                 {{ number_format($history->total_price, 2) }}</td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
-                                                {{ $history->payment_method }}
-                                            </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-900"
-                                                id="history-status-{{ $history->id }}">
-                                                <h5
+                                            <td class="px-4 py-2 text-sm">{{ $history->payment_method }}</td>
+                                            <td class="px-4 py-2 text-sm">
+                                                <span
                                                     class="
-                                                             {{ $history->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                             {{ $history->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                    ">
-                                                    {{ $history->status }}</h4>
+                                                {{ $history->status == 'Cancelled' ? 'bg-red-600 text-white px-3 py-1 rounded' : '' }}
+                                                {{ $history->status == 'Completed' ? 'bg-green-500 text-white px-3 py-1 rounded' : '' }}">
+                                                    {{ $history->status }}
+                                                </span>
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
+                                            <td class="px-4 py-2 text-sm">
                                                 @if ($history->payment_method === 'nonTunai')
                                                     <a href="">
                                                         <button
-                                                            class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
-                                                            <h6>File</h6>
-                                                        </button>
+                                                            class="bg-blue-500 text-white px-4 py-2 rounded-md text-xs">File</button>
                                                     </a>
                                                 @else
-                                                    <p class="text-zinc-950 text-2xl text-center mr-2">-</p>
+                                                    <p class="text-center">-</p>
                                                 @endif
                                             </td>
-                                            <td class="px-6 py-4 flex gap-3 mt-4">
+                                            <td class="px-4 py-2 text-sm">
                                                 <a href="{{ route('staffHistories.show', $history->id) }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
-                                                        height="30" viewBox="0 0 24 24">
-                                                        <path fill="#6c80e4" fill-rule="evenodd"
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                        height="24" viewBox="0 0 24 24">
+                                                        <path fill="#6c80e4"
                                                             d="M12 17.8c4.034 0 7.686-2.25 9.648-5.8C19.686 8.45 16.034 6.2 12 6.2S4.314 8.45 2.352 12c1.962 3.55 5.614 5.8 9.648 5.8M12 5c4.808 0 8.972 2.848 11 7c-2.028 4.152-6.192 7-11 7s-8.972-2.848-11-7c2.028-4.152 6.192-7 11-7m0 9.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8" />
                                                     </svg>
                                                 </a>
-
                                             </td>
-
                                         </tr>
                                     @empty
                                         <tr>
@@ -132,9 +119,6 @@
                                         </tr>
                                     @endforelse
                                 </tbody>
-
-
-
                             </table>
 
 

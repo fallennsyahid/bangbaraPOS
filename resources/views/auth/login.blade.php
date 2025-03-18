@@ -18,10 +18,11 @@
 </head>
 
 <body class="font-sans antialiased bg-black text-white">
-    <div class="flex justify-center items-center min-h-screen">
-        <div class="bg-zinc-900 p-8 rounded-sm shadow-lg flex flex-row items-center space-x-8 max-w-4xl">
+    <div class="flex justify-center items-center min-h-screen px-4">
+        <div
+            class="bg-zinc-900 p-8 rounded-sm shadow-lg flex flex-row md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8 max-w-4xl">
             <!-- Illustration -->
-            <div>
+            <div class="hidden md:block">
                 <img src="{{ asset('asset-admin/public/img/guest.png') }}" alt="Illustration" class="w-80 h-72">
             </div>
 

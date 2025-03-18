@@ -171,62 +171,66 @@
                 <div id="slider-content" class="flex transition-transform duration-500" style="width: 300%">
 
                     @foreach ($categories as $category)
-                        <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5">
-                            @foreach ($category->products as $product)
-                                @php
-                                    $isNonActive = $product->status_produk === 'Non-active';
-                                @endphp
+                        <div class="w-full min-h-16 flex flex-col justify-start">
+                            <div
+                                class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5 place-items-center">
+                                @foreach ($category->products as $product)
+                                    @php
+                                        $isNonActive = $product->status_produk === 'Non-active';
+                                    @endphp
 
-                                <div
-                                    class="product-card flex flex-col items-center 
-                                    bg-white h-[20rem] w-48 sm:h-80 sm:w-56 md:h-[22rem] md:w-56 lg:h-96 lg:w-64 rounded-md gap-3
+                                    <div
+                                        class="product-card flex flex-col items-center
+                                    bg-white h-[20rem] w-48 sm:h-80 sm:w-56 md:h-[22rem] md:w-56 lg:h-[25rem] lg:w-64 rounded-md gap-3
                                     transition duration-200 ease-in 
                                     {{ $isNonActive ? 'bg-gray-300 pointer-events-none' : 'hover:-translate-y-2' }}">
 
-                                    <!-- Bagian Gambar -->
-                                    <a href="{{ $isNonActive ? '#' : '#item-detail-modal' }}"
-                                        class="item-detail-button {{ $isNonActive ? 'pointer-events-none' : '' }}"
-                                        data-product-id="{{ $product->id }}">
-                                        <div class="relative group">
-                                            <img src="{{ asset('storage/' . $product->gambar_menu) }}"
-                                                alt="{{ $product->nama_menu }}"
-                                                class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out 
+                                        <!-- Bagian Gambar -->
+                                        <a href="{{ $isNonActive ? '#' : '#item-detail-modal' }}"
+                                            class="item-detail-button {{ $isNonActive ? 'pointer-events-none' : '' }}"
+                                            data-product-id="{{ $product->id }}">
+                                            <div class="relative group">
+                                                <img src="{{ asset('storage/' . $product->gambar_menu) }}"
+                                                    alt="{{ $product->nama_menu }}"
+                                                    class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out 
                                                 group-hover:brightness-75 {{ $isNonActive ? 'opacity-50' : '' }}" />
-                                            @if ($isNonActive)
-                                                <div
-                                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                                                    <span class="text-white font-semibold text-base">
-                                                        Tidak Tersedia
-                                                    </span>
-                                                </div>
-                                            @else
-                                                <div
-                                                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                    <span class="text-white font-semibold text-base">View More</span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </a>
+                                                @if ($isNonActive)
+                                                    <div
+                                                        class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                                                        <span class="text-white font-semibold text-base">
+                                                            Tidak Tersedia
+                                                        </span>
+                                                    </div>
+                                                @else
+                                                    <div
+                                                        class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                        <span class="text-white font-semibold text-base">View
+                                                            More</span>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </a>
 
-                                    <p class="text-text text-base sm:text-xl text-center">{{ $product->nama_menu }}
-                                    </p>
-                                    <h6 class="hidden">{{ $product->deskripsi_menu }}</h6>
-                                    <span class="text-price font-alkatra text-sm text-center">
-                                        Rp {{ number_format($product->harga_menu, 0, ',', '.') }}
-                                    </span>
+                                        <p class="text-text text-base sm:text-xl text-center">
+                                            {{ $product->nama_menu }}</p>
+                                        <h6 class="hidden">{{ $product->deskripsi_menu }}</h6>
+                                        <span class="text-price font-alkatra text-base text-center">
+                                            Rp {{ number_format($product->harga_menu, 0, ',', '.') }}
+                                        </span>
 
-                                    <div class=" flex mx-2">
-                                        <button type="submit"
-                                            class="item-detail-button text-shadow text-xs lg:text-base md:text-xs
+                                        <div class="flex mx-2">
+                                            <button type="submit"
+                                                class="item-detail-button text-shadow text-xs lg:text-base md:text-xs
                                         bg-[#BF0000] px-2 py-3 sm:px-4 sm:py-2 rounded-full text-white text-center
                                         {{ $isNonActive ? 'bg-gray-500 cursor-not-allowed' : '' }}"
-                                            data-product-id="{{ $product->id }}"
-                                            {{ $isNonActive ? 'disabled' : '' }}>
-                                            {{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan Ke Keranjang' }}
-                                        </button>
+                                                data-product-id="{{ $product->id }}"
+                                                {{ $isNonActive ? 'disabled' : '' }}>
+                                                {{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan Ke Keranjang' }}
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
                     @endforeach
                 </div>
