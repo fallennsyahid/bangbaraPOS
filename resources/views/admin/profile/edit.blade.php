@@ -25,8 +25,8 @@
                     </div>
 
                     <!-- Content -->
-                    <div class="min-h-screen flex items-center justify-center bg-gray-200 py-5">
-                        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+                    <div class="min-h-screen flex items-center justify-center bg-prime py-5">
+                        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-6xl">
                             <h2 class="text-2xl font-bold text-gray-800 mb-4">Profile</h2>
 
                             <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
@@ -68,7 +68,8 @@
                                         <div class="mb-4">
                                             <label for="usertype"
                                                 class="block text-sm font-medium text-gray-700">Usertype</label>
-                                            <input type="text" value="{{ old('usertype', $user->usertype) }}"
+                                            <input type="text" name="usertype" id="usertype"
+                                                value="{{ old('usertype', $user->usertype) }}"
                                                 class="w-full px-4 py-2 text-gray-900 bg-gray-100 border border-gray-400 rounded-md focus:ring focus:ring-yellow-500"
                                                 readonly>
                                         </div>

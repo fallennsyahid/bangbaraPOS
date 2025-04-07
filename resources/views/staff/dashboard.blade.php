@@ -19,7 +19,10 @@
                 <main class="bg-prime">
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-4 border-b lg:py-6">
-                        <h1 class="text-2xl text-zinc-950 font-semibold">Welcome, {{ Auth::user()->name }} 👋!</h1>
+                        <h1 class="text-xs md:text-lg space-x-2 text-zinc-950 font-serif">"Selamat datang di Dashboard
+                            Staff!
+                            Semoga harimu
+                            produktif dan penuh energi, {{ Auth::user()->name }} 👋!"</h1>
                         <x-staff.waButton></x-staff.waButton>
                     </div>
 
@@ -155,7 +158,7 @@
     <x-admin.js></x-admin.js>
     <script>
         function fetchOrders() {
-            fetch('/get-total-orders')
+            fetch('/get-total-orders-today')
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('totalOrders').innerText = data.total_orders;

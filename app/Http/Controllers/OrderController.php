@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use Log;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log as Enter;
 
 class OrderController extends Controller
 {
@@ -20,19 +18,21 @@ class OrderController extends Controller
 
     public function checkout(Request $request)
     {
-        if (!$request->isMethod('post')) {
-            return response()->json(['error' => 'Method not allowed'], 405);
-        }
-
+        // if (!$request->isMethod('post')) {
+        //     return response()->json(['error' => 'Method not allowed'], 405);
+        // }
         $request->validate([
-            'customer_name' => 'required|',
-            'customer_phone' => 'required|',
+            'customer_name' => 'required',
+            'customer_phone' => 'required',
             'request' => 'nullable',
             'payment_method' => 'required|in:Tunai,nonTunai',
             'payment_photo' => 'nullable',
+            'sauce' => 'nullable|string',
+            'hot_ice' => 'nullable|string',
         ]);
 
         $cartItems = Cart::with('product')->get();
+
         if ($cartItems->isEmpty()) {
             return redirect()->back()->with('error', 'Cart is empty!');
         }
@@ -42,7 +42,7 @@ class OrderController extends Controller
         $paymentPhotoPath = 'default.png'; // Default value untuk pembayaran tunai
 
         if ($request->hasFile('payment_photo')) {
-            $paymentPhotoPath = $request->file('payment_photo')->store('payment_receipts', 'public');
+            $paymentPhotoPath = $request->file('payment_photo')->store('payment_photos', 'public');
         }
 
         // Jika payment_method bukan tunai, tidak mengubah nilai yang sudah di-set
@@ -56,9 +56,10 @@ class OrderController extends Controller
             'gambar_menu' => $item->product->gambar_menu,
             'quantity' => $item->quantity,
             'price' => $item->product->harga_menu,
+            'sauce' => $item->sauce,
+            'hot_ice' => $item->hot_ice,
+            'category' => $item->product->category->nama_kategori,
         ])->toArray();
-
-        // dd($request->payment_method, $paymentPhotoPath);
 
         Order::create([
             'customer_name' => $request->customer_name,
@@ -69,11 +70,17 @@ class OrderController extends Controller
             'status' => 'Pending',
             'payment_method' => $request->payment_method,
             'payment_photo' => $paymentPhotoPath,
+            'sauce' => $request->sauce,
+            'hot_ice' => $request->hot_ice,
         ]);
 
         Cart::truncate();
 
-        return redirect()->route('index')->with('success', 'Pesanan Anda telah berhasil!');
+        if ($request->payment_method === 'Tunai') {
+            return redirect()->route('index')->with('checkout_success', 'tunai');
+        } else {
+            return redirect()->route('index')->with('checkout_success', 'nonTunai');
+        }
     }
 
     /**

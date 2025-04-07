@@ -30,7 +30,7 @@
 
                         <!-- Tabel -->
                         {{-- <div class="flex mx-auto space-x-10 justify-between w-full max-w-4xl mb-6"> --}}
-                        <div class="flex justify-between items-center w-full max-w-4xl">
+                        <div class="flex justify-between items-center w-full max-w-6xl">
                             <!-- Filter Category di ujung kiri -->
                             <div>
                                 <select id="categoryFilter"
@@ -67,7 +67,7 @@
                         </div>
 
 
-                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
+                        <div class="w-full max-w-6xl overflow-x-auto text-zinc-950">
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
                                 id="myTable">
                                 <!-- Header -->

@@ -28,7 +28,7 @@
                     <!-- Content -->
                     <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
                         <!-- Tombol View on GitHub -->
-                        <div class="mb-6 flex justify-end w-full max-w-4xl gap-3">
+                        <div class="mb-6 flex justify-end w-full max-w-6xl gap-3">
                             <a href="{{ route('staffs.create') }}"
                                 class="px-4 py-2 text-sm text-zinc-950 font-semibold shadow-xl rounded-md bg-[#B0B0B0] hover:bg-thead focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
                                 Create +
@@ -41,7 +41,7 @@
                                 Export
                             </a>
                         </div>
-                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
+                        <div class="w-full max-w-6xl overflow-x-auto text-zinc-950">
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
                                 id="myTable">
                                 <!-- Header -->
@@ -91,18 +91,20 @@
                                                     </svg>
                                                 </a>
 
-                                                <a href="{{ route('staffs.edit', $user->id) }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
-                                                        height="30" viewBox="0 0 24 24">
-                                                        <g fill="none" stroke="#28A745" stroke-linecap="round"
-                                                            stroke-linejoin="round" stroke-width="2">
-                                                            <path
-                                                                d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" />
-                                                            <path
-                                                                d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" />
-                                                        </g>
-                                                    </svg>
-                                                </a>
+                                                {{-- @if ($user->usertype !== 'admin')
+                                                    <a href="{{ route('staffs.edit', $user->id) }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                                                            height="30" viewBox="0 0 24 24">
+                                                            <g fill="none" stroke="#28A745" stroke-linecap="round"
+                                                                stroke-linejoin="round" stroke-width="2">
+                                                                <path
+                                                                    d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1" />
+                                                                <path
+                                                                    d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3" />
+                                                            </g>
+                                                        </svg>
+                                                    </a>
+                                                @endif --}}
 
                                                 <form id="delete-form-{{ $user->id }}"
                                                     action="{{ route('staffs.destroy', $user->id) }}" method="POST"

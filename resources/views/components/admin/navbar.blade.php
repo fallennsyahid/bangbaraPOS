@@ -13,10 +13,17 @@
             </span>
         </button>
 
-        <!-- Clock -->
-        <span id="real-time-clock"
-            class="inline-block text-xl font-bold tracking-wider uppercase text-slate-950 dark:text-light">
-        </span>
+        <!-- Clock and stats -->
+        <div class="flex items-center space-x-4">
+            <span id="real-time-clock"
+                class="inline-block text-xl font-bold tracking-wider uppercase text-slate-950 dark:text-light">
+            </span>
+            <span> | </span>
+            <h2 @php $store = \App\Models\Store::first(); @endphp
+                class="{{ $store && $store->status == 1 ? 'text-green-500' : 'text-red-700' }} font-semibold">
+                {{ $store && $store->status ? 'Open' : 'Close' }}
+            </h2>
+        </div>
 
         <!-- Mobile sub menu button -->
         <button @click="isMobileSubMenuOpen = !isMobileSubMenuOpen"
@@ -149,9 +156,9 @@
             <div class="relative" x-data="{ open: false }">
                 <button @click="open = !open; $nextTick(() => { if(open){ $refs.userMenu.focus() } })" type="button"
                     aria-haspopup="true" :aria-expanded="open ? 'true' : 'false'"
-                    class="transition-opacity duration-200 rounded-full dark:opacity-75 dark:hover:opacity-100 focus:outline-none focus:ring dark:focus:opacity-100">
+                    class="transition-opacity duration-200 rounded-full dark:opacity-75 dark:hover:opacity-100 focus:outline-none dark:focus:opacity-100">
                     <span class="sr-only">User menu</span>
-                    <img class="w-10 h-10 rounded-full mt-2" src="{{ asset('asset-admin/public/img/person.jpg') }}"
+                    <img class="w-12 h-12 rounded-full mt-2" src="{{ Avatar::create(Auth::user()->name)->toBase64() }}"
                         alt="Ahmed Kamel" />
                 </button>
 
@@ -466,7 +473,7 @@
         let days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
         let dayName = days[now.getDay()];
 
-        document.getElementById('real-time-clock').innerText = `${hours}:${minutes}:${seconds}, ${dayName}`;
+        document.getElementById('real-time-clock').innerText = `${hours}:${minutes}:${seconds}`;
     }
 
     setInterval(updateClock, 1000); // Update setiap detik

@@ -23,7 +23,8 @@ use App\Http\Controllers\Staff\StaffProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Staff\StaffHistoryController;
-
+use App\Http\Controllers\StoreController;
+use App\Livewire\OrdersTable;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -33,10 +34,6 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::post('/', [HomeController::class, 'store'])->name('index.store');
 
 Route::get('/#menu', [HomeController::class, 'menu'])->name('index#menu');
-
-Route::get('/history', [History::class, 'index'])->name('history');
-
-Route::get('/details', [DetailsController::class, 'index'])->name('details');
 
 Route::get('/testing', function () {
     return view('testing');
@@ -48,9 +45,12 @@ Route::get('/error', [ErrorController::class, 'index']);
 // CART
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::delete('/cart/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 Route::post('/cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
+Route::delete('/cart', [CartController::class, 'clearCart'])->name('cart.clear');
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
-Route::get('/cart/total', [CartController::class, 'getTotal'])->name('cart.total');
+// Route::get('/cart/total', [CartController::class, 'getTotal'])->name('cart.total');
+// Route::patch('/cart/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
 
 
 // ORDER CART
@@ -136,6 +136,18 @@ Route::get('/notifications', function () {
 });
 
 Route::resource('/admin/notification', NotificationContrller::class);
+// Table Orders Realtime
+// Route::get('/orders', OrdersTable::class)->name('orders.index');
+Route::get('/orders/latest', function () {
+    $latestOrder = Order::latest('created_at')->first();
+    return response()->json($latestOrder);
+});
+
+Route::get('/orders/latest-today', function () {
+    $latestOrder = Order::whereDate('created_at', Carbon::today())->latest('created_at')->first();
+    return response()->json($latestOrder);
+});
+
 
 // Reviews
 Route::resource('/admin/reviews', ReviewController::class);
@@ -174,6 +186,12 @@ Route::get('/get-orders', function () {
     $orders = Order::with('product')->orderBy('created_at', 'desc')->get();
     return response()->json($orders);
 });
+
+// Route Switch Toko
+Route::post('/store/toggle-status', [StoreController::class, 'toggleStatus'])->name('store.toggleStatus');
+
+// Route Bulk Delete
+// Route::delete('/admin/orders', [OrderAdminController::class, 'bulkDelete']);
 
 
 require __DIR__ . '/auth.php';

@@ -8,9 +8,8 @@
     <title>BangbaraPost - Admin</title>
     <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" sizes="192x192" type="image/png">
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
-        rel="stylesheet" />
     <link rel="stylesheet" href="//cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
+    {{ $slot }}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @vite('resources/css/app.css')
     <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.5.x/dist/component.min.js"></script>
