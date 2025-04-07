@@ -156,9 +156,9 @@
             <div class="relative" x-data="{ open: false }">
                 <button @click="open = !open; $nextTick(() => { if(open){ $refs.userMenu.focus() } })" type="button"
                     aria-haspopup="true" :aria-expanded="open ? 'true' : 'false'"
-                    class="transition-opacity duration-200 rounded-full dark:opacity-75 dark:hover:opacity-100 focus:outline-none focus:ring dark:focus:opacity-100">
+                    class="transition-opacity duration-200 rounded-full dark:opacity-75 dark:hover:opacity-100 focus:outline-none dark:focus:opacity-100">
                     <span class="sr-only">User menu</span>
-                    <img class="w-10 h-10 rounded-full mt-2" src="{{ asset('asset-admin/public/img/person.jpg') }}"
+                    <img class="w-12 h-12 rounded-full mt-2" src="{{ Avatar::create(Auth::user()->name)->toBase64() }}"
                         alt="Ahmed Kamel" />
                 </button>
 

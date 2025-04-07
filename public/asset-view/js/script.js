@@ -35,10 +35,13 @@ window.addEventListener('click', function (e) {
 
 // Menu Active
 const menuLinks = document.querySelectorAll('.menu-link');
+const sliderContent = document.getElementById("slider-content");
+
+let currentIndex = 0; // Simpan index slide aktif
 
 menuLinks.forEach(link => {
     link.addEventListener('click', function (e) {
-        e.preventDefault(); // Mencegah aksi default link
+        e.preventDefault(); // Mencegah aksi default
 
         // Hapus kelas active dari semua link
         menuLinks.forEach(l => l.classList.remove('active'));
@@ -48,13 +51,27 @@ menuLinks.forEach(link => {
     });
 });
 
+// Fungsi untuk mengubah slide
+function changeSlide(index) {
+    currentIndex = index; // Update index aktif
+    updateSlide(); // Panggil fungsi untuk menggeser slide
+}
+
+// Fungsi untuk memperbarui posisi slide
+function updateSlide() {
+    const slideWidth = document.getElementById("slider").clientWidth; // Lebar slider container
+    sliderContent.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+}
+
+// Event listener untuk resize agar slide tetap sesuai
+window.addEventListener("resize", updateSlide);
 
 // Menu Slide
-function changeSlide(index) {
-    const sliderContent = document.getElementById("slider-content");
-    const slideWidth = sliderContent.clientWidth / 3; // Menghitung lebar satu slide
-    sliderContent.style.transform = `translateX(-${index * slideWidth}px)`; // Menggeser sesuai index
-}
+// function changeSlide(index) {
+//     const sliderContent = document.getElementById("slider-content");
+//     const slideWidth = sliderContent.clientWidth / 3; // Menghitung lebar satu slide
+//     sliderContent.style.transform = `translateX(-${index * slideWidth}px)`; // Menggeser sesuai index
+// }
 
 // Rating
 const stars = document.querySelectorAll('input[name="rating"]');
