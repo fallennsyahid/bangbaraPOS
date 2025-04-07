@@ -39,7 +39,8 @@
                                 </svg>
                                 Delete
                             </button> --}}
-                        <div class="flex justify-end w-full max-w-4xl mb-4">
+
+                        <div class="flex justify-end w-full max-w-6xl mb-4">
                             <a href="{{ route('orders.export') }}"
                                 class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg flex items-center">
                                 <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
@@ -48,7 +49,7 @@
                             </a>
                         </div>
                         {{-- </div> --}}
-                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
+                        <div class="w-full max-w-6xl overflow-x-auto text-zinc-950">
 
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
                                 id="myTable">

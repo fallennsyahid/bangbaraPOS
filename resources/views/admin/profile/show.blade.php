@@ -16,7 +16,7 @@
                 <x-admin.navbar></x-admin.navbar>
 
                 <!-- Main content -->
-                <main class="bg-gray-100 p-6">
+                <main class="bg-prime p-6">
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
                         <h1 class="text-2xl font-semibold text-zinc-950">Profile</h1>
@@ -26,7 +26,7 @@
                         <a href="javascript:history.back()" class="text-amber-400 hover:underline">Back </a>/
                         <a href="/admin/dashboard" class="hover:underline text-zinc-950">Home</a>
                     </h2>
-                    <div class="min-h-screen mt-4 items-center justify-center bg-gray-100">
+                    <div class="min-h-screen mt-4 items-center justify-center bg-prime">
                         <!-- Profile Header -->
                         <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
                             <div class="flex items-center space-x-4">
@@ -69,7 +69,7 @@
                             <div class="flex items-end mt-6">
                                 <a href="{{ route('profile.edit', $user->id ?? 'Guest') }}">
                                     <button
-                                        class="bg-red-700 text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-red-600 transition">Ubah
+                                        class="bg-red-700 text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-red-600 transition">Change
                                         Profile</button>
                                 </a>
                             </div>

@@ -20,7 +20,9 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $users = User::where('id', '!=', Auth::user()->id)->get();
+        $users = User::where('id', '!=', Auth::user()->id)
+                 ->where('usertype', 'staff')
+                 ->get();
         return view('admin.staffs.index', compact('users'));
     }
 
@@ -104,7 +106,7 @@ class StaffController extends Controller
 
     // Simpan perubahan ke database
     if ($user->save()) {
-        return redirect()->route('staffs.index')->with('success', 'Staff berhasil diperbarui!');
+        return back()->with('success', 'Staff berhasil diperbarui!');
     } else {
         return back()->with('error', 'Gagal memperbarui staff, silakan coba lagi.');
     }

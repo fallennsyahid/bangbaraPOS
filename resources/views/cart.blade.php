@@ -90,6 +90,19 @@
                                             <h6 class="font-semibold text-base leading-7 text-black">
                                                 {{ $item->product->nama_menu }}
                                             </h6>
+                                            @if ($item->sauce || $item->hot_ice)
+                                                <p class="text-sm text-gray-600">
+                                                    @if ($item->hot_ice)
+                                                        Penyajian: {{ ucfirst($item->hot_ice) }}
+                                                    @endif
+                                                    @if ($item->hot_ice && $item->sauce)
+                                                        |
+                                                    @endif
+                                                    @if ($item->sauce)
+                                                        Saus: {{ ucfirst($item->sauce) }}
+                                                    @endif
+                                                </p>
+                                            @endif
                                             <h6
                                                 class="font-medium text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-red-700">
                                                 Rp {{ number_format($item->product->harga_menu, 2) }}
@@ -111,7 +124,7 @@
 
                                             <!-- Quantity Field -->
                                             <input type="text" id="cart-item-{{ $item->id }}"
-                                                class="quantity border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] text-center bg-transparent"
+                                                class="quantity border-y py-[15px] border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] text-center bg-transparent"
                                                 value="{{ $item->quantity }}" readonly>
 
                                             <!-- Button Increase Quantity -->
@@ -143,15 +156,6 @@
                             Keranjang Kosong
                         </h1>
                     @endif
-
-
-                    <!-- Total Price -->
-                    {{-- <div class="flex justify-end mt-4">
-                        <h3 id="cart-total-price" class="font-bold text-xl">
-                            Total: Rp
-                            {{ number_format($cartItems->sum(fn($item) => $item->quantity * $item->product->harga_menu), 2) }}
-                        </h3>
-                    </div> --}}
                 </div>
 
                 <!-- Order Summary Section -->
@@ -163,15 +167,6 @@
 
                     <!-- Order Details -->
                     <div class="mt-8">
-                        {{-- <div class="flex items-center justify-between pb-6">
-                            <p class="font-normal text-lg leading-8 text-black" id="cart-total-items-2">
-                                {{ $cartItems->sum('quantity') }} Items
-                            </p>
-                            <p class="font-medium text-lg leading-8 text-black " id="cart-total-price-2">
-                                Rp.
-                                {{ number_format($cartItems->sum(fn($item) => $item->quantity * $item->product->harga_menu), 2) }}
-                            </p>
-                        </div> --}}
 
                         {{-- <form action="" id="checkout-form" method="POST" enctype="multipart/form-data"> --}}
                         <form action="{{ route('order.checkout') }}" method="POST" enctype="multipart/form-data">
@@ -200,22 +195,6 @@
                                 </label>
                                 <textarea name="request" id="request" rows="" placeholder="Ex. Medium Rare"
                                     class="w-full border border-gray-300 rounded-lg px-3 py-3 mb-4 focus:ring-1 focus:ring-gray-400 focus:border-gray-400"></textarea>
-
-                                <!-- Subtotal -->
-                                {{-- <div class="flex justify-between pb-4 font-semibold">
-                                    <span>Subtotal</span>
-                                    <span class="text-shadow-2" id="subtotal">
-                                        Rp.
-                                        {{ number_format($cartItems->sum(fn($item) => $item->quantity * $item->product->harga_menu), 2) }}
-                                    </span>
-                                </div>
-                                <hr class="border-[1.5px] rounded-full border-black" />
-
-                                <!-- Discount -->
-                                <div class="flex justify-between py-4 font-semibold">
-                                    <span>Potongan Harga</span>
-                                    <span></span>
-                                </div> --}}
                                 <hr class="border-[1.5px] rounded-full border-black" />
 
                                 <!-- Total -->
@@ -228,18 +207,19 @@
                                 </div>
                                 <hr class="border-[1.5px] rounded-full border-black" />
 
-                                <!-- Metode Pembayaran -->
-                                <div class="mb-4 flex flex-col">
-                                    {{-- <h3 class="font-semibold mt-6 mb-2">Metode Pembayaran</h3> --}}
-                                    <label for="metodePembayaran" class="font-semibold mt-6 mb-2">Metode
-                                        Pembayaran</label>
-                                    <select name="payment_method" id="metodePembayaran"
-                                        class="payment_method w-3/4 border border-black rounded-lg font-medium py-2 px-2 focus:ring-gray-400 focus:border-gray-400">
-                                        <option value="-">Pilih Opsi Pembayaran</option>
-                                        <option value="Tunai">Tunai</option>
-                                        <option value="nonTunai">Non-Tunai</option>
-                                    </select>
-                                </div>
+                            </div>
+
+                            <!-- Metode Pembayaran -->
+                            <div class="mb-4 flex flex-col">
+                                {{-- <h3 class="font-semibold mt-6 mb-2">Metode Pembayaran</h3> --}}
+                                <label for="metodePembayaran" class="font-semibold mt-6 mb-2">Metode
+                                    Pembayaran</label>
+                                <select name="payment_method" id="metodePembayaran"
+                                    class="payment_method w-3/4 border border-black rounded-lg font-medium py-2 px-2 focus:ring-gray-400 focus:border-gray-400">
+                                    <option value="-">Pilih Opsi Pembayaran</option>
+                                    <option value="Tunai">Tunai</option>
+                                    <option value="nonTunai">Non-Tunai</option>
+                                </select>
                             </div>
 
                             <!-- File (Bukti Pembayaran) -->
@@ -281,7 +261,6 @@
         </div>
     </section>
 
-
     <!-- QRCODE -->
     <section>
         <div class="hidden justify-center items-center fixed left-0 top-0 w-full h-full overflow-auto bg-black/80 z-[9999]"
@@ -292,7 +271,12 @@
 
 </body>
 
-<script></script>
+<script>
+    function updateFileName(input) {
+        const fileName = input.files[0]?.name || "Tidak ada file yang dipilih";
+        document.getElementById("file-name").textContent = fileName;
+    }
+</script>
 
 <script src="{{ asset('asset-view/js/cart.js') }}"></script>
 

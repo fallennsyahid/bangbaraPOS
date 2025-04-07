@@ -26,7 +26,7 @@
 
                     <!-- Content -->
                     <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
-                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
+                        <div class="w-full max-w-6xl overflow-x-auto text-zinc-950">
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
                                 id="myTable">
                                 <!-- Header -->

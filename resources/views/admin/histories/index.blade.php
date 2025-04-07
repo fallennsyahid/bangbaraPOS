@@ -26,9 +26,8 @@
 
                     <!-- Content -->
                     <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
-                        <!-- Tombol View on GitHub -->
-                        <!-- Tabel -->
-                        <div class="mt-10 p-6 w-full max-w-4xl ">
+
+                        <div class="p-4 w-full max-w-6xl ">
                             <h2 class="text-xl font-semibold text-gray-800 mb-4">Pilih Periode</h2>
 
                             <form id="filterForm" class="space-y-4">
@@ -57,7 +56,7 @@
                             </form>
 
                         </div>
-                        <div class="mb-4 mt-3 flex justify-end w-full max-w-4xl">
+                        <div class="mb-4 mt-3 flex justify-end w-full max-w-6xl">
                             <a href="#" id="exportExcel"
                                 class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
                                 <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
@@ -65,7 +64,7 @@
                                 Export
                             </a>
                         </div>
-                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
+                        <div class="w-full max-w-6xl overflow-x-auto text-zinc-950">
                             <div class="flex mx-auto justify-between">
                             </div>
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"

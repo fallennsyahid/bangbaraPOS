@@ -13,10 +13,17 @@
             </span>
         </button>
 
-        <!-- Clock -->
-        <span id="real-time-clock"
-            class="inline-block text-xl font-bold tracking-wider uppercase text-slate-950 dark:text-light">
-        </span>
+        <!-- Clock and stats -->
+        <div class="flex items-center space-x-4">
+            <span id="real-time-clock"
+                class="inline-block text-xl font-bold tracking-wider uppercase text-slate-950 dark:text-light">
+            </span>
+            <span> | </span>
+            <h2 @php $store = \App\Models\Store::first(); @endphp
+                class="{{ $store && $store->status == 1 ? 'text-green-500' : 'text-red-700' }} font-semibold">
+                {{ $store && $store->status ? 'Open' : 'Close' }}
+            </h2>
+        </div>
 
         <!-- Mobile sub menu button -->
         <button @click="isMobileSubMenuOpen = !isMobileSubMenuOpen"

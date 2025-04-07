@@ -33,7 +33,7 @@
                         </h2>
 
                         <!-- Kontainer Tabel -->
-                        <div id="printArea" class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+                        <div id="printArea" class="w-full max-w-6xl bg-white shadow-lg rounded-lg p-6">
                             <!-- Detail Pemesan -->
                             <div class="mb-4">
                                 <label class="block text-gray-700 font-semibold">Nama Pemesan:</label>
@@ -55,6 +55,16 @@
                                                 <td class="px-6 py-4 text-sm text-gray-900">
                                                     {{ $product['nama_menu'] }}
                                                 </td>
+                                                @if ($product['category'] == 'Makanan')
+                                                    <td class="px-6 py-4 text-sm text-gray-900">
+                                                        {{ $product['sauce'] ?? '-' }}
+                                                    </td>
+                                                @else
+                                                    <td class="px-6 py-4 text-sm text-gray-900">
+                                                        {{ $product['hot_ice'] ?? '-' }}
+                                                    </td>
+                                                @endif
+
                                                 <td class="px-6 py-4 text-sm text-gray-900">
                                                     Rp{{ number_format($product['price'], 0, ',', '.') }}
                                                 </td>

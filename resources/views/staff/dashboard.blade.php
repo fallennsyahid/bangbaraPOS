@@ -19,7 +19,8 @@
                 <main class="bg-prime">
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-4 border-b lg:py-6">
-                        <h1 class="text-lg space-x-2 text-zinc-950 font-serif">"Selamat datang di Dashboard Staff!
+                        <h1 class="text-xs md:text-lg space-x-2 text-zinc-950 font-serif">"Selamat datang di Dashboard
+                            Staff!
                             Semoga harimu
                             produktif dan penuh energi, {{ Auth::user()->name }} 👋!"</h1>
                         <x-staff.waButton></x-staff.waButton>

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Log;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log as Anjay;
+use Illuminate\Support\Facades\Redirect;
 
 class CartController extends Controller
 {
@@ -15,7 +18,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cartItems = Cart::with('product')->get();
+        $sessionId = Session::getId();
+        $cartItems = Cart::with('product')->where('session_id', $sessionId)->get();
+
         return view('cart', compact('cartItems'));
     }
 
@@ -24,14 +29,23 @@ class CartController extends Controller
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1'
+            'quantity' => 'required|integer|min:1',
+            'sauce' => 'nullable|string|in:barbaque,mushroom,blackpepper',
+            'hot_ice' => 'nullable|string|in:hot,ice',
         ]);
 
+        $sessionId = Session::getId();
         $product_id = $request->product_id;
         $quantity = $request->quantity;
+        $sauce = $request->sauce;
+        $hot_ice = $request->hot_ice;
 
-        // Cek apakah produk sudah ada di cart
-        $cartItem = Cart::where('product_id', $product_id)->first();
+
+        $cartItem = Cart::where('session_id', $sessionId)
+            ->where('product_id', $product_id)
+            ->where('sauce', $sauce)
+            ->where('hot_ice', $hot_ice)
+            ->first();
 
         if ($cartItem) {
             // Jika sudah ada, tambah quantity
@@ -39,8 +53,11 @@ class CartController extends Controller
         } else {
             // Jika belum ada, buat entri baru
             Cart::create([
+                'session_id' => $sessionId,
                 'product_id' => $product_id,
                 'quantity' => $quantity,
+                'sauce' => $sauce,
+                'hot_ice' => $hot_ice,
             ]);
         }
 
@@ -50,13 +67,24 @@ class CartController extends Controller
     // Hapus produk dari keranjang
     public function removeFromCart($id)
     {
-        Cart::destroy($id);
+        // Cart::destroy($id);
+
+        $sessionId = Session::getId();
+        $cartItem = Cart::where('session_id', $sessionId)->where('id', $id)->first();
+
+        if (!$cartItem) {
+            return redirect()->route('cart')->with('error', 'Produk tidak ditemukan di keranjang');
+        }
+
         return redirect()->route('cart')->with('success', 'Produk dihapus dari keranjang');
     }
 
+    // Update quantity produk di keranjang
     public function updateQuantity(Request $request, $id)
     {
-        $item = Cart::find($id);
+        $sessionId  = Session::getId();
+        $item = Cart::where('session_id', $sessionId)->where('id', $id)->first();
+        // $item = Cart::find($id);
 
         if (!$item) {
             return response()->json(['message' => 'Item tidak ditemukan'], 404);
@@ -71,8 +99,15 @@ class CartController extends Controller
         }
 
         // Hitung ulang total items & total harga tanpa join
-        $totalItems = Cart::sum('quantity');
-        $totalPrice = Cart::all()->sum(fn($cart) => $cart->quantity * $cart->product->harga_menu);
+        $totalItems = Cart::where('session_id', $sessionId)->sum('quantity');
+        $totalPrice = Cart::where('session_id', $sessionId)
+            ->with('product')
+            ->get()
+            ->sum(function ($cart) {
+                return $cart->quantity * $cart->product->harga_menu;
+            });
+        // $totalItems = Cart::sum('quantity');
+        // $totalPrice = Cart::all()->sum(fn($cart) => $cart->quantity * $cart->product->harga_menu);
 
         return response()->json([
             'quantity' => $newQuantity > 0 ? $item->quantity : 0,

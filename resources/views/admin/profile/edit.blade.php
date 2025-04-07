@@ -25,8 +25,8 @@
                     </div>
 
                     <!-- Content -->
-                    <div class="min-h-screen flex items-center justify-center bg-gray-200 py-5">
-                        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+                    <div class="min-h-screen flex items-center justify-center bg-prime py-5">
+                        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-6xl">
                             <h2 class="text-2xl font-bold text-gray-800 mb-4">Profile</h2>
 
                             <div class="flex flex-col md:flex-row items-center md:items-start gap-6">

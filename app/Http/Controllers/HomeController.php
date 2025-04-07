@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\Store;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -16,9 +17,10 @@ class HomeController extends Controller
     public function index()
     {
         // $products = Product::all();
-        $categories = Category::with('products')->get();
+        $categories = Category::with(['products', 'options'])->get();
         $reviews = Review::all();
-        return view('welcome', compact('categories', 'reviews'));
+        $store = Store::first();
+        return view('welcome', compact('categories', 'reviews', 'store'));
     }
 
     /**
