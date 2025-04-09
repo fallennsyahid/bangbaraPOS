@@ -9,14 +9,11 @@
     <!-- CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
-
     <link rel="stylesheet" href="{{ asset('asset-view/css/slider.css') }}">
-
     <!-- ICON -->
     <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
     <!-- ICON WEB -->
     <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
-
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -102,13 +99,12 @@
     <!-- Header End -->
 
     <!-- Hero Section Start -->
-    <section id="home" class="pt-36 header-img bg-cover bg-center">
+    <section id="home" class="pt-36 header-img lg:min-h-screen">
         <div class="container mx-auto px-4">
             <div class="flex flex-wrap items-center">
                 <!-- Konten -->
-                <div class="w-full lg:w-3/4 px-4 text-center lg:text-left">
-                    <h1
-                        class="font-europhia text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl mt-4 mb-6 leading-tight">
+                <div class="w-full lg:w-3/4 px-4 pb-14 text-left lg:text-left lg:py-0">
+                    <h1 class="font-europhia text-white text-4xl md:text-6xl lg:text-7xl mt-4 mb-6 leading-tight">
                         Rasa Juara, Harga Bersahabat!
                     </h1>
                     <p
@@ -119,10 +115,10 @@
                         dirancang untuk memberikan pengalaman makan yang lezat dan
                         memuaskan, tanpa harus menguras dompet.
                     </p>
-
                     <a href="#menu"
                         class="text-base sm:text-lg md:text-xl lg:text-2xl font-europhia text-white bg-primary py-3 px-6 md:py-4 md:px-8 rounded-full shadow-lg hover:shadow-xl hover:opacity-80 transition duration-300 ease-in-out">Cek
-                        Selengkapnya</a>
+                        Selengkapnya
+                    </a>
                 </div>
             </div>
         </div>
@@ -346,7 +342,7 @@
     <!-- About Section End -->
 
     <!-- Contact Section Start -->
-    <section id="contact" class="bg-[#FFF890] min-h-screen">
+    <section id="contact" class="bg-[#FFF890]">
         <div class="container mx-auto px-4">
             <div class="flex justify-center py-4 mb-8">
                 <a href=""
@@ -355,7 +351,8 @@
                 </a>
             </div>
             <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8">
-                <form action="{{ route('index.store') }}" method="POST" class="form-contact w-full lg:w-1/2">
+                <form action="{{ route('index.store') }}" method="POST"
+                    class="form-contact w-full lg:w-1/2 sm:form-contact-sm md:form-contact-sm">
                     @csrf
                     <div class="bg-[#F5EB55] p-6 sm:p-9 rounded-2xl ring-1 ring-[#BBB34E]">
                         <div class="flex justify-between">
@@ -450,17 +447,17 @@
     {{-- Ulasan Section End --}}
 
     <!-- Footer Section Start -->
-    <footer class="bg-black footer">
+    <footer class="bg-black" id="#footer">
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-wrap justify-between items-center lg:justify-between gap-y-10">
                 <!-- Logo -->
-                <a href="#navbarHeader" class="flex justify-center lg:justify-start w-full lg:w-auto">
+                <a href="#navbarHeader" class="logo-footer flex justify-center lg:justify-start w-full lg:w-auto">
                     <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="Logo" height=""
                         class="h-12" />
                 </a>
 
                 <!-- Account -->
-                <div class="w-full sm:w-auto text-center">
+                <div class="account-footer w-full sm:w-auto text-center">
                     <h3 class="font-medium text-white text-xl pb-3">Account</h3>
                     <div class="flex justify-center gap-4">
                         <a href="https://wa.me/+6283857185413" target="_blank">
@@ -483,7 +480,7 @@
                 </div>
 
                 <!-- Contact -->
-                <div class="w-full sm:w-auto text-center">
+                <div class="contact-footer w-full sm:w-auto text-center">
                     <h3 class="font-bold text-white text-xl pb-3">Kontak</h3>
                     <a href="https://wa.me/+6283857185413" target="_blank"
                         class="font-normal text-white text-lg hover:underline">
@@ -492,7 +489,7 @@
                 </div>
 
                 <!-- Maps -->
-                <div class="w-full sm:w-auto text-center mt-6">
+                <div class="maps-footer w-full sm:w-auto text-center mt-6">
                     <h3 class="font-bold text-white text-xl pb-3">Maps</h3>
                     <a href="https://maps.app.goo.gl/QJJSghdQJtVT7pj77" target="_blank" class="inline-block">
                         <img src="{{ asset('asset-view/assets/svg/maps.svg') }}" alt="Google Maps" width=""
@@ -503,9 +500,14 @@
         </div>
     </footer>
     <!-- Footer Section End -->
-
 </body>
 <x-sweet-alert></x-sweet-alert>
+<!-- GSAP Core -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<!-- ScrollTrigger Plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<!-- Custom Animation -->
+<script src="{{ asset('asset-view/js/animation.js') }}"></script>
 
 <script src="{{ asset('asset-view/js/script.js') }}"></script>
 <script src="{{ asset('asset-view/js/popup.js') }}"></script>
