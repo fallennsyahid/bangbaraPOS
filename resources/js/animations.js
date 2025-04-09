@@ -164,5 +164,4 @@ gsap.fromTo(".ulasan-slide", {
     }
 });
 // Ulasan Section Animations End
-// Footer Section Animations End
 
