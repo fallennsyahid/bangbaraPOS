@@ -42,12 +42,12 @@
     min-height: 100vh;
 }
 
-.about-img {
+/* .about-img {
     background-image: url("../assets/png/about.png");
     background-size: cover;
     background-position: center;
-    min-height: 100vh;
-}
+    min-height: 30vh;
+} */
 
 .ulasan-img {
     background-image: url("../assets/png/ulasan.png");
@@ -92,10 +92,6 @@
         opacity: 1;
     }
 }
-
-/* .css {
-  color: oklch(0.623 0.214 259.815);
-} */
 
 .text-shadow {
     text-shadow: 0 4px 4px black;

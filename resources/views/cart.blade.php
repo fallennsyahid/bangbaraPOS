@@ -271,12 +271,7 @@
 
 </body>
 
-<script>
-    function updateFileName(input) {
-        const fileName = input.files[0]?.name || "Tidak ada file yang dipilih";
-        document.getElementById("file-name").textContent = fileName;
-    }
-</script>
+<script></script>
 
 <script src="{{ asset('asset-view/js/cart.js') }}"></script>
 

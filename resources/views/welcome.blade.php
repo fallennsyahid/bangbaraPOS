@@ -25,13 +25,7 @@
         rel="stylesheet" />
 </head>
 
-<style>
-    .swal2-container {
-        z-index: 999999 !important;
-    }
-</style>
-
-<body class="">
+<body class="bg-slate-950">
     <!-- Header Start -->
     <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
         <div class="container mx-auto px-4">
@@ -47,7 +41,7 @@
                 <div class="flex items-center">
                     <!-- Navigation Menu -->
                     <nav id="nav-menu"
-                        class="hidden absolute top-full right-4 py-5 bg-transparent backdrop-blur-xl shadow-2xl rounded-lg max-w-[250px] w-full lg:static lg:block lg:max-w-none lg:shadow-none lg:rounded-none lg:w-auto lg:mx-auto">
+                        class="hidden absolute top-full right-4 py-5 bg-black/80 backdrop-blur-xl shadow-2xl rounded-lg max-w-[250px] w-full lg:bg-transparent lg:static lg:block lg:max-w-none lg:shadow-none lg:rounded-none lg:w-auto lg:mx-auto">
                         <ul class="block lg:flex lg:gap-8">
                             <li class="group">
                                 <a href="#home"
@@ -70,7 +64,7 @@
                             <li class="group">
                                 <a href="#contact"
                                     class="text-base text-white py-2 mx-4 flex font-medium relative group-hover:text-primary after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 after:transform after:-translate-x-1/2 group-hover:after:w-3/4">
-                                    Reviews
+                                    Review
                                 </a>
                             </li>
                         </ul>
@@ -142,8 +136,8 @@
             <div
                 class="flex items-center bg-primary mx-auto my-5 px-8 sm:px-12 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
                 <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="" width="120px"
-                    class="mr-4" />
-                <h1 class="font-europhia text-shadow text-4xl sm:text-5xl lg:text-6xl text-white">
+                    class="mr-0 lg:mr-4 lg:scale-150" />
+                <h1 class="font-europhia text-shadow text-[2.5rem] lg:text-6xl text-white">
                     Menu Kami
                 </h1>
             </div>
@@ -317,23 +311,34 @@
     <!-- Popup End -->
 
     <!-- About Section Start -->
-    <section id="about" class="bg-red-600 flex justify-center items-center min-h-screen">
-        <div class="text-center p-6 bg-red-600">
-            <div class="flex flex-col items-center md:flex-row md:items-start">
-                <img src="{{ asset('asset-view/assets/svg/steak.svg') }}"
-                    alt="A plate with steak, fries, and vegetables" class="" height="40%" width="40%" />
-                <div class="mt-6 md:mt-0 md:ml-6 text-white">
-                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-europhia text-shadow mb-4">
-                        Tentang Kami
-                    </h1>
-                    <p class="leading-relaxed text-shadow-2 pt-6 text-lg sm:text-xl md:text-xl lg:text-2xl">
-                        Bangbara adalah tempat makan yang menghadirkan steak dan chicken
-                        katsu dengan cita rasa istimewa. Dengan bahan berkualitas dan harga
-                        yang terjangkau, Bangbara menjadi pilihan tepat untuk menikmati
-                        hidangan lezat bersama keluarga atau teman. Suasana yang nyaman dan
-                        pelayanan ramah membuat setiap kunjungan menjadi pengalaman yang
-                        menyenangkan.
-                    </p>
+    <section id="about" class="relative bg-red-600 overflow-hidden">
+        <!-- Gambar sebagai background di mobile -->
+        <img src="{{ asset('asset-view/assets/svg/steak.svg') }}" alt="A plate with steak, fries, and vegetables"
+            class="mobile-about-img absolute top-0 left-0 w-full h-full object-cover opacity-40 z-0  md:hidden" />
+
+        <div class="relative z-10 flex justify-center items-center p-6 min-h-[70vh]">
+            <div class="text-center max-w-6xl">
+                <div class="flex flex-col items-center md:flex-row md:items-start">
+                    <!-- Gambar normal di desktop -->
+                    <img src="{{ asset('asset-view/assets/svg/steak.svg') }}"
+                        alt="A plate with steak, fries, and vegetables"
+                        class="about-img hidden md:block w-2/5 h-auto" />
+
+                    <!-- Teks konten -->
+                    <div class="mt-6 md:mt-0 md:ml-6 text-white">
+                        <h1 class="about-title text-5xl sm:text-6xl lg:text-7xl font-europhia text-shadow mb-4">
+                            Tentang Kami
+                        </h1>
+                        <p
+                            class="about-text leading-relaxed text-shadow-2 pt-6 text-lg sm:text-xl md:text-xl lg:text-2xl">
+                            Bangbara adalah tempat makan yang menghadirkan steak dan chicken
+                            katsu dengan cita rasa istimewa. Dengan bahan berkualitas dan harga
+                            yang terjangkau, Bangbara menjadi pilihan tepat untuk menikmati
+                            hidangan lezat bersama keluarga atau teman. Suasana yang nyaman dan
+                            pelayanan ramah membuat setiap kunjungan menjadi pengalaman yang
+                            menyenangkan.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -345,12 +350,12 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-center py-4 mb-8">
                 <a href=""
-                    class="py-4 px-12 bg-[#CC0000] rounded-full text-center text-4xl font-europhia shadow-lg text-white cursor-default sm:text-5xl lg:text-6xl">
+                    class="contact-title py-4 px-12 bg-[#CC0000] rounded-full text-center text-4xl font-europhia shadow-lg text-white cursor-default sm:text-5xl lg:text-6xl">
                     Berikan Rating & Ulasan
                 </a>
             </div>
-            <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8 shadow-lg">
-                <form action="{{ route('index.store') }}" method="POST" class="w-full lg:w-1/2">
+            <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8">
+                <form action="{{ route('index.store') }}" method="POST" class="form-contact w-full lg:w-1/2">
                     @csrf
                     <div class="bg-[#F5EB55] p-6 sm:p-9 rounded-2xl ring-1 ring-[#BBB34E]">
                         <div class="flex justify-between">
@@ -382,9 +387,9 @@
                         </div>
                     </div>
                 </form>
-                <div class="w-full lg:w-auto flex justify-center">
+                <div class="hidden lg:flex lg:justify-center w-full lg:w-auto">
                     <img src="{{ asset('asset-view/assets/svg/contact.svg') }}" alt="Contact Illustration"
-                        class="w-72 sm:w-96 lg:w-[400px]" />
+                        class="contact-img w-72 sm:w-96 lg:w-[400px]" />
                 </div>
             </div>
         </div>
@@ -393,35 +398,59 @@
 
     {{-- Ulasan Section Start --}}
     <section id="ulasan" class="ulasan-img">
-        <div class="container">
-            <h1 class="py-12 font-europhia text-white text-center text-4xl sm:text-5xl lg:text-6xl">
-                Apa Kata Mereka
-            </h1>
-            <div class="slider">
-                @foreach ($reviews as $index => $review)
-                    <div class="review" style="--pos: {{ $index + 1 }}" id="review">
-                        <p class="text-center px-4 py-8 text-sm md:text-base">
-                            {{ $review->message }}
-                        </p>
-                        <div class="px-4 py-2 border-t-2 border-[#D6D6D6]">
-                            <p class="font-semibold text-gray-500">{{ $review->username }}</p>
-                            <p class="flex font-semibold text-gray-500">Rating:
-                                <span class="flex items-center text-xl mx-2 gap-1 text-yellow-500">
-                                    @for ($i = 0; $i < $review->rating; $i++)
-                                        <i class="fas fa-star"></i>
-                                    @endfor
-                                </span>
-                            </p>
+        {{-- <div class="container"> --}}
+        <h1 class="ulasan-title py-12 font-europhia text-white text-center text-5xl lg:text-6xl">
+            Apa Kata Mereka
+        </h1>
+        <div class="slider">
+            <div class="slide-track">
+                <!-- First set of reviews -->
+                @foreach ($reviews as $review)
+                    <div class="ulasan-slide slide">
+                        <div class="review">
+                            <p class="review-message">{{ $review->message }}</p>
+                            <div class="review-footer">
+                                <p class="review-username">{{ $review->username }}</p>
+                                <p class="review-rating">
+                                    Rating:
+                                    <span class="stars">
+                                        @for ($i = 0; $i < $review->rating; $i++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+                <!-- Duplicate set for infinite scrolling -->
+                @foreach ($reviews as $review)
+                    <div class="ulasan-slide slide">
+                        <div class="review">
+                            <p class="review-message">{{ $review->message }}</p>
+                            <div class="review-footer">
+                                <p class="review-username">{{ $review->username }}</p>
+                                <p class="review-rating">
+                                    Rating:
+                                    <span class="stars">
+                                        @for ($i = 0; $i < $review->rating; $i++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
+                                    </span>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
+        {{-- </div> --}}
     </section>
     {{-- Ulasan Section End --}}
 
     <!-- Footer Section Start -->
-    <footer class="bg-black">
+    <footer class="bg-black footer">
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-wrap justify-between items-center lg:justify-between gap-y-10">
                 <!-- Logo -->
@@ -476,43 +505,7 @@
     <!-- Footer Section End -->
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@stack('scripts')
-<script>
-    @if (session('success'))
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: {!! json_encode(session('success')) !!},
-            showConfirmButton: false,
-            timer: 1500,
-        });
-    @endif
-</script>
-
-<script>
-    @if (session('checkout_success') === 'tunai')
-        Swal.fire({
-            title: "Yeay! Pesananmu sudah terkirim",
-            text: "Pesanan berhasil dibuat, silakan menuju kasir untuk pembayaran",
-            icon: "success",
-            // imageUrl: "{{ asset('asset-view/assets/svg/success.svg') }}",
-            // imageWidth: 400,
-            // imageHeight: 200,
-            // imageAlt: "Success Logo",
-            confirmButtonText: "OK",
-            confirmButtonColor: "#CC0000",
-        });
-    @elseif (session('checkout_success') === 'nonTunai')
-        Swal.fire({
-            title: "Yeay! Pesananmu sudah terkirim",
-            text: "Chef kita lagi semangat masak buat kamu. Tunggu bentar lagi ya~",
-            icon: "success",
-            confirmButtonText: "OK",
-            confirmButtonColor: "#CC0000",
-        });
-    @endif
-</script>
+<x-sweet-alert></x-sweet-alert>
 
 <script src="{{ asset('asset-view/js/script.js') }}"></script>
 <script src="{{ asset('asset-view/js/popup.js') }}"></script>

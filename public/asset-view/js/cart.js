@@ -1,4 +1,3 @@
-// Tambah & Kurang Quantity
 document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("click", function (event) {
         if (event.target.closest(".increase, .decrease")) {
@@ -43,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-
     // PAYMENT METHOD
     const metodePembayaran = document.querySelector("#metodePembayaran");
     const buktiPembayaran = document.getElementById("bukti-pembayaran");
@@ -69,6 +67,11 @@ document.addEventListener("DOMContentLoaded", function () {
     imagePayment.addEventListener("click", () => {
         qrCode.classList.add("hidden");
     });
+
+    function updateFileName(input) {
+        const fileName = input.files[0]?.name || "Tidak ada file yang dipilih";
+        document.getElementById("file-name").textContent = fileName;
+    }
 });
 
 

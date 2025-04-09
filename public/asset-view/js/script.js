@@ -32,7 +32,6 @@ window.addEventListener('click', function (e) {
     }
 });
 
-
 // Menu Active
 const menuLinks = document.querySelectorAll('.menu-link');
 const sliderContent = document.getElementById("slider-content");
@@ -65,13 +64,6 @@ function updateSlide() {
 
 // Event listener untuk resize agar slide tetap sesuai
 window.addEventListener("resize", updateSlide);
-
-// Menu Slide
-// function changeSlide(index) {
-//     const sliderContent = document.getElementById("slider-content");
-//     const slideWidth = sliderContent.clientWidth / 3; // Menghitung lebar satu slide
-//     sliderContent.style.transform = `translateX(-${index * slideWidth}px)`; // Menggeser sesuai index
-// }
 
 // Rating
 const stars = document.querySelectorAll('input[name="rating"]');

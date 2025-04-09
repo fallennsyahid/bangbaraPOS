@@ -119,15 +119,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let selectedSauce = document.querySelector("input[name='sauce']:checked") ? document.querySelector("input[name='sauce']:checked").value : "";
         let selectedHotIce = document.querySelector("input[name='hot_ice']:checked") ? document.querySelector("input[name='hot_ice']:checked").value : "";
 
-        // if (!productId) {
-        //     Swal.fire({
-        //         icon: "error",
-        //         title: "Oops...",
-        //         text: "Produk tidak valid! ID tidak ditemukan.",
-        //     });
-        //     return;
-        // }
-
         // Validasi pilihan sauce jika pilihan saus ditampilkan
         if (!pilihanSaus.classList.contains("hidden") && !selectedSauce) {
             Swal.fire({
