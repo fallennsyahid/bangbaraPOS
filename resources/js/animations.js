@@ -164,23 +164,6 @@ gsap.fromTo(".ulasan-slide", {
     }
 });
 // Ulasan Section Animations End
-
-// Footer Section Animations Start
-// Animasi dari bawah untuk footer
-gsap.fromTo(".footer", {
-    opacity: 0,
-    scale: 0.95,
-}, {
-    scale: 1,
-    opacity: 1,
-    duration: 1.2,
-    ease: "power2.out",
-    scrollTrigger: {
-        trigger: "#footer",
-        start: "top 80%",
-        end: "bottom top",
-        toggleActions: "play reverse play reverse",
-    }
 });
 // Footer Section Animations End
 
