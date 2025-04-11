@@ -30,7 +30,11 @@
                             <!-- Income card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total Income</h6>
-                                <p class="text-3xl font-bold">Rp {{ number_format($totalIncome) }}</p>
+                                <div class="flex gap-4 justify-center items-center">
+                                    <img src="{{ asset('asset-admin/public/img/money-bag.png') }}" alt="Money Bag"
+                                        width="50px" class="filter invert text-white">
+                                    <p class="text-3xl font-bold">Rp {{ number_format($totalIncome) }}</p>
+                                </div>
                             </div>
 
 

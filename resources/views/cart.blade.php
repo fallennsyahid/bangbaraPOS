@@ -26,10 +26,13 @@
     {{-- Hero Section Start --}}
     <section class="relative h-[50vh] header-cart">
         <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center">
-            <h1 class="text-white text-4xl font-bold">Cart</h1>
-            <p class="text-white cursor-pointer">
-                Back /
-                <a href="{{ route('index') }}"><span class="text-rose-400 hover:underline">Home</span></a>
+            <h1 class="text-white text-5xl lg:text-4xl font-bold">Cart</h1>
+            <p class="text-white">
+                <span class="text-xl lg:text-base">
+                    Back /
+                </span>
+                <a href="{{ route('index') }}">
+                    <span class="text-rose-400 cursor-pointer text-xl lg:text-base hover:underline">Home</span></a>
             </p>
         </div>
     </section>
@@ -241,10 +244,10 @@
                                         </svg>
                                         Upload File
                                     </label>
-                                    <span id="file-name" class="text-xs"></span>
+                                    <span id="file-name" class="text-xs">Tidak ada file yang dipilih</span>
                                 </div>
                                 <input type="file" id="payment_photo" name="payment_photo" class="hidden"
-                                    accept="image/*" onchange="updateFileName(this)" />
+                                    accept="image/*" onchange="updateFileName(this)" required />
                             </div>
 
                             <!-- Submit Button -->
@@ -271,8 +274,13 @@
 
 </body>
 
-<script></script>
-
 <script src="{{ asset('asset-view/js/cart.js') }}"></script>
+<script>
+    function updateFileName(input) {
+        const fileName = input.files.length > 0 ? input.files[0].name : "Tidak ada file yang dipilih";
+        document.getElementById("file-name").textContent = fileName;
+    }
+</script>
+
 
 </html>

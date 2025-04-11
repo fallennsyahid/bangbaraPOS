@@ -103,7 +103,7 @@
         <div class="container mx-auto px-4">
             <div class="flex flex-wrap items-center">
                 <!-- Konten -->
-                <div class="w-full lg:w-3/4 px-4 pb-14 text-left lg:text-left lg:py-0">
+                <div class="w-full lg:w-3/4 px-4 pb-14 text-center lg:text-left lg:py-0">
                     <h1 class="font-europhia text-white text-4xl md:text-6xl lg:text-7xl mt-4 mb-6 leading-tight">
                         Rasa Juara, Harga Bersahabat!
                     </h1>
@@ -130,7 +130,7 @@
         <div class="flex flex-col items-center px-4 sm:px-8 lg:px-16">
             <!-- Header -->
             <div
-                class="flex items-center bg-primary mx-auto my-5 px-8 sm:px-12 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
+                class="flex items-center bg-primary mx-auto my-5 px-8 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
                 <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="" width="120px"
                     class="mr-0 lg:mr-4 lg:scale-150" />
                 <h1 class="font-europhia text-shadow text-[2.5rem] lg:text-6xl text-white">
@@ -307,26 +307,28 @@
     <!-- Popup End -->
 
     <!-- About Section Start -->
-    <section id="about" class="relative bg-red-600 overflow-hidden">
+    <section id="about"
+        class="relative bg-red-600 overflow-hidden min-h-[60vh] sm:min-h-[60vh] md:min-h-[50vh] lg:min-h-[50vh] xl:min-h-[70vh]">
         <!-- Gambar sebagai background di mobile -->
         <img src="{{ asset('asset-view/assets/svg/steak.svg') }}" alt="A plate with steak, fries, and vegetables"
-            class="mobile-about-img absolute top-0 left-0 w-full h-full object-cover opacity-40 z-0  md:hidden" />
+            class="mobile-about-img absolute top-0 left-0 w-full h-full object-cover opacity-40 z-0 md:hidden" />
 
-        <div class="relative z-10 flex justify-center items-center p-6 min-h-[70vh]">
-            <div class="text-center max-w-6xl">
+        <div class="relative z-10 flex justify-center items-center p-6 md:p-10 h-full">
+            <div class="text-center max-w-6xl w-full">
                 <div class="flex flex-col items-center md:flex-row md:items-start">
-                    <!-- Gambar normal di desktop -->
+                    <!-- Gambar normal di desktop/tablet -->
                     <img src="{{ asset('asset-view/assets/svg/steak.svg') }}"
                         alt="A plate with steak, fries, and vegetables"
-                        class="about-img hidden md:block w-2/5 h-auto" />
+                        class="about-img hidden md:block w-full md:w-2/5 h-auto opacity-0" />
 
                     <!-- Teks konten -->
-                    <div class="mt-6 md:mt-0 md:ml-6 text-white">
-                        <h1 class="about-title text-5xl sm:text-6xl lg:text-7xl font-europhia text-shadow mb-4">
+                    <div class="mt-6 md:mt-0 md:ml-6 text-white text-shadow-2">
+                        <h1
+                            class="about-title text-4xl sm:text-5xl lg:text-6xl font-europhia text-shadow mb-4 opacity-0">
                             Tentang Kami
                         </h1>
                         <p
-                            class="about-text leading-relaxed text-shadow-2 pt-6 text-lg sm:text-xl md:text-xl lg:text-2xl">
+                            class="about-text leading-relaxed pt-4 text-base sm:text-lg md:text-xl lg:text-2xl opacity-0">
                             Bangbara adalah tempat makan yang menghadirkan steak dan chicken
                             katsu dengan cita rasa istimewa. Dengan bahan berkualitas dan harga
                             yang terjangkau, Bangbara menjadi pilihan tepat untuk menikmati
@@ -378,10 +380,12 @@
                             class="p-4 my-4 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg">
                         <textarea name="message" id="message" cols="30" rows="10" placeholder="Ketik ulasanmu disini"
                             class="p-4 mt-4 mb-2 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg"></textarea>
-                        <div class="mt-6">
-                            <input type="submit" value="Kirim Pesan"
-                                class="py-2 px-12 rounded-xl font-medium bg-[#FFA500] cursor-pointer transition duration-100 ease-linear hover:bg-[#F59F00] hover:scale-110 active:bg-[#EA9800] active:scale-100">
-                        </div>
+                        <input type="submit" value="Kirim Pesan"
+                            class="py-2 px-12 rounded-xl font-medium bg-yellow-500 cursor-pointer transition-transform duration-300 ease-linear hover:bg-yellow-600 hover:scale-110 active:bg--yellow-700 active:scale-100">
+                        {{-- <button type="submit"
+                            class="w-full relative z-10 py-2 px-12 rounded-xl font-medium bg-yellow-500 cursor-pointer transition-transform duration-300 ease-linear hover:bg-yellow-600 hover:scale-110 active:bg-yellow-700 active:scale-100">
+                            Kirim Pesan
+                        </button> --}}
                     </div>
                 </form>
                 <div class="hidden lg:flex lg:justify-center w-full lg:w-auto">
@@ -502,12 +506,7 @@
     <!-- Footer Section End -->
 </body>
 <x-sweet-alert></x-sweet-alert>
-<!-- GSAP Core -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<!-- ScrollTrigger Plugin -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<!-- Custom Animation -->
-<script src="{{ asset('asset-view/js/animation.js') }}"></script>
+
 
 <script src="{{ asset('asset-view/js/script.js') }}"></script>
 <script src="{{ asset('asset-view/js/popup.js') }}"></script>

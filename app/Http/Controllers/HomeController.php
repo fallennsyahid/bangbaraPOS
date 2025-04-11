@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         // $products = Product::all();
         $categories = Category::with(['products', 'options'])->get();
-        $reviews = Review::all();
+        $reviews = Review::orderBy('created_at', 'desc')->take(5)->get();
         return view('welcome', compact('categories', 'reviews'));
     }
 

@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const buktiPembayaran = document.getElementById("bukti-pembayaran");
     const qrCode = document.querySelector("#qrcode");
     const imagePayment = document.querySelector("#imagePayment");
-    const form = document.querySelector("form");
     const paymentPhoto = document.querySelector("#payment_photo");
 
     metodePembayaran.addEventListener("change", function () {
@@ -67,11 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
     imagePayment.addEventListener("click", () => {
         qrCode.classList.add("hidden");
     });
-
-    function updateFileName(input) {
-        const fileName = input.files[0]?.name || "Tidak ada file yang dipilih";
-        document.getElementById("file-name").textContent = fileName;
-    }
 });
 
 
