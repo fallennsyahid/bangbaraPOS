@@ -30,7 +30,7 @@
                         <!-- Profile Header -->
                         <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
                             <div class="flex items-center space-x-4">
-                                <img src="{{ asset('asset-admin/public/img/person.jpg') }}" alt="Profile Picture"
+                                <img src="{{ Avatar::create(Auth::user()->name)->toBase64() }}" alt="Profile Picture"
                                     class="w-24 h-24 rounded-full">
                                 <div>
                                     <h1 class="text-2xl font-bold text-gray-900">{{ $user->name ?? 'Guest' }}

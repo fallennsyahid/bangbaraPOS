@@ -116,3 +116,7 @@ body {
 .hamburger-active > span:nth-child(3) {
     @apply -rotate-45;
 }
+
+.star-icon {
+    @apply text-yellow-500;
+}

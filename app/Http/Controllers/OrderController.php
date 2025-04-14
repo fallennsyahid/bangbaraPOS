@@ -26,7 +26,7 @@ class OrderController extends Controller
             'customer_phone' => 'required',
             'request' => 'nullable',
             'payment_method' => 'required|in:Tunai,nonTunai',
-            'payment_photo' => 'nullable',
+            'payment_photo' => $request->payment_method ===  'nonTunai' ? 'required|image|mimes:jpeg,png,jpg|max:2048' : 'nullable',
             'sauce' => 'nullable|string',
             'hot_ice' => 'nullable|string',
         ]);
@@ -58,6 +58,7 @@ class OrderController extends Controller
             'price' => $item->product->harga_menu,
             'sauce' => $item->sauce,
             'hot_ice' => $item->hot_ice,
+            'category' => $item->product->category->nama_kategori,
         ])->toArray();
 
         Order::create([

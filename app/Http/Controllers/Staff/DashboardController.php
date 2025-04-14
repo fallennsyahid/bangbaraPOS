@@ -102,8 +102,11 @@ class DashboardController extends Controller
 
     public function getBestSellerChartData(){
         // Ambil data orders
-        $orders = Order::where('status', 'Completed')->get();
-
+        $orders = Order::where('status', 'Completed')
+        ->whereDate('created_at', Carbon::today()) // Ambil pesanan hanya dari hari ini
+        ->orderBy('created_at', 'desc') // Urutkan dari terbaru
+        ->get();
+        
         $productTotals = [];
 
         foreach ($orders as $order) {

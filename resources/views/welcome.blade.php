@@ -10,7 +10,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
     <link rel="stylesheet" href="{{ asset('asset-view/css/slider.css') }}">
-    <!-- ICON -->
     <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
     <!-- ICON WEB -->
     <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
@@ -20,6 +19,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Euphoria+Script&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet" />
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 <body class="bg-slate-950">
@@ -130,7 +133,7 @@
         <div class="flex flex-col items-center px-4 sm:px-8 lg:px-16">
             <!-- Header -->
             <div
-                class="flex items-center bg-primary mx-auto my-5 px-8 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
+                class="flex items-center bg-primary mx-auto my-5 px-8 sm:px-12 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
                 <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="" width="120px"
                     class="mr-0 lg:mr-4 lg:scale-150" />
                 <h1 class="font-europhia text-shadow text-[2.5rem] lg:text-6xl text-white">
@@ -138,64 +141,72 @@
                 </h1>
             </div>
 
-            <!-- Tab Navigation -->
+            <!-- Tab Navigation Category -->
             <div class="w-full py-6 text-center">
                 <div class="flex flex-wrap justify-center gap-x-14 gap-y-4">
-                    <button onclick="changeSlide(0)"
-                        class="menu-link relative text-white font-europhia text-3xl sm:text-4xl lg:text-5xl hover:text-yellow-400 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:rounded-full after:w-full after:bg-white hover:after:bg-yellow-400 active">
-                        Makanan
-                    </button>
-                    <button onclick="changeSlide(1)"
-                        class="menu-link relative text-white font-europhia text-3xl sm:text-4xl lg:text-5xl hover:text-yellow-400 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:rounded-full after:w-full after:bg-white hover:after:bg-yellow-400">
-                        Minuman
-                    </button>
-                    <button onclick="changeSlide(2)"
-                        class="menu-link relative text-white font-europhia text-3xl sm:text-4xl lg:text-5xl hover:text-yellow-400 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:rounded-full after:w-full after:bg-white hover:after:bg-yellow-400">
-                        Extra
-                    </button>
+                    @foreach ($categories as $index => $category)
+                        @if ($index < 4)
+                            <button onclick="changeSlide({{ $index }})"
+                                class="menu-link relative text-white font-europhia text-3xl sm:text-4xl lg:text-5xl hover:text-yellow-400 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:rounded-full after:w-full after:bg-white hover:after:bg-yellow-400 {{ $index === 0 ? 'active' : '' }}"
+                                data-index="{{ $index }}">
+                                {{ $category->nama_kategori }}
+                            </button>
+                        @endif
+                    @endforeach
                 </div>
             </div>
 
             <!-- Slider Container -->
             <div id="slider" class="w-full overflow-hidden max-w-screen-lg mx-auto mt-10">
-                <div id="slider-content" class="flex transition-transform duration-500" style="width: 300%">
+                <div id="slider-content" class="flex transition-transform duration-500"
+                    style="width: {{ count($categories->take(4)) * 100 }}%">
 
-                    @foreach ($categories as $category)
+                    @foreach ($categories->take(4) as $category)
                         <div class="w-full min-h-16 flex flex-col justify-start">
                             <div
                                 class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5 place-items-center">
                                 @foreach ($category->products as $product)
                                     @php
                                         $isNonActive = $product->status_produk === 'Non-active';
+                                        $isClose = optional($store)->status == 0;
+
                                     @endphp
 
                                     <div
                                         class="product-card flex flex-col items-center
-                                    bg-white h-[20rem] w-48 sm:h-80 sm:w-56 md:h-[22rem] md:w-56 lg:h-[25rem] lg:w-64 rounded-md gap-3
+                                    bg-white h-[21rem] w-48 md:h-[22rem] md:w-56 lg:h-[25rem] lg:w-64 rounded-md gap-3
                                     transition duration-200 ease-in 
-                                    {{ $isNonActive ? 'bg-gray-300 pointer-events-none' : 'hover:-translate-y-2' }}">
+                                    {{ $isNonActive || $isClose ? 'bg-gray-300 pointer-events-none' : 'hover:-translate-y-2' }}">
 
                                         <!-- Bagian Gambar -->
-                                        <a href="{{ $isNonActive ? '#' : '#item-detail-modal' }}"
+                                        <a href="{{ $isNonActive || $isClose ? '#' : '#item-detail-modal' }}"
                                             class="item-detail-button {{ $isNonActive ? 'pointer-events-none' : '' }}"
                                             data-product-id="{{ $product->id }}">
                                             <div class="relative group">
                                                 <img src="{{ asset('storage/' . $product->gambar_menu) }}"
                                                     alt="{{ $product->nama_menu }}"
                                                     class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out 
-                                                group-hover:brightness-75 {{ $isNonActive ? 'opacity-50' : '' }}" />
-                                                @if ($isNonActive)
+                                                group-hover:brightness-75 {{ $isNonActive ? 'opacity-50' : '' }} {{ $isClose ? 'opacity-50' : '' }}" />
+                                                @if ($isClose)
                                                     <div
                                                         class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
                                                         <span class="text-white font-semibold text-base">
-                                                            Tidak Tersedia
+                                                            Tutup
+                                                        </span>
+                                                    </div>
+                                                @elseif ($isNonActive)
+                                                    <div
+                                                        class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                                                        <span class="text-white font-semibold text-base">
+                                                            Tidak tersedia
                                                         </span>
                                                     </div>
                                                 @else
                                                     <div
                                                         class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                        <span class="text-white font-semibold text-base">View
-                                                            More</span>
+                                                        <span class="text-white font-semibold text-base">
+                                                            View More
+                                                        </span>
                                                     </div>
                                                 @endif
                                             </div>
@@ -210,13 +221,15 @@
 
                                         <div class="flex mx-2">
                                             <button type="submit"
-                                                class="item-detail-button text-shadow text-xs lg:text-base md:text-xs
-                                        bg-[#BF0000] px-2 py-3 sm:px-4 sm:py-2 rounded-full text-white text-center
-                                        {{ $isNonActive ? 'bg-gray-500 cursor-not-allowed' : '' }}"
+                                                class="{{ $isClose
+                                                    ? 'hidden'
+                                                    : 'item-detail-button text-shadow text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center ' }}
+                                        {{ $isNonActive ? 'bg-gray-500 cursor-disabled' : '' }}"
                                                 data-product-id="{{ $product->id }}"
                                                 {{ $isNonActive ? 'disabled' : '' }}>
                                                 {{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan Ke Keranjang' }}
                                             </button>
+
                                         </div>
                                     </div>
                                 @endforeach
@@ -308,7 +321,7 @@
 
     <!-- About Section Start -->
     <section id="about"
-        class="relative bg-red-600 overflow-hidden min-h-[60vh] sm:min-h-[60vh] md:min-h-[50vh] lg:min-h-[50vh] xl:min-h-[70vh]">
+        class="relative overflow-x-hidden bg-red-600 overflow-hidden min-h-[60vh] sm:min-h-[60vh] md:min-h-[50vh] lg:min-h-[50vh] xl:min-h-[70vh]">
         <!-- Gambar sebagai background di mobile -->
         <img src="{{ asset('asset-view/assets/svg/steak.svg') }}" alt="A plate with steak, fries, and vegetables"
             class="mobile-about-img absolute top-0 left-0 w-full h-full object-cover opacity-40 z-0 md:hidden" />
@@ -344,7 +357,7 @@
     <!-- About Section End -->
 
     <!-- Contact Section Start -->
-    <section id="contact" class="bg-[#FFF890]">
+    <section id="contact" class="bg-[#FFF890] overflow-x-hidden">
         <div class="container mx-auto px-4">
             <div class="flex justify-center py-4 mb-8">
                 <a href=""
@@ -353,8 +366,7 @@
                 </a>
             </div>
             <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8">
-                <form action="{{ route('index.store') }}" method="POST"
-                    class="form-contact w-full lg:w-1/2 sm:form-contact-sm md:form-contact-sm">
+                <form action="{{ route('index.store') }}" method="POST" class="form-contact w-full lg:w-1/2">
                     @csrf
                     <div class="bg-[#F5EB55] p-6 sm:p-9 rounded-2xl ring-1 ring-[#BBB34E]">
                         <div class="flex justify-between">
@@ -376,16 +388,18 @@
                                 <label for="star5" class="cursor-pointer"><i class="far fa-star"></i></label>
                             </div>
                         </div>
-                        <input type="text" name="username" id="username" placeholder="Ketik namamu disini"
-                            class="p-4 my-4 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg">
-                        <textarea name="message" id="message" cols="30" rows="10" placeholder="Ketik ulasanmu disini"
-                            class="p-4 mt-4 mb-2 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg"></textarea>
-                        <input type="submit" value="Kirim Pesan"
-                            class="py-2 px-12 rounded-xl font-medium bg-yellow-500 cursor-pointer transition-transform duration-300 ease-linear hover:bg-yellow-600 hover:scale-110 active:bg--yellow-700 active:scale-100">
-                        {{-- <button type="submit"
-                            class="w-full relative z-10 py-2 px-12 rounded-xl font-medium bg-yellow-500 cursor-pointer transition-transform duration-300 ease-linear hover:bg-yellow-600 hover:scale-110 active:bg-yellow-700 active:scale-100">
-                            Kirim Pesan
-                        </button> --}}
+                        <div class="my-4">
+                            <input type="text" name="username" id="username" placeholder="Ketik namamu disini"
+                                class="p-4 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg">
+                        </div>
+                        <div class="mt-4 mb-8">
+                            <textarea name="message" id="message" cols="30" rows="10" placeholder="Ketik ulasanmu disini"
+                                class="p-4 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg"></textarea>
+                        </div>
+                        <div class="mt-4">
+                            <input type="submit" value="Kirim Pesan"
+                                class="py-2 px-10 rounded-xl font-medium bg-yellow-400 cursor-pointer transition-transform duration-300 ease-linear hover:bg-yellow-500 hover:scale-110 active:bg-yellow-600 active:scale-100">
+                        </div>
                     </div>
                 </form>
                 <div class="hidden lg:flex lg:justify-center w-full lg:w-auto">
@@ -399,7 +413,6 @@
 
     {{-- Ulasan Section Start --}}
     <section id="ulasan" class="ulasan-img">
-        {{-- <div class="container"> --}}
         <h1 class="ulasan-title py-12 font-europhia text-white text-center text-5xl lg:text-6xl">
             Apa Kata Mereka
         </h1>
@@ -446,7 +459,6 @@
                 @endforeach
             </div>
         </div>
-        {{-- </div> --}}
     </section>
     {{-- Ulasan Section End --}}
 

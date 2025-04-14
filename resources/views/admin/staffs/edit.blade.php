@@ -25,69 +25,71 @@
                     </div>
 
                     <!-- Content -->
-                    <div class="min-h-screen mb-4 py-5 flex flex-col items-center justify-center bg-prime">
-                        <h2 class="mb-4">
-                            <a href="{{ route('staffs.index') }}" class="text-amber-400 hover:underline">Back </a>/
-                            <a href="/admin/dashboard" class="hover:underline text-zinc-950">Home</a>
-                        </h2>
-                        <form action="{{ route('staffs.update', $user->id) }}" method="POST"
-                            enctype="multipart/form-data"
-                            class="w-full max-w-md bg-thead text-gray-900 p-6 rounded-lg shadow-lg">
-                            @csrf
-                            @method('PUT')
+                    <div class="min-h-screen flex items-center justify-center bg-gray-200 py-5">
+                        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">Profile</h2>
 
+                            <div class="flex flex-col md:flex-row items-center gap-6">
+                                <!-- Bagian Avatar -->
+                                <div class="flex flex-col items-center w-full md:w-1/3">
+                                    <img src="{{ asset('asset-admin/public/img/person.jpg') }}" alt="Profile Picture"
+                                        class="w-32 h-32 rounded-full border border-gray-300 mb-4">
+                                </div>
 
-                            <h2 class="text-2xl font-bold text-center mb-6 text-zinc-950">Edit Profile</h2>
+                                <!-- Container untuk kedua form -->
+                                <div class="w-full flex flex-col">
+                                    <!-- Form Update Profile -->
+                                    <form action="{{ route('staffs.update', $user->id) }}" method="POST"
+                                        enctype="multipart/form-data" class="w-full md:w-1/2">
+                                        @csrf
+                                        @method('PUT')
 
-                            <!-- Input Nama Staff -->
-                            <div class="mb-4">
-                                <label for="name" class="block text-sm font-medium mb-2">Name</label>
-                                <input type="text" id="name" name="name"
-                                    value="{{ old('name', $user->name) }}"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    placeholder="Enter staff name" required />
+                                        <!-- Input Username -->
+                                        <div class="mb-4">
+                                            <label for="name"
+                                                class="block text-sm font-medium text-gray-700">Username</label>
+                                            <input type="text" id="name" name="name"
+                                                value="{{ old('name', $user->name) }}"
+                                                class="w-full px-4 py-2 text-gray-900 bg-gray-100 border border-gray-400 rounded-md focus:ring focus:ring-yellow-500"
+                                                required />
+                                        </div>
+
+                                        <!-- Input Email -->
+                                        <div class="mb-4">
+                                            <label for="email" class="block text-sm font-medium text-gray-700">Email
+                                                Address</label>
+                                            <input type="email" id="email" name="email"
+                                                value="{{ old('email', $user->email) }}"
+                                                class="w-full px-4 py-2 text-gray-900 bg-gray-100 border border-gray-400 rounded-md focus:ring focus:ring-yellow-500"
+                                                required />
+                                        </div>
+
+                                        <!-- Input Usertype -->
+                                        <div class="mb-4">
+                                            <label for="usertype"
+                                                class="block text-sm font-medium mb-2 text-gray-700">Role</label>
+                                            <select id="usertype" name="usertype"
+                                                class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                                required>
+                                                <option value="{{ old('usertype', $user->usertype) }}">Select a Role
+                                                </option>
+                                                <option value="staff">Staff</option>
+                                                <option value="admin">Admin</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Tombol Update Profile -->
+                                        <button type="submit"
+                                            class="w-full bg-red-700 text-white font-bold py-2 px-4 rounded-md hover:bg-red-600 focus:ring focus:ring-blue-500">
+                                            Update Profile
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
 
-                            <!-- Input Email Staff -->
-                            <div class="mb-4">
-                                <label for="email" class="block text-sm font-medium mb-2">Email</label>
-                                <input type="email" id="email" name="email"
-                                    value="{{ old('email', $user->email) }}"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    placeholder="Enter staff email" required />
-                            </div>
-
-                            <!-- Dropdown Role -->
-                            <div class="mb-4">
-                                <label for="usertype" class="block text-sm font-medium mb-2">Role</label>
-                                <select id="usertype" name="usertype"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    required>
-                                    <option value="" disabled selected>Pilih Role</option>
-                                    <option value="staff"
-                                        {{ old('usertype', $user->usertype) == 'staff' ? 'selected' : '' }}>Staff
-                                    </option>
-                                    <option value="admin"
-                                        {{ old('usertype', $user->usertype) == 'admin' ? 'selected' : '' }}>Admin
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div class="mb-4">
-                                <input type="hidden" id="password" name="password"
-                                    value="{{ old('password', $user->password) }}"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    placeholder="Isi jika ingin mengganti password" />
-                            </div>
-
-                            <!-- Tombol Submit -->
-                            <button type="submit"
-                                class="w-full bg-yellow-500 mt-5 text-white font-bold py-2 px-4 rounded-md hover:bg-yellow-600 dark:hover:bg-yellow-400 focus:ring-2 focus:ring-yellow-500 focus:outline-none">
-                                Submit
-                            </button>
-                        </form>
-
+                        </div>
                     </div>
+
 
 
 

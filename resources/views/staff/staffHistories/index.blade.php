@@ -35,7 +35,7 @@
                                 Export Excel
                             </a>
                         </div> --}}
-                        <div class="mb-4 mt-3 flex justify-end w-full max-w-4xl">
+                        <div class="mb-4 mt-3 flex justify-end w-full max-w-6xl">
                             <a href="{{ route('histories.today') }}"
                                 class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
                                 <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
@@ -43,7 +43,7 @@
                                 Export
                             </a>
                         </div>
-                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
+                        <div class="w-full max-w-6xl overflow-x-auto text-zinc-950">
                             <div class="flex mx-auto justify-between">
                             </div>
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
@@ -94,7 +94,8 @@
                                             </td>
                                             <td class="px-4 py-2 text-sm">
                                                 @if ($history->payment_method === 'nonTunai')
-                                                    <a href="">
+                                                    <a href="{{ Storage::url($history->payment_photo) }}"
+                                                        target="_blank">
                                                         <button
                                                             class="bg-blue-500 text-white px-4 py-2 rounded-md text-xs">File</button>
                                                     </a>

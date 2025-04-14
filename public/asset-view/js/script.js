@@ -35,35 +35,41 @@ window.addEventListener('click', function (e) {
 // Menu Active
 const menuLinks = document.querySelectorAll('.menu-link');
 const sliderContent = document.getElementById("slider-content");
-
-let currentIndex = 0; // Simpan index slide aktif
+let currentIndex = 0;
 
 menuLinks.forEach(link => {
     link.addEventListener('click', function (e) {
-        e.preventDefault(); // Mencegah aksi default
+        e.preventDefault();
 
-        // Hapus kelas active dari semua link
+        // Ambil index dari data-index
+        const index = parseInt(this.dataset.index);
+
+        // Update index dan slide
+        currentIndex = index;
+        updateSlide();
+
+        // Atur ulang kelas active
         menuLinks.forEach(l => l.classList.remove('active'));
-
-        // Tambahkan kelas active ke link yang diklik
         this.classList.add('active');
     });
 });
 
-// Fungsi untuk mengubah slide
-function changeSlide(index) {
-    currentIndex = index; // Update index aktif
-    updateSlide(); // Panggil fungsi untuk menggeser slide
-}
-
-// Fungsi untuk memperbarui posisi slide
+// Fungsi menggeser slide
 function updateSlide() {
-    const slideWidth = document.getElementById("slider").clientWidth; // Lebar slider container
+    const slideWidth = document.getElementById("slider").clientWidth;
     sliderContent.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 }
 
-// Event listener untuk resize agar slide tetap sesuai
+// Responsif
 window.addEventListener("resize", updateSlide);
+
+function scrollToActiveTab() {
+    const activeTab = document.querySelector('.menu-link.active');
+    if (activeTab) {
+        activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+}
+
 
 // Rating
 const stars = document.querySelectorAll('input[name="rating"]');
@@ -73,7 +79,7 @@ stars.forEach((star, index) => {
     star.addEventListener("change", function () {
         // Reset semua bintang ke bentuk kosong dan abu-abu
         labels.forEach((label, i) => {
-            label.classList.remove('text-yellow-500', 'fas');
+            label.classList.remove('star-icon', 'fas');
             label.classList.add('far'); // Kembalikan ke bintang kosong abu-abu
         });
 
@@ -82,7 +88,7 @@ stars.forEach((star, index) => {
             const label = labels[i];
             label.classList.remove('far');
             label.classList.add('fas',
-                'text-yellow-500'); // Ubah ke bintang penuh kuning
+                'star-icon'); // Ubah ke bintang penuh kuning
         }
     });
 });

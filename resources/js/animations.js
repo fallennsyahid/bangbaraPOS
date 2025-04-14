@@ -76,21 +76,43 @@ gsap.fromTo(".about-text", {
 // About Section Animations End 
 
 // Contact Section Animations Start
-// Animasi untuk form dari kiri (review)
-gsap.fromTo(".form-contact", {
-    x: -100,
-    opacity: 0
-}, {
-    x: 0,
-    opacity: 1,
-    duration: 1.2,
-    ease: "power2.out",
-    scrollTrigger: {
-        trigger: "#contact",
-        start: "top 80%",
-        end: "bottom top",
-        toggleActions: "play reverse play reverse",
-        // markers: true, // aktifkan ini buat debugging posisi scroll
+ScrollTrigger.matchMedia({
+    // Mobile (max-width: 767px)
+    "(max-width: 767px)": function () {
+        gsap.fromTo(".form-contact", {
+            y: 100,
+            opacity: 0
+        }, {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top 80%",
+                end: "bottom top",
+                toggleActions: "play reverse play reverse"
+            }
+        });
+    },
+
+    // Desktop (min-width: 768px)
+    "(min-width: 768px)": function () {
+        gsap.fromTo(".form-contact", {
+            x: -100,
+            opacity: 0
+        }, {
+            x: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top 80%",
+                end: "bottom top",
+                toggleActions: "play reverse play reverse"
+            }
+        });
     }
 });
 

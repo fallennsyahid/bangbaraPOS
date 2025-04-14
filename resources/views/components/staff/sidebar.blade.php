@@ -96,7 +96,7 @@
                 }
             </script>
 
-            <a href=""
+            <a href="https://drive.google.com/file/d/1fyqcyXIvo7CwPJUxBFGByKUIOf-efGWJ/view?usp=sharing" target="_blank"
                 class="flex items-center p-2 text-gray-800 transition-colors rounded-md dark:text-light hover:bg-amber-200 dark:hover:bg-red-500">
                 <span aria-hidden="true">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -105,7 +105,7 @@
                             d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM12 8v4m0 4h.01"></path>
                     </svg>
                 </span>
-                <span class="ml-2 text-sm"> Help </span>
+                <span class="ml-2 text-sm"> Guide </span>
             </a>
         </div>
     </div>

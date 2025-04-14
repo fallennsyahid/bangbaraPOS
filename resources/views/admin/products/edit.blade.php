@@ -32,7 +32,7 @@
                         </h2>
                         <form action="{{ route('products.update', $product->id) }}" method="POST"
                             enctype="multipart/form-data"
-                            class="w-full max-w-md bg-thead text-gray-900 p-6 rounded-lg shadow-lg">
+                            class="w-full max-w-5xl bg-thead text-gray-900 p-6 rounded-lg shadow-lg">
                             @csrf
                             @method('PUT')
                             <h2 class="text-2xl font-bold text-center mb-6 text-zinc-900">
@@ -105,7 +105,7 @@
                                 <label for="status_produk" class="block text-sm font-medium mb-2">Product
                                     Status</label>
                                 <select id="status_produk" name="status_produk"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none">
+                                    class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none">
                                     <option value="Active"
                                         {{ old('status_produk', $product->status_produk) === 'active' ? 'selected' : '' }}>
                                         Active

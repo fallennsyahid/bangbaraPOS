@@ -1,4 +1,5 @@
-<x-admin.header></x-admin.header>
+<x-admin.header>
+</x-admin.header>
 
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
@@ -19,7 +20,10 @@
                 <main class="bg-prime">
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-4 border-b lg:py-6">
-                        <h1 class="text-2xl text-zinc-950 font-semibold">Dashboard</h1>
+                        <i class="text-lg space-x-2 text-zinc-950 font-serif">"Selamat datang di Dashboard Admin!
+                            Kelola data
+                            dengan mudah dan efisien, {{ Auth::user()->name }} 👋!"</i>
+
                         <x-admin.waButton></x-admin.waButton>
                     </div>
 
@@ -41,25 +45,39 @@
                             <!-- Selling card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total Selling</h6>
-                                <p class="text-3xl font-bold">{{ $histories }}</p>
+                                <div class="flex gap-4 justify-center items-center">
+                                    <img src="{{ asset('asset-admin/public/img/selling-bag.svg') }}" alt="Selling Bag">
+                                    <p class="text-3xl font-bold">{{ $histories }}</p>
+                                </div>
                             </div>
 
                             <!-- Orders card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total Orders</h6>
-                                <p class="text-3xl font-bold" id="totalOrders">{{ $total_orders }}</p>
+                                <div class="flex gap-4 justify-center items-center">
+                                    <img src="{{ asset('asset-admin/public/img/orders.svg') }}" alt="Orders">
+                                    <p class="text-3xl font-bold" id="totalOrders">{{ $total_orders }}</p>
+                                </div>
                             </div>
 
                             <!-- Completed card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total completed orders</h6>
-                                <p class="text-3xl font-bold">{{ $total_orders_completed }}</p>
+                                <div class="flex gap-4 justify-center items-center">
+                                    <img src="{{ asset('asset-admin/public/img/completed-orders.svg') }}"
+                                        alt="Completed Orders">
+                                    <p class="text-3xl font-bold">{{ $total_orders_completed }}</p>
+                                </div>
                             </div>
 
                             <!-- Cancelled card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total cancelled orders</h6>
-                                <p class="text-3xl font-bold">{{ $total_orders_cancelled }}</p>
+                                <div class="flex gap-4 justify-center items-center">
+                                    <img src="{{ asset('asset-admin/public/img/canceled-orders.svg') }}"
+                                        alt="Canceled Orders">
+                                    <p class="text-3xl font-bold">{{ $total_orders_cancelled }}</p>
+                                </div>
                             </div>
                             <!-- Tickets card -->
                             {{-- <div class="flex items-center justify-between p-4 bg-white rounded-md dark:bg-darker">

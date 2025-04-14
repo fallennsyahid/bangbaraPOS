@@ -26,9 +26,8 @@
 
                     <!-- Content -->
                     <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
-                        <!-- Tombol View on GitHub -->
-                        <!-- Tabel -->
-                        <div class="mt-10 p-6 w-full max-w-4xl ">
+
+                        <div class="p-4 w-full max-w-6xl ">
                             <h2 class="text-xl font-semibold text-gray-800 mb-4">Pilih Periode</h2>
 
                             <form id="filterForm" class="space-y-4">
@@ -37,7 +36,7 @@
                                         <label for="periode_awal" class="text-gray-700 text-sm font-medium">Periode
                                             Awal</label>
                                         <input type="date" id="periode_awal" name="periode_awal"
-                                            class="mt-1 block w-48 px-3 py-2 border border-[#CC0000] bg-[#CC0000] rounded-md shadow-sm">
+                                            class="text-white mt-1 block w-48 px-3 py-2 border border-[#CC0000] bg-[#CC0000] rounded-md shadow-sm">
                                     </div>
 
                                     <span class="text-gray-700 mt-4">-</span>
@@ -46,7 +45,7 @@
                                         <label for="periode_akhir" class="text-gray-700 text-sm font-medium">Periode
                                             Akhir</label>
                                         <input type="date" id="periode_akhir" name="periode_akhir"
-                                            class="mt-1 block w-48 px-3 py-2 border border-[#CC0000] bg-[#CC0000] rounded-md shadow-sm">
+                                            class="text-white mt-1 block w-48 px-3 py-2 border border-[#CC0000] bg-[#CC0000] rounded-md shadow-sm">
                                     </div>
                                 </div>
 
@@ -57,15 +56,18 @@
                             </form>
 
                         </div>
-                        <div class="mb-4 mt-3 flex justify-end w-full max-w-4xl">
+                        <div class="mb-4 mt-3 flex justify-between w-full max-w-6xl">
                             <a href="#" id="exportExcel"
                                 class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
                                 <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
                                     class="w-5 h-5 inline-block mr-2">
                                 Export
                             </a>
+                            <button id="bulkDeleteButton" class="bg-red-700 text-white px-4 py-2 rounded-lg">Delete
+                                Selected</button>
+
                         </div>
-                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
+                        <div class="w-full max-w-6xl overflow-x-auto text-zinc-950">
                             <div class="flex mx-auto justify-between">
                             </div>
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
@@ -73,6 +75,9 @@
                                 <!-- Header -->
                                 <thead class="bg-thead text-white shadow-md">
                                     <tr>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            <input type="checkbox" id="select-all" />
+                                        </th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">ID
                                         </th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
@@ -98,6 +103,9 @@
                                 <tbody id="productTable" class="bg-tbody">
                                     @forelse ($histories as $index => $history)
                                         <tr class="hover:bg-thead" data-category="{{ $history->id }}">
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
+                                                <input type="checkbox" class="select-item" value="{{ $history->id }}">
+                                            </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">
                                                 #{{ $index + 1 }}
                                             </td>
@@ -161,6 +169,12 @@
                                                     </svg>
                                                 </form>
 
+                                                {{-- ini untuk cetak struk --}}
+                                                <a href="javascript:void(0);"
+                                                    onclick="printReceipt({{ $history->id }})"><button
+                                                        class="px-4 py-2 bg-blue-500 rounded-xl text-white">Cetak
+                                                        Struk</button></a>
+
                                             </td>
 
                                         </tr>
@@ -209,7 +223,7 @@
                 showConfirmButton: true,
                 confirmButtonText: "Delete",
                 icon: "warning",
-                denyButtonText: `Don't delete`,
+                denyButtonText: "Don't delete",
                 customClass: {
                     confirmButton: 'confirm-button',
                     denyButton: 'cancel-button',
@@ -223,6 +237,30 @@
         }
     </script>
 
+    <script>
+        function printReceipt(id) {
+            fetch(`/admin/print-struk/${id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert("Struk berhasil dicetak!");
+                    } else {
+                        alert("Gagal cetak struk: " + data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error("Error:", err);
+                    alert("Terjadi kesalahan saat mencetak struk.");
+                });
+        }
+    </script>
+
     {{-- Script Tombol Export --}}
     {{-- <script>
         document.getElementById('exportExcel').addEventListener('click', () => {
@@ -230,26 +268,25 @@
             const month = document.getElementById('filter-month').value;
             const day = document.getElementById('filter-day').value;
 
-            const url = `/export-histories?year=${year}&month=${month}&day=${day}`;
+            const url = /export-histories?year=${year}&month=${month}&day=${day};
             window.location.href = url;
         });
     </script> --}}
     <script>
         document.getElementById('exportExcel').addEventListener('click', (e) => {
-            e.preventDefault();
+                    e.preventDefault();
 
-            const periode_awal = document.getElementById('periode_awal').value;
-            const periode_akhir = document.getElementById('periode_akhir').value;
+                    const periode_awal = document.getElementById('periode_awal').value;
+                    const periode_akhir = document.getElementById('periode_akhir').value;
 
-            if (!periode_awal || !periode_akhir) {
-                alert('Please select the date range first');
-                return;
-            }
+                    if (!periode_awal || !periode_akhir) {
+                        alert('Please select the date range first');
+                        return;
+                    }
 
-            const url = `/export-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}` +
-                `?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}`;
-            window.location.href = url;
-        });
+                    const url = /export-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir} + ?
+                    periode_awal = $ {
+                            const url = `/export-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}`;
     </script>
 
 
@@ -260,14 +297,14 @@
             let periode_awal = document.getElementById('periode_awal').value;
             let periode_akhir = document.getElementById('periode_akhir').value;
 
-            fetch(`/get-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}`)
+            fetch(/get-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir})
                 .then(response => response.json())
                 .then(data => {
-                    let tableBody = document.querySelector('#myTable tbody');
-                    tableBody.innerHTML = ''; // Kosongkan tabel sebelum menambahkan data baru
+                        let tableBody = document.querySelector('#myTable tbody');
+                        tableBody.innerHTML = ''; // Kosongkan tabel sebelum menambahkan data baru
 
-                    if (data.length > 0) {
-                        data.forEach((history, index) => {
+                        if (data.length > 0) {
+                            fetch(`/get-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}`)
                             let paymentPhoto = history.payment_method === 'nonTunai' ?
                                 `<a href="{{ Storage::url($history->payment_photo) }}" target="_blank">
                                     <button class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
@@ -319,12 +356,14 @@
                     `;
                             tableBody.innerHTML += row;
                         });
-                    } else {
-                        tableBody.innerHTML =
-                            `<tr><td colspan="7" class="text-center">No data available</td></tr>`;
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+                }
+                else {
+                    tableBody.innerHTML = <
+                        tr > < td colspan = "7"
+                    class = "text-center" > No data available < /td></tr > ;
+                }
+            })
+        .catch(error => console.error('Error:', error));
         });
     </script>
 
@@ -334,20 +373,115 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+
+    {{-- BulkDelete script --}}
     <script>
-        $(document).ready(function() {
-            let table = $('#myTable').DataTable({
-                "columnDefs": [{
-                    "targets": 0, // Kolom pertama (nomor urut)
-                    "render": function(data, type, row, meta) {
-                        return meta.row + 1; // Menampilkan nomor urut otomatis
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedIds = new Set();
+            const allIds = @json($histories->pluck('id')); // Laravel mengirimkan seluruh ID
+            const selectAll = document.getElementById('select-all');
+            const bulkDeleteButton = document.getElementById('bulkDeleteButton');
+
+            // Inisialisasi DataTable
+            const table = new DataTable('#myTable', {
+                ordering: false
+            });
+
+            // Saat draw (ganti halaman), sinkronisasi checkbox berdasarkan selectedIds
+            table.on('draw', function() {
+                document.querySelectorAll('.select-item').forEach(cb => {
+                    cb.checked = selectedIds.has(cb.value);
+                });
+
+                const allVisibleChecked = Array.from(document.querySelectorAll('.select-item')).every(cb =>
+                    cb.checked);
+                selectAll.checked = allVisibleChecked;
+            });
+
+            // Checkbox individual
+            document.querySelector('#myTable').addEventListener('change', function(e) {
+                if (e.target.classList.contains('select-item')) {
+                    const id = e.target.value;
+                    if (e.target.checked) {
+                        selectedIds.add(id);
+                    } else {
+                        selectedIds.delete(id);
                     }
-                }],
-                "ordering": false // Nonaktifkan sorting di semua kolom (opsional)
+
+                    // Update selectAll state
+                    const allVisibleChecked = Array.from(document.querySelectorAll('.select-item')).every(
+                        cb => cb.checked);
+                    selectAll.checked = allVisibleChecked;
+                }
+            });
+
+            // Select All
+            selectAll.addEventListener('change', function() {
+                if (this.checked) {
+                    allIds.forEach(id => selectedIds.add(String(id)));
+                } else {
+                    selectedIds.clear();
+                }
+
+                // Update visible checkboxes only
+                document.querySelectorAll('.select-item').forEach(cb => {
+                    cb.checked = selectAll.checked;
+                });
+            });
+
+            // Bulk Delete
+            bulkDeleteButton.addEventListener('click', function() {
+                if (selectedIds.size === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'No items selected',
+                        text: 'Please select items to delete.',
+                        customClass: {
+                            confirmButton: 'confirm-button',
+                        }
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'This action cannot be undone!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete them!',
+                    cancelButtonText: 'Cancel',
+                    customClass: {
+                        confirmButton: 'confirm-button',
+                        cancelButton: 'cancel-button',
+                    }
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        fetch('{{ route('histories.bulkDelete') }}', {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    ids: Array.from(selectedIds)
+                                })
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    location.reload();
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Failed!',
+                                        text: 'Deletion failed, try again.'
+                                    });
+                                }
+                            })
+                            .catch(error => console.error(error));
+                    }
+                });
             });
         });
     </script>
-
 </body>
-
-</html>

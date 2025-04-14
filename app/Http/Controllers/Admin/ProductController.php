@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProductsExport;
-
+use App\Imports\ProductsImport;
 
 class ProductController extends Controller
 {
@@ -27,6 +27,23 @@ class ProductController extends Controller
     {
         return Excel::download(new ProductsExport, 'products.xlsx');
     }
+
+  public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls',
+    ]);
+
+    // Simpan file ke storage/app/public/imports/
+    $path = $request->file('file')->store('imports', 'public');
+
+
+    // Gunakan storage_path untuk mengambil file yang benar
+    Excel::import(new ProductsImport, storage_path("app/public/" . $path));
+
+    return back()->with('success', 'Produk berhasil diimport!');
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,7 +65,7 @@ class ProductController extends Controller
             'deskripsi_menu' => 'required',
             'gambar_menu' => 'image|required|mimes:jpg,jpeg,png,svg|max:2048',
             'category_id' => 'required|exists:categories,id',
-            'status_produk' => 'required|in:active,unactive',
+            'status_produk' => 'required|in:Active,Non-active',
         ]);
 
         $path = $request->file('gambar_menu')->store('products', 'public');

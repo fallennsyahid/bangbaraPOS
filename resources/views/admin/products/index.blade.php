@@ -30,7 +30,7 @@
 
                         <!-- Tabel -->
                         {{-- <div class="flex mx-auto space-x-10 justify-between w-full max-w-4xl mb-6"> --}}
-                        <div class="flex justify-between items-center w-full max-w-4xl">
+                        <div class="flex justify-between items-center w-full max-w-6xl">
                             <!-- Filter Category di ujung kiri -->
                             <div>
                                 <select id="categoryFilter"
@@ -46,11 +46,19 @@
 
                             <!-- Tombol Export & Create di ujung kanan -->
                             <div class="flex space-x-3">
-                                <a href="{{ route('products.export') }}"
-                                    class="bg-green-600 text-white flex items-center py-2 px-4 rounded-md hover:bg-green-500 shadow-lg">
-                                    <img src="{{ asset('asset-view/assets/svg/export.svg') }}" class="w-5 h-5 mr-2">
-                                    Export
-                                </a>
+                                <form action="{{ route('products.import') }}" method="POST"
+                                    enctype="multipart/form-data" class="flex items-center">
+                                    @csrf
+                                    <label for="file_upload"
+                                        class="cursor-pointer bg-green-600 text-white flex items-center py-2 px-4 rounded-md hover:bg-green-500 shadow-lg">
+                                        <img src="{{ asset('asset-view/assets/svg/export.svg') }}" class="w-5 h-5 mr-2">
+                                        Import
+                                    </label>
+                                    <input id="file_upload" type="file" name="file" class="hidden"
+                                        accept=".xlsx, .xls" onchange="this.form.submit();">
+                                </form>
+
+
                                 <a href="{{ route('products.create') }}"
                                     class="px-4 py-2 flex items-center text-sm text-gray-900 font-semibold shadow-md rounded-md bg-gray-300 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500">
                                     Create +
@@ -59,7 +67,7 @@
                         </div>
 
 
-                        <div class="w-full max-w-4xl overflow-x-auto text-zinc-950">
+                        <div class="w-full max-w-6xl overflow-x-auto text-zinc-950">
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
                                 id="myTable">
                                 <!-- Header -->

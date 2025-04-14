@@ -31,7 +31,7 @@
                             <a href="/admin/dashboard" class="hover:underline text-zinc-950">Home</a>
                         </h2>
                         <form action="{{ route('staffs.store') }}" method="POST" enctype="multipart/form-data"
-                            class="w-full max-w-md bg-thead text-gray-900 p-6 rounded-lg shadow-lg">
+                            class="w-full max-w-6xl bg-thead text-gray-900 p-6 rounded-lg shadow-lg">
                             @csrf
                             <h2 class="text-2xl font-bold text-center mb-6 text-zinc-950">Add
                                 Staff</h2>

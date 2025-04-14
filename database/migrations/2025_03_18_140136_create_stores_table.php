@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table->string('session_id')->after('id');
+        Schema::create('stores', function (Blueprint $table) {
+            $table->id();
+            $table->boolean('status');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table->dropColumn('session_id');
-        });
+        Schema::dropIfExists('stores');
     }
 };

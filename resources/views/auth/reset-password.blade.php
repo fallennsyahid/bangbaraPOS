@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('assets/png/logo_bangbara.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
 
     <title>BangbaraPost - Auth</title>
 
@@ -39,38 +39,32 @@
                         <label for="email" class="block text-sm font-medium">Email</label>
                         <input id="email" type="email" name="email" value="{{ old('email', $request->email) }}"
                             required autofocus autocomplete="username"
-                            class="mt-1 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
+                            class="mt-1 p-3 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
                     <!-- Password -->
                     <div class="mb-4 relative">
                         <label for="password" class="block text-sm font-medium">Password</label>
-                        <input id="password" type="password" name="password" required
-                            class="mt-1 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
-                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-7.293-2.293a8 8 0 0110.586 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                        <input type="password" name="password" required
+                            class="password-field mt-1 p-3 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
+                        <span
+                            class="toggle-password absolute inset-y-0 right-0 pr-3 mt-5 flex items-center cursor-pointer">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABkklEQVR4nO2WvUoDQRSFPwsjoomk8wHEUpNgL9aKnVjYii/hT2FEIwgS8hBKgp1gY6ddYpGHWPNjKRKrRAZuYBj3zu5iRIs9cJs7557D3Duzs5AixT/AGlAGHoEOMJDoSO4UKE3ScBt4AUYxowls/cRwGXhIYOjGPbCU1HQX+AgR6wGHQAGYkygCR7Lm8t+BnTiGU8A5MAwRqQNZT61Za4TUGa0z0VZNa0rb6r5CRyPMfARUNY0rpaAXsVMXOaCvaF265APPITEztZERgVcgACqSs3Hs0dsfk1aBTw/RrNuohHBMzkbRozcAVgypFXEt3DYHIRyTs5GN0GwZUvsXjHMRmm1D2lCuzzgKMVp9kaDVQ2B9TKx6iObjYCMj5oHncJ149K5dsecJXacF4E3RegKm3YK8Z96NBB+QO89c81rhorwumnkuYqeaaVO0vZgFbhWBvnwczLs7L1GSmWrtvRHNWDAt21OuTtwIRCPOiL4hKy+LthutK+WEB1LFDLApr5c5/V3r16cruZpwDDdFCv4MXw/YJO5+W1zLAAAAAElFTkSuQmCC"
+                                alt="eye" class="h-5 w-5 text-gray-400">
                         </span>
-                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
 
-                    <!-- Password Confirmation-->
+                    <!-- Confirm Password -->
                     <div class="mb-4 relative">
                         <label for="password_confirmation" class="block text-sm font-medium">Confirm Password</label>
-                        <input id="password_confirmation" type="password" name="password_confirmation" required
-                            class="mt-1 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
-                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-7.293-2.293a8 8 0 0110.586 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                        <input type="password" name="password_confirmation" required
+                            class="password-field mt-1 p-3 block w-full rounded-md bg-gray-700 text-white border-gray-600 focus:border-purple-500 focus:ring-purple-500">
+                        <span
+                            class="toggle-password absolute inset-y-0 right-0 pr-3 mt-5 flex items-center cursor-pointer">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABkklEQVR4nO2WvUoDQRSFPwsjoomk8wHEUpNgL9aKnVjYii/hT2FEIwgS8hBKgp1gY6ddYpGHWPNjKRKrRAZuYBj3zu5iRIs9cJs7557D3Duzs5AixT/AGlAGHoEOMJDoSO4UKE3ScBt4AUYxowls/cRwGXhIYOjGPbCU1HQX+AgR6wGHQAGYkygCR7Lm8t+BnTiGU8A5MAwRqQNZT61Za4TUGa0z0VZNa0rb6r5CRyPMfARUNY0rpaAXsVMXOaCvaF265APPITEztZERgVcgACqSs3Hs0dsfk1aBTw/RrNuohHBMzkbRozcAVgypFXEt3DYHIRyTs5GN0GwZUvsXjHMRmm1D2lCuzzgKMVp9kaDVQ2B9TKx6iObjYCMj5oHncJ149K5dsecJXacF4E3RegKm3YK8Z96NBB+QO89c81rhorwumnkuYqeaaVO0vZgFbhWBvnwczLs7L1GSmWrtvRHNWDAt21OuTtwIRCPOiL4hKy+LthutK+WEB1LFDLApr5c5/V3r16cruZpwDDdFCv4MXw/YJO5+W1zLAAAAAElFTkSuQmCC"
+                                alt="eye" class="h-5 w-5 text-gray-400">
                         </span>
-                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                     </div>
 
                     <!-- Submit -->
@@ -90,5 +84,16 @@
         </div>
     </div>
 </body>
+
+<script>
+    document.querySelectorAll('.toggle-password').forEach((toggle, index) => {
+        toggle.addEventListener('click', () => {
+            const input = document.querySelectorAll('.password-field')[index];
+            input.type = input.type === 'password' ? 'text' : 'password';
+        });
+    });
+</script>
+
+
 
 </html>

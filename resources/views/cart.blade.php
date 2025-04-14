@@ -247,7 +247,7 @@
                                     <span id="file-name" class="text-xs">Tidak ada file yang dipilih</span>
                                 </div>
                                 <input type="file" id="payment_photo" name="payment_photo" class="hidden"
-                                    accept="image/*" onchange="updateFileName(this)" required />
+                                    accept="image/*" onchange="updateFileName(this)" />
                             </div>
 
                             <!-- Submit Button -->

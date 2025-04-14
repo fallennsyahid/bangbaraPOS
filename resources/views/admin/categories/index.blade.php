@@ -21,16 +21,12 @@
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
                         <h1 class="text-2xl font-semibold text-zinc-950">Manage Categories</h1>
                         <x-admin.waButton></x-admin.waButton>
-
                     </div>
 
-
                     <!-- Content -->
-                    <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 text-zinc-950">
-                        <!-- Tombol View on GitHub -->
-
+                    <div class="flex flex-col items-center justify-center px-4 text-zinc-950">
                         <!-- Tabel -->
-                        <div class="w-full max-w-4xl overflow-x-auto">
+                        <div class="w-full max-w-6xl overflow-x-auto">
                             <div class="mb-4 mt-3 py-2 flex justify-end">
                                 <a href="{{ route('categories.create') }}"
                                     class="px-4 py-2 shadow-xl text-sm text-zinc-950 font-semibold rounded-md bg-[#B0B0B0] hover:bg-tbody focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">

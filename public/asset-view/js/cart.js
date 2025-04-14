@@ -55,11 +55,13 @@ document.addEventListener("DOMContentLoaded", function () {
             qrCode.classList.add("flex");
             buktiPembayaran.classList.remove("hidden");
             buktiPembayaran.classList.add("block");
+            paymentPhoto.setAttribute("required", "required");
         } else {
             qrCode.classList.add("hidden");
             qrCode.classList.remove("flex");
             buktiPembayaran.classList.add("hidden");
             buktiPembayaran.classList.remove("block");
+            paymentPhoto.removeAttribute("required");
         }
     });
 
