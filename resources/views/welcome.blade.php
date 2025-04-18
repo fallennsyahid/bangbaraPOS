@@ -25,12 +25,6 @@
         rel="stylesheet" />
 </head>
 
-<style>
-    .swal2-container {
-        z-index: 999999 !important;
-    }
-</style>
-
 <body class="">
     <!-- Header Start -->
     <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
@@ -70,7 +64,7 @@
                             <li class="group">
                                 <a href="#contact"
                                     class="text-base text-white py-2 mx-4 flex font-medium relative group-hover:text-primary after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 after:transform after:-translate-x-1/2 group-hover:after:w-3/4">
-                                    Reviews
+                                    Review
                                 </a>
                             </li>
                         </ul>
@@ -142,8 +136,8 @@
             <div
                 class="flex items-center bg-primary mx-auto my-5 px-8 sm:px-12 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
                 <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="" width="120px"
-                    class="mr-4" />
-                <h1 class="font-europhia text-shadow text-4xl sm:text-5xl lg:text-6xl text-white">
+                    class="mr-0 lg:mr-4 lg:scale-150" />
+                <h1 class="font-europhia text-shadow text-[2.5rem] lg:text-6xl text-white">
                     Menu Kami
                 </h1>
             </div>
@@ -171,118 +165,81 @@
                 <div id="slider-content" class="flex transition-transform duration-500" style="width: 300%">
 
                     @foreach ($categories as $category)
-                        <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5">
-                            @foreach ($category->products as $product)
-                                @php
+                        <div class="w-full min-h-16 flex flex-col justify-start">
+                            <div
+                                class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5 place-items-center">
+                                @foreach ($category->products as $product)
+                                    @php
+                                        $isNonActive = $product->status_produk === 'Non-active';
+                                        $isClose = optional($store)->status == 0;
 
-                                    $isNonActive = $product->status_produk === 'Non-active';
-                                    $isClose = optional($store)->status == 0;
-                                @endphp
-                                <div class="w-full min-h-16 flex flex-col justify-start">
+                                    @endphp
+
                                     <div
-                                        class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5 place-items-center">
-                                        @foreach ($category->products as $product)
-                                            @php
-                                                $isNonActive = $product->status_produk === 'Non-active';
-                                            @endphp
-
-                                            <div
-                                                class="product-card flex flex-col items-center
+                                        class="product-card flex flex-col items-center
                                     bg-white h-[20rem] w-48 sm:h-80 sm:w-56 md:h-[22rem] md:w-56 lg:h-[25rem] lg:w-64 rounded-md gap-3
                                     transition duration-200 ease-in 
-                                    {{ $isNonActive || $isClose ? 'bg-gray-300 pointer-events-none' : 'hover:-translate-y-2' }}">
+                                    {{ $isNonActive ? 'bg-gray-300 pointer-events-none' : 'hover:-translate-y-2' }}">
 
-                                                <!-- Bagian Gambar -->
-                                                <a href="{{ $isNonActive || $isClose ? '#' : '#item-detail-modal' }}"
-                                                    class="item-detail-button {{ $isNonActive ? 'pointer-events-none' : '' }}"
-                                                    data-product-id="{{ $product->id }}">
-                                                    <div class="relative group">
-                                                        <img src="{{ asset('storage/' . $product->gambar_menu) }}"
-                                                            alt="{{ $product->nama_menu }}"
-                                                            class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out 
+                                        <!-- Bagian Gambar -->
+                                        <a href="{{ $isNonActive || $isClose ? '#' : '#item-detail-modal' }}"
+                                            class="item-detail-button {{ $isNonActive ? 'pointer-events-none' : '' }}"
+                                            data-product-id="{{ $product->id }}">
+                                            <div class="relative group">
+                                                <img src="{{ asset('storage/' . $product->gambar_menu) }}"
+                                                    alt="{{ $product->nama_menu }}"
+                                                    class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out 
                                                 group-hover:brightness-75 {{ $isNonActive ? 'opacity-50' : '' }} {{ $isClose ? 'opacity-50' : '' }}" />
-                                                        @if ($isClose)
-                                                            <div
-                                                                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                                                                <span
-                                                                    class="text-white font-semibold text-base">Tutup</span>
-                                                            </div>
-                                                        @elseif ($isNonActive)
-                                                            <div
-                                                                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                                                                <span class="text-white font-semibold text-base">Tidak
-                                                                    tersedia</span>
-                                                            </div>
-                                                        @else
-                                                            <div
-                                                                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                                <span class="text-white font-semibold text-base">View
-                                                                    More</span>
-                                                            </div>
-                                                        @endif
+                                                @if ($isClose)
+                                                    <div
+                                                        class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                                                        <span class="text-white font-semibold text-base">
+                                                            Tutup
+                                                        </span>
                                                     </div>
-                                                </a>
-                                                <!-- Bagian Gambar -->
-                                                <a href="{{ $isNonActive ? '#' : '#item-detail-modal' }}"
-                                                    class="item-detail-button {{ $isNonActive ? 'pointer-events-none' : '' }}"
-                                                    data-product-id="{{ $product->id }}">
-                                                    <div class="relative group">
-                                                        <img src="{{ asset('storage/' . $product->gambar_menu) }}"
-                                                            alt="{{ $product->nama_menu }}"
-                                                            class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out 
-                                                group-hover:brightness-75 {{ $isNonActive ? 'opacity-50' : '' }}" />
-                                                        @if ($isNonActive)
-                                                            <div
-                                                                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                                                                <span class="text-white font-semibold text-base">
-                                                                    Tidak Tersedia
-                                                                </span>
-                                                            </div>
-                                                        @else
-                                                            <div
-                                                                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                                <span class="text-white font-semibold text-base">View
-                                                                    More</span>
-                                                            </div>
-                                                        @endif
+                                                @elseif ($isNonActive)
+                                                    <div
+                                                        class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                                                        <span class="text-white font-semibold text-base">
+                                                            Tidak tersedia
+                                                        </span>
                                                     </div>
-                                                </a>
-
-                                                <p class="text-text text-base sm:text-xl text-center">
-                                                    {{ $product->nama_menu }}</p>
-                                                <h6 class="hidden">{{ $product->deskripsi_menu }}</h6>
-                                                <span class="text-price font-alkatra text-base text-center">
-                                                    Rp {{ number_format($product->harga_menu, 0, ',', '.') }}
-                                                </span>
-
-                                                <button type="submit"
-                                                    class="{{ $isClose
-                                                        ? 'hidden'
-                                                        : 'item-detail-button text-shadow text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center ' }}
-                                        {{ $isNonActive ? 'bg-gray-500 cursor-disabled' : '' }}"
-                                                    data-product-id="{{ $product->id }}"
-                                                    {{ $isNonActive ? 'disabled' : '' }}>
-                                                    {{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan Ke Keranjang' }}
-                                                </button>
+                                                @else
+                                                    <div
+                                                        class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                        <span class="text-white font-semibold text-base">View
+                                                            More</span>
+                                                    </div>
+                                                @endif
                                             </div>
-                                        @endforeach
+                                        </a>
+
+                                        <p class="text-text text-base sm:text-xl text-center">
+                                            {{ $product->nama_menu }}</p>
+                                        <h6 class="hidden">{{ $product->deskripsi_menu }}</h6>
+                                        <span class="text-price font-alkatra text-base text-center">
+                                            Rp {{ number_format($product->harga_menu, 0, ',', '.') }}
+                                        </span>
+
                                         <div class="flex mx-2">
                                             <button type="submit"
-                                                class="item-detail-button text-shadow text-xs lg:text-base md:text-xs
-                                        bg-[#BF0000] px-2 py-3 sm:px-4 sm:py-2 rounded-full text-white text-center
-                                        {{ $isNonActive ? 'bg-gray-500 cursor-not-allowed' : '' }}"
+                                                class="{{ $isClose
+                                                    ? 'hidden'
+                                                    : 'item-detail-button text-shadow text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center ' }}
+                                        {{ $isNonActive ? 'bg-gray-500 cursor-disabled' : '' }}"
                                                 data-product-id="{{ $product->id }}"
                                                 {{ $isNonActive ? 'disabled' : '' }}>
                                                 {{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan Ke Keranjang' }}
                                             </button>
+
                                         </div>
                                     </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
-        </div>
         </div>
     </section>
     <!-- Menu Section End -->
@@ -365,7 +322,7 @@
     <!-- Popup End -->
 
     <!-- About Section Start -->
-    <section id="about" class="bg-red-600 flex justify-center items-center min-h-screen">
+    {{-- <section id="about" class="bg-red-600 flex justify-center items-center">
         <div class="text-center p-6 bg-red-600">
             <div class="flex flex-col items-center md:flex-row md:items-start">
                 <img src="{{ asset('asset-view/assets/svg/steak.svg') }}"
@@ -374,7 +331,7 @@
                     <h1 class="text-5xl sm:text-6xl lg:text-7xl font-europhia text-shadow mb-4">
                         Tentang Kami
                     </h1>
-                    <p class="leading-relaxed text-shadow-2 pt-6 text-lg sm:text-xl md:text-xl lg:text-2xl">
+                    <p class="leading-relaxed text-shadow-2 pt-6 text-lg sm:text-xl md:text-xl lg:text-2xl ">
                         Bangbara adalah tempat makan yang menghadirkan steak dan chicken
                         katsu dengan cita rasa istimewa. Dengan bahan berkualitas dan harga
                         yang terjangkau, Bangbara menjadi pilihan tepat untuk menikmati
@@ -385,11 +342,41 @@
                 </div>
             </div>
         </div>
+    </section> --}}
+    <section id="about" class="relative bg-red-600 overflow-hidden">
+        <!-- Gambar sebagai background di mobile -->
+        <img src="{{ asset('asset-view/assets/svg/steak.svg') }}" alt="A plate with steak, fries, and vegetables"
+            class="absolute top-0 left-0 w-full h-full object-cover opacity-10 z-0 md:hidden" />
+
+        <div class="relative z-10 flex justify-center items-center p-6 min-h-[70vh]">
+            <div class="text-center max-w-6xl">
+                <div class="flex flex-col items-center md:flex-row md:items-start">
+                    <!-- Gambar normal di desktop -->
+                    <img src="{{ asset('asset-view/assets/svg/steak.svg') }}"
+                        alt="A plate with steak, fries, and vegetables" class="hidden md:block w-2/5 h-auto" />
+
+                    <!-- Teks konten -->
+                    <div class="mt-6 md:mt-0 md:ml-6 text-white">
+                        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-europhia text-shadow mb-4">
+                            Tentang Kami
+                        </h1>
+                        <p class="leading-relaxed text-shadow-2 pt-6 text-lg sm:text-xl md:text-xl lg:text-2xl">
+                            Bangbara adalah tempat makan yang menghadirkan steak dan chicken
+                            katsu dengan cita rasa istimewa. Dengan bahan berkualitas dan harga
+                            yang terjangkau, Bangbara menjadi pilihan tepat untuk menikmati
+                            hidangan lezat bersama keluarga atau teman. Suasana yang nyaman dan
+                            pelayanan ramah membuat setiap kunjungan menjadi pengalaman yang
+                            menyenangkan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <!-- About Section End -->
 
     <!-- Contact Section Start -->
-    <section id="contact" class="bg-[#FFF890] min-h-screen">
+    <section id="contact" class="bg-[#FFF890] min-h-screen overflow-x-hidden">
         <div class="container mx-auto px-4">
             <div class="flex justify-center py-4 mb-8">
                 <a href=""
@@ -397,8 +384,8 @@
                     Berikan Rating & Ulasan
                 </a>
             </div>
-            <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8 shadow-lg">
-                <form action="{{ route('index.store') }}" method="POST" class="w-full lg:w-1/2">
+            <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8">
+                <form action="{{ route('index.store') }}" method="POST" class="form-contact w-full lg:w-1/2">
                     @csrf
                     <div class="bg-[#F5EB55] p-6 sm:p-9 rounded-2xl ring-1 ring-[#BBB34E]">
                         <div class="flex justify-between">
@@ -430,9 +417,9 @@
                         </div>
                     </div>
                 </form>
-                <div class="w-full lg:w-auto flex justify-center">
+                <div class="hidden lg:flex lg:justify-center w-full lg:w-auto">
                     <img src="{{ asset('asset-view/assets/svg/contact.svg') }}" alt="Contact Illustration"
-                        class="w-72 sm:w-96 lg:w-[400px]" />
+                        class="contact-img w-72 sm:w-96 lg:w-[400px]" />
                 </div>
             </div>
         </div>
@@ -441,30 +428,54 @@
 
     {{-- Ulasan Section Start --}}
     <section id="ulasan" class="ulasan-img">
-        <div class="container">
-            <h1 class="py-12 font-europhia text-white text-center text-4xl sm:text-5xl lg:text-6xl">
-                Apa Kata Mereka
-            </h1>
-            <div class="slider">
-                @foreach ($reviews as $index => $review)
-                    <div class="review" style="--pos: {{ $index + 1 }}" id="review">
-                        <p class="text-center px-4 py-8 text-sm md:text-base">
-                            {{ $review->message }}
-                        </p>
-                        <div class="px-4 py-2 border-t-2 border-[#D6D6D6]">
-                            <p class="font-semibold text-gray-500">{{ $review->username }}</p>
-                            <p class="flex font-semibold text-gray-500">Rating:
-                                <span class="flex items-center text-xl mx-2 gap-1 text-yellow-500">
-                                    @for ($i = 0; $i < $review->rating; $i++)
-                                        <i class="fas fa-star"></i>
-                                    @endfor
-                                </span>
-                            </p>
+        {{-- <div class="container"> --}}
+        <h1 class="py-12 font-europhia text-white text-center text-5xl lg:text-6xl">
+            Apa Kata Mereka
+        </h1>
+        <div class="slider">
+            <div class="slide-track">
+                <!-- First set of reviews -->
+                @foreach ($reviews as $review)
+                    <div class="slide">
+                        <div class="review">
+                            <p class="review-message">{{ $review->message }}</p>
+                            <div class="review-footer">
+                                <p class="review-username">{{ $review->username }}</p>
+                                <p class="review-rating">
+                                    Rating:
+                                    <span class="stars">
+                                        @for ($i = 0; $i < $review->rating; $i++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+                <!-- Duplicate set for infinite scrolling -->
+                @foreach ($reviews as $review)
+                    <div class="slide">
+                        <div class="review">
+                            <p class="review-message">{{ $review->message }}</p>
+                            <div class="review-footer">
+                                <p class="review-username">{{ $review->username }}</p>
+                                <p class="review-rating">
+                                    Rating:
+                                    <span class="stars">
+                                        @for ($i = 0; $i < $review->rating; $i++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
+                                    </span>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
+        {{-- </div> --}}
     </section>
     {{-- Ulasan Section End --}}
 
@@ -524,43 +535,49 @@
     <!-- Footer Section End -->
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@stack('scripts')
-<script>
-    @if (session('success'))
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: {!! json_encode(session('success')) !!},
-            showConfirmButton: false,
-            timer: 1500,
-        });
-    @endif
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
 <script>
-    @if (session('checkout_success') === 'tunai')
-        Swal.fire({
-            title: "Yeay! Pesananmu sudah terkirim",
-            text: "Pesanan berhasil dibuat, silakan menuju kasir untuk pembayaran",
-            icon: "success",
-            // imageUrl: "{{ asset('asset-view/assets/svg/success.svg') }}",
-            // imageWidth: 400,
-            // imageHeight: 200,
-            // imageAlt: "Success Logo",
-            confirmButtonText: "OK",
-            confirmButtonColor: "#CC0000",
-        });
-    @elseif (session('checkout_success') === 'nonTunai')
-        Swal.fire({
-            title: "Yeay! Pesananmu sudah terkirim",
-            text: "Chef kita lagi semangat masak buat kamu. Tunggu bentar lagi ya~",
-            icon: "success",
-            confirmButtonText: "OK",
-            confirmButtonColor: "#CC0000",
-        });
-    @endif
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Animasi untuk form dari kiri
+    gsap.fromTo(".form-contact", {
+        x: -300,
+        opacity: 0
+    }, {
+        x: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: "#contact",
+            start: "top 80%",
+            end: "bottom top",
+            toggleActions: "play reverse play reverse",
+            // markers: true, // aktifkan ini buat debugging posisi scroll
+        }
+    });
+
+    // Animasi untuk gambar dari kanan
+    gsap.fromTo(".contact-img", {
+        x: 300,
+        opacity: 0
+    }, {
+        x: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: "#contact",
+            start: "top 80%",
+            end: "bottom top",
+            toggleActions: "play reverse play reverse",
+        }
+    });
 </script>
+
+<x-sweet-alert></x-sweet-alert>
 
 <script src="{{ asset('asset-view/js/script.js') }}"></script>
 <script src="{{ asset('asset-view/js/popup.js') }}"></script>

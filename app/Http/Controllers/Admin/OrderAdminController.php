@@ -8,6 +8,8 @@ use App\Models\Order;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
+
 
 
 
@@ -76,34 +78,41 @@ class OrderAdminController extends Controller
 
         // Update status pesanan
         $order->status = $request->status;
+
+         // Jika status diubah menjadi "Processed", simpan nama kasir dari user yang sedang login
+        if ($request->status === 'Processed' || $request->status === 'Completed') {
+            $order->casier_name = Auth::user()->name; // ← ambil langsung dari Auth
+        }
+        // Simpan perubahan 
         $order->save();
 
         return response()->json(['message' => 'Order status updated successfully']);
     }
 
 
-    public function bulkDelete(Request $request)
+        public function bulkDelete(Request $request)
     {
-        
-        $orderIds = $request->input('orderIds');
+        // Ambil array ID dari request
+        $ids = $request->input('ids');
 
-        if (!is_array($orderIds) || count($orderIds) === 0) {
-            return response()->json(['message' => 'No orders selected'], 400);
+        // Validasi jika tidak ada ID yang dikirim
+        if (!$ids || count($ids) === 0) {
+            return response()->json(['success' => false, 'message' => 'No items selected.']);
         }
 
-        // Pastikan semua ID yang diterima ada di database
-        $existingOrders = Order::whereIn('id', $orderIds)->pluck('id')->toArray();
-        
-        if (count($existingOrders) === 0) {
-            return response()->json(['message' => 'Orders not found'], 400);
+        // Hapus data berdasarkan ID
+        $deleted = Order::whereIn('id', $ids)->delete();
+
+        // Periksa apakah data berhasil dihapus
+        if ($deleted) {
+            return response()->json(['success' => true, 'message' => 'Selected items deleted successfully.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to delete selected items.']);
         }
-
-        // Hapus hanya ID yang valid
-        Order::whereIn('id', $existingOrders)->delete();
-
-        return response()->json(['message' => 'Orders deleted successfully']);
-
     }
+
+
+
     
     /**
      * Remove the specified resource from storage.

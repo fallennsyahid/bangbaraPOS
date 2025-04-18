@@ -158,8 +158,9 @@
                     aria-haspopup="true" :aria-expanded="open ? 'true' : 'false'"
                     class="transition-opacity duration-200 rounded-full dark:opacity-75 dark:hover:opacity-100 focus:outline-none dark:focus:opacity-100">
                     <span class="sr-only">User menu</span>
-                    <img class="w-12 h-12 rounded-full mt-2" src="{{ Avatar::create(Auth::user()->name)->toBase64() }}"
-                        alt="Ahmed Kamel" />
+                    <img class="w-12 h-12 rounded-full mt-2"
+                        src="{{ Auth::check() ? Avatar::create(Auth::user()->name)->toBase64() : asset('default-avatar.png') }}"
+                        alt="User Profile" />
                 </button>
 
                 <!-- User dropdown menu -->

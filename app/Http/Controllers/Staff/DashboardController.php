@@ -12,16 +12,18 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('staff.dashboard');
     }
 
-    public function dashboard(Request $request) {
-        
+    public function dashboard(Request $request)
+    {
+
         $products = Product::count();
-        $total_orders_completed = Order::where('status', 'Completed')->whereDate('created_at', Carbon::today())->count();
-        $total_orders_cancelled = Order::where('status', 'Cancelled')->whereDate('created_at', Carbon::today())->count();
-        $total_orders = Order::whereDate('created_at', Carbon::today())->count();
+        $total_orders_completed = History::where('status', 'Completed')->whereDate('created_at', Carbon::today())->count();
+        $total_orders_cancelled = History::where('status', 'Cancelled')->whereDate('created_at', Carbon::today())->count();
+        $total_orders = History::whereDate('created_at', Carbon::today())->count();
         $histories = History::whereDate('created_at', Carbon::today())->count();
         $totalIncome = DB::table('histories')->whereDate('created_at', Carbon::today())->sum('total_price');
 
@@ -41,7 +43,7 @@ class DashboardController extends Controller
 
         $totals = $history->pluck('total');
 
-                // Ambil data chart awal (orders stats) untuk tahun yang dipilih
+        // Ambil data chart awal (orders stats) untuk tahun yang dipilih
         // Data untuk metode pembayaran Tunai
         $tunai = History::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
             ->where('payment_method', 'Tunai')
@@ -73,12 +75,13 @@ class DashboardController extends Controller
         }
 
         return view('staff.dashboard', compact('products', 'total_orders', 'year', 'years', 'histories', 'totalIncome', 'total_orders_completed', 'total_orders_cancelled', 'months', 'totals',  'tunaiData', 'nonTunaiData'));
-}
+    }
 
 
-    public function getChartData(Request $request) {
+    public function getChartData(Request $request)
+    {
         // fungsi chart
-         // Mengambil data total orders per bulan
+        // Mengambil data total orders per bulan
         $year = $request->input('year', date('Y')); // Ambil tahun dari request, default tahun sekarang
 
         $history = History::selectRaw('MONTH(created_at) as month, SUM(total_price) as total')
@@ -100,18 +103,19 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function getBestSellerChartData(){
+    public function getBestSellerChartData()
+    {
         // Ambil data orders
-        $orders = Order::where('status', 'Completed')
-        ->whereDate('created_at', Carbon::today()) // Ambil pesanan hanya dari hari ini
-        ->orderBy('created_at', 'desc') // Urutkan dari terbaru
-        ->get();
-        
+        $histories = History::where('status', 'Completed')
+            ->whereDate('created_at', Carbon::today()) // Ambil pesanan hanya dari hari ini
+            ->orderBy('created_at', 'desc') // Urutkan dari terbaru
+            ->get();
+
         $productTotals = [];
 
-        foreach ($orders as $order) {
+        foreach ($histories as $history) {
             // Mengubah data json
-            $products = json_decode($order->products, true);
+            $products = json_decode(json_decode($history->products, true), true);
 
             if (is_array($products)) {
                 foreach ($products as $product) {
@@ -119,8 +123,8 @@ class DashboardController extends Controller
                     $key = $product['nama_menu'];
                     // Tambahkan quantity produk
                     $productTotals[$key] = isset($productTotals[$key])
-                    ? $productTotals[$key] + (int)$product['quantity']
-                    : (int)$product['quantity'];
+                        ? $productTotals[$key] + (int)$product['quantity']
+                        : (int)$product['quantity'];
                 }
             }
         }
@@ -141,48 +145,30 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function getOrderStats(Request $request) {
-        $year = $request->input('year', date('Y'));
+    public function getOrderStats()
+    {
+        $today = Carbon::today()->toDateString(); // ambil tanggal hari ini
 
-        // Ambil data history untuk metode pembayaran Tunai
-        $tunai = History::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-        ->where('payment_method', 'Tunai')
-         ->whereYear('created_at', $year)
-        ->groupBy('month')
-        ->orderBy('month')
-        ->get();
+        $tunai = array_fill(0, 24, 0);
+        $nonTunai = array_fill(0, 24, 0);
 
-        // Ambil data history untuk metode pembayaran nonTunai
-         $nonTunai = History::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-        ->where('payment_method', 'nonTunai')
-        ->whereYear('created_at', $year)
-        ->groupBy('month')
-        ->orderBy('month')
-        ->get();
+        $orders = History::whereDate('created_at', $today)->get();
 
-        // inisialisasi
-        $tunaiData = array_fill(0, 12, 0);
-        $nonTunaiData = array_fill(0, 12, 0);
+        foreach ($orders as $order) {
+            $hour = (int)date('G', strtotime($order->created_at));
+            $payment = strtolower($order->payment_method);
 
-        // isi data berdasarkan bulan (index 0 untuk januari, dst.)
-        foreach ($tunai as $item) {
-            $index = $item->month - 1 ;
-            $tunaiData[$index] = (int)$item->total;
-
+            if ($payment === 'tunai') {
+                $tunai[$hour]++;
+            } elseif ($payment === 'nontunai') {
+                $nonTunai[$hour]++;
+            }
         }
 
-        foreach ($nonTunai as $item) {
-            $index = $item->month - 1 ;
-            $nonTunaiData[$index] = (int)$item->total;
-
-        }
-
-        // Kirim data ke dashboard
         return response()->json([
-        'Tunai'     => $tunaiData,
-        'nonTunai' => $nonTunaiData,
-    ]);
-
-
+            'labels' => array_map(fn($h) => str_pad($h, 2, '0', STR_PAD_LEFT) . ':00', range(0, 23)),
+            'tunai' => $tunai,
+            'non_tunai' => $nonTunai,
+        ]);
     }
 }

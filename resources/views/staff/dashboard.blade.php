@@ -3,7 +3,7 @@
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
     setColors(color);" :class="{ 'dark': isDark }">
-        <div class="flex h-screen antialiased text-gray-950 bg-gray-100 dark:bg-dark dark:text-light">
+        <div class="flex h-screen antialiased text-gray-950 bg-prime dark:text-light">
             <!-- Loading screen -->
             <div x-ref="loading"
                 class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
@@ -92,16 +92,6 @@
                         <div class="grid grid-cols-1 gap-4 p-4 lg:grid-cols-2 lg:gap-4 h-100">
                             <!-- Bar chart card (Total Income) -->
                             <div class="bg-[#D3D3D3] rounded-md border border-gray-400 shadow-xl p-4">
-                                <!-- Filter Orders Method -->
-                                <div class="hidden flex flex-col sm:flex-row gap-4 mb-4">
-                                    <input type="date" id="filter_date"
-                                        class="bg-white text-gray-900 py-2 px-4 rounded-md shadow-lg"
-                                        value="{{ date('Y-m-d') }}">
-                                    <button id="btn_filter" class="bg-red-700 text-white py-2 px-4 rounded-md">
-                                        Filter
-                                    </button>
-                                </div>
-
                                 <!-- Card header -->
                                 <div class="border-b border-white pb-2 mb-4">
                                     <h4 class="text-lg font-semibold text-gray-900">Orders Method (Today)</h4>
@@ -124,8 +114,8 @@
                                 <div class="relative h-60">
                                     <canvas id="bestSellerChart"></canvas>
                                     <div id="noDataMessage"
-                                        class="hidden flex items-center justify-center h-full text-gray-700 font-medium">
-                                        Tidak ada produk yang dijual di periode ini.
+                                        class="flex items-center justify-center h-full text-gray-700 font-medium">
+                                        Tidak ada produk yang dijual di hari ini.
                                     </div>
                                 </div>
                             </div>
@@ -136,18 +126,6 @@
 
 
                 </main>
-                {{-- Chart Order --}}
-
-                <!-- Main footer -->
-                <footer
-                    class="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 dark:border-primary-darker">
-                    <div>Bangbara &copy; 2025</div>
-                    <div>
-                        Made by
-                        <a href="https://github.com/Kamona-WD" target="_blank"
-                            class="text-blue-500 hover:underline">BangbaraPos</a>
-                    </div>
-                </footer>
             </div>
 
             <x-admin.panel-content></x-admin.panel-content>
@@ -238,12 +216,10 @@
     {{-- Method Orders data --}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Label statis untuk 24 jam
             const staticLabels = Array.from({
                 length: 24
             }, (_, i) => (i < 10 ? '0' + i : i) + ':00');
 
-            // Inisialisasi chart dengan dua dataset default (nilai 0)
             const ctxHourly = document.getElementById('hourlyMethodChart').getContext('2d');
             let hourlyChart = new Chart(ctxHourly, {
                 type: 'line',
@@ -252,16 +228,16 @@
                     datasets: [{
                             label: 'Tunai',
                             data: Array(24).fill(0),
-                            backgroundColor: 'rgba(255, 206, 86, 0.2)', // kuning transparan
-                            borderColor: 'rgba(255, 206, 86, 1)', // kuning solid
-                            borderWidth: 1
+                            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            borderWidth: 1,
                         },
                         {
                             label: 'nonTunai',
                             data: Array(24).fill(0),
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)', // contoh warna biru kehijauan
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
+                            borderWidth: 1,
                         }
                     ]
                 },
@@ -285,10 +261,8 @@
                 }
             });
 
-            // Fungsi untuk fetch data dan update chart
             function updateHourlyChart() {
-                const date = document.getElementById('filter_date').value;
-                fetch(`/hourly-orders-stats?date=${date}`)
+                fetch(`/hourly-orders-stats`)
                     .then(response => response.json())
                     .then(result => {
                         hourlyChart.data.labels = result.labels;
@@ -296,18 +270,13 @@
                         hourlyChart.data.datasets[1].data = result.non_tunai;
                         hourlyChart.update();
                     })
-                    .catch(error => console.error('Error:', error));
+                    .catch(error => console.error('Error fetching hourly stats:', error));
             }
 
-            // Event listener untuk tombol filter
-            document.getElementById('btn_filter').addEventListener('click', function() {
-                updateHourlyChart();
-            });
-
-            // Update chart saat halaman pertama kali dimuat
-            updateHourlyChart();
+            updateHourlyChart(); // langsung update saat halaman dimuat
         });
     </script>
+
 </body>
 
 </html>

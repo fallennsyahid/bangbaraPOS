@@ -3,7 +3,7 @@
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
     setColors(color);" :class="{ 'dark': isDark }">
-        <div class="flex h-screen antialiased text-gray-950 bg-gray-100 dark:bg-dark dark:text-light">
+        <div class="flex h-screen antialiased text-gray-950 bg-prime dark:text-light">
             <!-- Loading screen -->
             <div x-ref="loading"
                 class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
@@ -20,14 +20,13 @@
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
                         <h1 class="text-2xl font-semibold text-zinc-950">Manage Histories</h1>
-                        <x-admin.waButton></x-admin.waButton>
                     </div>
 
 
                     <!-- Content -->
-                    <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
+                    <div class="flex flex-col items-center justify-center min-h-full bg-prime px-4 py-4">
 
-                        <div class="p-4 w-full max-w-6xl ">
+                        <div class="p-2 w-full max-w-6xl ">
                             <h2 class="text-xl font-semibold text-gray-800 mb-4">Pilih Periode</h2>
 
                             <form id="filterForm" class="space-y-4">
@@ -36,7 +35,7 @@
                                         <label for="periode_awal" class="text-gray-700 text-sm font-medium">Periode
                                             Awal</label>
                                         <input type="date" id="periode_awal" name="periode_awal"
-                                            class="mt-1 block w-48 px-3 py-2 border border-[#CC0000] bg-[#CC0000] rounded-md shadow-sm">
+                                            class="text-white mt-1 block w-48 px-3 py-2 border border-[#CC0000] bg-[#CC0000] rounded-md shadow-sm">
                                     </div>
 
                                     <span class="text-gray-700 mt-4">-</span>
@@ -45,7 +44,7 @@
                                         <label for="periode_akhir" class="text-gray-700 text-sm font-medium">Periode
                                             Akhir</label>
                                         <input type="date" id="periode_akhir" name="periode_akhir"
-                                            class="mt-1 block w-48 px-3 py-2 border border-[#CC0000] bg-[#CC0000] rounded-md shadow-sm">
+                                            class="text-white mt-1 block w-48 px-3 py-2 border border-[#CC0000] bg-[#CC0000] rounded-md shadow-sm">
                                     </div>
                                 </div>
 
@@ -56,13 +55,17 @@
                             </form>
 
                         </div>
-                        <div class="mb-4 mt-3 flex justify-end w-full max-w-6xl">
+                        <div class="mb-4 mt-3 flex justify-between w-full max-w-6xl">
                             <a href="#" id="exportExcel"
                                 class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
                                 <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
                                     class="w-5 h-5 inline-block mr-2">
                                 Export
                             </a>
+                            <button id="bulkDeleteButton"
+                                class="bg-red-700 text-white px-4 py-2 rounded-lg hidden">Delete
+                                Selected</button>
+
                         </div>
                         <div class="w-full max-w-6xl overflow-x-auto text-zinc-950">
                             <div class="flex mx-auto justify-between">
@@ -72,6 +75,9 @@
                                 <!-- Header -->
                                 <thead class="bg-thead text-white shadow-md">
                                     <tr>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            <input type="checkbox" id="select-all" />
+                                        </th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">ID
                                         </th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
@@ -98,6 +104,9 @@
                                     @forelse ($histories as $index => $history)
                                         <tr class="hover:bg-thead" data-category="{{ $history->id }}">
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">
+                                                <input type="checkbox" class="select-item" value="{{ $history->id }}">
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
                                                 #{{ $index + 1 }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">
@@ -118,8 +127,7 @@
                                                 id="history-status-{{ $history->id }}">
                                                 <h5
                                                     class="
-                                                             {{ $history->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                             {{ $history->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                             {{ $history->status == 'Cancelled' ? 'text-red-700 font-extrabold' : '' }}
                                                     ">
                                                     {{ $history->status }}</h4>
                                             </td>
@@ -136,7 +144,7 @@
                                                     <p class="text-zinc-950 text-2xl text-center mr-2">-</p>
                                                 @endif
                                             </td>
-                                            <td class="px-6 py-4 flex gap-3 mt-4">
+                                            <td class="px-6 py-4 flex items-center gap-3 mt-4">
                                                 <a href="{{ route('histories.show', $history->id) }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="30"
                                                         height="30" viewBox="0 0 24 24">
@@ -160,6 +168,27 @@
                                                     </svg>
                                                 </form>
 
+                                                {{-- ini untuk cetak struk --}}
+                                                <a href="javascript:void(0);"
+                                                    onclick="printReceipt({{ $history->id }})"><svg width="42"
+                                                        height="42" viewBox="0 0 42 42" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M28.2851 23.8717H28.9156C30.1048 23.8717 30.6987 23.8717 31.0682 23.5022C31.4377 23.1328 31.4377 22.5388 31.4377 21.3496V20.0886C31.4377 17.7103 31.4377 16.5224 30.6987 15.7834C29.9598 15.0444 28.7719 15.0444 26.3935 15.0444H15.0442C12.6658 15.0444 11.4779 15.0444 10.739 15.7834C10 16.5224 10 17.7103 10 20.0886V22.6107C10 23.2046 10 23.5022 10.1841 23.6876C10.3695 23.8717 10.6671 23.8717 11.261 23.8717H13.1526"
+                                                            stroke="#9F6802" stroke-width="1.33333" />
+                                                        <path
+                                                            d="M13.7832 31.8239V21.3497C13.7832 20.1606 13.7832 19.5666 14.1527 19.1971C14.5222 18.8276 15.1161 18.8276 16.3053 18.8276H25.1326C26.3217 18.8276 26.9157 18.8276 27.2852 19.1971C27.6547 19.5666 27.6547 20.1606 27.6547 21.3497V31.8239C27.6547 32.2237 27.6547 32.4229 27.5235 32.5175C27.3924 32.6121 27.2032 32.549 26.8249 32.4229L24.091 31.5112C24.022 31.4806 23.9481 31.4627 23.8728 31.4582C23.7976 31.467 23.7245 31.4892 23.6572 31.5238L20.9535 32.6058C20.8806 32.644 20.8009 32.6676 20.7189 32.6751C20.637 32.6676 20.5573 32.644 20.4844 32.6058L17.7807 31.5238C17.6748 31.4809 17.6218 31.4608 17.5663 31.4582C17.5108 31.4557 17.4554 31.4746 17.3469 31.5112L14.613 32.4229C14.2347 32.549 14.0455 32.6121 13.9144 32.5175C13.7832 32.4229 13.7832 32.2237 13.7832 31.8239Z"
+                                                            stroke="#9F6802" stroke-width="1.33333" />
+                                                        <path d="M17.5664 23.8711H22.6106M17.5664 27.6542H23.8716"
+                                                            stroke="#9F6802" stroke-width="1.33333"
+                                                            stroke-linecap="round" />
+                                                        <path
+                                                            d="M27.6547 15.0442V14.5398C27.6547 12.3998 27.6547 11.3291 26.9901 10.6646C26.3255 10 25.2549 10 23.1149 10H18.323C16.183 10 15.1123 10 14.4478 10.6646C13.7832 11.3291 13.7832 12.3998 13.7832 14.5398V15.0442"
+                                                            stroke="#9F6802" stroke-width="1.33333" />
+                                                    </svg>
+                                                </a>
+
+
                                             </td>
 
                                         </tr>
@@ -179,17 +208,6 @@
                         </div>
                     </div>
                 </main>
-
-                <!-- Main footer -->
-                <footer
-                    class="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 dark:border-primary-darker">
-                    <div>Bangbara &copy; 2025</div>
-                    <div>
-                        Made by
-                        <a href="https://github.com/Kamona-WD" target="_blank"
-                            class="text-blue-500 hover:underline">BangbaraPos</a>
-                    </div>
-                </footer>
             </div>
 
             <x-admin.panel-content></x-admin.panel-content>
@@ -221,6 +239,31 @@
             });
         }
     </script>
+
+    <script>
+        function printReceipt(id) {
+            fetch(`/admin/histories/print-struk/${id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert("Struk berhasil dicetak!");
+                    } else {
+                        alert("Gagal cetak struk: " + data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error("Error:", err);
+                    alert("Terjadi kesalahan saat mencetak struk.");
+                });
+        }
+    </script>
+
 
     {{-- Script Tombol Export --}}
     {{-- <script>
@@ -275,6 +318,9 @@
                                 </a>` : '-';
                             let row = `
                         <tr>
+                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
+                             <input type="checkbox" class="select-item" value="${history.id}">
+                            </td>
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">#${index + 1}</td>
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">${history.casier_name}</td>
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">${history.customer_name}</td>
@@ -282,7 +328,7 @@
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">Rp ${history.total_price.toLocaleString()}</td>
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">${history.payment_method}</td>
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">
-                                <span class="${history.status === 'Cancelled' ? 'bg-red-600 text-white px-3 py-2 rounded-md' : 'bg-green-500 text-white px-3 py-2 rounded-md'}">
+                                <span class="${history.status === 'Cancelled' ? 'text-red-700 font-extrabold' : ''}">
                                     ${history.status}
                                 </span>
                             </td>
@@ -333,20 +379,123 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+
+    {{-- BulkDelete script --}}
     <script>
-        $(document).ready(function() {
-            let table = $('#myTable').DataTable({
-                "columnDefs": [{
-                    "targets": 0, // Kolom pertama (nomor urut)
-                    "render": function(data, type, row, meta) {
-                        return meta.row + 1; // Menampilkan nomor urut otomatis
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedIds = new Set();
+            const allIds = @json($histories->pluck('id')); // Laravel mengirimkan seluruh ID
+            const selectAll = document.getElementById('select-all');
+            const bulkDeleteButton = document.getElementById('bulkDeleteButton');
+
+            // Inisialisasi DataTable
+            const table = new DataTable('#myTable', {
+                ordering: false
+            });
+
+            // Function BulkDelete display
+            function updateBulkDeleteButton() {
+                bulkDeleteButton.classList.toggle('hidden', selectedIds.size === 0);
+            }
+
+            // Saat draw (ganti halaman), sinkronisasi checkbox berdasarkan selectedIds
+            table.on('draw', function() {
+                document.querySelectorAll('.select-item').forEach(cb => {
+                    cb.checked = selectedIds.has(cb.value);
+                });
+
+                const allVisibleChecked = Array.from(document.querySelectorAll('.select-item')).every(cb =>
+                    cb.checked);
+                selectAll.checked = allVisibleChecked;
+            });
+
+            // Checkbox individual
+            document.querySelector('#myTable').addEventListener('change', function(e) {
+                if (e.target.classList.contains('select-item')) {
+                    const id = e.target.value;
+                    if (e.target.checked) {
+                        selectedIds.add(id);
+                    } else {
+                        selectedIds.delete(id);
                     }
-                }],
-                "ordering": false // Nonaktifkan sorting di semua kolom (opsional)
+                    updateBulkDeleteButton();
+                    // Update selectAll state
+                    const allVisibleChecked = Array.from(document.querySelectorAll('.select-item')).every(
+                        cb => cb.checked);
+                    selectAll.checked = allVisibleChecked;
+                }
+            });
+
+            // Select All
+            selectAll.addEventListener('change', function() {
+                if (this.checked) {
+                    allIds.forEach(id => selectedIds.add(String(id)));
+                } else {
+                    selectedIds.clear();
+                }
+
+                // Update visible checkboxes only
+                document.querySelectorAll('.select-item').forEach(cb => {
+                    cb.checked = selectAll.checked;
+                });
+                updateBulkDeleteButton();
+            });
+
+            // Bulk Delete
+            bulkDeleteButton.addEventListener('click', function() {
+                if (selectedIds.size === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'No items selected',
+                        text: 'Please select items to delete.',
+                        customClass: {
+                            confirmButton: 'confirm-button',
+                        }
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'This action cannot be undone!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete them!',
+                    cancelButtonText: 'Cancel',
+                    customClass: {
+                        confirmButton: 'confirm-button',
+                        cancelButton: 'cancel-button',
+                    }
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        fetch('{{ route('histories.bulkDelete') }}', {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    ids: Array.from(selectedIds)
+                                })
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    location.reload();
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Failed!',
+                                        text: 'Deletion failed, try again.'
+                                    });
+                                }
+                            })
+                            .catch(error => console.error(error));
+                    }
+                });
             });
         });
     </script>
-
 </body>
 
 </html>

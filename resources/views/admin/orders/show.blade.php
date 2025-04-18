@@ -3,7 +3,7 @@
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
     setColors(color);" :class="{ 'dark': isDark }">
-        <div class="flex h-screen antialiased text-gray-950 bg-gray-100 dark:bg-dark dark:text-light">
+        <div class="flex h-screen antialiased text-gray-950 bg-prime dark:text-light">
             <!-- Loading screen -->
             <div x-ref="loading"
                 class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
@@ -20,12 +20,11 @@
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
                         <h1 class="text-2xl font-semibold text-zinc-950">Order Details</h1>
-                        <x-admin.waButton></x-admin.waButton>
                     </div>
 
 
                     <!-- Content -->
-                    <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
+                    <div class="flex flex-col items-center justify-center min-h-full bg-prime px-4 py-4">
                         <!-- Navigasi -->
                         <h2 class="mb-4">
                             <a href="{{ route('orders.index') }}" class="text-amber-400 hover:underline">Back</a> /
@@ -38,6 +37,12 @@
                             <div class="mb-4">
                                 <label class="block text-gray-700 font-semibold">Nama Pemesan:</label>
                                 <input type="text" value="{{ $order->customer_name }}"
+                                    class="w-full p-2 border rounded-md bg-gray-100 text-zinc-900" readonly>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-semibold">Nama Kasir:</label>
+                                <input type="text" value="{{ $order->casier_name }}"
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-900" readonly>
                             </div>
 
@@ -124,7 +129,7 @@
                                     <div class="text-center text-xs font-bold mb-1">~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div>
                                     <div class="text-xs pl-2">
                                         <div class="text-xs mb-1">Customer：{{ $order->customer_name }}</div>
-                                        <div class="text-xs mb-1">TelePhone：{{ $order->customer_phone }}</div>
+                                        <div class="text-xs mb-1">Casier：{{ $order->casier_name }}</div>
                                         <div>OrderNumber：#{{ $order->id }}</div>
                                     </div>
                                     <div class="border-double border-t-4 border-b-4 border-gray-900 my-3">
@@ -162,17 +167,6 @@
                             </div>
                         </div>
                 </main>
-
-                <!-- Main footer -->
-                <footer
-                    class="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 dark:border-primary-darker">
-                    <div>Bangbara &copy; 2025</div>
-                    <div>
-                        Made by
-                        <a href="https://github.com/Kamona-WD" target="_blank"
-                            class="text-blue-500 hover:underline">BangbaraPos</a>
-                    </div>
-                </footer>
             </div>
 
             <x-admin.panel-content></x-admin.panel-content>

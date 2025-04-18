@@ -23,12 +23,14 @@ class HistoryController extends Controller
         $start = $request->periode_awal . " 00:00:00";
         $end = $request->periode_akhir . " 23:59:59";
         $query->whereBetween('created_at', [$start, $end]);
+        
     }
 
 
         $histories = $query->orderBy('created_at', 'desc')->get(); // Ambil data hasil filter
-
-        return view('admin.histories.index', compact('histories')); // Pastikan `history.index` adalah view yang benar
+        $allIds = History::pluck('id')->toArray(); // Ambil semua ID
+        return view('admin.histories.index', compact('histories', 'allIds')); // Pastikan `history.index` adalah view yang benar
+    
     }
 
      public function getHistories(Request $request)
@@ -41,10 +43,6 @@ class HistoryController extends Controller
 
     return response()->json($query->get());
 }
-
-
-
-
 
 
     public function export(Request $request)
@@ -75,6 +73,26 @@ class HistoryController extends Controller
     return Excel::download(new HistoriesExport($histories), 'histories.xlsx');
 }
 
+    public function bulkDelete(Request $request)
+{
+    // Ambil array ID dari request
+    $ids = $request->input('ids');
+
+    // Validasi jika tidak ada ID yang dikirim
+    if (!$ids || count($ids) === 0) {
+        return response()->json(['success' => false, 'message' => 'No items selected.']);
+    }
+
+    // Hapus data berdasarkan ID
+    $deleted = History::whereIn('id', $ids)->delete();
+
+    // Periksa apakah data berhasil dihapus
+    if ($deleted) {
+        return response()->json(['success' => true, 'message' => 'Selected items deleted successfully.']);
+    } else {
+        return response()->json(['success' => false, 'message' => 'Failed to delete selected items.']);
+    }
+}
     /**
      * Show the form for creating a new resource.
      */
@@ -95,14 +113,20 @@ class HistoryController extends Controller
      * Display the specified resource.
      */
     public function show(History $history)
-    {
-        $products = json_decode($history->products, true);
+{
+    $products = json_decode($history->products, true); // Decode pertama: hasilnya masih string
 
-        if (is_string($products)) {
-            $products = json_decode($products, true);
-        }
-        return view('admin.histories.show', compact('history', 'products'));
+    if (is_string($products)) {
+        $products = json_decode($products, true); // Decode kedua: hasilnya array as expected
     }
+
+    if (!is_array($products)) {
+        $products = []; // Jaga-jaga kalau masih gagal decode
+    }
+
+    return view('admin.histories.show', compact('history', 'products'));
+}
+
 
     /**
      * Show the form for editing the specified resource.

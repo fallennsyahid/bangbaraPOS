@@ -22,17 +22,19 @@ class OrderObserver
     public function updated(Order $order): void
     {
         if ($order->status === 'Completed' || $order->status === 'Cancelled') {
-        History::create([
-            'casier_name' => Auth::user()->name,
-            'customer_name' => $order->customer_name,
-            'customer_phone' => $order->customer_phone,
-            'total_price' => $order->total_price,
-            'payment_photo' => $order->payment_photo,
-            'payment_method' => $order->payment_method,
-            'request' => $order->request,
-            'status' => $order->status,
-            'products' => json_encode($order->products),
-        ]);
+            History::create([
+                'casier_name' => Auth::user()->name,
+                'customer_name' => $order->customer_name,
+                'customer_phone' => $order->customer_phone,
+                'total_price' => $order->total_price,
+                'payment_photo' => $order->payment_photo,
+                'payment_method' => $order->payment_method,
+                'request' => $order->request,
+                'status' => $order->status,
+                'products' => json_encode($order->products),
+            ]);
+
+            $order->delete();
         }
     }
 
@@ -41,7 +43,7 @@ class OrderObserver
      */
     public function deleted(Order $order): void
     {
-        $order->delete();
+        // 
     }
 
     /**

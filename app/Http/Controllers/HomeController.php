@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Store;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -20,6 +21,7 @@ class HomeController extends Controller
         $categories = Category::with(['products', 'options'])->get();
         $reviews = Review::all();
         $store = Store::first();
+
         return view('welcome', compact('categories', 'reviews', 'store'));
     }
 

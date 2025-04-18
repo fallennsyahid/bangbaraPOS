@@ -5,7 +5,6 @@ use App\Models\Order;
 use App\Models\History;
 use Carbon\Carbon;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminProfileController;
@@ -18,13 +17,16 @@ use App\Http\Controllers\Admin\NotificationContrller;
 use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Admin\OrderAdminController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\StruckController;
+use App\Http\Controllers\Admin\StruckOrderController;
 use App\Http\Controllers\Staff\StaffOrdersController;
 use App\Http\Controllers\Staff\StaffProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Staff\StaffHistoryController;
 use App\Http\Controllers\StoreController;
-use App\Livewire\OrdersTable;
+use App\Http\Controllers\Staff\StruckHistoryController;
+use App\Http\Controllers\Staff\StruckOrdersStaffController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -68,6 +70,11 @@ Route::resource('/staff/staffOrders', StaffOrdersController::class);
 Route::resource('/staff/staffHistories', StaffHistoryController::class);
 Route::resource('/staff/staffProfile', StaffProfileController::class);
 
+// Staff Struck Route
+Route::post('/staff/histories/print-struk/{id}', [StruckHistoryController::class, 'print']);
+Route::post('/staff/orders/print-struk/{id}', [StruckOrdersStaffController::class, 'print']);
+
+
 // Admin Route
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
     ->middleware(['auth', 'verified', 'admin'])
@@ -94,12 +101,24 @@ Route::post('/products/import', [ProductController::class, 'import'])->name('pro
 
 // Category Routes
 Route::resource('/admin/categories', CategoryController::class);
+Route::delete('/categories/bulk-delete', [CategoryController::class, 'bulkDelete'])->name('categories.bulkDelete');
+
 // Products Routes
 Route::resource('/admin/products', ProductController::class);
+Route::delete('/products/bulk-delete', [ProductController::class, 'bulkDelete'])->name('products.bulkDelete');
+
 // Orders Routes
 Route::resource('/admin/orders', OrderAdminController::class);
+Route::delete('/orders/bulk-delete', [OrderAdminController::class, 'bulkDelete'])->name('orders.bulkDelete');
+Route::post('/admin/orders/print-struk/{id}', [StruckOrderController::class, 'print']);
+
+
 // History Routes
 Route::resource('/admin/histories', HistoryController::class);
+Route::delete('/bulk-delete', [HistoryController::class, 'bulkDelete'])->name('histories.bulkDelete');
+Route::post('/admin/histories/print-struk/{id}', [StruckController::class, 'print'])->name('admin.print.struk');
+
+
 // Staffs Routes
 Route::resource('/admin/staffs', StaffController::class);
 Route::delete('/admin/staffs/{id}', [StaffController::class, 'destroy'])->name('staffs.destroy');
@@ -151,11 +170,13 @@ Route::get('/orders/latest-today', function () {
 
 // Reviews
 Route::resource('/admin/reviews', ReviewController::class);
+Route::delete('/reviews/bulkDelete', [ReviewController::class, 'bulkDelete'])->name('reviews.bulkDelete');
 
 // Chart Route
 Route::get('/chart-data', [AdminController::class, 'getChartData']);
 Route::get('/best-seller-chart', [AdminController::class, 'getBestSellerChartData']);
 Route::get('/best-seller-today', [DashboardController::class, 'getBestSellerChartData']);
+Route::get('/hourly-orders-stats', [DashboardController::class, 'getOrderStats']);
 Route::get('/best-seller-chart-filter', [AdminController::class, 'getBestSellerChartDataFilter']);
 Route::get('/orders-stats', [AdminController::class, 'getOrdersStats']);
 // Filter method chart

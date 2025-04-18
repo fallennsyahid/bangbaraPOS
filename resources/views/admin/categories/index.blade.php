@@ -3,7 +3,7 @@
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
     setColors(color);" :class="{ 'dark': isDark }">
-        <div class="flex h-screen antialiased text-gray-950 bg-gray-100 dark:bg-dark dark:text-light">
+        <div class="flex h-screen antialiased text-gray-950 bg-prime dark:text-light">
             <!-- Loading screen -->
             <div x-ref="loading"
                 class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
@@ -20,23 +20,28 @@
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
                         <h1 class="text-2xl font-semibold text-zinc-950">Manage Categories</h1>
-                        <x-admin.waButton></x-admin.waButton>
                     </div>
 
                     <!-- Content -->
                     <div class="flex flex-col items-center justify-center px-4 text-zinc-950">
                         <!-- Tabel -->
                         <div class="w-full max-w-6xl overflow-x-auto">
-                            <div class="mb-4 mt-3 py-2 flex justify-end">
+                            <div class="mb-4 mt-3 py-2 flex justify-between">
                                 <a href="{{ route('categories.create') }}"
                                     class="px-4 py-2 shadow-xl text-sm text-zinc-950 font-semibold rounded-md bg-[#B0B0B0] hover:bg-tbody focus:outline-none focus:ring focus:ring-primary focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark">
                                     Create +
                                 </a>
+                                <button id="bulkDeleteButton"
+                                    class="bg-red-700 text-white px-4 py-2 rounded-lg hidden">Delete
+                                    Selected</button>
                             </div>
                             <table class="table-auto border-collapse w-full text-left shadow-lg" id="myTable">
                                 <!-- Header -->
                                 <thead class="bg-thead text-white shadow-md">
                                     <tr>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            <input type="checkbox" id="select-all" />
+                                        </th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">ID
                                         </th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
@@ -54,6 +59,10 @@
                                 <tbody class="bg-tbody">
                                     @foreach ($categories as $index => $category)
                                         <tr class="hover:bg-thead">
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950"> <input
+                                                    type="checkbox" class="select-item" value="{{ $category->id }}">
+
+                                            </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">#{{ $index + 1 }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
@@ -130,17 +139,6 @@
 
 
                 </main>
-
-                <!-- Main footer -->
-                <footer
-                    class="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 dark:border-primary-darker">
-                    <div>Bangbara &copy; 2025</div>
-                    <div>
-                        Made by
-                        <a href="https://github.com/Kamona-WD" target="_blank"
-                            class="text-blue-500 hover:underline">BangbaraPos</a>
-                    </div>
-                </footer>
             </div>
 
             <x-admin.panel-content></x-admin.panel-content>
@@ -153,7 +151,120 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <script>
-        let table = new DataTable('#myTable');
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedIds = new Set();
+            const allIds = @json($categories->pluck('id')); // Laravel mengirimkan seluruh ID
+            const selectAll = document.getElementById('select-all');
+            const bulkDeleteButton = document.getElementById('bulkDeleteButton');
+
+            // Inisialisasi DataTable
+            const table = new DataTable('#myTable', {
+                ordering: false
+            });
+
+            // function BulkDeleteButton display
+            function updateBulkDeleteButton() {
+                bulkDeleteButton.classList.toggle('hidden', selectedIds.size === 0);
+            }
+
+            // Saat draw (ganti halaman), sinkronisasi checkbox berdasarkan selectedIds
+            table.on('draw', function() {
+                document.querySelectorAll('.select-item').forEach(cb => {
+                    cb.checked = selectedIds.has(cb.value);
+                });
+
+                const allVisibleChecked = Array.from(document.querySelectorAll('.select-item')).every(cb =>
+                    cb.checked);
+                selectAll.checked = allVisibleChecked;
+            });
+
+            // Checkbox individual
+            document.querySelector('#myTable').addEventListener('change', function(e) {
+                if (e.target.classList.contains('select-item')) {
+                    const id = e.target.value;
+                    if (e.target.checked) {
+                        selectedIds.add(id);
+                    } else {
+                        selectedIds.delete(id);
+                    }
+                    updateBulkDeleteButton();
+
+                    // Update selectAll state
+                    const allVisibleChecked = Array.from(document.querySelectorAll('.select-item')).every(
+                        cb => cb.checked);
+                    selectAll.checked = allVisibleChecked;
+                }
+            });
+
+            // Select All
+            selectAll.addEventListener('change', function() {
+                if (this.checked) {
+                    allIds.forEach(id => selectedIds.add(String(id)));
+                } else {
+                    selectedIds.clear();
+                }
+
+                // Update visible checkboxes only
+                document.querySelectorAll('.select-item').forEach(cb => {
+                    cb.checked = selectAll.checked;
+                });
+                updateBulkDeleteButton();
+            });
+
+            // Bulk Delete
+            bulkDeleteButton.addEventListener('click', function() {
+                if (selectedIds.size === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'No items selected',
+                        text: 'Please select items to delete.',
+                        customClass: {
+                            confirmButton: 'confirm-button',
+                        }
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'This action cannot be undone!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete them!',
+                    cancelButtonText: 'Cancel',
+                    customClass: {
+                        confirmButton: 'confirm-button',
+                        cancelButton: 'cancel-button',
+                    }
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        fetch('{{ route('categories.bulkDelete') }}', {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    ids: Array.from(selectedIds)
+                                })
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    location.reload();
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Failed!',
+                                        text: 'Deletion failed, try again.'
+                                    });
+                                }
+                            })
+                            .catch(error => console.error(error));
+                    }
+                });
+            });
+        });
     </script>
 </body>
 
