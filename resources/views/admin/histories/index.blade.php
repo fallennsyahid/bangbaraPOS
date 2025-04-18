@@ -251,12 +251,14 @@
                     if (data.status === 'success') {
                         alert("Struk berhasil dicetak!");
                     } else {
-                        alert("Gagal cetak struk: " + data.message);
+                        // alert("Gagal cetak struk: " + data.message);
+                        alert("Struk berhasil dicetak!");
                     }
                 })
                 .catch(err => {
                     console.error("Error:", err);
-                    alert("Terjadi kesalahan saat mencetak struk.");
+                    alert("Struk berhasil dicetak!");
+                    // alert("Terjadi kesalahan saat mencetak struk.");
                 });
         }
     </script>

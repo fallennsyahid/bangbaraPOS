@@ -2,16 +2,11 @@
 window.onscroll = function () {
     const header = document.querySelector('header');
     const fixedNav = header.offsetTop;
-    // const toTop = document.querySelector('#to-top');
 
     if (window.scrollY > fixedNav) {
         header.classList.add('navbar-fixed');
-        // toTop.classList.remove('hidden');
-        // toTop.classList.add('flex');
     } else {
         header.classList.remove('navbar-fixed');
-        // toTop.classList.remove('flex');
-        // toTop.classList.add('hidden');
     }
 };
 
@@ -35,7 +30,8 @@ window.addEventListener('click', function (e) {
 // Menu Active
 const menuLinks = document.querySelectorAll('.menu-link');
 const sliderContent = document.getElementById("slider-content");
-let currentIndex = 0;
+// let currentIndex = 0;
+let currentIndex = parseInt(localStorage.getItem('sliderIndex')) || 0;
 
 menuLinks.forEach(link => {
     link.addEventListener('click', function (e) {
@@ -58,6 +54,8 @@ menuLinks.forEach(link => {
 function updateSlide() {
     const slideWidth = document.getElementById("slider").clientWidth;
     sliderContent.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+
+    localStorage.setItem('sliderIndex', currentIndex);
 }
 
 // Responsif
@@ -69,6 +67,19 @@ function scrollToActiveTab() {
         activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
 }
+
+function setActiveTab(index) {
+    menuLinks.forEach(l => l.classList.remove('active'));
+    if (menuLinks[index]) {
+        menuLinks[index].classList.add('active');
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateSlide();
+    setActiveTab(currentIndex);
+    scrollToActiveTab();
+});
 
 
 // Rating

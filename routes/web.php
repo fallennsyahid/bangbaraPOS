@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\OrderAdminController;
 use App\Http\Controllers\Admin\NotificationContrller;
 use App\Http\Controllers\Staff\StaffOrdersController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Staff\StaffHistoryController;
 use App\Http\Controllers\Staff\StaffProfileController;
 
@@ -204,6 +205,10 @@ Route::post('/store/toggle-status', [StoreController::class, 'toggleStatus'])->n
 
 Route::post('/admin/print-struk/{id}', [StruckController::class, 'print']);
 Route::delete('/bulk-delete', [HistoryController::class, 'bulkDelete'])->name('histories.bulkDelete');
+
+// Route Settings
+Route::resource('/admin/settings', SettingsController::class);
+Route::get('/staff/settings', [SettingsController::class, 'staffIndex'])->name('staffSettings.index');
 
 // Autentikasi route
 require __DIR__ . '/auth.php';

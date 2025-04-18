@@ -25,7 +25,7 @@
 
 </head>
 
-<body class="bg-slate-950">
+<body>
     <!-- Header Start -->
     <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
         <div class="container mx-auto px-4">
@@ -91,7 +91,7 @@
 
                 <div class="hidden lg:block lg:items-center lg:space-x-4">
                     <!-- Cart Icon -->
-                    <a href="{{ route('cart') }}" class=" relative">
+                    <a href="{{ route('cart') }}" class="relative">
                         <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
                     </a>
@@ -223,7 +223,7 @@
                                             <button type="submit"
                                                 class="{{ $isClose
                                                     ? 'hidden'
-                                                    : 'item-detail-button text-shadow text-sm sm:text-sm bg-[#BF0000] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center ' }}
+                                                    : 'item-detail-button text-shadow text-sm sm:text-sm bg-red-600 px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center ' }}
                                         {{ $isNonActive ? 'bg-gray-500 cursor-disabled' : '' }}"
                                                 data-product-id="{{ $product->id }}"
                                                 {{ $isNonActive ? 'disabled' : '' }}>
@@ -246,7 +246,7 @@
     <section id="popup">
         <div class="hidden fixed z-[9999] left-0 top-0 w-full h-full overflow-auto justify-center items-center bg-[rgba(0,0,0,0.6)]"
             id="item-detail-modal" name="modal">
-            <div class="flex flex-col bg-white h-3/4 w-[90%] md:w-1/2 lg:w-1/3 xl:w-1/4 rounded-lg gap-2 overflow-hidden animation"
+            <div class="flex flex-col bg-white max-h-[90vh] w-[90%] max-w-[350px] md:max-w-[375px] lg:max-w-[400px] rounded-lg gap-2 overflow-hidden animation"
                 name="modal-container">
                 <a href="#"
                     class="close-icon absolute bg-white w-8 h-8 m-2 rounded-full flex items-center justify-center hover:scale-125 hover:rotate-90 transition duration-300">
@@ -258,23 +258,24 @@
                     </svg>
                 </a>
                 <input type="hidden" id="modal-product-id" name="product_id" value="">
-                <img id="modal-image" src="" alt="Food" class="rounded-t-lg overflow-hidden" />
+                <img id="modal-image" src="" alt="Food"
+                    class="w-full object-fill aspect-video rounded-t-lg overflow-hidden" />
                 <h1 id="modal-title" class="text-center font-alatsi text-2xl pb-2"></h1>
                 <p id="modal-description" class="text-center font-alatsi text-base px-4"></p>
 
                 <div id="pilihan-saus" class="">
                     <h3 class="text-center text-base font-semibold text-gray-800 mb-2">Pilih Saus</h3>
                     <div class="sauce flex justify-center gap-2 flex-wrap">
-                        <input type="radio" name="sauce" id="sauce-bbq" value="barbeque" class="hidden">
+                        <input type="radio" name="sauce" id="sauce-bbq" value="barbaque" class="hidden">
                         <label for="sauce-bbq"
-                            class="py-1 px-3 border border-yellow-400 bg-yellow-200 cursor-pointer transition-all duration-200 ease-out shadow-sm text-sm text-gray-800 rounded 
+                            class="py-1 px-2 border border-yellow-400 bg-yellow-200 cursor-pointer transition-all duration-200 ease-out shadow-sm text-sm text-gray-800 rounded 
                             hover:shadow-md active:scale-95">
                             Barbaque
                         </label>
 
                         <input type="radio" name="sauce" id="sauce-mushroom" value="mushroom" class="hidden">
                         <label for="sauce-mushroom"
-                            class="py-1 px-3 border border-yellow-400 bg-yellow-200 cursor-pointer transition-all duration-200 ease-out shadow-sm text-sm text-gray-800 rounded 
+                            class="py-1 px-2 border border-yellow-400 bg-yellow-200 cursor-pointer transition-all duration-200 ease-out shadow-sm text-sm text-gray-800 rounded 
                             hover:shadow-md active:scale-95">
                             Mushroom
                         </label>
@@ -282,7 +283,7 @@
                         <input type="radio" name="sauce" id="sauce-blackpepper" value="blackpepper"
                             class="hidden">
                         <label for="sauce-blackpepper"
-                            class="py-1 px-3 border border-yellow-400 bg-yellow-200 cursor-pointer transition-all duration-200 ease-out shadow-sm text-sm text-gray-800 rounded 
+                            class="py-1 px-2 border border-yellow-400 bg-yellow-200 cursor-pointer transition-all duration-200 ease-out shadow-sm text-sm text-gray-800 rounded 
                             hover:shadow-md active:scale-95">
                             Blackpepper
                         </label>
@@ -324,7 +325,7 @@
         class="relative overflow-x-hidden bg-red-600 overflow-hidden min-h-[60vh] sm:min-h-[60vh] md:min-h-[50vh] lg:min-h-[50vh] xl:min-h-[70vh]">
         <!-- Gambar sebagai background di mobile -->
         <img src="{{ asset('asset-view/assets/svg/steak.svg') }}" alt="A plate with steak, fries, and vegetables"
-            class="mobile-about-img absolute top-0 left-0 w-full h-full object-cover opacity-40 z-0 md:hidden" />
+            class="absolute top-0 left-0 w-full h-full object-cover opacity-40 z-0 md:hidden" />
 
         <div class="relative z-10 flex justify-center items-center p-6 md:p-10 h-full">
             <div class="text-center max-w-6xl w-full">
@@ -332,16 +333,14 @@
                     <!-- Gambar normal di desktop/tablet -->
                     <img src="{{ asset('asset-view/assets/svg/steak.svg') }}"
                         alt="A plate with steak, fries, and vegetables"
-                        class="about-img hidden md:block w-full md:w-2/5 h-auto opacity-0" />
+                        class="hidden md:block w-full md:w-2/5 h-auto" />
 
                     <!-- Teks konten -->
                     <div class="mt-6 md:mt-0 md:ml-6 text-white text-shadow-2">
-                        <h1
-                            class="about-title text-4xl sm:text-5xl lg:text-6xl font-europhia text-shadow mb-4 opacity-0">
+                        <h1 class="about-title text-4xl sm:text-5xl lg:text-6xl font-europhia text-shadow mb-4 ">
                             Tentang Kami
                         </h1>
-                        <p
-                            class="about-text leading-relaxed pt-4 text-base sm:text-lg md:text-xl lg:text-2xl opacity-0">
+                        <p class="leading-relaxed pt-4 text-base sm:text-lg md:text-xl lg:text-2xl ">
                             Bangbara adalah tempat makan yang menghadirkan steak dan chicken
                             katsu dengan cita rasa istimewa. Dengan bahan berkualitas dan harga
                             yang terjangkau, Bangbara menjadi pilihan tepat untuk menikmati
@@ -357,11 +356,11 @@
     <!-- About Section End -->
 
     <!-- Contact Section Start -->
-    <section id="contact" class="bg-[#FFF890] overflow-x-hidden">
+    <section id="contact" class="bg-yellow-200 overflow-x-hidden">
         <div class="container mx-auto px-4">
             <div class="flex justify-center py-4 mb-8">
                 <a href=""
-                    class="contact-title py-4 px-12 bg-[#CC0000] rounded-full text-center text-4xl font-europhia shadow-lg text-white cursor-default sm:text-5xl lg:text-6xl">
+                    class="contact-title py-4 px-12 bg-red-700 rounded-full text-center text-4xl font-europhia shadow-lg text-white cursor-default sm:text-5xl lg:text-6xl">
                     Berikan Rating & Ulasan
                 </a>
             </div>
@@ -518,7 +517,6 @@
     <!-- Footer Section End -->
 </body>
 <x-sweet-alert></x-sweet-alert>
-
 
 <script src="{{ asset('asset-view/js/script.js') }}"></script>
 <script src="{{ asset('asset-view/js/popup.js') }}"></script>
