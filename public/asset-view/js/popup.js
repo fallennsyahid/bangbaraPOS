@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    // Buat elemen pilihan Hot/Ice
+    // Elemen pilihan Hot/Ice
     const pilihanHotIce = document.createElement("div");
     pilihanHotIce.id = "pilihan-hot-ice";
     pilihanHotIce.className = "hidden";
@@ -39,6 +39,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
     modalContainer.insertBefore(pilihanHotIce, quantityButtons);
 
+    // Fungsi untuk toggle tombol add to cart
+    function updateAddToCartButtonState() {
+        const sauceVisible = !pilihanSaus.classList.contains("hidden");
+        const hotIceVisible = !pilihanHotIce.classList.contains("hidden");
+
+        const sauceChecked = document.querySelector("input[name='sauce']:checked");
+        const hotIceChecked = document.querySelector("input[name='hot_ice']:checked");
+
+        let enable = true;
+
+        if (sauceVisible && !sauceChecked) enable = false;
+        if (hotIceVisible && !hotIceChecked) enable = false;
+
+        addToCartButton.disabled = !enable;
+        addToCartButton.classList.toggle("opacity-50", !enable);
+        addToCartButton.classList.toggle("cursor-not-allowed", !enable);
+    }
+
+    // Observe tampilan saus/hot-ice
+    const observer = new MutationObserver(updateAddToCartButtonState);
+    observer.observe(pilihanSaus, { attributes: true, attributeFilter: ['class'] });
+    observer.observe(pilihanHotIce, { attributes: true, attributeFilter: ['class'] });
+
+    // Saat radio berubah
+    document.addEventListener("change", function (e) {
+        if (e.target.name === "sauce" || e.target.name === "hot_ice") {
+            updateAddToCartButtonState();
+        }
+    });
+
     itemDetailButtons.forEach((btn) => {
         btn.onclick = (e) => {
             e.preventDefault();
@@ -54,15 +84,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Update isi modal
             itemDetailModal.querySelector("img").src = productImage;
             itemDetailModal.querySelector("h1").innerText = productName;
             itemDetailModal.querySelector("p").innerText = productDescription;
-
-            // Set product ID di input hidden dalam modal
             document.querySelector("#modal-product-id").value = productId;
 
-            // Tentukan apakah ini kategori makanan atau minuman
             let isMakanan = productCard.closest("#slider-content").children[0].contains(productCard);
             let isMinuman = productCard.closest("#slider-content").children[1].contains(productCard);
             let isAirMineral = productName.toLowerCase().includes("air mineral");
@@ -82,8 +108,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 pilihanHotIce.classList.add("hidden");
             }
 
+            // Reset radio
+            document.querySelectorAll("input[name='sauce']").forEach(i => i.checked = false);
+            document.querySelectorAll("input[name='hot_ice']").forEach(i => i.checked = false);
+
             itemDetailModal.classList.remove("hidden");
             itemDetailModal.classList.add("flex");
+
+            setTimeout(updateAddToCartButtonState, 100);
         };
     });
 
@@ -116,41 +148,30 @@ document.addEventListener("DOMContentLoaded", function () {
         let productId = itemDetailModal.querySelector("input[name='product_id']").value;
         let quantity = quantityInput.value;
         let url = this.dataset.url;
-        let selectedSauce = document.querySelector("input[name='sauce']:checked") ? document.querySelector("input[name='sauce']:checked").value : "";
-        let selectedHotIce = document.querySelector("input[name='hot_ice']:checked") ? document.querySelector("input[name='hot_ice']:checked").value : "";
+        let selectedSauce = document.querySelector("input[name='sauce']:checked")?.value || "";
+        let selectedHotIce = document.querySelector("input[name='hot_ice']:checked")?.value || "";
 
-        // if (!productId) {
+        // if (!pilihanSaus.classList.contains("hidden") && !selectedSauce) {
         //     Swal.fire({
-        //         icon: "error",
-        //         title: "Oops...",
-        //         text: "Produk tidak valid! ID tidak ditemukan.",
+        //         icon: "warning",
+        //         title: "Pilih Saus",
+        //         text: "Silakan pilih saus terlebih dahulu sebelum melanjutkan!",
+        //         confirmButtonText: "OK",
+        //         confirmButtonColor: "#CC0000",
         //     });
         //     return;
         // }
 
-        // Validasi pilihan sauce jika pilihan saus ditampilkan
-        if (!pilihanSaus.classList.contains("hidden") && !selectedSauce) {
-            Swal.fire({
-                icon: "warning",
-                title: "Pilih Saus",
-                text: "Silakan pilih saus terlebih dahulu sebelum melanjutkan!",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#CC0000",
-            });
-            return;
-        }
-
-        // Validasi pilihan hot/ice jika opsi ini ditampilkan
-        if (!pilihanHotIce.classList.contains("hidden") && !selectedHotIce) {
-            Swal.fire({
-                icon: "warning",
-                title: "Pilih Penyajian",
-                text: "Silakan pilih penyajian terlebih dahulu sebelum melanjutkan!",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#CC0000",
-            });
-            return;
-        }
+        // if (!pilihanHotIce.classList.contains("hidden") && !selectedHotIce) {
+        //     Swal.fire({
+        //         icon: "warning",
+        //         title: "Pilih Penyajian",
+        //         text: "Silakan pilih penyajian terlebih dahulu sebelum melanjutkan!",
+        //         confirmButtonText: "OK",
+        //         confirmButtonColor: "#CC0000",
+        //     });
+        //     return;
+        // }
 
         let form = document.createElement("form");
         form.method = "POST";

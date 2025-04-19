@@ -74,7 +74,7 @@
 
                                 <!-- Body -->
                                 <tbody id="productTable" class="bg-tbody">
-                                    @forelse ($histories as $index => $history)
+                                    @foreach ($histories as $index => $history)
                                         <tr>
                                             <td class="px-4 py-2 text-sm">#{{ $index + 1 }}</td>
                                             <td class="px-4 py-2 text-sm">{{ $history->casier_name }}</td>
@@ -134,12 +134,11 @@
 
                                             </td>
                                         </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="7" class="text-center py-4">No data available for the
+                                    @endforeach
+                                    {{-- <tr>
+                                            <td class="text-center py-4">No data available for the
                                                 selected filters.</td>
-                                        </tr>
-                                    @endforelse
+                                        </tr> --}}
                                 </tbody>
                             </table>
 
@@ -218,7 +217,7 @@
         });
     </script> --}}
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', () => {
             const filters = document.querySelectorAll('#filter_year, #filter_month, #filter_day');
             const exportButton = document.getElementById('exportExcel');
@@ -257,6 +256,7 @@
                                     tableBody.innerHTML += `
                                 <tr class="hover:bg-thead" data-category="${history.id}">
                                     <td class="px-6 py-4 font-medium text-sm text-zinc-950">#${index + 1}</td>
+                                    <td class="px-6 py-4 font-medium text-sm text-zinc-950">${history.casier_name}</td>
                                     <td class="px-6 py-4 font-medium text-sm text-zinc-950">${history.customer_name}</td>
                                     <td class="px-6 py-4 font-medium text-sm text-zinc-950">${history.customer_phone}</td>
                                     <td class="px-6 py-4 font-medium text-sm text-zinc-950">Rp ${parseFloat(history.total_price).toLocaleString('id-ID', { minimumFractionDigits: 2 })}</td>
@@ -286,7 +286,7 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 
     {{-- DataTables --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"

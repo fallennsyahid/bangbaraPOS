@@ -32,7 +32,7 @@
     background-image: url("../assets/png/header.png");
     background-size: cover;
     background-position: center;
-    min-height: 100vh;
+    /* min-height: 100vh; */
 }
 
 .menu-img {
@@ -42,25 +42,10 @@
     min-height: 100vh;
 }
 
-.about-img {
-    background-image: url("../assets/png/about.png");
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-}
-
 .ulasan-img {
     background-image: url("../assets/png/ulasan.png");
     background-size: cover;
     background-position: center;
-    min-height: 75vh;
-}
-
-.cart-img {
-    background-image: url("../assets/png/cart.png");
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
 }
 
 .header-cart {
@@ -92,10 +77,6 @@
         opacity: 1;
     }
 }
-
-/* .css {
-  color: oklch(0.623 0.214 259.815);
-} */
 
 .text-shadow {
     text-shadow: 0 4px 4px black;

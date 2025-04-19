@@ -1,4 +1,3 @@
-// Tambah & Kurang Quantity
 document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("click", function (event) {
         if (event.target.closest(".increase, .decrease")) {
@@ -43,13 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-
     // PAYMENT METHOD
     const metodePembayaran = document.querySelector("#metodePembayaran");
     const buktiPembayaran = document.getElementById("bukti-pembayaran");
     const qrCode = document.querySelector("#qrcode");
     const imagePayment = document.querySelector("#imagePayment");
-    const form = document.querySelector("form");
     const paymentPhoto = document.querySelector("#payment_photo");
 
     metodePembayaran.addEventListener("change", function () {
@@ -58,11 +55,13 @@ document.addEventListener("DOMContentLoaded", function () {
             qrCode.classList.add("flex");
             buktiPembayaran.classList.remove("hidden");
             buktiPembayaran.classList.add("block");
+            paymentPhoto.setAttribute("required", "required");
         } else {
             qrCode.classList.add("hidden");
             qrCode.classList.remove("flex");
             buktiPembayaran.classList.add("hidden");
             buktiPembayaran.classList.remove("block");
+            paymentPhoto.removeAttribute("required");
         }
     });
 

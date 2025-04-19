@@ -26,7 +26,7 @@ class OrderController extends Controller
             'customer_phone' => 'required',
             'request' => 'nullable',
             'payment_method' => 'required|in:Tunai,nonTunai',
-            'payment_photo' => 'nullable',
+            'payment_photo' => $request->payment_method ===  'nonTunai' ? 'required|image|mimes:jpeg,png,jpg|max:2048' : 'nullable',
             'sauce' => 'nullable|string',
             'hot_ice' => 'nullable|string',
         ]);

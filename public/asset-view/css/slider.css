@@ -18,12 +18,21 @@
     display: flex;
     width: calc(370px * 12); /* Adjust based on your total reviews count */
     animation: scroll 40s linear infinite;
+<<<<<<< HEAD
 }
 
 .slide-track:hover {
     animation-play-state: paused;
 }
 
+=======
+}
+
+.slide-track:hover {
+    animation-play-state: paused !important;
+}
+
+>>>>>>> 859f373db6147b3c31d9719316dfdb40fe882829
 @keyframes scroll {
     0% {
         transform: translateX(0);
@@ -63,7 +72,11 @@
 
 .review-message {
     padding: 16px;
+<<<<<<< HEAD
     font-size: 14px;
+=======
+    font-size: 16px;
+>>>>>>> 859f373db6147b3c31d9719316dfdb40fe882829
     line-height: 1.5;
     overflow-y: auto;
     flex-grow: 1;

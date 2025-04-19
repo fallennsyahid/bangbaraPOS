@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>BangbaraPos</title>
     <!-- CSS -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css'])
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
 
     <!-- ICON WEB -->
@@ -26,10 +26,13 @@
     {{-- Hero Section Start --}}
     <section class="relative h-[50vh] header-cart">
         <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center">
-            <h1 class="text-white text-4xl font-bold">Cart</h1>
-            <p class="text-white cursor-pointer">
-                Back /
-                <a href="{{ route('index') }}"><span class="text-rose-400 hover:underline">Home</span></a>
+            <h1 class="text-white text-5xl lg:text-4xl font-bold">Cart</h1>
+            <p class="text-white">
+                <span class="text-xl lg:text-base">
+                    Back /
+                </span>
+                <a href="{{ route('index') }}">
+                    <span class="text-rose-400 cursor-pointer text-xl lg:text-base hover:underline">Home</span></a>
             </p>
         </div>
     </section>
@@ -78,20 +81,24 @@
 
                     @if ($cartItems->isNotEmpty())
                         @foreach ($cartItems as $item)
-                            <div
-                                class="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6 border-b border-gray-200 group">
-                                <div class="w-full max-w-[126px] sm:justify-center">
+                            {{-- <div
+                                class="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6 border-b border-gray-200 group"> --}}
+                            <div class="flex flex-row items-start gap-5 py-6 border-b border-gray-200 group">
+                                {{-- Image Product --}}
+                                <div class="w-full max-w-[126px] flex mx-auto justify-center">
                                     <img src="{{ Storage::url($item->product->gambar_menu) }}"
                                         alt="{{ $item->product->nama_menu }}" class="mx-auto rounded-xl object-cover">
                                 </div>
+                                {{-- Image Product End --}}
                                 <div class="grid grid-cols-1 md:grid-cols-4 w-full">
+                                    {{-- Product Description --}}
                                     <div class="md:col-span-2">
                                         <div class="flex flex-col max-[500px]:items-center gap-3">
-                                            <h6 class="font-semibold text-base leading-7 text-black">
+                                            <h6 class="font-semibold text-lg sm:text-base leading-7 text-black">
                                                 {{ $item->product->nama_menu }}
                                             </h6>
                                             @if ($item->sauce || $item->hot_ice)
-                                                <p class="text-sm text-gray-600">
+                                                <p class="text-base sm:text-sm text-gray-600 ">
                                                     @if ($item->hot_ice)
                                                         Penyajian: {{ ucfirst($item->hot_ice) }}
                                                     @endif
@@ -109,7 +116,9 @@
                                             </h6>
                                         </div>
                                     </div>
-                                    <div class="flex items-center max-[500px]:justify-center h-full max-md:mt-3">
+                                    {{-- Product Description End --}}
+                                    {{-- Button Quantity --}}
+                                    <div class="flex items-center justify-center h-full max-md:mt-0">
                                         <div class="flex items-center justify-center h-full flex-row">
                                             <!-- Button Decrease Quantity -->
                                             <button
@@ -140,14 +149,18 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div
-                                        class="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-3 h-full">
+                                    {{-- Button Quantity End --}}
+                                    {{-- Final Price --}}
+                                    {{-- <div
+                                        class="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-3 h-full"> --}}
+                                    <div class="flex items-center justify-center h-full">
                                         <p class="font-bold text-lg leading-8 text-gray-600 text-center transition-all duration-300 group-hover:text-red-700 total-price"
                                             id="cart-item-{{ $item->id }}-total-price"
                                             data-price="{{ $item->product->harga_menu }}">
                                             Rp {{ number_format($item->product->harga_menu * $item->quantity, 2) }}
                                         </p>
                                     </div>
+                                    {{-- Final Price --}}
                                 </div>
                             </div>
                         @endforeach
@@ -168,7 +181,6 @@
                     <!-- Order Details -->
                     <div class="mt-8">
 
-                        {{-- <form action="" id="checkout-form" method="POST" enctype="multipart/form-data"> --}}
                         <form action="{{ route('order.checkout') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
@@ -241,7 +253,7 @@
                                         </svg>
                                         Upload File
                                     </label>
-                                    <span id="file-name" class="text-xs"></span>
+                                    <span id="file-name" class="text-xs">Tidak ada file yang dipilih</span>
                                 </div>
                                 <input type="file" id="payment_photo" name="payment_photo" class="hidden"
                                     accept="image/*" onchange="updateFileName(this)" />
@@ -271,13 +283,13 @@
 
 </body>
 
+<script src="{{ asset('asset-view/js/cart.js') }}"></script>
 <script>
     function updateFileName(input) {
-        const fileName = input.files[0]?.name || "Tidak ada file yang dipilih";
+        const fileName = input.files.length > 0 ? input.files[0].name : "Tidak ada file yang dipilih";
         document.getElementById("file-name").textContent = fileName;
     }
 </script>
 
-<script src="{{ asset('asset-view/js/cart.js') }}"></script>
 
 </html>

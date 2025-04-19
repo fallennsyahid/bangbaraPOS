@@ -7,12 +7,22 @@ use Illuminate\Http\Request;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector; // Sesuaikan dengan sistem Anda
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class StruckOrdersStaffController extends Controller
 {
     public function print($id)
     {
         try {
+
+             $printerName = Auth::user()->printer_name;
+
+             if(!$printerName) {
+                return response()->json([
+                'status' => 'error',
+                'message' => 'Cannot set printer name'
+            ]);
+        }
             $order = Order::findOrFail($id);
             $products = json_decode($order->products, true);
 
@@ -23,7 +33,7 @@ class StruckOrdersStaffController extends Controller
                 ]);
             }
             // $printerName = "\\\\UmaruSyahid\\POS-58"; // Perhatikan double backslash
-            $connector = new WindowsPrintConnector("POS-58"); // Ganti dengan nama printer Anda
+            $connector = new WindowsPrintConnector($printerName); // Ganti dengan nama printer Anda
             $printer = new Printer($connector);
 
             $printer->setJustification(Printer::JUSTIFY_CENTER);

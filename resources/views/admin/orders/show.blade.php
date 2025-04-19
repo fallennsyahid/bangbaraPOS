@@ -22,7 +22,6 @@
                         <h1 class="text-2xl font-semibold text-zinc-950">Order Details</h1>
                     </div>
 
-
                     <!-- Content -->
                     <div class="flex flex-col items-center justify-center min-h-full bg-prime px-4 py-4">
                         <!-- Navigasi -->
@@ -57,8 +56,7 @@
                                                     <img src="{{ Storage::url($product['gambar_menu']) }}"
                                                         class="w-20 h-20 object-cover rounded-md" alt="Gambar Product">
                                                 </td>
-                                                <td class="px-6 py-4 text-sm text-gray-900">
-                                                    {{ $product['nama_menu'] }}
+                                                <td class="px-6 py-4 text-sm text-gray-900">{{ $product['nama_menu'] }}
                                                 </td>
                                                 @if ($product['category'] == 'Makanan')
                                                     <td class="px-6 py-4 text-sm text-gray-900">
@@ -69,7 +67,6 @@
                                                         {{ $product['hot_ice'] ?? '-' }}
                                                     </td>
                                                 @endif
-
                                                 <td class="px-6 py-4 text-sm text-gray-900">
                                                     Rp{{ number_format($product['price'], 0, ',', '.') }}
                                                 </td>
@@ -84,7 +81,9 @@
                             <!-- Total Price -->
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Total:</label>
-                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>Rp {{ number_format($order->total_price, 0, ',', '.') }}</textarea>
+                                <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
+Rp{{ number_format($order->total_price, 0, ',', '.') }}
+                                </textarea>
                             </div>
 
                             <!-- Catatan -->
@@ -100,6 +99,7 @@
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
                             </div>
 
+                            <!-- Phone Number -->
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Phone Number:</label>
                                 <a href="https://wa.me/{{ $order->customer_phone }}" target="_blank">
@@ -173,26 +173,8 @@
         </div>
     </div>
 
-    <!-- All javascript code in this project for now is just for demo DON'T RELY ON IT  -->
+    <!-- Tidak memuat script window.print() karena pencetakan dilakukan di sisi server -->
     <x-admin.js></x-admin.js>
-    {{-- Confirm Alert --}}
-
-    <script>
-        document.getElementById('printButton').addEventListener('click', function(event) {
-            event.preventDefault();
-
-            // Hide web display
-            document.getElementById('printArea').classList.add('hidden');
-            document.getElementById('printDisplay').classList.remove('hidden')
-
-            // Print
-            window.print();
-
-            // return web display
-            document.getElementById('printArea').classList.remove('hidden');
-            document.getElementById('printDisplay').classList.add('hidden');
-        });
-    </script>
 </body>
 
 </html>

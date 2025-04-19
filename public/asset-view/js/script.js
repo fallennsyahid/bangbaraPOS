@@ -2,16 +2,11 @@
 window.onscroll = function () {
     const header = document.querySelector('header');
     const fixedNav = header.offsetTop;
-    // const toTop = document.querySelector('#to-top');
 
     if (window.scrollY > fixedNav) {
         header.classList.add('navbar-fixed');
-        // toTop.classList.remove('hidden');
-        // toTop.classList.add('flex');
     } else {
         header.classList.remove('navbar-fixed');
-        // toTop.classList.remove('flex');
-        // toTop.classList.add('hidden');
     }
 };
 
@@ -32,46 +27,60 @@ window.addEventListener('click', function (e) {
     }
 });
 
-
 // Menu Active
 const menuLinks = document.querySelectorAll('.menu-link');
 const sliderContent = document.getElementById("slider-content");
-
-let currentIndex = 0; // Simpan index slide aktif
+// let currentIndex = 0;
+let currentIndex = parseInt(localStorage.getItem('sliderIndex')) || 0;
 
 menuLinks.forEach(link => {
     link.addEventListener('click', function (e) {
-        e.preventDefault(); // Mencegah aksi default
+        e.preventDefault();
 
-        // Hapus kelas active dari semua link
+        // Ambil index dari data-index
+        const index = parseInt(this.dataset.index);
+
+        // Update index dan slide
+        currentIndex = index;
+        updateSlide();
+
+        // Atur ulang kelas active
         menuLinks.forEach(l => l.classList.remove('active'));
-
-        // Tambahkan kelas active ke link yang diklik
         this.classList.add('active');
     });
 });
 
-// Fungsi untuk mengubah slide
-function changeSlide(index) {
-    currentIndex = index; // Update index aktif
-    updateSlide(); // Panggil fungsi untuk menggeser slide
-}
-
-// Fungsi untuk memperbarui posisi slide
+// Fungsi menggeser slide
 function updateSlide() {
-    const slideWidth = document.getElementById("slider").clientWidth; // Lebar slider container
+    const slideWidth = document.getElementById("slider").clientWidth;
     sliderContent.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+
+    localStorage.setItem('sliderIndex', currentIndex);
 }
 
-// Event listener untuk resize agar slide tetap sesuai
+// Responsif
 window.addEventListener("resize", updateSlide);
 
-// Menu Slide
-// function changeSlide(index) {
-//     const sliderContent = document.getElementById("slider-content");
-//     const slideWidth = sliderContent.clientWidth / 3; // Menghitung lebar satu slide
-//     sliderContent.style.transform = `translateX(-${index * slideWidth}px)`; // Menggeser sesuai index
-// }
+function scrollToActiveTab() {
+    const activeTab = document.querySelector('.menu-link.active');
+    if (activeTab) {
+        activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+}
+
+function setActiveTab(index) {
+    menuLinks.forEach(l => l.classList.remove('active'));
+    if (menuLinks[index]) {
+        menuLinks[index].classList.add('active');
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateSlide();
+    setActiveTab(currentIndex);
+    scrollToActiveTab();
+});
+
 
 // Rating
 const stars = document.querySelectorAll('input[name="rating"]');
@@ -81,7 +90,7 @@ stars.forEach((star, index) => {
     star.addEventListener("change", function () {
         // Reset semua bintang ke bentuk kosong dan abu-abu
         labels.forEach((label, i) => {
-            label.classList.remove('text-yellow-500', 'fas');
+            label.classList.remove('star-icon', 'fas');
             label.classList.add('far'); // Kembalikan ke bintang kosong abu-abu
         });
 
@@ -90,7 +99,7 @@ stars.forEach((star, index) => {
             const label = labels[i];
             label.classList.remove('far');
             label.classList.add('fas',
-                'text-yellow-500'); // Ubah ke bintang penuh kuning
+                'star-icon'); // Ubah ke bintang penuh kuning
         }
     });
 });

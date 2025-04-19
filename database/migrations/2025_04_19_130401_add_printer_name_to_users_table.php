@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table->string('session_id')->after('id');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('printer_name')->nullable();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table->dropColumn('session_id');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('printer_name');
         });
     }
 };

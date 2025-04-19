@@ -7,12 +7,24 @@ use Illuminate\Http\Request;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector; // Sesuaikan dengan sistem Anda
 use App\Models\History;
+use Illuminate\Support\Facades\Auth;
 
 class StruckController extends Controller
 {
+    
     public function print($id)
     {
         try {
+
+            $printerName = Auth::user()->printer_name;
+
+            if (!$printerName) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Set printer name first.'
+                ]);
+            }
+
             $history = History::findOrFail($id);
             $firstDecode = json_decode($history->products, true);
             $products = json_decode($firstDecode, true); // decode kedua
@@ -24,7 +36,7 @@ class StruckController extends Controller
                 ]);
             }
             // $printerName = "\\\\UmaruSyahid\\POS-58"; // Perhatikan double backslash
-            $connector = new WindowsPrintConnector("POS-58"); // Ganti dengan nama printer Anda
+            $connector = new WindowsPrintConnector($printerName); // Ganti dengan nama printer Anda //menggunakan nama session
             $printer = new Printer($connector);
 
             $printer->setJustification(Printer::JUSTIFY_CENTER);

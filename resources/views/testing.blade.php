@@ -9,12 +9,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <style>
-    .sauce input[type="radio"]:checked+label {
-        background: #e7b800;
-        color: white;
-        box-shadow: 0 0 10px 4px rgba(211, 47, 47, 0.4);
-        transform: scale(1.02);
-    }
 </style>
 
 
