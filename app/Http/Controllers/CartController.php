@@ -118,6 +118,14 @@ class CartController extends Controller
         ]);
     }
 
+    public function getCartQuantity()
+    {
+        $sessionId = Session::getId();
+        $quantity = Cart::where('session_id', $sessionId)->sum('quantity');
+
+        return response()->json(['quantity' => $quantity]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

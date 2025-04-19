@@ -47,6 +47,7 @@ Route::delete('/cart/{id}', [CartController::class, 'removeFromCart'])->name('ca
 Route::post('/cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
 Route::delete('/cart', [CartController::class, 'clearCart'])->name('cart.clear');
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
+Route::get('/cart/quantity', [CartController::class, 'getCartQuantity'])->name('cart.quantity');
 // Route::get('/cart/total', [CartController::class, 'getTotal'])->name('cart.total');
 // Route::patch('/cart/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
 
@@ -203,7 +204,6 @@ Route::post('/store/toggle-status', [StoreController::class, 'toggleStatus'])->n
 // --- PRINT STRUK ---
 // Route::get('/cetak-struk/{id}', [PrintController::class, 'print'])->name('print.struck');
 
-Route::post('/admin/print-struk/{id}', [StruckController::class, 'print']);
 Route::delete('/bulk-delete', [HistoryController::class, 'bulkDelete'])->name('histories.bulkDelete');
 
 // Route Settings
