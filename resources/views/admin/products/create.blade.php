@@ -3,7 +3,7 @@
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
     setColors(color);" :class="{ 'dark': isDark }">
-        <div class="flex h-screen antialiased text-gray-950 bg-gray-100 dark:bg-dark dark:text-light">
+        <div class="flex h-screen antialiased text-gray-950 bg-prime dark:text-light">
             <!-- Loading screen -->
             <div x-ref="loading"
                 class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
@@ -20,12 +20,11 @@
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
                         <h1 class="text-2xl font-semibold text-zinc-950">Add Product</h1>
-                        <x-admin.waButton></x-admin.waButton>
 
                     </div>
 
                     <!-- Content -->
-                    <div class="min-h-screen mb-4 py-5 flex flex-col items-center justify-center bg-prime px-4">
+                    <div class="min-h-full mb-4 py-5 flex flex-col items-center justify-center bg-prime px-4">
                         <h2 class="mb-4"><a href="{{ route('products.index') }}"
                                 class="text-amber-400 hover:underline">Back </a>/
                             <a href="/admin/dashboard" class="hover:underline text-zinc-950">Home</a>
@@ -107,17 +106,6 @@
 
 
                 </main>
-
-                <!-- Main footer -->
-                <footer
-                    class="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 dark:border-primary-darker">
-                    <div>Bangbara &copy; 2025</div>
-                    <div>
-                        Made by
-                        <a href="https://github.com/Kamona-WD" target="_blank"
-                            class="text-blue-500 hover:underline">BangbaraPos</a>
-                    </div>
-                </footer>
             </div>
 
             <x-admin.panel-content></x-admin.panel-content>

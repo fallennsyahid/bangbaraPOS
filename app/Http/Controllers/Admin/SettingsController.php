@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -12,7 +13,8 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        return view('admin.settings.index');
+        $image = Image::first();
+        return view('admin.settings.index', compact('image'));
     }
 
     public function staffIndex()

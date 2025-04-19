@@ -277,7 +277,7 @@
     <section>
         <div class="hidden justify-center items-center fixed left-0 top-0 w-full h-full overflow-auto bg-black/80 z-[9999]"
             id="qrcode">
-            <img src="{{ asset('asset-view/assets/png/qr-code.jpg') }}" alt="" id="imagePayment" />
+            <img src="{{ Storage::url($imagePayment->payment_image) }}" alt="" id="imagePayment" />
         </div>
     </section>
 

@@ -3,7 +3,7 @@
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
     setColors(color);" :class="{ 'dark': isDark }">
-        <div class="flex h-screen antialiased text-gray-950 bg-gray-100 dark:bg-dark dark:text-light">
+        <div class="flex h-screen antialiased text-gray-950 bg-prime dark:text-light">
             <!-- Loading screen -->
             <div x-ref="loading"
                 class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
@@ -20,14 +20,13 @@
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
                         <h1 class="text-2xl font-semibold text-zinc-950">Manage Histories</h1>
-                        <x-admin.waButton></x-admin.waButton>
                     </div>
 
 
                     <!-- Content -->
-                    <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
+                    <div class="flex flex-col items-center justify-center min-h-full bg-prime px-4 py-4">
 
-                        <div class="p-4 w-full max-w-6xl ">
+                        <div class="p-2 w-full max-w-6xl ">
                             <h2 class="text-xl font-semibold text-gray-800 mb-4">Pilih Periode</h2>
 
                             <form id="filterForm" class="space-y-4">
@@ -63,7 +62,12 @@
                                     class="w-5 h-5 inline-block mr-2">
                                 Export
                             </a>
+<<<<<<< HEAD
                             <button id="bulkDeleteButton" class="bg-red-700 text-white px-4 py-2 rounded-lg">Delete
+=======
+                            <button id="bulkDeleteButton"
+                                class="bg-red-700 text-white px-4 py-2 rounded-lg hidden">Delete
+>>>>>>> ba63282505d71938bef16983cb1dcd840224129c
                                 Selected</button>
 
                         </div>
@@ -127,8 +131,7 @@
                                                 id="history-status-{{ $history->id }}">
                                                 <h5
                                                     class="
-                                                             {{ $history->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                             {{ $history->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}
+                                                             {{ $history->status == 'Cancelled' ? 'text-red-700 font-extrabold' : '' }}
                                                     ">
                                                     {{ $history->status }}</h4>
                                             </td>
@@ -145,7 +148,7 @@
                                                     <p class="text-zinc-950 text-2xl text-center mr-2">-</p>
                                                 @endif
                                             </td>
-                                            <td class="px-6 py-4 flex gap-3 mt-4">
+                                            <td class="px-6 py-4 flex items-center gap-3 mt-4">
                                                 <a href="{{ route('histories.show', $history->id) }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="30"
                                                         height="30" viewBox="0 0 24 24">
@@ -171,9 +174,30 @@
 
                                                 {{-- ini untuk cetak struk --}}
                                                 <a href="javascript:void(0);"
+<<<<<<< HEAD
                                                     onclick="printReceipt({{ $history->id }})"><button
                                                         class="px-4 py-2 bg-blue-500 rounded-xl text-white">Cetak
                                                         Struk</button></a>
+=======
+                                                    onclick="printReceipt({{ $history->id }})"><svg width="42"
+                                                        height="42" viewBox="0 0 42 42" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M28.2851 23.8717H28.9156C30.1048 23.8717 30.6987 23.8717 31.0682 23.5022C31.4377 23.1328 31.4377 22.5388 31.4377 21.3496V20.0886C31.4377 17.7103 31.4377 16.5224 30.6987 15.7834C29.9598 15.0444 28.7719 15.0444 26.3935 15.0444H15.0442C12.6658 15.0444 11.4779 15.0444 10.739 15.7834C10 16.5224 10 17.7103 10 20.0886V22.6107C10 23.2046 10 23.5022 10.1841 23.6876C10.3695 23.8717 10.6671 23.8717 11.261 23.8717H13.1526"
+                                                            stroke="#9F6802" stroke-width="1.33333" />
+                                                        <path
+                                                            d="M13.7832 31.8239V21.3497C13.7832 20.1606 13.7832 19.5666 14.1527 19.1971C14.5222 18.8276 15.1161 18.8276 16.3053 18.8276H25.1326C26.3217 18.8276 26.9157 18.8276 27.2852 19.1971C27.6547 19.5666 27.6547 20.1606 27.6547 21.3497V31.8239C27.6547 32.2237 27.6547 32.4229 27.5235 32.5175C27.3924 32.6121 27.2032 32.549 26.8249 32.4229L24.091 31.5112C24.022 31.4806 23.9481 31.4627 23.8728 31.4582C23.7976 31.467 23.7245 31.4892 23.6572 31.5238L20.9535 32.6058C20.8806 32.644 20.8009 32.6676 20.7189 32.6751C20.637 32.6676 20.5573 32.644 20.4844 32.6058L17.7807 31.5238C17.6748 31.4809 17.6218 31.4608 17.5663 31.4582C17.5108 31.4557 17.4554 31.4746 17.3469 31.5112L14.613 32.4229C14.2347 32.549 14.0455 32.6121 13.9144 32.5175C13.7832 32.4229 13.7832 32.2237 13.7832 31.8239Z"
+                                                            stroke="#9F6802" stroke-width="1.33333" />
+                                                        <path d="M17.5664 23.8711H22.6106M17.5664 27.6542H23.8716"
+                                                            stroke="#9F6802" stroke-width="1.33333"
+                                                            stroke-linecap="round" />
+                                                        <path
+                                                            d="M27.6547 15.0442V14.5398C27.6547 12.3998 27.6547 11.3291 26.9901 10.6646C26.3255 10 25.2549 10 23.1149 10H18.323C16.183 10 15.1123 10 14.4478 10.6646C13.7832 11.3291 13.7832 12.3998 13.7832 14.5398V15.0442"
+                                                            stroke="#9F6802" stroke-width="1.33333" />
+                                                    </svg>
+                                                </a>
+
+>>>>>>> ba63282505d71938bef16983cb1dcd840224129c
 
                                             </td>
 
@@ -194,17 +218,6 @@
                         </div>
                     </div>
                 </main>
-
-                <!-- Main footer -->
-                <footer
-                    class="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 dark:border-primary-darker">
-                    <div>Bangbara &copy; 2025</div>
-                    <div>
-                        Made by
-                        <a href="https://github.com/Kamona-WD" target="_blank"
-                            class="text-blue-500 hover:underline">BangbaraPos</a>
-                    </div>
-                </footer>
             </div>
 
             <x-admin.panel-content></x-admin.panel-content>
@@ -239,7 +252,11 @@
 
     <script>
         function printReceipt(id) {
+<<<<<<< HEAD
             fetch(`/admin/print-struk/${id}`, {
+=======
+            fetch(`/admin/histories/print-struk/${id}`, {
+>>>>>>> ba63282505d71938bef16983cb1dcd840224129c
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -251,18 +268,30 @@
                     if (data.status === 'success') {
                         alert("Struk berhasil dicetak!");
                     } else {
+<<<<<<< HEAD
                         // alert("Gagal cetak struk: " + data.message);
                         alert("Struk berhasil dicetak!");
+=======
+                        alert("Gagal cetak struk: " + data.message);
+>>>>>>> ba63282505d71938bef16983cb1dcd840224129c
                     }
                 })
                 .catch(err => {
                     console.error("Error:", err);
+<<<<<<< HEAD
                     alert("Struk berhasil dicetak!");
                     // alert("Terjadi kesalahan saat mencetak struk.");
+=======
+                    alert("Terjadi kesalahan saat mencetak struk.");
+>>>>>>> ba63282505d71938bef16983cb1dcd840224129c
                 });
         }
     </script>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ba63282505d71938bef16983cb1dcd840224129c
     {{-- Script Tombol Export --}}
     {{-- <script>
         document.getElementById('exportExcel').addEventListener('click', () => {
@@ -315,6 +344,9 @@
                                 </a>` : '-';
                             let row = `
                         <tr>
+                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
+                             <input type="checkbox" class="select-item" value="${history.id}">
+                            </td>
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">#${index + 1}</td>
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">${history.casier_name}</td>
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">${history.customer_name}</td>
@@ -322,7 +354,7 @@
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">Rp ${history.total_price.toLocaleString()}</td>
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">${history.payment_method}</td>
                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">
-                                <span class="${history.status === 'Cancelled' ? 'bg-red-600 text-white px-3 py-2 rounded-md' : 'bg-green-500 text-white px-3 py-2 rounded-md'}">
+                                <span class="${history.status === 'Cancelled' ? 'text-red-700 font-extrabold' : ''}">
                                     ${history.status}
                                 </span>
                             </td>
@@ -389,6 +421,14 @@
                 ordering: false
             });
 
+<<<<<<< HEAD
+=======
+            // Function BulkDelete display
+            function updateBulkDeleteButton() {
+                bulkDeleteButton.classList.toggle('hidden', selectedIds.size === 0);
+            }
+
+>>>>>>> ba63282505d71938bef16983cb1dcd840224129c
             // Saat draw (ganti halaman), sinkronisasi checkbox berdasarkan selectedIds
             table.on('draw', function() {
                 document.querySelectorAll('.select-item').forEach(cb => {
@@ -409,7 +449,11 @@
                     } else {
                         selectedIds.delete(id);
                     }
+<<<<<<< HEAD
 
+=======
+                    updateBulkDeleteButton();
+>>>>>>> ba63282505d71938bef16983cb1dcd840224129c
                     // Update selectAll state
                     const allVisibleChecked = Array.from(document.querySelectorAll('.select-item')).every(
                         cb => cb.checked);
@@ -429,6 +473,10 @@
                 document.querySelectorAll('.select-item').forEach(cb => {
                     cb.checked = selectAll.checked;
                 });
+<<<<<<< HEAD
+=======
+                updateBulkDeleteButton();
+>>>>>>> ba63282505d71938bef16983cb1dcd840224129c
             });
 
             // Bulk Delete

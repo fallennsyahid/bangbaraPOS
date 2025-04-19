@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>BangbaraPos - Rasa Juara, Harga Bersahabat! Nikmati steak berkualitas dengan harga terjangkau.</title>
+    <title>BangbaraPos</title>
     <!-- CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
@@ -33,8 +33,7 @@
                 <!-- Logo -->
                 <div class="py-6">
                     <a href="#home">
-                        <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="BangbaraPos Logo"
-                            width="150" />
+                        <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="Logo" width="150px" />
                     </a>
                 </div>
 
@@ -75,12 +74,11 @@
                     <div class="flex items-center space-x-4 lg:hidden">
                         <!-- Cart Icon -->
                         <a href="{{ route('cart') }}">
-                            <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Shopping Cart" width="40"
+                            <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
                                 class="hover:scale-110 transition duration-300 ease-in-out" />
                         </a>
                         <!-- Hamburger Menu -->
-                        <button id="hamburger" name="hamburger" type="button" class="block" aria-label="Toggle menu"
-                            aria-expanded="false" aria-controls="nav-menu">
+                        <button id="hamburger" name="hamburger" type="button" class="block">
                             <span
                                 class="hamburger-line block w-6 h-1 bg-white transition duration-300 ease-in-out origin-top-left mb-1"></span>
                             <span
@@ -93,11 +91,11 @@
 
                 <div class="hidden lg:block lg:items-center lg:space-x-4">
                     <!-- Cart Icon -->
-                    <a href="{{ route('cart') }}" class="relative" aria-label="View shopping cart">
-                        <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40"
+                    <a href="{{ route('cart') }}" class="relative">
+                        <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
 
-                        <span id="cart-quantity-badge" aria-label="Cart quantity count"
+                        <span id="cart-quantity-badge"
                             class="absolute bottom-0 left-0 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
                             0
                         </span>
@@ -141,7 +139,7 @@
             <!-- Header -->
             <div
                 class="flex items-center bg-primary mx-auto my-5 px-8 sm:px-12 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
-                <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="Menu Book Icon" width="120"
+                <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="" width="120px"
                     class="mr-0 lg:mr-4 lg:scale-150" />
                 <h1 class="font-europhia text-shadow text-[2.5rem] lg:text-6xl text-white">
                     Menu Kami
@@ -150,14 +148,12 @@
 
             <!-- Tab Navigation Category -->
             <div class="w-full py-6 text-center">
-                <div class="flex flex-wrap justify-center gap-x-14 gap-y-4" role="tablist" aria-label="Menu categories">
+                <div class="flex flex-wrap justify-center gap-x-14 gap-y-4">
                     @foreach ($categories as $index => $category)
                         @if ($index < 4)
                             <button onclick="changeSlide({{ $index }})"
                                 class="menu-link relative text-white font-europhia text-3xl sm:text-4xl lg:text-5xl hover:text-yellow-400 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:rounded-full after:w-full after:bg-white hover:after:bg-yellow-400 {{ $index === 0 ? 'active' : '' }}"
-                                data-index="{{ $index }}" role="tab" id="tab-{{ $index }}"
-                                aria-selected="{{ $index === 0 ? 'true' : 'false' }}"
-                                aria-controls="panel-{{ $index }}">
+                                data-index="{{ $index }}">
                                 {{ $category->nama_kategori }}
                             </button>
                         @endif
@@ -171,9 +167,7 @@
                     style="width: {{ count($categories->take(4)) * 100 }}%">
 
                     @foreach ($categories->take(4) as $category)
-                        <div class="w-full min-h-16 flex flex-col justify-start" role="tabpanel"
-                            id="panel-{{ $index }}" aria-labelledby="tab-{{ $index }}"
-                            {{ $index !== 0 ? 'hidden' : '' }}>
+                        <div class="w-full min-h-16 flex flex-col justify-start">
                             <div
                                 class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5 place-items-center">
                                 @foreach ($category->products as $product)
@@ -192,8 +186,7 @@
                                         <!-- Bagian Gambar -->
                                         <a href="{{ $isNonActive || $isClose ? '#' : '#item-detail-modal' }}"
                                             class="item-detail-button {{ $isNonActive ? 'pointer-events-none' : '' }}"
-                                            data-product-id="{{ $product->id }}"
-                                            aria-label="{{ $product->nama_menu }} details">
+                                            data-product-id="{{ $product->id }}">
                                             <div class="relative group">
                                                 <img src="{{ asset('storage/' . $product->gambar_menu) }}"
                                                     alt="{{ $product->nama_menu }}"
@@ -238,8 +231,7 @@
                                                     : 'item-detail-button text-shadow text-sm sm:text-sm bg-red-600 px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center ' }}
                                         {{ $isNonActive ? 'bg-gray-500 cursor-disabled' : '' }}"
                                                 data-product-id="{{ $product->id }}"
-                                                {{ $isNonActive ? 'disabled' : '' }}
-                                                aria-label="{{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan ' . $product->nama_menu . ' ke keranjang' }}">
+                                                {{ $isNonActive ? 'disabled' : '' }}>
                                                 {{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan Ke Keranjang' }}
                                             </button>
 
@@ -258,12 +250,11 @@
     <!-- Popup Start -->
     <section id="popup">
         <div class="hidden fixed z-[9999] left-0 top-0 w-full h-full overflow-auto justify-center items-center bg-[rgba(0,0,0,0.6)]"
-            id="item-detail-modal" name="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+            id="item-detail-modal" name="modal">
             <div class="flex flex-col bg-white max-h-[90vh] w-[90%] max-w-[350px] md:max-w-[375px] lg:max-w-[400px] rounded-lg gap-2 overflow-hidden animation"
                 name="modal-container">
                 <a href="#"
-                    class="close-icon absolute bg-white w-8 h-8 m-2 rounded-full flex items-center justify-center hover:scale-125 hover:rotate-90 transition duration-300"
-                    aria-label="Close dialog">
+                    class="close-icon absolute bg-white w-8 h-8 m-2 rounded-full flex items-center justify-center hover:scale-125 hover:rotate-90 transition duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="feather feather-x text-primary">
@@ -272,15 +263,14 @@
                     </svg>
                 </a>
                 <input type="hidden" id="modal-product-id" name="product_id" value="">
-                <img id="modal-image" src="" alt="Product Image"
+                <img id="modal-image" src="" alt="Food"
                     class="w-full object-fill aspect-video rounded-t-lg overflow-hidden" />
                 <h1 id="modal-title" class="text-center font-alatsi text-2xl pb-2"></h1>
                 <p id="modal-description" class="text-center font-alatsi text-base px-4"></p>
 
-                <div id="pilihan-saus">
+                <div id="pilihan-saus" class="">
                     <h3 class="text-center text-base font-semibold text-gray-800 mb-2">Pilih Saus</h3>
-                    <div class="sauce flex justify-center gap-2 flex-wrap" role="radiogroup"
-                        aria-labelledby="sauce-heading">
+                    <div class="sauce flex justify-center gap-2 flex-wrap">
                         <input type="radio" name="sauce" id="sauce-bbq" value="barbaque" class="hidden">
                         <label for="sauce-bbq"
                             class="py-1 px-2 border border-yellow-400 bg-yellow-200 cursor-pointer transition-all duration-200 ease-out shadow-sm text-sm text-gray-800 rounded 
@@ -307,8 +297,7 @@
 
                 <div class="flex justify-center items-center flex-row my-4" id="quantity-button">
                     <!-- Decrease Quantity -->
-                    <button id="decrease-qty" class="group rounded-l-sm border border-black/80 px-2 py-2"
-                        aria-label="Decrease quantity">
+                    <button id="decrease-qty" class="group rounded-l-sm border border-black/80 px-2 py-2">
                         <span class="inline-block transform transition-transform duration-200 group-hover:scale-125"> -
                         </span>
                     </button>
@@ -316,11 +305,10 @@
                     <!-- Display Quantity -->
                     <input type="text" id="modal-quantity"
                         class="border-y border-black/80 px-2 py-2 text-center w-1/4 focus:outline-none" value="1"
-                        readonly aria-label="Product quantity">
+                        readonly>
 
                     <!-- Increase Quantity -->
-                    <button id="increase-qty" class="group rounded-r-sm border border-black/80 px-2 py-2"
-                        aria-label="Increase quantity">
+                    <button id="increase-qty" class="group rounded-r-sm border border-black/80 px-2 py-2">
                         <span class="inline-block transform transition-transform duration-200 group-hover:scale-125"> +
                         </span>
                     </button>
@@ -328,7 +316,7 @@
 
                 <button id="add-to-cart-modal"
                     class="bg-[#BF0000] w-full px-4 py-2 font-marmelad text-white rounded-b-md mt-auto"
-                    data-url="{{ route('cart.add') }}" data-id="" aria-label="Add to cart">
+                    data-url="{{ route('cart.add') }}" data-id="">
                     Tambahkan Ke Keranjang
                 </button>
 
@@ -341,19 +329,20 @@
     <section id="about"
         class="relative overflow-x-hidden bg-red-600 overflow-hidden min-h-[60vh] sm:min-h-[60vh] md:min-h-[50vh] lg:min-h-[50vh] xl:min-h-[70vh]">
         <!-- Gambar sebagai background di mobile -->
-        <img src="{{ asset('asset-view/assets/svg/steak.svg') }}" alt="Plate Steak"
+        <img src="{{ asset('asset-view/assets/svg/steak.svg') }}" alt="A plate with steak, fries, and vegetables"
             class="absolute top-0 left-0 w-full h-full object-cover opacity-40 z-0 md:hidden" />
 
         <div class="relative z-10 flex justify-center items-center p-6 md:p-10 h-full">
             <div class="text-center max-w-6xl w-full">
                 <div class="flex flex-col items-center md:flex-row md:items-start">
                     <!-- Gambar normal di desktop/tablet -->
-                    <img src="{{ asset('asset-view/assets/svg/steak.svg') }}" alt="Plate Steak"
+                    <img src="{{ asset('asset-view/assets/svg/steak.svg') }}"
+                        alt="A plate with steak, fries, and vegetables"
                         class="hidden md:block w-full md:w-2/5 h-auto" />
 
                     <!-- Teks konten -->
                     <div class="mt-6 md:mt-0 md:ml-6 text-white text-shadow-2">
-                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-europhia text-shadow mb-4 ">
+                        <h1 class="about-title text-4xl sm:text-5xl lg:text-6xl font-europhia text-shadow mb-4 ">
                             Tentang Kami
                         </h1>
                         <p class="leading-relaxed pt-4 text-base sm:text-lg md:text-xl lg:text-2xl ">
@@ -375,19 +364,18 @@
     <section id="contact" class="bg-yellow-200 overflow-x-hidden">
         <div class="container mx-auto px-4">
             <div class="flex justify-center py-4 mb-8">
-                <h1
-                    class="py-4 px-12 bg-red-700 rounded-full text-center text-4xl font-europhia shadow-lg text-white cursor-default sm:text-5xl lg:text-6xl">
+                <a href=""
+                    class="contact-title py-4 px-12 bg-red-700 rounded-full text-center text-4xl font-europhia shadow-lg text-white cursor-default sm:text-5xl lg:text-6xl">
                     Berikan Rating & Ulasan
-                </h1>
+                </a>
             </div>
             <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8">
-                <form action="{{ route('index.store') }}" method="POST" class="w-full lg:w-1/2">
+                <form action="{{ route('index.store') }}" method="POST" class="form-contact w-full lg:w-1/2">
                     @csrf
                     <div class="bg-[#F5EB55] p-6 sm:p-9 rounded-2xl ring-1 ring-[#BBB34E]">
                         <div class="flex justify-between">
                             <h5 class="font-medium text-xl">Kualitas Produk</h5>
-                            <div class="flex items-center gap-2 text-xl" id="star" role="radiogroup"
-                                aria-labelledby="rating-heading">
+                            <div class="flex items-center gap-2 text-xl" id="star">
                                 <input type="radio" name="rating" id="star1" value="1" class="hidden">
                                 <label for="star1" class="cursor-pointer"><i class="far fa-star"></i></label>
 
@@ -420,7 +408,7 @@
                 </form>
                 <div class="hidden lg:flex lg:justify-center w-full lg:w-auto">
                     <img src="{{ asset('asset-view/assets/svg/contact.svg') }}" alt="Contact Illustration"
-                        class="w-72 sm:w-96 lg:w-[400px]" />
+                        class="contact-img w-72 sm:w-96 lg:w-[400px]" />
                 </div>
             </div>
         </div>
@@ -429,14 +417,14 @@
 
     {{-- Ulasan Section Start --}}
     <section id="ulasan" class="ulasan-img">
-        <h1 class="py-12 font-europhia text-white text-center text-5xl lg:text-6xl">
+        <h1 class="ulasan-title py-12 font-europhia text-white text-center text-5xl lg:text-6xl">
             Apa Kata Mereka
         </h1>
-        <div class="slider" aria-label="Customer rating">
+        <div class="slider">
             <div class="slide-track">
                 <!-- First set of reviews -->
                 @foreach ($reviews as $review)
-                    <div class="slide">
+                    <div class="ulasan-slide slide">
                         <div class="review">
                             <p class="review-message">{{ $review->message }}</p>
                             <div class="review-footer">
@@ -456,7 +444,7 @@
 
                 <!-- Duplicate set for infinite scrolling -->
                 @foreach ($reviews as $review)
-                    <div class="slide">
+                    <div class="ulasan-slide slide">
                         <div class="review">
                             <p class="review-message">{{ $review->message }}</p>
                             <div class="review-footer">
@@ -483,13 +471,13 @@
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-wrap justify-between items-center lg:justify-between gap-y-10">
                 <!-- Logo -->
-                <a href="#navbarHeader" class="flex justify-center lg:justify-start w-full lg:w-auto">
+                <a href="#navbarHeader" class="logo-footer flex justify-center lg:justify-start w-full lg:w-auto">
                     <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="Logo" height=""
                         class="h-12" />
                 </a>
 
                 <!-- Account -->
-                <div class="w-full sm:w-auto text-center">
+                <div class="account-footer w-full sm:w-auto text-center">
                     <h3 class="font-medium text-white text-xl pb-3">Account</h3>
                     <div class="flex justify-center gap-4">
                         <a href="https://wa.me/+6283857185413" target="_blank">
@@ -512,7 +500,7 @@
                 </div>
 
                 <!-- Contact -->
-                <div class="w-full sm:w-auto text-center">
+                <div class="contact-footer w-full sm:w-auto text-center">
                     <h3 class="font-bold text-white text-xl pb-3">Kontak</h3>
                     <a href="https://wa.me/+6283857185413" target="_blank"
                         class="font-normal text-white text-lg hover:underline">
@@ -521,7 +509,7 @@
                 </div>
 
                 <!-- Maps -->
-                <div class="w-full sm:w-auto text-center mt-6">
+                <div class="maps-footer w-full sm:w-auto text-center mt-6">
                     <h3 class="font-bold text-white text-xl pb-3">Maps</h3>
                     <a href="https://maps.app.goo.gl/QJJSghdQJtVT7pj77" target="_blank" class="inline-block">
                         <img src="{{ asset('asset-view/assets/svg/maps.svg') }}" alt="Google Maps"

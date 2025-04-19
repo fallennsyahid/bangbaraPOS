@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\StaffCredentials;
 use Illuminate\Support\Facades\Auth;
+use Laravolt\Avatar\Facade as Avatar;
 
 class StaffController extends Controller
 {
@@ -21,8 +22,14 @@ class StaffController extends Controller
     public function index()
     {
         $users = User::where('id', '!=', Auth::user()->id)
-                 ->where('usertype', 'staff')
-                 ->get();
+             ->where('usertype', 'staff')
+             ->get()
+             ->map(function ($user) {
+             $user->avatar = Auth::check() 
+             ? Avatar::create($user->name)->toBase64() 
+             : asset('default-avatar.png');
+             return $user;
+             });
         return view('admin.staffs.index', compact('users'));
     }
 
@@ -70,6 +77,9 @@ class StaffController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
+        $user->avatar = Auth::check()
+            ? Avatar::create($user->name)->toBase64()
+            : asset('default-avatar.png');
         return view('admin.staffs.show', compact('user'));
     }
 

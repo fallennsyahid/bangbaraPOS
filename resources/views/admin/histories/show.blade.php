@@ -3,7 +3,7 @@
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
     setColors(color);" :class="{ 'dark': isDark }">
-        <div class="flex h-screen antialiased text-gray-950 bg-gray-100 dark:bg-dark dark:text-light">
+        <div class="flex h-screen antialiased text-gray-950 bg-prime dark:text-light">
             <!-- Loading screen -->
             <div x-ref="loading"
                 class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
@@ -20,12 +20,11 @@
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
                         <h1 class="text-2xl font-semibold text-zinc-950">Order Details</h1>
-                        <x-admin.waButton></x-admin.waButton>
                     </div>
 
 
                     <!-- Content -->
-                    <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
+                    <div class="flex flex-col items-center justify-center min-h-full bg-prime px-4 py-4">
                         <!-- Navigasi -->
                         <h2 class="mb-4">
                             <a href="{{ route('histories.index') }}" class="text-amber-400 hover:underline">Back</a> /
@@ -99,18 +98,21 @@
                                         readonly>
                                 </a>
                             </div>
-                            <div class="mt-11 flex justify-items-end">
-                                <a href="#" id="printButton"
-                                    class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
-                                    <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
-                                        class="w-5 h-5 inline-block mr-2">
-                                    Print
-                                </a>
-                            </div>
+                            {{-- <div class="mt-11 flex justify-items-end">
+                                <form action="{{ route('print.struck', $history->id) }}" method="GET">
+                                    <button type="submit"
+                                        class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg flex items-center">
+                                        <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
+                                            class="w-5 h-5 inline-block mr-2">
+                                        Print
+                                    </button>
+                                </form>
+
+                            </div> --}}
                         </div>
 
 
-                        {{-- Print Display --}}
+                        {{-- Print Display
                         <div id="printDisplay" class="hidden">
                             <div class="flex justify-center items-center h-screen m-0 bg-gray-200 text-gray-900">
                                 <div class="rounded-md relative w-72 shadow-2xl p-3 bg-white">
@@ -121,7 +123,6 @@
                                     <div class="text-center text-xs font-bold mb-1">~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div>
                                     <div class="text-xs pl-2">
                                         <div class="text-xs mb-1">Customer：{{ $history->customer_name }}</div>
-                                        <div class="text-xs mb-1">TelePhone：{{ $history->customer_phone }}</div>
                                         <div class="text-xs mb-1">Casier：{{ $history->casier_name }}</div>
                                         <div>OrderNumber：#{{ $history->id }}</div>
                                     </div>
@@ -158,25 +159,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
-
-
-
-
 
                 </main>
-
-                <!-- Main footer -->
-                <footer
-                    class="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 dark:border-primary-darker">
-                    <div>Bangbara &copy; 2025</div>
-                    <div>
-                        Made by
-                        <a href="https://github.com/Kamona-WD" target="_blank"
-                            class="text-blue-500 hover:underline">BangbaraPos</a>
-                    </div>
-                </footer>
             </div>
 
             <x-admin.panel-content></x-admin.panel-content>
@@ -187,22 +173,26 @@
     <x-admin.js></x-admin.js>
     {{-- Confirm Alert --}}
 
-    <script>
+    {{-- <script>
         document.getElementById('printButton').addEventListener('click', function(event) {
             event.preventDefault();
 
-            // Hide web display
-            document.getElementById('printArea').classList.add('hidden');
-            document.getElementById('printDisplay').classList.remove('hidden')
+            // Simpan referensi elemen
+            const printArea = document.getElementById('printArea');
+            const printDisplay = document.getElementById('printDisplay');
 
-            // Print
+            // Sembunyikan elemen web dan tampilkan elemen cetak
+            printArea.classList.add('hidden');
+            printDisplay.classList.remove('hidden');
+
+            // Tunggu hingga cetak selesai
             window.print();
 
-            // return web display
-            document.getElementById('printArea').classList.remove('hidden');
-            document.getElementById('printDisplay').classList.add('hidden');
+            // Kembalikan tampilan awal
+            printArea.classList.remove('hidden');
+            printDisplay.classList.add('hidden');
         });
-    </script>
+    </script> --}}
 </body>
 
 </html>

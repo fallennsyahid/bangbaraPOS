@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Carbon as Enter;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
@@ -16,16 +17,20 @@ use App\Http\Controllers\Admin\StruckController;
 use App\Http\Controllers\Admin\HistoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Admin\OrderAdminController;
 use App\Http\Controllers\Admin\NotificationContrller;
+use App\Http\Controllers\Admin\StruckOrderController;
 use App\Http\Controllers\Staff\StaffOrdersController;
 use App\Http\Controllers\Admin\AdminProfileController;
-use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\PaymentImageController;
 use App\Http\Controllers\Staff\StaffHistoryController;
-use App\Http\Controllers\Staff\StaffProfileController;
 
 // Route halaman utama
+use App\Http\Controllers\Staff\StaffProfileController;
+use App\Http\Controllers\Staff\StruckHistoryController;
+use App\Http\Controllers\Staff\StruckOrdersStaffController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -67,6 +72,12 @@ Route::resource('/staff/staffHistories', StaffHistoryController::class);
 Route::resource('/staff/staffProfile', StaffProfileController::class);
 
 // --- ROUTE ADMIN ---
+// Staff Struck Route
+Route::post('/staff/histories/print-struk/{id}', [StruckHistoryController::class, 'print']);
+Route::post('/staff/orders/print-struk/{id}', [StruckOrdersStaffController::class, 'print']);
+
+
+// Admin Route
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
     ->middleware(['auth', 'verified', 'admin'])
     ->name('admin.dashboard');
@@ -95,10 +106,26 @@ Route::resource('/admin/categories', CategoryController::class);
 // Product Routes
 Route::resource('/admin/products', ProductController::class);
 // Order Routes
+Route::delete('/categories/bulk-delete', [CategoryController::class, 'bulkDelete'])->name('categories.bulkDelete');
+
+// Products Routes
+Route::resource('/admin/products', ProductController::class);
+Route::delete('/products/bulk-delete', [ProductController::class, 'bulkDelete'])->name('products.bulkDelete');
+
+// Orders Routes
 Route::resource('/admin/orders', OrderAdminController::class);
+Route::delete('/orders/bulk-delete', [OrderAdminController::class, 'bulkDelete'])->name('orders.bulkDelete');
+Route::post('/admin/orders/print-struk/{id}', [StruckOrderController::class, 'print']);
+
+
 // History Routes
 Route::resource('/admin/histories', HistoryController::class);
 // Staff Routes
+Route::delete('/bulk-delete', [HistoryController::class, 'bulkDelete'])->name('histories.bulkDelete');
+Route::post('/admin/histories/print-struk/{id}', [StruckController::class, 'print'])->name('admin.print.struk');
+
+
+// Staffs Routes
 Route::resource('/admin/staffs', StaffController::class);
 Route::delete('/admin/staffs/{id}', [StaffController::class, 'destroy'])->name('staffs.destroy');
 // Profile Routes
@@ -114,7 +141,7 @@ Route::get('histories/filter', [HistoryController::class, 'filter'])->name('hist
 // --- NOTIFIKASI ---
 Route::get('/notifications', function () {
     $orders = Order::where('status', 'Pending')
-        ->whereDate('created_at', Carbon::today())
+        ->whereDate('created_at', Enter::today())
         ->latest()
         ->take(5)
         ->get([
@@ -157,11 +184,13 @@ Route::get('/orders/latest-today', function () {
 
 // --- REVIEWS ---
 Route::resource('/admin/reviews', ReviewController::class);
+Route::delete('/reviews/bulkDelete', [ReviewController::class, 'bulkDelete'])->name('reviews.bulkDelete');
 
 // --- CHART ROUTES ---
 Route::get('/chart-data', [AdminController::class, 'getChartData']);
 Route::get('/best-seller-chart', [AdminController::class, 'getBestSellerChartData']);
 Route::get('/best-seller-today', [DashboardController::class, 'getBestSellerChartData']);
+Route::get('/hourly-orders-stats', [DashboardController::class, 'getOrderStats']);
 Route::get('/best-seller-chart-filter', [AdminController::class, 'getBestSellerChartDataFilter']);
 Route::get('/orders-stats', [AdminController::class, 'getOrdersStats']);
 Route::get('/hourly-orders-stats', [AdminController::class, 'getHourlyPaymentStats']);
@@ -209,6 +238,9 @@ Route::delete('/bulk-delete', [HistoryController::class, 'bulkDelete'])->name('h
 // Route Settings
 Route::resource('/admin/settings', SettingsController::class);
 Route::get('/staff/settings', [SettingsController::class, 'staffIndex'])->name('staffSettings.index');
+
+Route::post('/admin/settings/payment-image', [PaymentImageController::class, 'store'])->name('payment-image.store');
+Route::put('/admin/settings/payment-image/{id}', [PaymentImageController::class, 'update'])->name('payment-image.update');
 
 // Autentikasi route
 require __DIR__ . '/auth.php';

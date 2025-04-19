@@ -7,7 +7,11 @@
             title: 'Success',
             text: {!! json_encode(session('success')) !!},
             showConfirmButton: false,
+<<<<<<< HEAD
             timer: 1700,
+=======
+            timer: 1500,
+>>>>>>> ba63282505d71938bef16983cb1dcd840224129c
         });
     @endif
 </script>

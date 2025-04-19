@@ -3,7 +3,7 @@
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
     setColors(color);" :class="{ 'dark': isDark }">
-        <div class="flex h-screen antialiased text-gray-950 bg-gray-100 dark:bg-dark dark:text-light">
+        <div class="flex h-screen antialiased text-gray-950 bg-prime dark:text-light">
             <!-- Loading screen -->
             <div x-ref="loading"
                 class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
@@ -12,7 +12,7 @@
 
             <x-staff.sidebar></x-staff.sidebar>
 
-            <div class="flex-1 h-full overflow-x-hidden overflow-y-auto">
+            <div class="flex-1 min-h-full overflow-x-hidden overflow-y-auto">
                 <x-staff.navbar></x-staff.navbar>
 
                 <!-- Main content -->
@@ -30,8 +30,13 @@
                         <!-- Profile Header -->
                         <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
                             <div class="flex items-center space-x-4">
+<<<<<<< HEAD
                                 <img src="{{ Avatar::create(Auth::user()->name)->toBase64() }}" alt="Profile Picture"
                                     class="w-24 h-24 rounded-full">
+=======
+                                <img src="{{ Auth::check() ? Avatar::create(Auth::user()->name)->toBase64() : asset('default-avatar.png') }}"
+                                    alt="Profile Picture" class="w-24 h-24 rounded-full">
+>>>>>>> ba63282505d71938bef16983cb1dcd840224129c
                                 <div>
                                     <h1 class="text-2xl font-bold text-gray-900">{{ $user->name ?? 'Guest' }}
                                     </h1>
@@ -70,17 +75,6 @@
                     </div>
 
                 </main>
-
-                <!-- Main footer -->
-                <footer
-                    class="flex items-center justify-between p-2 bg-white dark:bg-zinc-900 dark:border-primary-darker">
-                    <div>Bangbara &copy; 2025</div>
-                    <div>
-                        Made by
-                        <a href="https://github.com/Kamona-WD" target="_blank"
-                            class="text-blue-500 hover:underline">BangbaraPos</a>
-                    </div>
-                </footer>
             </div>
 
             <x-admin.panel-content></x-admin.panel-content>

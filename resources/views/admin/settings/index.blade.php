@@ -31,7 +31,7 @@
                             <div class="flex items-center">
                                 <form action="" method="" class="flex flex-col items-center w-full">
                                     <input type="text" value="POS-58"
-                                        class="p-2 rounded-xl font-medium w-full border-2 border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
+                                        class="p-2 rounded-xl text-black font-medium w-full border-2 border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
                                     <label for="printer-update"
                                         class="flex items-center justify-center gap-2 bg-yellow-400 py-2 px-4 mt-4 max-w-40 rounded-md text-white font-semibold cursor-pointer hover:bg-yellow-500 group">
                                         <svg fill="#000000" width="30px" height="30px" viewBox="0 0 24 24"
@@ -67,23 +67,29 @@
                     <div class="min-h-full mt-4 flex items-center justify-center bg-prime">
                         <div class="w-full mx-auto bg-white py-4 px-6 rounded-lg shadow-lg">
                             <div class="flex flex-col items-center justify-center">
-                                <form action="" method="" class="flex flex-col gap-6">
+                                <form action="{{ route('payment-image.update', $image->id) }}" method="post"
+                                    enctype="multipart/form-data" class="flex flex-col gap-6">
+                                    @csrf
+                                    @method('PUT')
                                     <table class="table-auto border-collapse border border-gray-300 w-full text-center">
                                         <thead class="bg-gray-100">
                                             <tr>
-                                                <th class="border border-gray-300 px-4 py-2">Current Photo</th>
-                                                <th class="border border-gray-300 px-4 py-2">Upload Photo</th>
-                                                <th class="border border-gray-300 px-4 py-2">Preview Photo</th>
+                                                <th class="border border-gray-300 px-4 py-2 text-black">Current Photo
+                                                </th>
+                                                <th class="border border-gray-300 px-4 py-2 text-black">Upload Photo
+                                                </th>
+                                                <th class="border border-gray-300 px-4 py-2 text-black">Preview Photo
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td class="border border-gray-300 px-4 py-2">
-                                                    <img src="{{ asset('asset-view/assets/png/drink/1.png') }}"
-                                                        alt="" class="w-40 h-auto rounded">
+                                                    <img src="{{ Storage::url($image->payment_image) }}" alt=""
+                                                        class="w-40 h-auto rounded">
                                                 </td>
                                                 <td class="border border-gray-300 px-4 py-2">
-                                                    <label for="payment-image"
+                                                    <label for="payment_image"
                                                         class="flex items-center gap-3 bg-red-500 px-4 py-2 rounded-md text-white font-semibold cursor-pointer hover:bg-red-600">
                                                         <svg fill="#ffffff" width="30px" height="30px"
                                                             viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg"
@@ -100,8 +106,9 @@
                                                         </svg>
                                                         Upload
                                                     </label>
-                                                    <input type="file" class="hidden" id="payment-image"
-                                                        accept="image/*" onchange="previewImage(this)" />
+                                                    <input type="file" class="hidden" id="payment_image"
+                                                        name="payment_image" accept="image/*"
+                                                        onchange="previewImage(this)" />
                                                 </td>
                                                 <td class="border border-gray-300 px-4 py-2">
                                                     <img id="image-preview" src="" alt="Preview Gambar"

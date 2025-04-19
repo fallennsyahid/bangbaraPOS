@@ -81,6 +81,27 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')->with('success', 'Berhasil Update Kategori');
     }
 
+    public function bulkDelete(Request $request)
+{
+    // Ambil array ID dari request
+    $ids = $request->input('ids');
+
+    // Validasi jika tidak ada ID yang dikirim
+    if (!$ids || count($ids) === 0) {
+        return response()->json(['success' => false, 'message' => 'No items selected.']);
+    }
+
+    // Hapus data berdasarkan ID
+    $deleted = Category::whereIn('id', $ids)->delete();
+
+    // Periksa apakah data berhasil dihapus
+    if ($deleted) {
+        return response()->json(['success' => true, 'message' => 'Selected items deleted successfully.']);
+    } else {
+        return response()->json(['success' => false, 'message' => 'Failed to delete selected items.']);
+    }
+}
+
     /**
      * Remove the specified resource from storage.
      */

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Log;
 use App\Models\Cart;
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -20,6 +21,7 @@ class CartController extends Controller
     {
         $sessionId = Session::getId();
         $cartItems = Cart::with('product')->where('session_id', $sessionId)->get();
+        // $imagePayment = Image::first();
 
         return view('cart', compact('cartItems'));
     }

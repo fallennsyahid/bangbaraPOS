@@ -20,7 +20,9 @@ class ProductController extends Controller
     {
         $products = Product::with('category')->get();
         $categories = Category::all();
-        return view('admin.products.index', compact('products', 'categories'));
+        $allIds = Product::pluck('id')->toArray(); // Ambil semua ID
+
+        return view('admin.products.index', compact('products', 'categories', 'allIds'));
     }
 
     public function export()
@@ -133,6 +135,27 @@ class ProductController extends Controller
         $product->update($data);
         return redirect()->route('products.index')->with('success', 'Berhasil Mengubah Produk');
     }
+
+    public function bulkDelete(Request $request)
+{
+    // Ambil array ID dari request
+    $ids = $request->input('ids');
+
+    // Validasi jika tidak ada ID yang dikirim
+    if (!$ids || count($ids) === 0) {
+        return response()->json(['success' => false, 'message' => 'No items selected.']);
+    }
+
+    // Hapus data berdasarkan ID
+    $deleted = Product::whereIn('id', $ids)->delete();
+
+    // Periksa apakah data berhasil dihapus
+    if ($deleted) {
+        return response()->json(['success' => true, 'message' => 'Selected items deleted successfully.']);
+    } else {
+        return response()->json(['success' => false, 'message' => 'Failed to delete selected items.']);
+    }
+}
 
     /**
      * Remove the specified resource from storage.

@@ -3,7 +3,7 @@
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
     setColors(color);" :class="{ 'dark': isDark }">
-        <div class="flex h-screen antialiased text-gray-950 bg-gray-100 dark:bg-dark dark:text-light">
+        <div class="flex h-screen antialiased text-gray-950 bg-prime dark:text-light">
             <!-- Loading screen -->
             <div x-ref="loading"
                 class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
@@ -20,13 +20,12 @@
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
                         <h1 class="text-2xl font-semibold text-zinc-950">Manage Staffs</h1>
-                        <x-admin.waButton></x-admin.waButton>
 
                     </div>
 
 
                     <!-- Content -->
-                    <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
+                    <div class="flex flex-col items-center justify-center min-h-full bg-prime px-4 py-4">
                         <!-- Tombol View on GitHub -->
                         <div class="mb-6 flex justify-end w-full max-w-6xl gap-3">
                             <a href="{{ route('staffs.create') }}"
@@ -50,6 +49,9 @@
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">ID
                                         </th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Avatar</th>
+                                        </th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Name</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Email</th>
@@ -67,6 +69,10 @@
                                     @foreach ($users as $index => $user)
                                         <tr class="hover:bg-thead">
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">#{{ $index + 1 }}
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
+                                                <img src="{{ $user->avatar }}" alt="Avatar"
+                                                    class="w-10 h-10 rounded-full">
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $user->name }}
@@ -136,17 +142,6 @@
 
 
                 </main>
-
-                <!-- Main footer -->
-                <footer
-                    class="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 dark:border-primary-darker">
-                    <div>Bangbara &copy; 2025</div>
-                    <div>
-                        Made by
-                        <a href="https://github.com/Kamona-WD" target="_blank"
-                            class="text-blue-500 hover:underline">BangbaraPos</a>
-                    </div>
-                </footer>
             </div>
 
             <x-admin.panel-content></x-admin.panel-content>

@@ -4,7 +4,7 @@
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
     setColors(color);" :class="{ 'dark': isDark }">
-        <div class="flex h-screen antialiased text-gray-950 bg-gray-100 dark:bg-dark dark:text-light">
+        <div class="flex h-screen antialiased text-gray-950 bg-prime dark:text-light">
             <!-- Loading screen -->
             <div x-ref="loading"
                 class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
@@ -34,9 +34,9 @@
                             <!-- Income card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total Income</h6>
-                                <div class="flex gap-4 justify-center items-center">
-                                    <img src="{{ asset('asset-admin/public/img/money-bag.png') }}" alt="Money Bag"
-                                        width="50px" class="filter invert text-white">
+                                <div class="flex gap-2 ml-4">
+                                    <img src="{{ asset('asset-admin/public/img/money-bag.png') }}"
+                                        class="w-10 filter invert" stroke="currentColor" />
                                     <p class="text-3xl font-bold">Rp {{ number_format($totalIncome) }}</p>
                                 </div>
                             </div>
@@ -45,39 +45,25 @@
                             <!-- Selling card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total Selling</h6>
-                                <div class="flex gap-4 justify-center items-center">
-                                    <img src="{{ asset('asset-admin/public/img/selling-bag.svg') }}" alt="Selling Bag">
-                                    <p class="text-3xl font-bold">{{ $histories }}</p>
-                                </div>
+                                <p class="text-3xl font-bold">{{ $histories }}</p>
                             </div>
 
                             <!-- Orders card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total Orders</h6>
-                                <div class="flex gap-4 justify-center items-center">
-                                    <img src="{{ asset('asset-admin/public/img/orders.svg') }}" alt="Orders">
-                                    <p class="text-3xl font-bold" id="totalOrders">{{ $total_orders }}</p>
-                                </div>
+                                <p class="text-3xl font-bold" id="totalOrders">{{ $total_orders }}</p>
                             </div>
 
                             <!-- Completed card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total completed orders</h6>
-                                <div class="flex gap-4 justify-center items-center">
-                                    <img src="{{ asset('asset-admin/public/img/completed-orders.svg') }}"
-                                        alt="Completed Orders">
-                                    <p class="text-3xl font-bold">{{ $total_orders_completed }}</p>
-                                </div>
+                                <p class="text-3xl font-bold">{{ $total_orders_completed }}</p>
                             </div>
 
                             <!-- Cancelled card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total cancelled orders</h6>
-                                <div class="flex gap-4 justify-center items-center">
-                                    <img src="{{ asset('asset-admin/public/img/canceled-orders.svg') }}"
-                                        alt="Canceled Orders">
-                                    <p class="text-3xl font-bold">{{ $total_orders_cancelled }}</p>
-                                </div>
+                                <p class="text-3xl font-bold">{{ $total_orders_cancelled }}</p>
                             </div>
                             <!-- Tickets card -->
                             {{-- <div class="flex items-center justify-between p-4 bg-white rounded-md dark:bg-darker">
@@ -126,7 +112,7 @@
                                     <h4 class="text-lg font-semibold text-gray-900">Total Income</h4>
                                 </div>
                                 <!-- Chart -->
-                                <div class="relative p-4 h-72">
+                                <div class="relative p-4 h-[480px]">
                                     <canvas id="orderChart"></canvas>
                                 </div>
                             </div>
@@ -204,17 +190,17 @@
                 <script>
                     const ctx = document.getElementById('orderChart').getContext('2d');
 
+                    const allMonths = ['January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'
+                    ];
 
                     let orderChart = new Chart(ctx, {
                         type: 'bar',
                         data: {
-                            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-                                'October', 'November', 'December'
-                            ],
-
+                            labels: allMonths, // label tetap 12 bulan
                             datasets: [{
                                 label: 'Total Income',
-                                data: @json($totals),
+                                data: @json($totals), // data tetap 12 item (isi 0 kalau tidak ada transaksi)
                                 backgroundColor: '#D3A200',
                                 borderColor: '#D3A200',
                                 borderWidth: 1
@@ -227,7 +213,7 @@
                                 y: {
                                     ticks: {
                                         callback: function(value) {
-                                            return value.toLocaleString(); // Format angka dengan pemisah ribuan
+                                            return value.toLocaleString(); // Format angka ribuan
                                         }
                                     }
                                 }
@@ -235,49 +221,21 @@
                         }
                     });
 
-
-                    // Event Listener untuk Dropdown Tahun
                     document.getElementById('filter_year').addEventListener('change', function() {
                         const selectedYear = this.value;
+
                         fetch(`/chart-data?year=${selectedYear}`)
                             .then(response => response.json())
                             .then(data => {
-                                const allMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-                                    'September',
-                                    'October', 'November', 'December'
-                                ];
-
-                                // Objek Menyimpan total perbulan (default 0)
-                                let monthTotals = {};
-                                allMonths.forEach(month => {
-                                    monthTotals[month] = 0
-                                });
-
-                                // Masukkan data ke API ke dalam objek
-                                data.months.forEach((month, index) => {
-                                    monthTotals[month] = data.totals[index];
-                                });
-
-                                // Update data chart
-                                orderChart.data.labels = allMonths;
-                                orderChart.data.datasets[0].data = data.totals;
+                                orderChart.data.labels = allMonths; // tetap semua bulan
+                                orderChart.data.datasets[0].data = data.totals; // data income (0 kalau tidak ada transaksi)
                                 orderChart.update();
                             })
-                            .catch(error => console.error('Error:', error)); // <- titik koma hanya di akhir catch
+                            .catch(error => console.error('Error:', error));
                     });
                 </script>
 
 
-                <!-- Main footer -->
-                <footer
-                    class="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 dark:border-primary-darker">
-                    <div>Bangbara &copy; 2025</div>
-                    <div>
-                        Made by
-                        <a href="https://github.com/Kamona-WD" target="_blank"
-                            class="text-blue-500 hover:underline">BangbaraPos</a>
-                    </div>
-                </footer>
             </div>
 
             <x-admin.panel-content></x-admin.panel-content>

@@ -3,7 +3,7 @@
 <body>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');
     setColors(color);" :class="{ 'dark': isDark }">
-        <div class="flex h-screen antialiased text-gray-950 bg-gray-100 dark:bg-dark dark:text-light">
+        <div class="flex h-screen antialiased text-gray-950 bg-prime dark:text-light">
             <!-- Loading screen -->
             <div x-ref="loading"
                 class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
@@ -25,7 +25,7 @@
 
 
                     <!-- Content -->
-                    <div class="flex flex-col items-center justify-center min-h-screen bg-prime px-4 py-4">
+                    <div class="flex flex-col items-center justify-center max-h-screen bg-prime px-4 py-4">
                         <!-- Tombol View on GitHub -->
                         <!-- Tabel -->
                         {{-- <div class="flex justify-between w-full max-w-4xl mb-4"> --}}
@@ -48,7 +48,7 @@
                             </a>
                         </div>
                         {{-- </div> --}}
-                        <div class="w-full max-w-6xl overflow-x-auto text-zinc-950 h-80">
+                        <div class="w-full max-w-6xl overflow-x-auto text-zinc-950">
 
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
                                 id="myTable">
@@ -86,10 +86,7 @@
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm">
                                                 <h5 id="order-status-{{ $order->id }}"
-                                                    class="{{ $order->status == 'Processed' ? 'bg-yellow-800 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                    {{ $order->status == 'Pending' ? 'bg-amber-300 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                    {{ $order->status == 'Cancelled' ? 'bg-red-600 rounded-md px-3 py-2 text-center text-white' : '' }}
-                                                    {{ $order->status == 'Completed' ? 'bg-green-500 rounded-md px-3 py-2 text-center text-white' : '' }}">
+                                                    class="{{ $order->status == 'Pending' ? 'font-extrabold text-yellow-500' : '' }}">
                                                     {{ $order->status }}
                                                 </h5>
 
@@ -119,9 +116,9 @@
                                                     <p class="text-zinc-950 text-2xl text-center mr-2">-</p>
                                                 @endif
                                             </td>
-                                            <td class="px-6 py-4 flex gap-3 mt-4">
+                                            <td class="px-6 py-4 flex items-center gap-3 mt-4">
 
-                                                <a href="{{ route('orders.show', $order->id) }}">
+                                                <a href="{{ route('staffOrders.show', $order->id) }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="30"
                                                         height="30" viewBox="0 0 24 24">
                                                         <path fill="#6c80e4" fill-rule="evenodd"
@@ -144,6 +141,24 @@
                                                         </g>
                                                     </svg>
                                                 @endif
+                                                {{-- ini untuk cetak struk --}}
+                                                <a href="javascript:void(0);"
+                                                    onclick="printReceipt({{ $order->id }})"><svg width="42"
+                                                        height="42" viewBox="0 0 42 42" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M28.2851 23.8717H28.9156C30.1048 23.8717 30.6987 23.8717 31.0682 23.5022C31.4377 23.1328 31.4377 22.5388 31.4377 21.3496V20.0886C31.4377 17.7103 31.4377 16.5224 30.6987 15.7834C29.9598 15.0444 28.7719 15.0444 26.3935 15.0444H15.0442C12.6658 15.0444 11.4779 15.0444 10.739 15.7834C10 16.5224 10 17.7103 10 20.0886V22.6107C10 23.2046 10 23.5022 10.1841 23.6876C10.3695 23.8717 10.6671 23.8717 11.261 23.8717H13.1526"
+                                                            stroke="#9F6802" stroke-width="1.33333" />
+                                                        <path
+                                                            d="M13.7832 31.8239V21.3497C13.7832 20.1606 13.7832 19.5666 14.1527 19.1971C14.5222 18.8276 15.1161 18.8276 16.3053 18.8276H25.1326C26.3217 18.8276 26.9157 18.8276 27.2852 19.1971C27.6547 19.5666 27.6547 20.1606 27.6547 21.3497V31.8239C27.6547 32.2237 27.6547 32.4229 27.5235 32.5175C27.3924 32.6121 27.2032 32.549 26.8249 32.4229L24.091 31.5112C24.022 31.4806 23.9481 31.4627 23.8728 31.4582C23.7976 31.467 23.7245 31.4892 23.6572 31.5238L20.9535 32.6058C20.8806 32.644 20.8009 32.6676 20.7189 32.6751C20.637 32.6676 20.5573 32.644 20.4844 32.6058L17.7807 31.5238C17.6748 31.4809 17.6218 31.4608 17.5663 31.4582C17.5108 31.4557 17.4554 31.4746 17.3469 31.5112L14.613 32.4229C14.2347 32.549 14.0455 32.6121 13.9144 32.5175C13.7832 32.4229 13.7832 32.2237 13.7832 31.8239Z"
+                                                            stroke="#9F6802" stroke-width="1.33333" />
+                                                        <path d="M17.5664 23.8711H22.6106M17.5664 27.6542H23.8716"
+                                                            stroke="#9F6802" stroke-width="1.33333"
+                                                            stroke-linecap="round" />
+                                                        <path
+                                                            d="M27.6547 15.0442V14.5398C27.6547 12.3998 27.6547 11.3291 26.9901 10.6646C26.3255 10 25.2549 10 23.1149 10H18.323C16.183 10 15.1123 10 14.4478 10.6646C13.7832 11.3291 13.7832 12.3998 13.7832 14.5398V15.0442"
+                                                            stroke="#9F6802" stroke-width="1.33333" />
+                                                    </svg></a>
 
                                             </td>
                                         </tr>
@@ -157,17 +172,6 @@
                         </div>
                     </div>
                 </main>
-
-                <!-- Main footer -->
-                <footer
-                    class="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 dark:border-primary-darker">
-                    <div>Bangbara &copy; 2025</div>
-                    <div>
-                        Made by
-                        <a href="https://github.com/Kamona-WD" target="_blank"
-                            class="text-blue-500 hover:underline">BangbaraPos</a>
-                    </div>
-                </footer>
             </div>
 
             <x-admin.panel-content></x-admin.panel-content>
@@ -266,7 +270,7 @@
         }
 
         function updateStatus(status) {
-            fetch(/admin/orders / $ {
+            fetch(/admin/staffOrders / $ {
                     orderId
                 }
                 /status, {
@@ -514,18 +518,17 @@
 
                         let statusElement = document.getElementById(`order-status-${orderId}`);
                         if (statusElement) {
-                            statusElement.className = 'rounded-md px-3 py-2 text-center text-white';
-
-                            let statusClasses = {
-                                'Processed': 'bg-yellow-800',
-                                'Pending': 'bg-amber-300',
-                                'Cancelled': 'bg-red-600',
-                                'Completed': 'bg-green-500'
+                            const statusClasses = {
+                                'Processed': 'text-black',
+                                'Pending': 'text-yellow-300 font-extrabold',
+                                'Cancelled': 'text-black',
+                                'Completed': 'text-black',
                             };
 
-                            statusElement.classList.add(statusClasses[currentStatus] || '');
+                            statusElement.className = `text-center ${statusClasses[currentStatus] || ''}`;
                             statusElement.innerText = currentStatus;
                         }
+
 
                         // ✅ UPDATE STATUS DI ATTRIBUT DATA
                         document.querySelector(`[data-id="${orderId}"]`).setAttribute("data-status", currentStatus);
@@ -585,6 +588,28 @@
                 });
             }
         });
+
+        function printReceipt(id) {
+            fetch(`/admin/orders/print-struk/${id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert("Struk berhasil dicetak!");
+                    } else {
+                        alert("Gagal cetak struk: " + data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error("Error:", err);
+                    alert("Terjadi kesalahan saat mencetak struk.");
+                });
+        }
 
         setInterval(checkNewOrders, 5000); // Cek setiap 5 detik
     </script>

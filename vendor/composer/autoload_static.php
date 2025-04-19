@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
+class ComposerStaticInite338eca221ec4356bfaf10fb37f7c06b
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -358,8 +358,8 @@ class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -404,7 +404,6 @@ class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
         'Mike42\\' => 
         array (
             0 => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42',
-            1 => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42',
         ),
         'Matrix\\' => 
         array (
@@ -613,7 +612,10 @@ class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
         'App\\Http\\Controllers\\Admin\\OrderAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/OrderAdminController.php',
         'App\\Http\\Controllers\\Admin\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ProductController.php',
         'App\\Http\\Controllers\\Admin\\ReviewController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ReviewController.php',
+        'App\\Http\\Controllers\\Admin\\SettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/SettingsController.php',
         'App\\Http\\Controllers\\Admin\\StaffController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/StaffController.php',
+        'App\\Http\\Controllers\\Admin\\StruckController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/StruckController.php',
+        'App\\Http\\Controllers\\Admin\\StruckOrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/StruckOrderController.php',
         'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
         'App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EmailVerificationNotificationController.php',
@@ -627,12 +629,13 @@ class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\OrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderController.php',
-        'App\\Http\\Controllers\\PrintController' => __DIR__ . '/../..' . '/app/Http/Controllers/PrintController.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
         'App\\Http\\Controllers\\Staff\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Staff/DashboardController.php',
         'App\\Http\\Controllers\\Staff\\StaffHistoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Staff/StaffHistoryController.php',
         'App\\Http\\Controllers\\Staff\\StaffOrdersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Staff/StaffOrdersController.php',
         'App\\Http\\Controllers\\Staff\\StaffProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Staff/StaffProfileController.php',
+        'App\\Http\\Controllers\\Staff\\StruckHistoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Staff/StruckHistoryController.php',
+        'App\\Http\\Controllers\\Staff\\StruckOrdersStaffController' => __DIR__ . '/../..' . '/app/Http/Controllers/Staff/StruckOrdersStaffController.php',
         'App\\Http\\Controllers\\StoreController' => __DIR__ . '/../..' . '/app/Http/Controllers/StoreController.php',
         'App\\Http\\Middleware\\Admin' => __DIR__ . '/../..' . '/app/Http/Middleware/Admin.php',
         'App\\Http\\Middleware\\EnsureCartSession' => __DIR__ . '/../..' . '/app/Http/Middleware/EnsureCartSession.php',
@@ -641,7 +644,6 @@ class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
         'App\\Imports\\ProductsImport' => __DIR__ . '/../..' . '/app/Imports/ProductsImport.php',
-        'App\\Livewire\\OrdersTable' => __DIR__ . '/../..' . '/app/Livewire/OrdersTable.php',
         'App\\Mail\\StaffCredentials' => __DIR__ . '/../..' . '/app/Mail/StaffCredentials.php',
         'App\\Models\\Cart' => __DIR__ . '/../..' . '/app/Models/Cart.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
@@ -2302,6 +2304,7 @@ class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
         'Illuminate\\Database\\Capsule\\Manager' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Capsule/Manager.php',
         'Illuminate\\Database\\ClassMorphViolationException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/ClassMorphViolationException.php',
         'Illuminate\\Database\\Concerns\\BuildsQueries' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Concerns/BuildsQueries.php',
+        'Illuminate\\Database\\Concerns\\BuildsWhereDateClauses' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Concerns/BuildsWhereDateClauses.php',
         'Illuminate\\Database\\Concerns\\CompilesJsonPaths' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Concerns/CompilesJsonPaths.php',
         'Illuminate\\Database\\Concerns\\ExplainsQueries' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Concerns/ExplainsQueries.php',
         'Illuminate\\Database\\Concerns\\ManagesTransactions' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Concerns/ManagesTransactions.php',
@@ -3198,6 +3201,7 @@ class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
         'Illuminate\\Validation\\Rules\\ImageFile' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Rules/ImageFile.php',
         'Illuminate\\Validation\\Rules\\In' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Rules/In.php',
         'Illuminate\\Validation\\Rules\\NotIn' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Rules/NotIn.php',
+        'Illuminate\\Validation\\Rules\\Numeric' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Rules/Numeric.php',
         'Illuminate\\Validation\\Rules\\Password' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Rules/Password.php',
         'Illuminate\\Validation\\Rules\\ProhibitedIf' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Rules/ProhibitedIf.php',
         'Illuminate\\Validation\\Rules\\RequiredIf' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Rules/RequiredIf.php',
@@ -4579,82 +4583,30 @@ class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
         'Matrix\\Operators\\Operator' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/Operators/Operator.php',
         'Matrix\\Operators\\Subtraction' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/Operators/Subtraction.php',
         'Mike42\\Escpos\\CapabilityProfile' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CapabilityProfile.php',
+        'Mike42\\Escpos\\CapabilityProfiles\\DefaultCapabilityProfile' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CapabilityProfiles/DefaultCapabilityProfile.php',
+        'Mike42\\Escpos\\CapabilityProfiles\\EposTepCapabilityProfile' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CapabilityProfiles/EposTepCapabilityProfile.php',
+        'Mike42\\Escpos\\CapabilityProfiles\\P822DCapabilityProfile' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CapabilityProfiles/P822DCapabilityProfile.php',
+        'Mike42\\Escpos\\CapabilityProfiles\\SimpleCapabilityProfile' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CapabilityProfiles/SimpleCapabilityProfile.php',
+        'Mike42\\Escpos\\CapabilityProfiles\\StarCapabilityProfile' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CapabilityProfiles/StarCapabilityProfile.php',
         'Mike42\\Escpos\\CodePage' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CodePage.php',
         'Mike42\\Escpos\\Devices\\AuresCustomerDisplay' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/Devices/AuresCustomerDisplay.php',
         'Mike42\\Escpos\\EscposImage' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/EscposImage.php',
-        'Mike42\\Escpos\\Experimental\\Unifont\\ColumnFormatGlyph' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/Experimental/Unifont/ColumnFormatGlyph.php',
-        'Mike42\\Escpos\\Experimental\\Unifont\\ColumnFormatGlyphFactory' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/Experimental/Unifont/ColumnFormatGlyphFactory.php',
-        'Mike42\\Escpos\\Experimental\\Unifont\\FontMap' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/Experimental/Unifont/FontMap.php',
-        'Mike42\\Escpos\\Experimental\\Unifont\\UnifontGlyphFactory' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/Experimental/Unifont/UnifontGlyphFactory.php',
-        'Mike42\\Escpos\\Experimental\\Unifont\\UnifontPrintBuffer' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/Experimental/Unifont/UnifontPrintBuffer.php',
         'Mike42\\Escpos\\GdEscposImage' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/GdEscposImage.php',
         'Mike42\\Escpos\\ImagickEscposImage' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/ImagickEscposImage.php',
         'Mike42\\Escpos\\NativeEscposImage' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/NativeEscposImage.php',
         'Mike42\\Escpos\\PrintBuffers\\EscposPrintBuffer' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintBuffers/EscposPrintBuffer.php',
         'Mike42\\Escpos\\PrintBuffers\\ImagePrintBuffer' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintBuffers/ImagePrintBuffer.php',
         'Mike42\\Escpos\\PrintBuffers\\PrintBuffer' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintBuffers/PrintBuffer.php',
+        'Mike42\\Escpos\\PrintConnectors\\ApiPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/ApiPrintConnector.php',
         'Mike42\\Escpos\\PrintConnectors\\CupsPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/CupsPrintConnector.php',
         'Mike42\\Escpos\\PrintConnectors\\DummyPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/DummyPrintConnector.php',
         'Mike42\\Escpos\\PrintConnectors\\FilePrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/FilePrintConnector.php',
-        'Mike42\\Escpos\\PrintConnectors\\MultiplePrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/MultiplePrintConnector.php',
         'Mike42\\Escpos\\PrintConnectors\\NetworkPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/NetworkPrintConnector.php',
         'Mike42\\Escpos\\PrintConnectors\\PrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/PrintConnector.php',
         'Mike42\\Escpos\\PrintConnectors\\RawbtPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/RawbtPrintConnector.php',
         'Mike42\\Escpos\\PrintConnectors\\UriPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/UriPrintConnector.php',
         'Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/WindowsPrintConnector.php',
         'Mike42\\Escpos\\Printer' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/Printer.php',
-        'Mike42\\GfxPhp\\AbstractRasterImage' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/AbstractRasterImage.php',
-        'Mike42\\GfxPhp\\BlackAndWhiteRasterImage' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/BlackAndWhiteRasterImage.php',
-        'Mike42\\GfxPhp\\Codec\\BmpCodec' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/BmpCodec.php',
-        'Mike42\\GfxPhp\\Codec\\Bmp\\BmpBitfieldDecoder' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Bmp/BmpBitfieldDecoder.php',
-        'Mike42\\GfxPhp\\Codec\\Bmp\\BmpColorBitfield' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Bmp/BmpColorBitfield.php',
-        'Mike42\\GfxPhp\\Codec\\Bmp\\BmpColorMask' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Bmp/BmpColorMask.php',
-        'Mike42\\GfxPhp\\Codec\\Bmp\\BmpFile' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Bmp/BmpFile.php',
-        'Mike42\\GfxPhp\\Codec\\Bmp\\BmpFileHeader' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Bmp/BmpFileHeader.php',
-        'Mike42\\GfxPhp\\Codec\\Bmp\\BmpInfoHeader' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Bmp/BmpInfoHeader.php',
-        'Mike42\\GfxPhp\\Codec\\Bmp\\Rle4Decoder' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Bmp/Rle4Decoder.php',
-        'Mike42\\GfxPhp\\Codec\\Bmp\\Rle8Decoder' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Bmp/Rle8Decoder.php',
-        'Mike42\\GfxPhp\\Codec\\Bmp\\RleCanvas' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Bmp/RleCanvas.php',
-        'Mike42\\GfxPhp\\Codec\\Common\\DataBlobInputStream' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Common/DataBlobInputStream.php',
-        'Mike42\\GfxPhp\\Codec\\Common\\DataInputStream' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Common/DataInputStream.php',
-        'Mike42\\GfxPhp\\Codec\\GifCodec' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/GifCodec.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifApplicationExt' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifApplicationExt.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifColorTable' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifColorTable.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifCommentExt' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifCommentExt.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifData' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifData.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifDataStream' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifDataStream.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifGraphicControlExt' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifGraphicControlExt.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifGraphicsBlock' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifGraphicsBlock.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifImageDescriptor' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifImageDescriptor.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifLogicalScreen' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifLogicalScreen.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifLogicalScreenDescriptor' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifLogicalScreenDescriptor.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifPlaintextExt' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifPlaintextExt.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifSpecialPurposeBlock' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifSpecialPurposeBlock.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifTableBasedImage' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifTableBasedImage.php',
-        'Mike42\\GfxPhp\\Codec\\Gif\\GifUnknownExt' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Gif/GifUnknownExt.php',
-        'Mike42\\GfxPhp\\Codec\\ImageCodec' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/ImageCodec.php',
-        'Mike42\\GfxPhp\\Codec\\ImageDecoder' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/ImageDecoder.php',
-        'Mike42\\GfxPhp\\Codec\\ImageEncoder' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/ImageEncoder.php',
-        'Mike42\\GfxPhp\\Codec\\PngCodec' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/PngCodec.php',
-        'Mike42\\GfxPhp\\Codec\\Png\\FilterDecoder' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Png/FilterDecoder.php',
-        'Mike42\\GfxPhp\\Codec\\Png\\InterlaceDecoder' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Png/InterlaceDecoder.php',
-        'Mike42\\GfxPhp\\Codec\\Png\\PngChunk' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Png/PngChunk.php',
-        'Mike42\\GfxPhp\\Codec\\Png\\PngHeader' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Png/PngHeader.php',
-        'Mike42\\GfxPhp\\Codec\\Png\\PngImage' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/Png/PngImage.php',
-        'Mike42\\GfxPhp\\Codec\\PnmCodec' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/PnmCodec.php',
-        'Mike42\\GfxPhp\\Codec\\WbmpCodec' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Codec/WbmpCodec.php',
-        'Mike42\\GfxPhp\\GrayscaleRasterImage' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/GrayscaleRasterImage.php',
-        'Mike42\\GfxPhp\\Image' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Image.php',
-        'Mike42\\GfxPhp\\IndexedRasterImage' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/IndexedRasterImage.php',
-        'Mike42\\GfxPhp\\PaletteGenerator' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/PaletteGenerator.php',
-        'Mike42\\GfxPhp\\RasterImage' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/RasterImage.php',
-        'Mike42\\GfxPhp\\RgbRasterImage' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/RgbRasterImage.php',
-        'Mike42\\GfxPhp\\Util\\AbstractLzwDictionary' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Util/AbstractLzwDictionary.php',
-        'Mike42\\GfxPhp\\Util\\LzwCompression' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Util/LzwCompression.php',
-        'Mike42\\GfxPhp\\Util\\LzwDecodeBuffer' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Util/LzwDecodeBuffer.php',
-        'Mike42\\GfxPhp\\Util\\LzwDecodeDictionary' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Util/LzwDecodeDictionary.php',
-        'Mike42\\GfxPhp\\Util\\LzwEncodeBuffer' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Util/LzwEncodeBuffer.php',
-        'Mike42\\GfxPhp\\Util\\LzwEncodeDictionary' => __DIR__ . '/..' . '/mike42/gfx-php/src/Mike42/GfxPhp/Util/LzwEncodeDictionary.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditions' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditions.php',
         'Mockery\\Adapter\\Phpunit\\MockeryTestCase' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCase.php',
@@ -4865,6 +4817,7 @@ class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
         'Monolog\\Registry' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Registry.php',
         'Monolog\\ResettableInterface' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/ResettableInterface.php',
         'Monolog\\SignalHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/SignalHandler.php',
+        'Monolog\\Test\\MonologTestCase' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Test/MonologTestCase.php',
         'Monolog\\Test\\TestCase' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Test/TestCase.php',
         'Monolog\\Utils' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Utils.php',
         'Nette\\ArgumentOutOfRangeException' => __DIR__ . '/..' . '/nette/utils/src/exceptions.php',
@@ -4895,6 +4848,7 @@ class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
         'Nette\\Schema\\Processor' => __DIR__ . '/..' . '/nette/schema/src/Schema/Processor.php',
         'Nette\\Schema\\Schema' => __DIR__ . '/..' . '/nette/schema/src/Schema/Schema.php',
         'Nette\\Schema\\ValidationException' => __DIR__ . '/..' . '/nette/schema/src/Schema/ValidationException.php',
+        'Nette\\ShouldNotHappenException' => __DIR__ . '/..' . '/nette/utils/src/exceptions.php',
         'Nette\\SmartObject' => __DIR__ . '/..' . '/nette/utils/src/SmartObject.php',
         'Nette\\StaticClass' => __DIR__ . '/..' . '/nette/utils/src/StaticClass.php',
         'Nette\\UnexpectedValueException' => __DIR__ . '/..' . '/nette/utils/src/exceptions.php',
@@ -5255,6 +5209,7 @@ class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
         'PHPUnit\\Framework\\Attributes\\UsesMethod' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Attributes/UsesMethod.php',
         'PHPUnit\\Framework\\Attributes\\UsesTrait' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Attributes/UsesTrait.php',
         'PHPUnit\\Framework\\Attributes\\WithoutErrorHandler' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Attributes/WithoutErrorHandler.php',
+        'PHPUnit\\Framework\\ChildProcessResultProcessor' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/TestRunner/ChildProcessResultProcessor.php',
         'PHPUnit\\Framework\\CodeCoverageException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/CodeCoverageException.php',
         'PHPUnit\\Framework\\ComparisonMethodDoesNotAcceptParameterTypeException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/ObjectEquals/ComparisonMethodDoesNotAcceptParameterTypeException.php',
         'PHPUnit\\Framework\\ComparisonMethodDoesNotDeclareBoolReturnTypeException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/ObjectEquals/ComparisonMethodDoesNotDeclareBoolReturnTypeException.php',
@@ -8420,10 +8375,10 @@ class ComposerStaticInit1028264b913d4eb675e22d86016cedd8
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1028264b913d4eb675e22d86016cedd8::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1028264b913d4eb675e22d86016cedd8::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit1028264b913d4eb675e22d86016cedd8::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit1028264b913d4eb675e22d86016cedd8::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite338eca221ec4356bfaf10fb37f7c06b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite338eca221ec4356bfaf10fb37f7c06b::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInite338eca221ec4356bfaf10fb37f7c06b::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInite338eca221ec4356bfaf10fb37f7c06b::$classMap;
 
         }, null, ClassLoader::class);
     }
