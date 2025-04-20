@@ -96,7 +96,7 @@
                             class="hover:scale-110 transition duration-300 ease-in-out" />
 
                         <span id="cart-quantity-badge"
-                            class="absolute bottom-0 left-0 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
+                            class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
                             0
                         </span>
                     </a>
@@ -251,7 +251,7 @@
     <section id="popup">
         <div class="hidden fixed z-[9999] left-0 top-0 w-full h-full overflow-auto justify-center items-center bg-[rgba(0,0,0,0.6)]"
             id="item-detail-modal" name="modal">
-            <div class="flex flex-col bg-white max-h-[90vh] w-[90%] max-w-[350px] md:max-w-[375px] lg:max-w-[400px] rounded-lg gap-2 overflow-hidden animation"
+            <div class="flex flex-col bg-white max-h-[90vh] w-[90%] max-w-[325px] md:max-w-[350px] lg:max-w-[375x] rounded-lg gap-2 overflow-hidden animation"
                 name="modal-container">
                 <a href="#"
                     class="close-icon absolute bg-white w-8 h-8 m-2 rounded-full flex items-center justify-center hover:scale-125 hover:rotate-90 transition duration-300">
@@ -263,8 +263,8 @@
                     </svg>
                 </a>
                 <input type="hidden" id="modal-product-id" name="product_id" value="">
-                <img id="modal-image" src="" alt="Food"
-                    class="w-full object-fill aspect-video rounded-t-lg overflow-hidden" />
+                <img id="modal-image" src="{{ asset('asset-view/assets/png/food/1.png') }}" alt="Food"
+                    class="w-full object-cover rounded-t-lg overflow-hidden" />
                 <h1 id="modal-title" class="text-center font-alatsi text-2xl pb-2"></h1>
                 <p id="modal-description" class="text-center font-alatsi text-base px-4"></p>
 
@@ -417,14 +417,14 @@
 
     {{-- Ulasan Section Start --}}
     <section id="ulasan" class="ulasan-img">
-        <h1 class="ulasan-title py-12 font-europhia text-white text-center text-5xl lg:text-6xl">
+        <h1 class="py-12 font-europhia text-white text-center text-5xl lg:text-6xl">
             Apa Kata Mereka
         </h1>
         <div class="slider">
             <div class="slide-track">
                 <!-- First set of reviews -->
                 @foreach ($reviews as $review)
-                    <div class="ulasan-slide slide">
+                    <div class="slide">
                         <div class="review">
                             <p class="review-message">{{ $review->message }}</p>
                             <div class="review-footer">

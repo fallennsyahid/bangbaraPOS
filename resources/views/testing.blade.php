@@ -18,98 +18,18 @@
 
 <body>
 
-    <section>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center p-4">
-            <div class="space-y-4 bg-slate-100 p-6 rounded-xl">
-                <h5 class="text-lg font-semibold">John Smith</h5>
-                <p class="text-gray-600">
-                    <i class="fas fa-quote-left text-blue-500 mr-2"></i>At vero eos et accusamus et iusto odio
-                    dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.
-                </p>
-                <div class="flex justify-center space-x-1">
-                    <img src="{{ asset('asset-admin/public/img/star-icon.svg') }}" alt="">
-                </div>
-            </div>
-            <div class="space-y-4 bg-slate-100 p-6 rounded-xl">
-                <h5 class="text-lg font-semibold">John Smith</h5>
-                <p class="text-gray-600">
-                    <i class="fas fa-quote-left text-blue-500 mr-2"></i>At vero eos et accusamus et iusto odio
-                    dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.
-                </p>
-                <div class="flex justify-center space-x-1">
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="far fa-star text-yellow-400"></i>
-                </div>
-            </div>
-            <div class="space-y-4 bg-slate-100 p-6 rounded-xl">
-                <h5 class="text-lg font-semibold">John Smith</h5>
-                <p class="text-gray-600">
-                    <i class="fas fa-quote-left text-blue-500 mr-2"></i>At vero eos et accusamus et iusto odio
-                    dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.
-                </p>
-                <div class="flex justify-center space-x-1">
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="far fa-star text-yellow-400"></i>
-                </div>
-            </div>
-            <div class="space-y-4 bg-slate-100 p-6 rounded-xl">
-                <h5 class="text-lg font-semibold">John Smith</h5>
-                <p class="text-gray-600">
-                    <i class="fas fa-quote-left text-blue-500 mr-2"></i>At vero eos et accusamus et iusto odio
-                    dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.
-                </p>
-                <div class="flex justify-center space-x-1">
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="far fa-star text-yellow-400"></i>
-                </div>
-            </div>
-            <div class="space-y-4 bg-slate-100 p-6 rounded-xl">
-                <h5 class="text-lg font-semibold">John Smith</h5>
-                <p class="text-gray-600">
-                    <i class="fas fa-quote-left text-blue-500 mr-2"></i>At vero eos et accusamus et iusto odio
-                    dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.
-                </p>
-                <div class="flex justify-center space-x-1">
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="far fa-star text-yellow-400"></i>
-                </div>
-            </div>
-            <div class="space-y-4 bg-slate-100 p-6 rounded-xl">
-                <h5 class="text-lg font-semibold">John Smith</h5>
-                <p class="text-gray-600">
-                    <i class="fas fa-quote-left text-blue-500 mr-2"></i>At vero eos et accusamus et iusto odio
-                    dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.
-                </p>
-                <div class="flex justify-center space-x-1">
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="fas fa-star text-yellow-400"></i>
-                    <i class="far fa-star text-yellow-400"></i>
+    <div class="h-[300px] m-auto relative w-full grid place-items-center overflow-hidden mask-image">
+        <div class="flex slide-track">
+            <div class="h-[250px] w-[370px] flex items-center p-4 slide">
+                <div
+                    class="review bg-white rounded-lg w-full h-full flex flex-col justify-between transition-transform duration-500">
+                    <div class="p-4 text-sm overflow-y-auto flex-grow-1 items-center flex text-center justify-center">
+                        <div class="py-3 px-4 border-t-2 border-solid border-slate-300"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-    =======
-    <form action="">
-        <button>
-            Cetack Struk
-        </button>
-    </form>
-    >>>>>>> ba63282505d71938bef16983cb1dcd840224129c
+    </div>
 
 </body>
 

@@ -62,13 +62,10 @@
                                     class="w-5 h-5 inline-block mr-2">
                                 Export
                             </a>
-<<<<<<< HEAD
                             <button id="bulkDeleteButton" class="bg-red-700 text-white px-4 py-2 rounded-lg">Delete
-=======
-                            <button id="bulkDeleteButton"
-                                class="bg-red-700 text-white px-4 py-2 rounded-lg hidden">Delete
->>>>>>> ba63282505d71938bef16983cb1dcd840224129c
-                                Selected</button>
+                                <button id="bulkDeleteButton"
+                                    class="bg-red-700 text-white px-4 py-2 rounded-lg hidden">Delete
+                                    Selected</button>
 
                         </div>
                         <div class="w-full max-w-6xl overflow-x-auto text-zinc-950">
@@ -174,14 +171,12 @@
 
                                                 {{-- ini untuk cetak struk --}}
                                                 <a href="javascript:void(0);"
-<<<<<<< HEAD
                                                     onclick="printReceipt({{ $history->id }})"><button
-                                                        class="px-4 py-2 bg-blue-500 rounded-xl text-white">Cetak
-                                                        Struk</button></a>
-=======
-                                                    onclick="printReceipt({{ $history->id }})"><svg width="42"
-                                                        height="42" viewBox="0 0 42 42" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        class="px-4 py-2 bg-blue-500 rounded-xl text-white">
+                                                        Cetak
+                                                        Struk</button>
+                                                    <svg width="42" height="42" viewBox="0 0 42 42"
+                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <path
                                                             d="M28.2851 23.8717H28.9156C30.1048 23.8717 30.6987 23.8717 31.0682 23.5022C31.4377 23.1328 31.4377 22.5388 31.4377 21.3496V20.0886C31.4377 17.7103 31.4377 16.5224 30.6987 15.7834C29.9598 15.0444 28.7719 15.0444 26.3935 15.0444H15.0442C12.6658 15.0444 11.4779 15.0444 10.739 15.7834C10 16.5224 10 17.7103 10 20.0886V22.6107C10 23.2046 10 23.5022 10.1841 23.6876C10.3695 23.8717 10.6671 23.8717 11.261 23.8717H13.1526"
                                                             stroke="#9F6802" stroke-width="1.33333" />
@@ -197,7 +192,6 @@
                                                     </svg>
                                                 </a>
 
->>>>>>> ba63282505d71938bef16983cb1dcd840224129c
 
                                             </td>
 
@@ -252,15 +246,12 @@
 
     <script>
         function printReceipt(id) {
-<<<<<<< HEAD
-            fetch(`/admin/print-struk/${id}`, {
-=======
             fetch(`/admin/histories/print-struk/${id}`, {
->>>>>>> ba63282505d71938bef16983cb1dcd840224129c
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content')
                     }
                 })
                 .then(res => res.json())
@@ -268,140 +259,99 @@
                     if (data.status === 'success') {
                         alert("Struk berhasil dicetak!");
                     } else {
-<<<<<<< HEAD
                         // alert("Gagal cetak struk: " + data.message);
                         alert("Struk berhasil dicetak!");
-=======
                         alert("Gagal cetak struk: " + data.message);
->>>>>>> ba63282505d71938bef16983cb1dcd840224129c
                     }
                 })
                 .catch(err => {
                     console.error("Error:", err);
-<<<<<<< HEAD
+
                     alert("Struk berhasil dicetak!");
                     // alert("Terjadi kesalahan saat mencetak struk.");
-=======
+
                     alert("Terjadi kesalahan saat mencetak struk.");
->>>>>>> ba63282505d71938bef16983cb1dcd840224129c
+
                 });
         }
     </script>
 
-<<<<<<< HEAD
-=======
+    <script>
+        document.getElementById('exportExcel').addEventListener('click', function(e) {
+            e.preventDefault();
 
->>>>>>> ba63282505d71938bef16983cb1dcd840224129c
-    {{-- Script Tombol Export --}}
-    {{-- <script>
-        document.getElementById('exportExcel').addEventListener('click', () => {
-            const year = document.getElementById('filter-year').value;
-            const month = document.getElementById('filter-month').value;
-            const day = document.getElementById('filter-day').value;
+            const year = document.getElementById('filter-year')?.value;
+            const month = document.getElementById('filter-month')?.value;
+            const day = document.getElementById('filter-day')?.value;
 
-            const url = /export-histories?year=${year}&month=${month}&day=${day};
+            const periode_awal = document.getElementById('periode_awal')?.value;
+            const periode_akhir = document.getElementById('periode_akhir')?.value;
+
+            let url = '';
+
+            if (periode_awal && periode_akhir) {
+                url = `/export-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}`;
+            } else {
+                url = `/export-histories?year=${year}&month=${month}&day=${day}`;
+            }
+
+            if (!url.includes('=')) {
+                alert("Silakan isi tanggal atau periode terlebih dahulu.");
+                return;
+            }
+
             window.location.href = url;
         });
-    </script> --}}
-    <script>
-        document.getElementById('exportExcel').addEventListener('click', (e) => {
-                    e.preventDefault();
-
-                    const periode_awal = document.getElementById('periode_awal').value;
-                    const periode_akhir = document.getElementById('periode_akhir').value;
-
-                    if (!periode_awal || !periode_akhir) {
-                        alert('Please select the date range first');
-                        return;
-                    }
-
-                    const url = /export-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir} + ?
-                    periode_awal = $ {
-                            const url = `/export-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}`;
     </script>
 
 
     <script>
         document.getElementById('filterForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Cegah reload halaman
+            event.preventDefault();
 
-            let periode_awal = document.getElementById('periode_awal').value;
-            let periode_akhir = document.getElementById('periode_akhir').value;
+            const periode_awal = document.getElementById('periode_awal').value;
+            const periode_akhir = document.getElementById('periode_akhir').value;
 
-            fetch(/get-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir})
+            fetch(`/get-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}`)
                 .then(response => response.json())
                 .then(data => {
-                        let tableBody = document.querySelector('#myTable tbody');
-                        tableBody.innerHTML = ''; // Kosongkan tabel sebelum menambahkan data baru
+                    let tableBody = document.querySelector('#myTable tbody');
+                    tableBody.innerHTML = '';
 
-                        if (data.length > 0) {
-                            fetch(`/get-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}`)
-                            let paymentPhoto = history.payment_method === 'nonTunai' ?
-                                `<a href="{{ Storage::url($history->payment_photo) }}" target="_blank">
-                                    <button class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
-                                        <h6>File</h6>
-                                    </button>
-                                </a>` : '-';
+                    if (data.length > 0) {
+                        data.forEach((history, index) => {
+                            let paymentPhoto = history.payment_method === 'nonTunai' ? `
+                            <a href="${history.payment_photo_url}" target="_blank">
+                                <button class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
+                                    <h6>File</h6>
+                                </button>
+                            </a>` : '-';
+
                             let row = `
-                        <tr>
-                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
-                             <input type="checkbox" class="select-item" value="${history.id}">
-                            </td>
-                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">#${index + 1}</td>
-                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">${history.casier_name}</td>
-                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">${history.customer_name}</td>
-                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">${new Date(history.created_at).toLocaleDateString()}</td>
-                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">Rp ${history.total_price.toLocaleString()}</td>
-                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">${history.payment_method}</td>
-                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
-                                <span class="${history.status === 'Cancelled' ? 'text-red-700 font-extrabold' : ''}">
-                                    ${history.status}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
-                                ${paymentPhoto}
-                            </td>
-                                   <td class="px-6 py-4 flex gap-3 mt-4">
-                                                <a href="{{ route('histories.show', $history->id) }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
-                                                        height="30" viewBox="0 0 24 24">
-                                                        <path fill="#6c80e4" fill-rule="evenodd"
-                                                            d="M12 17.8c4.034 0 7.686-2.25 9.648-5.8C19.686 8.45 16.034 6.2 12 6.2S4.314 8.45 2.352 12c1.962 3.55 5.614 5.8 9.648 5.8M12 5c4.808 0 8.972 2.848 11 7c-2.028 4.152-6.192 7-11 7s-8.972-2.848-11-7c2.028-4.152 6.192-7 11-7m0 9.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8" />
-                                                    </svg>
-                                                </a>
-
-                                                <form id="delete-form-{{ $history->id }}"
-                                                    action="{{ route('histories.destroy', $history->id) }}"
-                                                    method="POST"
-                                                    onsubmit="return confirm('Are you sure you want to delete this category?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
-                                                        height="30" viewBox="0 0 24 24"
-                                                        class="cursor-pointer hover:fill-red-700 transition duration-200"
-                                                        onclick="confirmDelete({{ $history->id }})">
-                                                        <path fill="red"
-                                                            d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z" />
-                                                    </svg>
-                                                </form>
-
-                                            </td>
-                        </tr>
-                    `;
+                            <tr>
+                                <td><input type="checkbox" class="select-item" value="${history.id}"></td>
+                                <td>#${index + 1}</td>
+                                <td>${history.casier_name}</td>
+                                <td>${history.customer_name}</td>
+                                <td>${new Date(history.created_at).toLocaleDateString()}</td>
+                                <td>Rp ${history.total_price.toLocaleString()}</td>
+                                <td>${history.payment_method}</td>
+                                <td><span class="${history.status === 'Cancelled' ? 'text-red-700 font-extrabold' : ''}">${history.status}</span></td>
+                                <td>${paymentPhoto}</td>
+                            </tr>`;
                             tableBody.innerHTML += row;
                         });
-                }
-                else {
-                    tableBody.innerHTML = <
-                        tr > < td colspan = "7"
-                    class = "text-center" > No data available < /td></tr > ;
-                }
-            })
-        .catch(error => console.error('Error:', error));
+                    } else {
+                        tableBody.innerHTML =
+                            `<tr><td colspan="10" class="text-center">Tidak ada data</td></tr>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Gagal mengambil data!");
+                });
         });
     </script>
-
-
 
     {{-- DataTables --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -420,15 +370,10 @@
             const table = new DataTable('#myTable', {
                 ordering: false
             });
-
-<<<<<<< HEAD
-=======
             // Function BulkDelete display
             function updateBulkDeleteButton() {
                 bulkDeleteButton.classList.toggle('hidden', selectedIds.size === 0);
             }
-
->>>>>>> ba63282505d71938bef16983cb1dcd840224129c
             // Saat draw (ganti halaman), sinkronisasi checkbox berdasarkan selectedIds
             table.on('draw', function() {
                 document.querySelectorAll('.select-item').forEach(cb => {
@@ -449,11 +394,7 @@
                     } else {
                         selectedIds.delete(id);
                     }
-<<<<<<< HEAD
-
-=======
                     updateBulkDeleteButton();
->>>>>>> ba63282505d71938bef16983cb1dcd840224129c
                     // Update selectAll state
                     const allVisibleChecked = Array.from(document.querySelectorAll('.select-item')).every(
                         cb => cb.checked);
@@ -473,10 +414,7 @@
                 document.querySelectorAll('.select-item').forEach(cb => {
                     cb.checked = selectAll.checked;
                 });
-<<<<<<< HEAD
-=======
-                updateBulkDeleteButton();
->>>>>>> ba63282505d71938bef16983cb1dcd840224129c
+                updateBulkDeleteButton(); >>>
             });
 
             // Bulk Delete

@@ -137,7 +137,7 @@
                                                 </a>
 
                                                 @if ($order->status !== 'Completed' && $order->status !== 'Cancelled')
-                                                    <svg id="order-status-{{ $order->id }}"
+                                                    <svg id="order-status-{{ $order->id }}" class="cursor-pointer"
                                                         xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                                                         viewBox="0 0 24 24" onclick="openModal(this)"
                                                         data-id="{{ $order->id }}"
