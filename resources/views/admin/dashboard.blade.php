@@ -34,9 +34,9 @@
                             <!-- Income card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total Income</h6>
-                                <div class="flex gap-2 ml-4">
+                                <div class="flex gap-4 items-center justify-center">
                                     <img src="{{ asset('asset-admin/public/img/money-bag.png') }}"
-                                        class="w-10 filter invert" stroke="currentColor" />
+                                        class="w-10 filter invert" />
                                     <p class="text-3xl font-bold">Rp {{ number_format($totalIncome) }}</p>
                                 </div>
                             </div>
@@ -45,25 +45,39 @@
                             <!-- Selling card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total Selling</h6>
-                                <p class="text-3xl font-bold">{{ $histories }}</p>
+                                <div class="flex items-center justify-center gap-4">
+                                    <img src="{{ asset('asset-admin/public/img/selling-bag.svg') }}" alt="Selling Bag">
+                                    <p class="text-3xl font-bold">{{ $histories }}</p>
+                                </div>
                             </div>
 
                             <!-- Orders card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total Orders</h6>
-                                <p class="text-3xl font-bold" id="totalOrders">{{ $total_orders }}</p>
+                                <div class="flex justify-center items-center gap-4">
+                                    <img src="{{ asset('asset-admin/public/img/orders.svg') }}" alt="Total Orders">
+                                    <p class="text-3xl font-bold" id="totalOrders">{{ $total_orders }}</p>
+                                </div>
                             </div>
 
                             <!-- Completed card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total completed orders</h6>
-                                <p class="text-3xl font-bold">{{ $total_orders_completed }}</p>
+                                <div class="flex justify-center items-center gap-4">
+                                    <img src="{{ asset('asset-admin/public/img/completed-orders.svg') }}"
+                                        alt="Completed Orders">
+                                    <p class="text-3xl font-bold">{{ $total_orders_completed }}</p>
+                                </div>
                             </div>
 
                             <!-- Cancelled card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total cancelled orders</h6>
-                                <p class="text-3xl font-bold">{{ $total_orders_cancelled }}</p>
+                                <div class="flex items-center justify-center gap-4">
+                                    <img src="{{ asset('asset-admin/public/img/canceled-orders.svg') }}"
+                                        alt="Cancelled Orders">
+                                    <p class="text-3xl font-bold">{{ $total_orders_cancelled }}</p>
+                                </div>
                             </div>
                             <!-- Tickets card -->
                             {{-- <div class="flex items-center justify-between p-4 bg-white rounded-md dark:bg-darker">

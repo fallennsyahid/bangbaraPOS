@@ -5,20 +5,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description"
+        content="BangbaraPos - Rasa Juara, Harga Bersahabat! Nikmati steak berkualitas dengan harga terjangkau.">
     <title>BangbaraPos</title>
     <!-- CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
     <link rel="stylesheet" href="{{ asset('asset-view/css/slider.css') }}">
-    <link rel="icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" />
     <!-- ICON WEB -->
     <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Euphoria+Script&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet" />
+
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -32,15 +28,16 @@
             <div class="flex items-center justify-between">
                 <!-- Logo -->
                 <div class="py-6">
-                    <a href="#home">
-                        <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="Logo" width="150px" />
+                    <a href="#home" aria-label="Go to homepage">
+                        <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="BangbaraPos Logo"
+                            width="150" />
                     </a>
                 </div>
 
                 <!-- Navigation and Controls -->
                 <div class="flex items-center">
                     <!-- Navigation Menu -->
-                    <nav id="nav-menu"
+                    <nav id="nav-menu" aria-label="Main navigation"
                         class="hidden absolute top-full right-4 py-5 bg-black/80 backdrop-blur-xl shadow-2xl rounded-lg max-w-[250px] w-full lg:bg-transparent lg:static lg:block lg:max-w-none lg:shadow-none lg:rounded-none lg:w-auto lg:mx-auto">
                         <ul class="block lg:flex lg:gap-8">
                             <li class="group">
@@ -73,12 +70,18 @@
                     <!-- Cart and Hamburger Menu -->
                     <div class="flex items-center space-x-4 lg:hidden">
                         <!-- Cart Icon -->
-                        <a href="{{ route('cart') }}">
-                            <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
+                        <a href="{{ route('cart') }}" class="relative" aria-label="View shopping cart">
+                            <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Shopping Cart" width="40"
                                 class="hover:scale-110 transition duration-300 ease-in-out" />
+
+                            <span id="cart-quantity-badge" aria-label="Cart items count"
+                                class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
+                                0
+                            </span>
                         </a>
                         <!-- Hamburger Menu -->
-                        <button id="hamburger" name="hamburger" type="button" class="block">
+                        <button id="hamburger" name="hamburger" type="button" class="block" aria-label="Toggle menu"
+                            aria-expanded="false" aria-controls="nav-menu">
                             <span
                                 class="hamburger-line block w-6 h-1 bg-white transition duration-300 ease-in-out origin-top-left mb-1"></span>
                             <span
@@ -91,11 +94,11 @@
 
                 <div class="hidden lg:block lg:items-center lg:space-x-4">
                     <!-- Cart Icon -->
-                    <a href="{{ route('cart') }}" class="relative">
-                        <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Cart" width="40px"
+                    <a href="{{ route('cart') }}" class="relative" aria-label="View shopping cart">
+                        <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Shopping Cart" width="40"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
 
-                        <span id="cart-quantity-badge"
+                        <span id="cart-quantity-badge" aria-label="Cart items count"
                             class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
                             0
                         </span>
@@ -112,7 +115,7 @@
             <div class="flex flex-wrap items-center">
                 <!-- Konten -->
                 <div class="w-full lg:w-3/4 px-4 pb-14 text-center lg:text-left lg:py-0">
-                    <h1 class="font-europhia text-white text-4xl md:text-6xl lg:text-7xl mt-4 mb-6 leading-tight">
+                    <h1 class="font-euphoria text-white text-4xl md:text-6xl lg:text-7xl mt-4 mb-6 leading-tight">
                         Rasa Juara, Harga Bersahabat!
                     </h1>
                     <p
@@ -124,7 +127,7 @@
                         memuaskan, tanpa harus menguras dompet.
                     </p>
                     <a href="#menu"
-                        class="text-base sm:text-lg md:text-xl lg:text-2xl font-europhia text-white bg-primary py-3 px-6 md:py-4 md:px-8 rounded-full shadow-lg hover:shadow-xl hover:opacity-80 transition duration-300 ease-in-out">Cek
+                        class="text-base sm:text-lg md:text-xl lg:text-2xl font-euphoria text-white bg-primary py-3 px-6 md:py-4 md:px-8 rounded-full shadow-lg hover:shadow-xl hover:opacity-80 transition duration-300 ease-in-out">Cek
                         Selengkapnya
                     </a>
                 </div>
@@ -139,21 +142,22 @@
             <!-- Header -->
             <div
                 class="flex items-center bg-primary mx-auto my-5 px-8 sm:px-12 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
-                <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="" width="120px"
+                <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="Menu book icon" width="120"
                     class="mr-0 lg:mr-4 lg:scale-150" />
-                <h1 class="font-europhia text-shadow text-[2.5rem] lg:text-6xl text-white">
+                <h1 class="font-euphoria text-shadow text-[2.5rem] lg:text-6xl text-white">
                     Menu Kami
                 </h1>
             </div>
 
             <!-- Tab Navigation Category -->
             <div class="w-full py-6 text-center">
-                <div class="flex flex-wrap justify-center gap-x-14 gap-y-4">
+                <div class="flex flex-wrap justify-center gap-x-14 gap-y-4" role="tablist"
+                    aria-label="Menu categories">
                     @foreach ($categories as $index => $category)
                         @if ($index < 4)
                             <button onclick="changeSlide({{ $index }})"
-                                class="menu-link relative text-white font-europhia text-3xl sm:text-4xl lg:text-5xl hover:text-yellow-400 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:rounded-full after:w-full after:bg-white hover:after:bg-yellow-400 {{ $index === 0 ? 'active' : '' }}"
-                                data-index="{{ $index }}">
+                                class="menu-link relative text-white font-euphoria text-3xl sm:text-4xl lg:text-5xl hover:text-yellow-400 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:rounded-full after:w-full after:bg-white hover:after:bg-yellow-400 {{ $index === 0 ? 'active' : '' }}"
+                                data-index="{{ $index }}" role="tab" id="tab-{{ $index }}">
                                 {{ $category->nama_kategori }}
                             </button>
                         @endif
@@ -167,7 +171,9 @@
                     style="width: {{ count($categories->take(4)) * 100 }}%">
 
                     @foreach ($categories->take(4) as $category)
-                        <div class="w-full min-h-16 flex flex-col justify-start">
+                        <div class="w-full min-h-16 flex flex-col justify-start" role="tabpanel"
+                            id="panel-{{ $index }}" aria-labelledby="tab-{{ $index }}"
+                            {{ $index !== 0 ? 'hidden' : ' ' }}>
                             <div
                                 class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-6 px-4 py-5 place-items-center">
                                 @foreach ($category->products as $product)
@@ -186,7 +192,8 @@
                                         <!-- Bagian Gambar -->
                                         <a href="{{ $isNonActive || $isClose ? '#' : '#item-detail-modal' }}"
                                             class="item-detail-button {{ $isNonActive ? 'pointer-events-none' : '' }}"
-                                            data-product-id="{{ $product->id }}">
+                                            data-product-id="{{ $product->id }}"
+                                            aria-label="{{ $product->nama_menu }} details">
                                             <div class="relative group">
                                                 <img src="{{ asset('storage/' . $product->gambar_menu) }}"
                                                     alt="{{ $product->nama_menu }}"
@@ -225,13 +232,14 @@
                                         </span>
 
                                         <div class="flex mx-2">
-                                            <button type="submit"
+                                            <button type="button"
                                                 class="{{ $isClose
                                                     ? 'hidden'
                                                     : 'item-detail-button text-shadow text-sm sm:text-sm bg-red-600 px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center ' }}
                                         {{ $isNonActive ? 'bg-gray-500 cursor-disabled' : '' }}"
                                                 data-product-id="{{ $product->id }}"
-                                                {{ $isNonActive ? 'disabled' : '' }}>
+                                                {{ $isNonActive ? 'disabled' : '' }}
+                                                aria-label="{{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan ' . $product->nama_menu . ' ke keranjang' }}">
                                                 {{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan Ke Keranjang' }}
                                             </button>
 
@@ -249,12 +257,13 @@
 
     <!-- Popup Start -->
     <section id="popup">
-        <div class="hidden fixed z-[9999] left-0 top-0 w-full h-full overflow-auto justify-center items-center bg-[rgba(0,0,0,0.6)]"
-            id="item-detail-modal" name="modal">
+        <div class="hidden fixed z-[9999] left-0 top-0 w-full h-full overflow-auto justify-center items-center bg-black/60"
+            id="item-detail-modal" name="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
             <div class="flex flex-col bg-white max-h-[90vh] w-[90%] max-w-[325px] md:max-w-[350px] lg:max-w-[375x] rounded-lg gap-2 overflow-hidden animation"
                 name="modal-container">
                 <a href="#"
-                    class="close-icon absolute bg-white w-8 h-8 m-2 rounded-full flex items-center justify-center hover:scale-125 hover:rotate-90 transition duration-300">
+                    class="close-icon absolute bg-white w-8 h-8 m-2 rounded-full flex items-center justify-center hover:scale-125 hover:rotate-90 transition duration-300"
+                    aria-label="Close dialog">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="feather feather-x text-primary">
@@ -270,7 +279,8 @@
 
                 <div id="pilihan-saus" class="">
                     <h3 class="text-center text-base font-semibold text-gray-800 mb-2">Pilih Saus</h3>
-                    <div class="sauce flex justify-center gap-2 flex-wrap">
+                    <div class="sauce flex justify-center gap-2 flex-wrap" role="radiogroup"
+                        aria-labelledby="sauce-heading">
                         <input type="radio" name="sauce" id="sauce-bbq" value="barbaque" class="hidden">
                         <label for="sauce-bbq"
                             class="py-1 px-2 border border-yellow-400 bg-yellow-200 cursor-pointer transition-all duration-200 ease-out shadow-sm text-sm text-gray-800 rounded 
@@ -297,7 +307,8 @@
 
                 <div class="flex justify-center items-center flex-row my-4" id="quantity-button">
                     <!-- Decrease Quantity -->
-                    <button id="decrease-qty" class="group rounded-l-sm border border-black/80 px-2 py-2">
+                    <button id="decrease-qty" class="group rounded-l-sm border border-black/80 px-2 py-2"
+                        aria-label="Decrease quantity">
                         <span class="inline-block transform transition-transform duration-200 group-hover:scale-125"> -
                         </span>
                     </button>
@@ -305,18 +316,19 @@
                     <!-- Display Quantity -->
                     <input type="text" id="modal-quantity"
                         class="border-y border-black/80 px-2 py-2 text-center w-1/4 focus:outline-none" value="1"
-                        readonly>
+                        readonly aria-label="Product quantity">
 
                     <!-- Increase Quantity -->
-                    <button id="increase-qty" class="group rounded-r-sm border border-black/80 px-2 py-2">
+                    <button id="increase-qty" class="group rounded-r-sm border border-black/80 px-2 py-2"
+                        aria-label="Increase quantity">
                         <span class="inline-block transform transition-transform duration-200 group-hover:scale-125"> +
                         </span>
                     </button>
                 </div>
 
                 <button id="add-to-cart-modal"
-                    class="bg-[#BF0000] w-full px-4 py-2 font-marmelad text-white rounded-b-md mt-auto"
-                    data-url="{{ route('cart.add') }}" data-id="">
+                    class="bg-red-600 w-full px-4 py-2 font-marmelad text-white rounded-b-md mt-auto"
+                    data-url="{{ route('cart.add') }}" data-id="" aria-label="Add to cart">
                     Tambahkan Ke Keranjang
                 </button>
 
@@ -342,7 +354,7 @@
 
                     <!-- Teks konten -->
                     <div class="mt-6 md:mt-0 md:ml-6 text-white text-shadow-2">
-                        <h1 class="about-title text-4xl sm:text-5xl lg:text-6xl font-europhia text-shadow mb-4 ">
+                        <h1 class="about-title text-4xl sm:text-5xl lg:text-6xl font-euphoria text-shadow mb-4 ">
                             Tentang Kami
                         </h1>
                         <p class="leading-relaxed pt-4 text-base sm:text-lg md:text-xl lg:text-2xl ">
@@ -364,18 +376,19 @@
     <section id="contact" class="bg-yellow-200 overflow-x-hidden">
         <div class="container mx-auto px-4">
             <div class="flex justify-center py-4 mb-8">
-                <a href=""
-                    class="contact-title py-4 px-12 bg-red-700 rounded-full text-center text-4xl font-europhia shadow-lg text-white cursor-default sm:text-5xl lg:text-6xl">
+                <h1
+                    class="py-4 px-12 bg-red-700 rounded-full text-center text-4xl font-euphoria shadow-lg text-white sm:text-5xl lg:text-6xl">
                     Berikan Rating & Ulasan
-                </a>
+                </h1>
             </div>
             <div class="flex flex-wrap justify-center lg:justify-around items-center pb-10 gap-8">
                 <form action="{{ route('index.store') }}" method="POST" class="form-contact w-full lg:w-1/2">
                     @csrf
-                    <div class="bg-[#F5EB55] p-6 sm:p-9 rounded-2xl ring-1 ring-[#BBB34E]">
+                    <div class="bg-yellow-300 p-6 sm:p-9 rounded-2xl ring-1 ring-yellow-400">
                         <div class="flex justify-between">
                             <h5 class="font-medium text-xl">Kualitas Produk</h5>
-                            <div class="flex items-center gap-2 text-xl" id="star">
+                            <div class="flex items-center gap-2 text-xl" id="star" role="radiogroup"
+                                aria-labelledby="rating-heading">
                                 <input type="radio" name="rating" id="star1" value="1" class="hidden">
                                 <label for="star1" class="cursor-pointer"><i class="far fa-star"></i></label>
 
@@ -393,10 +406,12 @@
                             </div>
                         </div>
                         <div class="my-4">
+                            <label for="username" class="sr-only">Nama</label>
                             <input type="text" name="username" id="username" placeholder="Ketik namamu disini"
                                 class="p-4 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg">
                         </div>
                         <div class="mt-4 mb-8">
+                            <label for="message" class="sr-only">Ulasan</label>
                             <textarea name="message" id="message" cols="30" rows="10" placeholder="Ketik ulasanmu disini"
                                 class="p-4 rounded-xl font-medium w-full focus:outline-none focus:border-2 focus:border-yellow-400 focus:ring-2 ring-yellow-500 focus:shadow-lg"></textarea>
                         </div>
@@ -417,10 +432,10 @@
 
     {{-- Ulasan Section Start --}}
     <section id="ulasan" class="ulasan-img">
-        <h1 class="py-12 font-europhia text-white text-center text-5xl lg:text-6xl">
+        <h1 class="py-12 font-euphoria text-white text-center text-5xl lg:text-6xl">
             Apa Kata Mereka
         </h1>
-        <div class="slider">
+        <div class="slider" aria-label="Customer reviews">
             <div class="slide-track">
                 <!-- First set of reviews -->
                 @foreach ($reviews as $review)

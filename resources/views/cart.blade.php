@@ -13,13 +13,6 @@
     <!-- ICON WEB -->
     <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
 
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Euphoria+Script&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet" />
-
 </head>
 
 <body>
@@ -81,13 +74,12 @@
 
                     @if ($cartItems->isNotEmpty())
                         @foreach ($cartItems as $item)
-                            {{-- <div
-                                class="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6 border-b border-gray-200 group"> --}}
                             <div class="flex flex-row items-start gap-5 py-6 border-b border-gray-200 group">
                                 {{-- Image Product --}}
                                 <div class="w-full max-w-[126px] flex mx-auto justify-center">
                                     <img src="{{ Storage::url($item->product->gambar_menu) }}"
-                                        alt="{{ $item->product->nama_menu }}" class="mx-auto rounded-xl object-cover">
+                                        alt="{{ $item->product->nama_menu }}" class="mx-auto rounded-xl object-cover"
+                                        loading="lazy">
                                 </div>
                                 {{-- Image Product End --}}
                                 <div class="grid grid-cols-1 md:grid-cols-4 w-full">
