@@ -55,8 +55,8 @@ Route::post('/cart/update/{id}', [CartController::class, 'updateQuantity'])->nam
 Route::delete('/cart', [CartController::class, 'clearCart'])->name('cart.clear');
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
 Route::get('/cart/quantity', [CartController::class, 'getCartQuantity'])->name('cart.quantity');
-// Route::get('/cart/total', [CartController::class, 'getTotal'])->name('cart.total');
-// Route::patch('/cart/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
+Route::get('/cart/quantity-desktop', [CartController::class, 'getCartQuantityDesktop'])->name('cart.quantity.desktop');
+
 
 // --- ROUTE ORDER ---
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('order.checkout');

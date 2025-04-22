@@ -1,3 +1,5 @@
+@import "./fonts.css";
+
 :root {
     --light: #edf2f9;
     --dark: #18181b;
@@ -33,7 +35,7 @@
 
 /* Front End */
 body {
-    font-family: "Poppins", "Fraunces", sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 .navbar-fixed {

@@ -5,6 +5,7 @@ module.exports = {
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
     ],
     darkMode: "class", // or 'media' or false
     theme: {
@@ -44,7 +45,8 @@ module.exports = {
                 "Segoe UI Symbol",
                 "Noto Color Emoji",
             ],
-            europhia: ["Euphoria Script", "sans-serif"],
+            // poppins: ['Poppins', 'sans-serif'],
+            euphoria: ["Euphoria Script", 'cursive'],
         },
 
         extend: {

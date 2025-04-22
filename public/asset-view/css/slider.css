@@ -65,6 +65,10 @@
 .review:hover {
     transform: translateZ(10px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    -webkit-transform: translateZ(10px);
+    -moz-transform: translateZ(10px);
+    -ms-transform: translateZ(10px);
+    -o-transform: translateZ(10px);
 }
 
 .review-message {
@@ -106,27 +110,29 @@
     font-size: 18px;
 }
 
-/* .slider::before,
-.slider::after {
-    background: linear-gradient(
-        to right,
-        rgba(0, 0, 0, 0.9) 0%,
-        rgba(0, 0, 0, 0) 100%
-    );
-    content: "";
-    height: 100%;
-    position: absolute;
-    width: 15%;
-    z-index: 2;
-}
+@media (max-width: 768px) {
+    .slider {
+        height: 200px; /* lebih pendek dari 300px */
+    }
 
-.slider::before {
-    left: 0;
-    top: 0;
-}
+    .slide {
+        width: 250px; /* lebih kecil dari 370px */
+        height: 180px;
+    }
 
-.slider::after {
-    right: 0;
-    top: 0;
-    transform: rotateZ(180deg);
-} */
+    .slide-track {
+        width: calc(250px * 12); /* sesuaikan dengan jumlah item */
+        animation: scroll-mobile 40s linear infinite;
+    }
+
+    @keyframes scroll-mobile {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(
+                calc(-250px * 6)
+            ); /* sesuaikan dengan item yang kelihatan */
+        }
+    }
+}

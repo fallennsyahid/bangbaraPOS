@@ -13,16 +13,15 @@
     <!-- ICON WEB -->
     <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
 
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Euphoria+Script&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet" />
-
+    {{-- Alpine JS --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body>
+<body x-data x-init="$refs.loading.classList.add('hidden')">
+    <div x-ref="loading"
+        class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
+        Loading....
+    </div>
     {{-- Hero Section Start --}}
     <section class="relative h-[50vh] header-cart">
         <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center">
@@ -81,13 +80,12 @@
 
                     @if ($cartItems->isNotEmpty())
                         @foreach ($cartItems as $item)
-                            {{-- <div
-                                class="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6 border-b border-gray-200 group"> --}}
                             <div class="flex flex-row items-start gap-5 py-6 border-b border-gray-200 group">
                                 {{-- Image Product --}}
                                 <div class="w-full max-w-[126px] flex mx-auto justify-center">
                                     <img src="{{ Storage::url($item->product->gambar_menu) }}"
-                                        alt="{{ $item->product->nama_menu }}" class="mx-auto rounded-xl object-cover">
+                                        alt="{{ $item->product->nama_menu }}" class="mx-auto rounded-xl object-cover"
+                                        loading="lazy">
                                 </div>
                                 {{-- Image Product End --}}
                                 <div class="grid grid-cols-1 md:grid-cols-4 w-full">
@@ -221,16 +219,32 @@
 
                             </div>
 
+                            {{-- Opsi Penyajian --}}
+                            <div class="flex flex-col">
+                                <label for="serve_option" class="font-semibold mt-6 mb-2">Opsi Penyajian</label>
+                                <select name="serve_option" id="serve_option" required
+                                    class="w-3/4 border border-black rounded-lg font-medium py-2 px-2 focus:ring-gray-400 focus:border-gray-400">
+                                    <option value="-" disabled
+                                        {{ old('serve_option') == '-' ? 'selected' : '' }}>Pilih Opsi Penyajian
+                                    </option>
+                                    <option value="dine-in" {{ old('serve_option') == 'dine-in' ? 'selected' : '' }}>
+                                        Dine In</option>
+                                    <option value="take-away"
+                                        {{ old('serve_option') == 'take-away' ? 'selected' : '' }}>Take Away</option>
+                                </select>
+                            </div>
+
                             <!-- Metode Pembayaran -->
                             <div class="mb-4 flex flex-col">
                                 {{-- <h3 class="font-semibold mt-6 mb-2">Metode Pembayaran</h3> --}}
                                 <label for="metodePembayaran" class="font-semibold mt-6 mb-2">Metode
                                     Pembayaran</label>
-                                <select name="payment_method" id="metodePembayaran"
+                                <select name="payment_method" id="metodePembayaran" required
                                     class="payment_method w-3/4 border border-black rounded-lg font-medium py-2 px-2 focus:ring-gray-400 focus:border-gray-400">
-                                    <option value="-">Pilih Opsi Pembayaran</option>
+                                    <option value="-" disabled selected>Pilih Opsi Pembayaran</option>
                                     <option value="Tunai">Tunai</option>
                                     <option value="nonTunai">Non-Tunai</option>
+                                    <option value="Debit">Debit</option>
                                 </select>
                             </div>
 
@@ -277,11 +291,24 @@
     <section>
         <div class="hidden justify-center items-center fixed left-0 top-0 w-full h-full overflow-auto bg-black/80 z-[9999]"
             id="qrcode">
-            <img src="{{ Storage::url($imagePayment->payment_image) }}" alt="" id="imagePayment" />
+            <img src="{{ Storage::url($imagePayment->payment_image) }}" alt="Barcode" id="imagePayment" />
         </div>
     </section>
 
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if (session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: {!! json_encode(session('error')) !!},
+            confirmButtonText: "OK",
+            confirmButtonColor: "#CC0000",
+        });
+    @endif
+</script>
 
 <script src="{{ asset('asset-view/js/cart.js') }}"></script>
 <script>

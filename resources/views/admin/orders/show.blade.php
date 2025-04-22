@@ -82,7 +82,7 @@
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Total:</label>
                                 <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
-Rp{{ number_format($order->total_price, 0, ',', '.') }}
+                                    Rp{{ number_format($order->total_price, 0, ',', '.') }}
                                 </textarea>
                             </div>
 
@@ -96,6 +96,13 @@ Rp{{ number_format($order->total_price, 0, ',', '.') }}
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Metode Pembayaran:</label>
                                 <input type="text" value="{{ $order->payment_method }}"
+                                    class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
+                            </div>
+
+                            <!-- Metode Pemesanan -->
+                            <div class="mt-4">
+                                <label class="block text-gray-700 font-semibold">Metode Pemesanan:</label>
+                                <input type="text" value="{{ $order->serve_option ?? 'None' }}"
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
                             </div>
 

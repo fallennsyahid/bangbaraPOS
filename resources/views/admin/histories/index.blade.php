@@ -248,7 +248,8 @@
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content')
                     }
                 })
                 .then(res => res.json())
@@ -309,11 +310,12 @@
     {{-- Script Filter Data by Periode --}}
     <script>
         document.getElementById('filterForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Cegah reload halaman
+            event.preventDefault();
 
-            let periode_awal = document.getElementById('periode_awal').value;
-            let periode_akhir = document.getElementById('periode_akhir').value;
+            const periode_awal = document.getElementById('periode_awal').value;
+            const periode_akhir = document.getElementById('periode_akhir').value;
 
+            fetch(`/get-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}`)
             fetch(`/get-histories?periode_awal=${periode_awal}&periode_akhir=${periode_akhir}`)
                 .then(response => response.json())
                 .then(data => {

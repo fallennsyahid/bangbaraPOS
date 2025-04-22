@@ -139,6 +139,8 @@
                                         </div>
                                     @endforeach
                                 </div>
+
+                                {{ $reviews->links() }}
                             </section>
 
                             <x-admin.success-alert></x-admin.success-alert>
