@@ -12,16 +12,31 @@ class OrderExport implements FromCollection, WithHeadings
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
-    {
-        return Order::get()
+   public function collection()
+{
+    return Order::get()
         ->map(function ($order) {
+            $productNames = [];
+
+            // Pastikan products tidak null dan berbentuk JSON yang valid
+            if (!empty($order->products)) {
+                $products = json_decode($order->products, true);
+
+                // Cek jika berhasil di-decode dan berbentuk array
+                if (is_array($products)) {
+                    foreach ($products as $product) {
+                        if (isset($product['nama_menu'])) {
+                            $productNames[] = $product['nama_menu'];
+                        }
+                    }
+                }
+            }
+
             return [
                 $order->id,
                 $order->customer_name,
                 $order->customer_phone,
-                $order->products, // Nama produk
-                $order->quantity,
+                implode(', ', $productNames), // gabungkan semua nama menu
                 $order->status,
                 $order->total_price,
                 $order->payment_method,
@@ -29,7 +44,8 @@ class OrderExport implements FromCollection, WithHeadings
                 $order->created_at,
             ];
         });
-    }
+}
+
 
     /**
      * Menentukan judul kolom di Excel.

@@ -20,7 +20,6 @@
                     <!-- Content header -->
                     <div class="flex items-center justify-between px-4 py-2 border-b lg:py-4">
                         <h1 class="text-2xl font-semibold text-zinc-950">Settings</h1>
-                        <x-staff.waButton></x-staff.waButton>
                     </div>
                     <h2 class="mb-4 text-center">
                         <a href="javascript:history.back()" class="text-amber-400 hover:underline">Back </a>/

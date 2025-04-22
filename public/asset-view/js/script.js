@@ -103,3 +103,5 @@ stars.forEach((star, index) => {
         }
     });
 });
+
+

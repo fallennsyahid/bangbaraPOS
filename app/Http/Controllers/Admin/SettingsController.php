@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
 {
@@ -14,7 +16,9 @@ class SettingsController extends Controller
     public function index()
     {
         $user = Auth::user();
-    return view('admin.settings.index', compact('user'));
+        $image = Image::first();
+
+        return view('admin.settings.index', compact('user', 'image'));
     }
 
     // public function staffIndex()
@@ -35,7 +39,17 @@ class SettingsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'payment_image' => 'required',
+        ]);
+
+        $paymentImage = $request->file('payment_image')->store('barcode-image', 'public');
+
+        Image::create([
+            'payment_image' => $paymentImage,
+        ]);
+
+        return redirect()->back()->with('Success', 'Change photo successfully.');
     }
 
     /**
@@ -59,7 +73,23 @@ class SettingsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         $request->validate([
+            'payment_image' => 'required',
+        ]);
+
+        $image = Image::findOrFail($id);
+
+        if ($image->payment_image && Storage::disk('public')->exists($image->payment_image)) {
+            Storage::disk('public')->delete($image->payment_image);
+        }
+
+        $paymentImage = $request->file('payment_image')->store('barcode-image', 'public');
+
+        $image->update([
+            'payment_image' => $paymentImage,
+        ]);
+
+        return redirect()->back()->with('success', 'Photo updated successfully.');
     }
 
     /**

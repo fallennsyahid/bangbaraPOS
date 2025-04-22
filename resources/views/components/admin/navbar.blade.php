@@ -483,8 +483,6 @@
         let minutes = now.getMinutes().toString().padStart(2, '0');
         let seconds = now.getSeconds().toString().padStart(2, '0');
 
-        let days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-        let dayName = days[now.getDay()];
 
         document.getElementById('real-time-clock').innerText = `${hours}:${minutes}:${seconds}`;
     }

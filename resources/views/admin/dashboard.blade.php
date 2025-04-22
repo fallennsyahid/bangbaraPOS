@@ -42,7 +42,6 @@
                             </div>
 
 
-
                             <!-- Selling card -->
                             <div class="bg-red-600 text-center text-white rounded-xl shadow-lg p-6 w-80 mx-auto">
                                 <h6 class="text-lg font-medium">Total Selling</h6>
@@ -80,6 +79,7 @@
                                     <p class="text-3xl font-bold">{{ $total_orders_cancelled }}</p>
                                 </div>
                             </div>
+
                             <!-- Tickets card -->
                             {{-- <div class="flex items-center justify-between p-4 bg-white rounded-md dark:bg-darker">
                                 <div>

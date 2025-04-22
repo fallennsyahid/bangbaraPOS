@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Carbon as Enter;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
@@ -18,12 +19,13 @@ use App\Http\Controllers\Admin\StruckController;
 use App\Http\Controllers\Admin\StruckOrderController;
 use App\Http\Controllers\Staff\StaffOrdersController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\PaymentImageController;
 use App\Http\Controllers\Admin\SetPrinterAdminController;
-use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Staff\StaffProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\SetPrinterController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Staff\SetPrinterController as StaffSetPrinterController;
 use App\Http\Controllers\Staff\SetPrinterStaffController;
 use App\Http\Controllers\Staff\StaffHistoryController;
@@ -52,6 +54,7 @@ Route::delete('/cart/{id}', [CartController::class, 'removeFromCart'])->name('ca
 Route::post('/cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
 Route::delete('/cart', [CartController::class, 'clearCart'])->name('cart.clear');
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
+Route::get('/cart/quantity', [CartController::class, 'getCartQuantity'])->name('cart.quantity');
 // Route::get('/cart/total', [CartController::class, 'getTotal'])->name('cart.total');
 // Route::patch('/cart/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
 
@@ -135,7 +138,7 @@ Route::get('histories/filter', [HistoryController::class, 'filter'])->name('hist
 // --- NOTIFIKASI ---
 Route::get('/notifications', function () {
     $orders = Order::where('status', 'Pending')
-        ->whereDate('created_at', Carbon::today())
+        ->whereDate('created_at', Enter::today())
         ->latest()
         ->take(5)
         ->get([
@@ -227,7 +230,6 @@ Route::post('/store/toggle-status', [StoreController::class, 'toggleStatus'])->n
 // --- PRINT STRUK ---
 // Route::get('/cetak-struk/{id}', [PrintController::class, 'print'])->name('print.struck');
 
-Route::post('/admin/print-struk/{id}', [StruckController::class, 'print']);
 Route::delete('/bulk-delete', [HistoryController::class, 'bulkDelete'])->name('histories.bulkDelete');
 
 // Route Settings

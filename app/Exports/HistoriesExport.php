@@ -2,12 +2,10 @@
 
 namespace App\Exports;
 
-use App\Models\History;
-use Illuminate\Http\Request;
+
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
 class HistoriesExport implements FromCollection, WithHeadings, WithMapping
@@ -28,14 +26,27 @@ class HistoriesExport implements FromCollection, WithHeadings, WithMapping
 
 
 
-    public function map($history): array
+     public function map($history): array
     {
+        $productNames = [];
+
+        if (!empty($history->products)) {
+            $products = json_decode(json_decode($history->products, true), true);
+
+            if (is_array($products)) {
+                foreach ($products as $product) {
+                    if (isset($product['nama_menu'])) {
+                        $productNames[] = $product['nama_menu'];
+                    }
+                }
+            }
+        }
+
         return [
             $history->id,
             $history->customer_name,
             $history->customer_phone,
-            isset($history->product) ? implode(', ', $history->product->pluck('nama_menu')->toArray()) : '-',
-            $history->quantity,
+            implode(', ', $productNames), // nama-nama menu digabung
             $history->total_price,
             $history->payment_method,
             $history->request,
@@ -51,7 +62,6 @@ class HistoriesExport implements FromCollection, WithHeadings, WithMapping
             'Costumer',
             'Phone',
             'Orders',
-            'QTY',
             'Total',
             'Method',
             'Photo',

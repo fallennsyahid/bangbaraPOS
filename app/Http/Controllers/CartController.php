@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use DB;
 use Log;
 use App\Models\Cart;
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Log as Anjay;
-use Illuminate\Support\Facades\Redirect;
+
 
 class CartController extends Controller
 {
@@ -20,8 +20,9 @@ class CartController extends Controller
     {
         $sessionId = Session::getId();
         $cartItems = Cart::with('product')->where('session_id', $sessionId)->get();
+        $imagePayment = Image::first();
 
-        return view('cart', compact('cartItems'));
+        return view('cart', compact('cartItems', 'imagePayment'));
     }
 
     // Tambah produk ke keranjang
@@ -116,6 +117,14 @@ class CartController extends Controller
             'totalItems' => $totalItems,
             'totalPrice' => $totalPrice
         ]);
+    }
+
+    public function getCartQuantity()
+    {
+        $sessionId = Session::getId();
+        $quantity = Cart::where('session_id', $sessionId)->sum('quantity');
+
+        return response()->json(['quantity' => $quantity]);
     }
 
     /**

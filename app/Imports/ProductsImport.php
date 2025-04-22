@@ -20,6 +20,7 @@ public function model(array $row)
 {
     // Cek apakah gambar_menu memiliki URL untuk gambar
     if (!empty($row['gambar_menu'])) {
+        
         // Mengunduh gambar dari URL (jika gambar berupa URL)
         $imageUrl = $row['gambar_menu'];
         $imageContents = file_get_contents($imageUrl);
