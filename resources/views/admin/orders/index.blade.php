@@ -731,34 +731,14 @@
                 .then(res => res.json())
                 .then(data => {
                     if (data.status === 'success') {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "{{ session('message', $title ?? 'Successfully Printed Struck') }}",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
+                        alert("Struk berhasil dicetak!");
                     } else {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "error",
-                            title: "Oops...",
-                            text: data.message || "Failed to print struck!",
-                            customClass: {
-                                confirmButton: 'confirm-button',
-                            }
-                        });
-                        // alert("Gagal cetak struk: " + data.message);
+                        alert("Gagal cetak struk: " + data.message);
                     }
                 })
                 .catch(err => {
                     console.error("Error:", err);
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Failed to print struck!",
-                    });
+                    alert("Terjadi kesalahan saat mencetak struk.");
                 });
         }
     </script>
