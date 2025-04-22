@@ -18,6 +18,7 @@ class Order extends Model
         'products',
         'total_price',
         'status',
+        'serve_option',
         'payment_method',
         'payment_photo',
     ];

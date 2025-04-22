@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
@@ -18,34 +19,32 @@ class OrderController extends Controller
 
     public function checkout(Request $request)
     {
-        // if (!$request->isMethod('post')) {
-        //     return response()->json(['error' => 'Method not allowed'], 405);
-        // }
         $request->validate([
             'customer_name' => 'required',
             'customer_phone' => 'required',
             'request' => 'nullable',
-            'payment_method' => 'required|in:Tunai,nonTunai',
+            'serve_option' => 'required|in:take-away,dine-in',
+            'payment_method' => 'required|in:Tunai,nonTunai,Debit',
             'payment_photo' => $request->payment_method ===  'nonTunai' ? 'required|image|mimes:jpeg,png,jpg|max:2048' : 'nullable',
             'sauce' => 'nullable|string',
             'hot_ice' => 'nullable|string',
         ]);
 
-        $cartItems = Cart::with('product')->get();
+        $sessionId = Session::getId();
+        $cartItems = Cart::with('product')->where('session_id', $sessionId)->get();
 
         if ($cartItems->isEmpty()) {
-            return redirect()->back()->with('error', 'Cart is empty!');
+            return redirect()->back()->with('error', 'Keranjang kamu kosong!');
         }
 
         $totalPrice = $cartItems->sum(fn($item) => $item->quantity * $item->product->harga_menu);
 
-        $paymentPhotoPath = 'default.png'; // Default value untuk pembayaran tunai
+        $paymentPhotoPath = 'default.png';
 
         if ($request->hasFile('payment_photo')) {
             $paymentPhotoPath = $request->file('payment_photo')->store('payment_photos', 'public');
         }
 
-        // Jika payment_method bukan tunai, tidak mengubah nilai yang sudah di-set
         if ($request->payment_method !== 'Tunai' && !$request->hasFile('payment_photo')) {
             $paymentPhotoPath = null;
         }
@@ -68,19 +67,17 @@ class OrderController extends Controller
             'products' => json_encode($products),
             'total_price' => $totalPrice,
             'status' => 'Pending',
+            'serve_option' => $request->serve_option,
             'payment_method' => $request->payment_method,
             'payment_photo' => $paymentPhotoPath,
             'sauce' => $request->sauce,
             'hot_ice' => $request->hot_ice,
         ]);
 
-        Cart::truncate();
+        // Hapus keranjang hanya milik session ini
+        Cart::where('session_id', $sessionId)->delete();
 
-        if ($request->payment_method === 'Tunai') {
-            return redirect()->route('index')->with('checkout_success', 'tunai');
-        } else {
-            return redirect()->route('index')->with('checkout_success', 'nonTunai');
-        }
+        return redirect()->route('index')->with('checkout_success', $request->payment_method === 'Tunai' ? 'tunai' : 'nonTunai');
     }
 
     /**

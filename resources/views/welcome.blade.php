@@ -4,24 +4,29 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description"
         content="BangbaraPos - Rasa Juara, Harga Bersahabat! Nikmati steak berkualitas dengan harga terjangkau.">
     <title>BangbaraPos</title>
     <!-- CSS -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/css/app.css')
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
     <link rel="stylesheet" href="{{ asset('asset-view/css/slider.css') }}">
     <!-- ICON WEB -->
     <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
-
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    {{-- Alpine JS --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body>
+<body x-data x-init="$refs.loading.classList.add('hidden')">
+    <div x-ref="loading"
+        class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
+        Loading....
+    </div>
     <!-- Header Start -->
     <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
         <div class="container mx-auto px-4">
@@ -98,7 +103,7 @@
                         <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Shopping Cart" width="40"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
 
-                        <span id="cart-quantity-badge" aria-label="Cart items count"
+                        <span id="cart-quantity-badge-desktop" aria-label="Cart items count"
                             class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
                             0
                         </span>
@@ -432,7 +437,7 @@
 
     {{-- Ulasan Section Start --}}
     <section id="ulasan" class="ulasan-img">
-        <h1 class="py-12 font-euphoria text-white text-center text-5xl lg:text-6xl">
+        <h1 class="pt-10 pb-2 font-euphoria text-white text-center text-5xl lg:text-6xl">
             Apa Kata Mereka
         </h1>
         <div class="slider" aria-label="Customer reviews">
@@ -552,6 +557,21 @@
 
     // Jalankan saat halaman dimuat
     document.addEventListener('DOMContentLoaded', updateCartQuantity);
+</script>
+
+<script>
+    function updateCartQuantityDekstop() {
+        fetch("{{ route('cart.quantity.desktop') }}")
+            .then(response => response.json())
+            .then(data => {
+                const badge = document.getElementById('cart-quantity-badge-desktop');
+                badge.textContent = data.quantity;
+            })
+            .catch(error => console.error('Error fetching cart quantity:', error));
+    }
+
+    // Jalankan saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', updateCartQuantityDekstop);
 </script>
 
 <script src="{{ asset('asset-view/js/script.js') }}"></script>

@@ -83,7 +83,6 @@ class CartController extends Controller
     {
         $sessionId  = Session::getId();
         $item = Cart::where('session_id', $sessionId)->where('id', $id)->first();
-        // $item = Cart::find($id);
 
         if (!$item) {
             return response()->json(['message' => 'Item tidak ditemukan'], 404);
@@ -118,6 +117,14 @@ class CartController extends Controller
     }
 
     public function getCartQuantity()
+    {
+        $sessionId = Session::getId();
+        $quantity = Cart::where('session_id', $sessionId)->sum('quantity');
+
+        return response()->json(['quantity' => $quantity]);
+    }
+
+    public function getCartQuantityDesktop()
     {
         $sessionId = Session::getId();
         $quantity = Cart::where('session_id', $sessionId)->sum('quantity');

@@ -82,7 +82,7 @@
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Total:</label>
                                 <textarea class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
-Rp{{ number_format($order->total_price, 0, ',', '.') }}
+                                    Rp{{ number_format($order->total_price, 0, ',', '.') }}
                                 </textarea>
                             </div>
 
@@ -99,6 +99,13 @@ Rp{{ number_format($order->total_price, 0, ',', '.') }}
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
                             </div>
 
+                            <!-- Metode Pemesanan -->
+                            <div class="mt-4">
+                                <label class="block text-gray-700 font-semibold">Metode Pemesanan:</label>
+                                <input type="text" value="{{ $order->serve_option ?? 'None' }}"
+                                    class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
+                            </div>
+
                             <!-- Phone Number -->
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Phone Number:</label>
@@ -108,71 +115,7 @@ Rp{{ number_format($order->total_price, 0, ',', '.') }}
                                         readonly>
                                 </a>
                             </div>
-
-<<<<<<< HEAD
-                            <!-- Tombol Cetak Struk -->
-                            <div class="mt-11 flex justify-end">
-                                <!-- Tombol print: menggunakan method POST onClick -->
-                                <form action="" method="POST">
-                                    @csrf
-                                    <button type="submit"
-                                        class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg inline-flex items-center">
-                                        <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
-                                            class="w-5 h-5 inline-block mr-2" alt="Icon Print">
-                                        Print
-                                    </button>
-                                </form>
-=======
-                        {{-- Print Display --}}
-                        <div id="printDisplay" class="hidden">
-                            <div class="flex justify-center items-center h-screen m-0 bg-gray-200 text-gray-900">
-                                <div class="rounded-md relative w-72 shadow-2xl p-3 bg-white">
-                                    <div class="py-2">
-                                        <div class="text-center text-xl font-bold">ORDER</div>
-                                        <div class="text-center text-xs font-bold">Order details</div>
-                                    </div>
-                                    <div class="text-center text-xs font-bold mb-1">~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div>
-                                    <div class="text-xs pl-2">
-                                        <div class="text-xs mb-1">Customer：{{ $order->customer_name }}</div>
-                                        <div class="text-xs mb-1">Casier：{{ $order->casier_name }}</div>
-                                        <div>OrderNumber：#{{ $order->id }}</div>
-                                    </div>
-                                    <div class="border-double border-t-4 border-b-4 border-gray-900 my-3">
-                                        <div class="flex text-sm pt-1 px-1">
-                                            <span class="w-2/6">Name</span>
-                                            <span class="w-2/6 text-right">Price</span>
-                                            <span class="w-2/6 text-right">QTY</span>
-                                        </div>
-                                        <div
-                                            class="border-dashed border-t border-b border-gray-900 mt-1 my-2 py-2 px-1">
-                                            @foreach ($products as $product)
-                                                <div class="flex justify-between text-sm">
-                                                    <span class="w-2/6 truncate">{{ $product['nama_menu'] }}</span>
-                                                    <span class="w-2/6 text-right">
-                                                        Rp{{ number_format($product['price'], 0, ',', '.') }}
-                                                    </span>
-                                                    <span class="w-2/6 text-right">{{ $product['quantity'] }}</span>
-                                                </div>
-                                            @endforeach
-                                            <!-- Jika ada produk lain, tambahkan di sini -->
-                                        </div>
-                                    </div>
-                                    <div class="text-xs">
-                                        <div class="mb-1">Discount：Rp0</div>
-                                        <div class="mb-52">Remark：--</div>
-                                        <div class="text-right">
-                                            <div>Time： {{ $order->created_at->format('d/m/y') }}
-                                            </div>
-                                            <div class="font-bold text-sm">Total：
-                                                Rp{{ number_format($order->total_price, 0, ',', '.') }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
->>>>>>> ba63282505d71938bef16983cb1dcd840224129c
-                            </div>
                         </div>
-                    </div>
                 </main>
             </div>
 
