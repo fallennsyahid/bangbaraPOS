@@ -102,6 +102,11 @@
                     <a href="{{ route('cart') }}" class="relative" aria-label="View shopping cart">
                         <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Shopping Cart" width="40"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
+
+                        <span id="cart-quantity-badge-desktop" aria-label="Cart items count"
+                            class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
+                            0
+                        </span>
                     </a>
                 </div>
             </div>
@@ -238,6 +243,8 @@
                                                     : 'item-detail-button text-shadow text-sm sm:text-sm bg-red-600 px-2 py-1 sm:px-4 sm:py-2 rounded-full text-white text-center ' }}
                                         {{ $isNonActive ? 'bg-gray-500 cursor-disabled' : '' }}"
                                                 data-product-id="{{ $product->id }}"
+                                                data-product-name="{{ $product->nama_menu }}"
+                                                data-product-category="{{ $category->nama_kategori }}"
                                                 {{ $isNonActive ? 'disabled' : '' }}
                                                 aria-label="{{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan ' . $product->nama_menu . ' ke keranjang' }}">
                                                 {{ $isNonActive ? 'Tidak Tersedia' : 'Tambahkan Ke Keranjang' }}
@@ -487,8 +494,7 @@
             <div class="flex flex-wrap justify-between items-center lg:justify-between gap-y-10">
                 <!-- Logo -->
                 <a href="#navbarHeader" class="logo-footer flex justify-center lg:justify-start w-full lg:w-auto">
-                    <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="Logo" height=""
-                        class="h-12" />
+                    <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="Logo" class="h-12" />
                 </a>
 
                 <!-- Account -->
@@ -536,6 +542,39 @@
     </footer>
     <!-- Footer Section End -->
 </body>
+
+<script>
+    // Update Cart Quantity Badge
+    function updateCartQuantity() {
+        fetch("{{ route('cart.quantity') }}")
+            .then(response => response.json())
+            .then(data => {
+                const badge = document.getElementById('cart-quantity-badge');
+                badge.textContent = data.quantity;
+            })
+            .catch(error => console.error('Error fetching cart quantity:', error));
+    }
+
+    // Jalankan saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', updateCartQuantity);
+</script>
+
+<script>
+    function updateCartQuantityDekstop() {
+        fetch("{{ route('cart.quantity.desktop') }}")
+            .then(response => response.json())
+            .then(data => {
+                const badge = document.getElementById('cart-quantity-badge-desktop');
+                badge.textContent = data.quantity;
+            })
+            .catch(error => console.error('Error fetching cart quantity:', error));
+    }
+
+    // Jalankan saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', updateCartQuantityDekstop);
+</script>
+
+
 <x-sweet-alert></x-sweet-alert>
 
 <script src="{{ asset('asset-view/js/script.js') }}"></script>

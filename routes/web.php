@@ -52,7 +52,6 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::delete('/cart/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 Route::post('/cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
-Route::delete('/cart', [CartController::class, 'clearCart'])->name('cart.clear');
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
 Route::get('/cart/quantity', [CartController::class, 'getCartQuantity'])->name('cart.quantity');
 Route::get('/cart/quantity-desktop', [CartController::class, 'getCartQuantityDesktop'])->name('cart.quantity.desktop');
@@ -130,7 +129,7 @@ Route::resource('/admin/profile', AdminProfileController::class);
 
 // --- UPDATE STATUS ORDER ---
 // Untuk mengubah status order
-Route::patch('/admin/orders/{order}/status', [OrderAdminController::class, 'updateStatus'])->name('admin.orders.index');
+Route::patch('/admin/orders/{order}/status', [OrderAdminController::class, 'updateStatus']);
 
 // --- FILTER HISTORY ---
 Route::get('histories/filter', [HistoryController::class, 'filter'])->name('histories.filter');

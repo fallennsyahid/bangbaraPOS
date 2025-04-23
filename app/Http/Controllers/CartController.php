@@ -30,7 +30,7 @@ class CartController extends Controller
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
             'sauce' => 'nullable|string|in:barbaque,mushroom,blackpepper',
-            'hot_ice' => 'nullable|string|in:hot,ice',
+            'hot_ice' => 'nullable|string|in:hot,ice,biasa',
         ]);
 
         $sessionId = Session::getId();

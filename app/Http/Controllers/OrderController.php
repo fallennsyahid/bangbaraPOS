@@ -25,7 +25,7 @@ class OrderController extends Controller
             'request' => 'nullable',
             'serve_option' => 'required|in:take-away,dine-in',
             'payment_method' => 'required|in:Tunai,nonTunai,Debit',
-            'payment_photo' => $request->payment_method ===  'nonTunai' ? 'required|image|mimes:jpeg,png,jpg|max:2048' : 'nullable',
+            // 'payment_photo' => $request->payment_method ===  'nonTunai' ? 'required|image|mimes:jpeg,png,jpg|max:2048' : 'nullable',
             'sauce' => 'nullable|string',
             'hot_ice' => 'nullable|string',
         ]);
@@ -68,7 +68,7 @@ class OrderController extends Controller
             'total_price' => $totalPrice,
             'status' => 'Pending',
             'serve_option' => $request->serve_option,
-            'payment_method' => $request->payment_method,
+            // 'payment_method' => $request->payment_method,
             'payment_photo' => $paymentPhotoPath,
             'sauce' => $request->sauce,
             'hot_ice' => $request->hot_ice,
@@ -77,7 +77,8 @@ class OrderController extends Controller
         // Hapus keranjang hanya milik session ini
         Cart::where('session_id', $sessionId)->delete();
 
-        return redirect()->route('index')->with('checkout_success', $request->payment_method === 'Tunai' ? 'tunai' : 'nonTunai');
+        // return redirect()->route('index')->with('checkout_success', $request->payment_method === 'Tunai' ? 'tunai' : 'nonTunai');
+        return redirect()->route('index')->with('checkout_success', 'Pesanan kamu sudah masuk, silahkan pergi ke kasir untuk konfirmasi!');
     }
 
     /**

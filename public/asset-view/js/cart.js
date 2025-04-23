@@ -43,31 +43,31 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // PAYMENT METHOD
-    const metodePembayaran = document.querySelector("#metodePembayaran");
-    const buktiPembayaran = document.getElementById("bukti-pembayaran");
-    const qrCode = document.querySelector("#qrcode");
-    const imagePayment = document.querySelector("#imagePayment");
-    const paymentPhoto = document.querySelector("#payment_photo");
+    // const metodePembayaran = document.querySelector("#metodePembayaran");
+    // const buktiPembayaran = document.getElementById("bukti-pembayaran");
+    // const qrCode = document.querySelector("#qrcode");
+    // const imagePayment = document.querySelector("#imagePayment");
+    // const paymentPhoto = document.querySelector("#payment_photo");
 
-    metodePembayaran.addEventListener("change", function () {
-        if (this.value === "nonTunai") {
-            qrCode.classList.remove("hidden");
-            qrCode.classList.add("flex");
-            buktiPembayaran.classList.remove("hidden");
-            buktiPembayaran.classList.add("block");
-            paymentPhoto.setAttribute("required", "required");
-        } else {
-            qrCode.classList.add("hidden");
-            qrCode.classList.remove("flex");
-            buktiPembayaran.classList.add("hidden");
-            buktiPembayaran.classList.remove("block");
-            paymentPhoto.removeAttribute("required");
-        }
-    });
+    // metodePembayaran.addEventListener("change", function () {
+    //     if (this.value === "nonTunai") {
+    //         qrCode.classList.remove("hidden");
+    //         qrCode.classList.add("flex");
+    //         buktiPembayaran.classList.remove("hidden");
+    //         buktiPembayaran.classList.add("block");
+    //         paymentPhoto.setAttribute("required", "required");
+    //     } else {
+    //         qrCode.classList.add("hidden");
+    //         qrCode.classList.remove("flex");
+    //         buktiPembayaran.classList.add("hidden");
+    //         buktiPembayaran.classList.remove("block");
+    //         paymentPhoto.removeAttribute("required");
+    //     }
+    // });
 
-    imagePayment.addEventListener("click", () => {
-        qrCode.classList.add("hidden");
-    });
+    // imagePayment.addEventListener("click", () => {
+    //     qrCode.classList.add("hidden");
+    // });
 });
 
 

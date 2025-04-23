@@ -224,13 +224,10 @@
                                 <label for="serve_option" class="font-semibold mt-6 mb-2">Opsi Penyajian</label>
                                 <select name="serve_option" id="serve_option" required
                                     class="w-3/4 border border-black rounded-lg font-medium py-2 px-2 focus:ring-gray-400 focus:border-gray-400">
-                                    <option value="-" disabled
-                                        {{ old('serve_option') == '-' ? 'selected' : '' }}>Pilih Opsi Penyajian
+                                    <option value="-" disabled selected>Pilih Opsi Penyajian
                                     </option>
-                                    <option value="dine-in" {{ old('serve_option') == 'dine-in' ? 'selected' : '' }}>
-                                        Dine In</option>
-                                    <option value="take-away"
-                                        {{ old('serve_option') == 'take-away' ? 'selected' : '' }}>Take Away</option>
+                                    <option value="dine-in">Dine In</option>
+                                    <option value="take-away">Take Away</option>
                                 </select>
                             </div>
 
