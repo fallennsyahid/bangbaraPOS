@@ -190,9 +190,18 @@ class AdminController extends Controller
             ->orderBy('month')
             ->get();
 
+        // Ambil data history untuk metode pembayaran Debit
+        $debit = History::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+            ->where('payment_method', 'Debit')
+            ->whereYear('created_at', $year)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
         // inisialisasi
         $tunaiData = array_fill(0, 12, 0);
         $nonTunaiData = array_fill(0, 12, 0);
+        $debitData = array_fill(0, 12, 0);
 
         // isi data berdasarkan bulan (index 0 untuk januari, dst.)
         foreach ($tunai as $item) {
@@ -205,10 +214,16 @@ class AdminController extends Controller
             $nonTunaiData[$index] = (int)$item->total;
         }
 
+        foreach ($debit as $item) {
+            $index = $item->month - 1;
+            $debitData[$index] = (int)$item->total;
+        }
+
         // Kirim data ke dashboard
         return response()->json([
             'Tunai'     => $tunaiData,
             'nonTunai' => $nonTunaiData,
+            'Debit' => $debit,
         ]);
     }
 
@@ -233,9 +248,18 @@ class AdminController extends Controller
             ->orderBy('hour')
             ->get();
 
+        // Query untuk metode Debit (misalnya selain Tunai)
+        $debit = History::selectRaw('HOUR(created_at) as hour, COUNT(*) as total')
+            ->whereDate('created_at', $date)
+            ->where('payment_method', '<>', 'nonTunai')
+            ->groupBy('hour')
+            ->orderBy('hour')
+            ->get();
+
         // Inisialisasi array untuk 24 jam (0-23) dengan default 0
         $tunaiData = array_fill(0, 24, 0);
         $nonTunaiData = array_fill(0, 24, 0);
+        $debitData = array_fill(0, 24, 0);
 
         foreach ($tunai as $item) {
             $index = (int)$item->hour;
@@ -245,6 +269,11 @@ class AdminController extends Controller
         foreach ($nonTunai as $item) {
             $index = (int)$item->hour;
             $nonTunaiData[$index] = (int)$item->total;
+        }
+        
+        foreach ($debit as $item) {
+            $index = (int)$item->hour;
+            $debitData[$index] = (int)$item->total;
         }
 
         // Buat label untuk 24 jam (00:00, 01:00, dst.)
@@ -257,6 +286,7 @@ class AdminController extends Controller
             'labels' => $labels,
             'tunai' => $tunaiData,
             'non_tunai' => $nonTunaiData,
+            'debit' => $debitData,
         ]);
     }
 

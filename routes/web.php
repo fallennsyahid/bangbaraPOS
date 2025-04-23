@@ -56,6 +56,8 @@ Route::delete('/cart', [CartController::class, 'clearCart'])->name('cart.clear')
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
 Route::get('/cart/quantity', [CartController::class, 'getCartQuantity'])->name('cart.quantity');
 Route::get('/cart/quantity-desktop', [CartController::class, 'getCartQuantityDesktop'])->name('cart.quantity.desktop');
+// Route::get('/cart/nontunai', [OrderController::class, 'nonTunaiTransaction']);
+// Route::get('/cart/nontunai-payment', [OrderController::class, 'nonTunaiTransacion'])->name('nontunai.payment');
 
 
 // --- ROUTE ORDER ---
@@ -130,7 +132,7 @@ Route::resource('/admin/profile', AdminProfileController::class);
 
 // --- UPDATE STATUS ORDER ---
 // Untuk mengubah status order
-Route::patch('/admin/orders/{order}/status', [OrderAdminController::class, 'updateStatus'])->name('admin.orders.index');
+Route::patch('/admin/orders/{order}/status', [OrderAdminController::class, 'updateStatus']);
 
 // --- FILTER HISTORY ---
 Route::get('histories/filter', [HistoryController::class, 'filter'])->name('histories.filter');
@@ -193,7 +195,7 @@ Route::get('/orders-stats', [AdminController::class, 'getOrdersStats']);
 Route::get('/hourly-orders-stats', [AdminController::class, 'getHourlyPaymentStats']);
 
 // --- UPDATE STATUS MELALUI GET ---
-Route::get('/orders/{id}/status', function ($id) {
+Route::patch('/orders/{id}/status', function ($id) {
     $order = Order::find($id);
     return response()->json([
         'status' => $order->status

@@ -74,8 +74,6 @@
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Time</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
-                                            Photo</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Aksi</th>
                                     </tr>
                                 </thead>
@@ -108,23 +106,8 @@
                                                 {{ $order->payment_method }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
-                                                {{-- <a href="https://wa.me/{{ $order->customer_phone }}"
-                                                class="hover:text-blue-400 hover:underline"
-                                                target="_blank">{{ $order->customer_phone }}</a> --}}
+
                                                 {{ $order->created_at->diffForHumans() }}
-                                            </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
-                                                @if ($order->payment_method === 'nonTunai')
-                                                    <a href="{{ Storage::url($order->payment_photo) }}"
-                                                        target="_blank">
-                                                        <button
-                                                            class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
-                                                            <h6>File</h6>
-                                                        </button>
-                                                    </a>
-                                                @else
-                                                    <p class="text-zinc-950 text-2xl text-center mr-2">-</p>
-                                                @endif
                                             </td>
                                             <td class="px-6 py-4 flex items-center gap-3 mt-4">
 
@@ -284,95 +267,7 @@
             }
         };
     </script>
-    <script>
-        let orderId = null;
 
-        function openModal(id) {
-            orderId = id;
-            document.getElementById("modalConfirm").classList.remove("hidden");
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add("hidden");
-        }
-
-        function updateStatus(status) {
-            fetch(/admin/orders / $ {
-                    orderId
-                }
-                /status, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({
-                    status: status
-                })
-            })
-        .then(response => response.json())
-            .then(data => {
-                console.log(data); // Debugging: lihat apa yang dikembalikan
-                if (data.message) {
-                    // Menggunakan SweetAlert untuk menampilkan pesan sukses
-                    Swal.fire({
-                        title: 'Success',
-                        text: data.message,
-                        icon: 'success',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: '#fcd34d',
-                    });
-
-                    // Update status di UI
-                    const statusElement = document.getElementById(order - status - $ {
-                        orderId
-                    });
-                    if (statusElement) {
-                        // Hapus semua class status lama
-                        statusElement.classList.remove('bg-yellow-800', 'bg-amber-300', 'bg-red-600',
-                            'bg-green-500');
-
-                        // Tambahkan class status baru
-                        if (status === 'Processed') {
-                            statusElement.classList.add('bg-yellow-800', 'rounded-md', 'px-3', 'py-2',
-                                'text-center', 'text-white');
-                        } else if (status === 'Pending') {
-                            statusElement.classList.add('bg-amber-300', 'rounded-md', 'px-3', 'py-2', 'text-center',
-                                'text-white');
-                        } else if (status === 'Cancelled') {
-                            statusElement.classList.add('bg-red-600', 'rounded-md', 'px-3', 'py-2', 'text-center',
-                                'text-white');
-                        } else if (status === 'Completed') {
-                            statusElement.classList.add('bg-green-500', 'rounded-md', 'px-3', 'py-2', 'text-center',
-                                'text-white');
-                        }
-
-                        // Update status text
-                        statusElement.innerText = status;
-                    }
-                } else {
-                    // Menggunakan SweetAlert untuk menampilkan pesan gagal
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Status update failed',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                }
-                closeModal('modalConfirm'); // Menutup modal
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Menggunakan SweetAlert untuk menampilkan pesan error
-                Swal.fire({
-                    title: 'Error',
-                    text: error.message,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            });
-        }
-    </script>
     {{-- DataTables --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

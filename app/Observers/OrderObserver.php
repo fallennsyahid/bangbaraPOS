@@ -23,7 +23,7 @@ class OrderObserver
     {
         if ($order->status === 'Completed' || $order->status === 'Cancelled') {
             History::create([
-                'casier_name' => Auth::user()->name,
+                'casier_name' => $order->casier_name,
                 'customer_name' => $order->customer_name,
                 'customer_phone' => $order->customer_phone,
                 'total_price' => $order->total_price,
@@ -34,7 +34,6 @@ class OrderObserver
                 'products' => json_encode($order->products),
             ]);
 
-            $order->delete();
         }
     }
 

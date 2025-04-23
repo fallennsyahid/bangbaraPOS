@@ -25,7 +25,7 @@ class OrderController extends Controller
             'request' => 'nullable',
             'serve_option' => 'required|in:take-away,dine-in',
             'payment_method' => 'required|in:Tunai,nonTunai,Debit',
-            'payment_photo' => $request->payment_method ===  'nonTunai' ? 'required|image|mimes:jpeg,png,jpg|max:2048' : 'nullable',
+            // 'payment_photo' => $request->payment_method ===  'nonTunai' ? 'required|image|mimes:jpeg,png,jpg|max:2048' : 'nullable',
             'sauce' => 'nullable|string',
             'hot_ice' => 'nullable|string',
         ]);
@@ -60,7 +60,7 @@ class OrderController extends Controller
             'category' => $item->product->category->nama_kategori,
         ])->toArray();
 
-        Order::create([
+        $order = Order::create([
             'customer_name' => $request->customer_name,
             'customer_phone' => $request->customer_phone,
             'request' => $request->input('request'),
@@ -74,11 +74,56 @@ class OrderController extends Controller
             'hot_ice' => $request->hot_ice,
         ]);
 
+        // Set your Merchant Server Key
+        \Midtrans\Config::$serverKey = config('midtrans.serverKey');
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+
+       $params = [
+        'transaction_details' => [
+            'order_id' => 'ORDER-' . $order->id, // <- ini yang dikirim ke Midtrans
+            'gross_amount' => $totalPrice,
+        ],
+        'item_details' => $cartItems->map(function($item) {
+            return [
+            'id' => $item->product_id,
+            'price' => $item->product->harga_menu,
+            'quantity' => $item->quantity,
+            'name' => $item->product->nama_menu,
+            ];
+        })->toArray(),
+        'customer_details' => [
+            'first_name' => $request->customer_name,
+        ]
+    ];
+
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+        $order->snap_token = $snapToken;
+        $order->save();
+
         // Hapus keranjang hanya milik session ini
         Cart::where('session_id', $sessionId)->delete();
 
-        return redirect()->route('index')->with('checkout_success', $request->payment_method === 'Tunai' ? 'tunai' : 'nonTunai');
+        // return redirect()->route('index')->with('checkout_success', $request->payment_method === 'Tunai' ? 'tunai' : 'nonTunai');
+        if ($request->payment_method === 'nonTunai') {
+            return view('nontunaiPayment', [
+                'order' => $order,
+                'snap_token' => $snapToken,
+                'products' => $products,
+            ]);
+        }
+
+        return redirect()->route('index')->with('checkout_success', 'tunai');
     }
+
+    // public function nonTunaiTransacion() {
+    //     return view('nontunaiPayment');
+    // }
 
     /**
      * Show the form for creating a new resource.

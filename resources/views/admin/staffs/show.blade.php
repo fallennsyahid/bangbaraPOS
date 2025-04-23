@@ -54,10 +54,7 @@
                                     <p class="text-gray-600">Email</p>
                                     <p class="text-gray-900 font-medium">{{ $user->email }}</p>
                                 </div>
-                                <div>
-                                    <p class="text-gray-600">Phone Number</p>
-                                    <p class="text-gray-900 font-medium">089864375463</p>
-                                </div>
+
                                 <div>
                                     <p class="text-gray-600">User Role</p>
                                     <p class="text-gray-900 font-medium">{{ $user->usertype }}</p>

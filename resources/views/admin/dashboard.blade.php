@@ -375,6 +375,12 @@
                             backgroundColor: 'rgba(75, 192, 192, 0.2)', // contoh warna biru kehijauan
                             borderColor: 'rgba(75, 192, 192, 1)',
                             borderWidth: 1
+                        }, {
+                            label: 'Debit',
+                            data: Array(24).fill(0),
+                            backgroundColor: 'rgba(153, 102, 255, 0.2)', // biar beda warna dari nonTunai
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            borderWidth: 1
                         }
                     ]
                 },
@@ -407,6 +413,7 @@
                         hourlyChart.data.labels = result.labels;
                         hourlyChart.data.datasets[0].data = result.tunai;
                         hourlyChart.data.datasets[1].data = result.non_tunai;
+                        hourlyChart.data.datasets[2].data = result.debit;
                         hourlyChart.update();
                     })
                     .catch(error => console.error('Error:', error));

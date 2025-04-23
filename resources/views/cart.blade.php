@@ -269,9 +269,12 @@
                                     </label>
                                     <span id="file-name" class="text-xs">Tidak ada file yang dipilih</span>
                                 </div>
-                                <input type="file" id="payment_photo" name="payment_photo" class="hidden"
-                                    accept="image/*" onchange="updateFileName(this)" />
+                                {{-- <input type="file" id="payment_photo" name="payment_photo" class="hidden"
+                                    accept="image/*" onchange="updateFileName(this)" /> --}}
                             </div>
+
+                            <button class="px-4 py-2 bg-blue-500 rounded-lg text-white" id="pay-button">Bayar</button>
+
 
                             <!-- Submit Button -->
                             <div class="flex items-center border-b-2 border-gray-200 py-4">
@@ -295,7 +298,9 @@
         </div>
     </section>
 
+
 </body>
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
