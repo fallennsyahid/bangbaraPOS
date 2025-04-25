@@ -26,7 +26,6 @@ class OrderObserver
                 'customer_name' => $order->customer_name,
                 'customer_phone' => $order->customer_phone,
                 'total_price' => $order->total_price,
-                'payment_photo' => $order->payment_photo,
                 'payment_method' => $order->payment_method,
                 'request' => $order->request,
                 'status' => $order->status,

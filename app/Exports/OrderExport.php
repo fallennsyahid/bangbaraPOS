@@ -55,6 +55,6 @@ class OrderExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         // Headings saat di excel nya
-        return ['ID', 'Costumer Name', 'Customer Name', 'Product Name', 'QTY', 'Status', 'total_price', 'Payment Method', 'Request', 'Created At'];
+        return ['ID', 'Costumer Name', 'Phone', 'Product Name', 'Status', 'Total Price', 'Method', 'Request', 'Created At'];
     }
 }

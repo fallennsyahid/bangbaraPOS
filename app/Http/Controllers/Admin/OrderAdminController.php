@@ -77,7 +77,7 @@ class OrderAdminController extends Controller
         // Update status pesanan
         $order->status = $request->status;
 
-        // Jika status diubah menjadi "Processed", simpan nama kasir dari user yang sedang login
+         // Jika status diubah menjadi "Processed", simpan nama kasir dari user yang sedang login
         if ($request->status === 'Processed' || $request->status === 'Completed' ||  $request->status === 'Cancelled') {
             $order->casier_name = Auth::user()->name; // ← ambil langsung dari Auth
         }
