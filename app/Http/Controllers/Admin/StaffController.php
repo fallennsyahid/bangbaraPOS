@@ -55,6 +55,12 @@ class StaffController extends Controller
             'usertype' => 'required|in:staff',
         ]);
 
+        $existingData = User::where('email', $request->email)->first();
+
+        if ($existingData) {
+            return redirect()->back()->with('error', 'Email is already have been used.');
+        }
+
         // Generate Password
         $password = Str::random(8);
         $user =
@@ -105,6 +111,13 @@ class StaffController extends Controller
         'usertype' => 'nullable|in:staff,admin',
         'password' => 'nullable',
         ]);
+
+        $existingData = User::where('email', $request->email)->first();
+
+        if ($existingData) {
+            return redirect()->back()->with('error', 'Email is already exists.');
+        }
+
 
         $user->name = $request->name;
         $user->email = $request->email;

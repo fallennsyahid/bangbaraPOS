@@ -132,3 +132,28 @@
             }
         }
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        @if (session('error'))
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+            customClass: {
+                confirmButton: 'confirm-button',
+            }
+            });
+        @endif
+
+     @if (session('success'))
+            Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: {{ session('success') }},
+            showConfirmButton: false,
+            timer: 1500,
+        });
+    @endif
+    </script>
