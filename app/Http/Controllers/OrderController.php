@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
@@ -25,7 +26,6 @@ class OrderController extends Controller
             'request' => 'nullable',
             'serve_option' => 'required|in:take-away,dine-in',
             'payment_method' => 'required|in:Tunai,nonTunai,Debit',
-            // 'payment_photo' => $request->payment_method ===  'nonTunai' ? 'required|image|mimes:jpeg,png,jpg|max:2048' : 'nullable',
             'sauce' => 'nullable|string',
             'hot_ice' => 'nullable|string',
         ]);
@@ -39,16 +39,6 @@ class OrderController extends Controller
 
         $totalPrice = $cartItems->sum(fn($item) => $item->quantity * $item->product->harga_menu);
 
-        $paymentPhotoPath = 'default.png';
-
-        if ($request->hasFile('payment_photo')) {
-            $paymentPhotoPath = $request->file('payment_photo')->store('payment_photos', 'public');
-        }
-
-        if ($request->payment_method !== 'Tunai' && !$request->hasFile('payment_photo')) {
-            $paymentPhotoPath = null;
-        }
-
         $products = $cartItems->map(fn($item) => [
             'product_id' => $item->product_id,
             'nama_menu' => $item->product->nama_menu,
@@ -60,68 +50,135 @@ class OrderController extends Controller
             'category' => $item->product->category->nama_kategori,
         ])->toArray();
 
-        $order = Order::create([
+        // Konfigurasi Midtrans
+        \Midtrans\Config::$serverKey = config('midtrans.serverKey');
+        \Midtrans\Config::$isProduction = false;
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
+
+        $params = [
+            'transaction_details' => [
+                'order_id' => 'ORDER-' . time() . '-' . rand(), // unik, tidak pakai ID dari DB
+                'gross_amount' => $totalPrice,
+            ],
+            'item_details' => $cartItems->map(fn($item) => [
+                'id' => $item->product_id,
+                'price' => $item->product->harga_menu,
+                'quantity' => $item->quantity,
+                'name' => $item->product->nama_menu,
+            ])->toArray(),
+            'customer_details' => [
+                'first_name' => $request->customer_name,
+            ],
+            'custom_fields' => [
+                'session_id' => $sessionId,
+                'customer_name' => $request->customer_name,
+                'customer_phone' => $request->customer_phone,
+                'request' => $request->input('request'),
+                'products' => json_encode($products),
+                'serve_option' => $request->serve_option,
+                'payment_method' => $request->payment_method,
+                'sauce' => $request->sauce,
+                'hot_ice' => $request->hot_ice,
+            ]
+        ];
+
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+        Order::create([
+            'order_id' => $params['transaction_details']['order_id'],
+            'session_id' => $sessionId,
             'customer_name' => $request->customer_name,
             'customer_phone' => $request->customer_phone,
             'request' => $request->input('request'),
             'products' => json_encode($products),
             'total_price' => $totalPrice,
-            'status' => 'Pending',
             'serve_option' => $request->serve_option,
             'payment_method' => $request->payment_method,
-            'payment_photo' => $paymentPhotoPath,
-            'sauce' => $request->sauce,
-            'hot_ice' => $request->hot_ice,
         ]);
 
-        // Set your Merchant Server Key
-        \Midtrans\Config::$serverKey = config('midtrans.serverKey');
-        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-        \Midtrans\Config::$isProduction = false;
-        // Set sanitization on (default)
-        \Midtrans\Config::$isSanitized = true;
-        // Set 3DS transaction for credit card to true
-        \Midtrans\Config::$is3ds = true;
-
-       $params = [
-        'transaction_details' => [
-            'order_id' => 'ORDER-' . $order->id, // <- ini yang dikirim ke Midtrans
-            'gross_amount' => $totalPrice,
-        ],
-        'item_details' => $cartItems->map(function($item) {
-            return [
-            'id' => $item->product_id,
-            'price' => $item->product->harga_menu,
-            'quantity' => $item->quantity,
-            'name' => $item->product->nama_menu,
-            ];
-        })->toArray(),
-        'customer_details' => [
-            'first_name' => $request->customer_name,
-        ]
-    ];
-
-        $snapToken = \Midtrans\Snap::getSnapToken($params);
-
-        $order->snap_token = $snapToken;
-        $order->save();
-
-        // Hapus keranjang hanya milik session ini
-        Cart::where('session_id', $sessionId)->delete();
-
-        // return redirect()->route('index')->with('checkout_success', $request->payment_method === 'Tunai' ? 'tunai' : 'nonTunai');
         if ($request->payment_method === 'nonTunai') {
+            Session::put('pending_cart_session_id', $sessionId);
+            Session::put('pending_cart_order_id', $params['transaction_details']['order_id']);
+
             return view('nontunaiPayment', [
-                'order' => $order,
                 'snap_token' => $snapToken,
                 'products' => $products,
             ]);
+        } else {
+            Cart::where('session_id', $sessionId)->delete();
+
+            return redirect()->route('index')->with('success', 'Silahkan pergi ke kasir untuk konfirmasi pembayaran!');
         }
 
-        return redirect()->route('index')->with('checkout_success', 'tunai');
+
+        return redirect()->route('index')->with('success', 'Silahkan pergi ke kasir untuk konfirmasi pembayaran!');
     }
 
-    // public function nonTunaiTransacion() {
+    public function paymentSuccess()
+    {
+        $sessionId = Session::get('pending_cart_session_id');
+
+        if ($sessionId) {
+            Cart::where('session_id', $sessionId)->delete();
+            Session::forget('pending_cart_session_id');
+            Session::forget('pending_cart_order_id');
+        }
+
+        return redirect()->route('index')->with('success', 'Pembayaran berhasil!');
+    }
+
+    public function midtransCallback(Request $request)
+    {
+        Log::info('Callback masuk:', $request->all());
+        $serverKey = config('midtrans.serverKey');
+        $hashed = hash(
+            "sha512",
+            $request->order_id .
+                $request->status_code .
+                $request->gross_amount .
+                $serverKey
+        );
+
+        if ($hashed !== $request->signature_key) {
+            return response()->json(['message' => 'Invalid signature'], 403);
+        }
+
+        if (in_array($request->transaction_status, ['capture', 'settlement'])) {
+            $tempOrder = Order::where('order_id', $request->order_id)->first();
+
+            if (!$tempOrder) {
+                return response()->json(['message' => 'Order tidak ditemukan'], 404);
+            }
+
+            Order::create([
+                'customer_name' => $tempOrder->customer_name,
+                'customer_phone' => $tempOrder->customer_phone,
+                'request' => $tempOrder->request,
+                'products' => $tempOrder->products,
+                'total_price' => $tempOrder->total_price,
+                'status' => 'Paid',
+                'serve_option' => $tempOrder->serve_option,
+                'payment_method' => $tempOrder->payment_method,
+                'session_id' => $tempOrder->session_id,
+                'snap_token' => $request->input('token'),
+            ]);
+
+            Cart::where('session_id', $tempOrder->session_id)->delete();
+            $tempOrder->delete(); // opsional: bersihkan temp order
+        }
+
+        return response()->json(['message' => 'Callback received'], 200);
+    }
+
+    // public function hapusKeranjangSetelahPembayaran(Request $request)
+    // {
+    //     Cart::where('session_id', $request->session_id)->delete();
+    //     return response()->json(['message' => 'Keranjang berhasil dihapus']);
+    // }
+
+    // public function indexPayment()
+    // {
     //     return view('nontunaiPayment');
     // }
 

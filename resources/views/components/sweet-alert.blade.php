@@ -12,21 +12,31 @@
         });
     @endif
 
-    @if (session('checkout_success') === 'tunai')
+    @if (session('checkout_success'))
         Swal.fire({
             title: "Yeay! Pesananmu sudah terkirim",
-            text: "Pesanan berhasil dibuat, silakan menuju kasir untuk pembayaran",
-            icon: "success",
-            confirmButtonText: "OK",
-            confirmButtonColor: "#CC0000"
-        });
-    @elseif (session('checkout_success') === 'nonTunai')
-        Swal.fire({
-            title: "Yeay! Pesananmu sudah terkirim",
-            text: "Chef kita lagi semangat masak buat kamu. Tunggu bentar lagi ya~",
+            text: @json(session('checkout_success')),
             icon: "success",
             confirmButtonText: "OK",
             confirmButtonColor: "#CC0000"
         });
     @endif
+
+    // @if (session('checkout_success') === 'tunai')
+    //     Swal.fire({
+    //         title: "Yeay! Pesananmu sudah terkirim",
+    //         text: "Pesanan berhasil dibuat, silakan menuju kasir untuk pembayaran",
+    //         icon: "success",
+    //         confirmButtonText: "OK",
+    //         confirmButtonColor: "#CC0000"
+    //     });
+    // @elseif (session('checkout_success') === 'nonTunai')
+    //     Swal.fire({
+    //         title: "Yeay! Pesananmu sudah terkirim",
+    //         text: "Chef kita lagi semangat masak buat kamu. Tunggu bentar lagi ya~",
+    //         icon: "success",
+    //         confirmButtonText: "OK",
+    //         confirmButtonColor: "#CC0000"
+    //     });
+    // @endif
 </script>

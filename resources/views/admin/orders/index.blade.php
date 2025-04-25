@@ -267,7 +267,6 @@
             }
         };
     </script>
-
     {{-- DataTables --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -408,7 +407,7 @@
         });
 
         // Cek order baru setiap 5 detik
-        setInterval(checkNewOrders, 5000);
+        setInterval(checkNewOrders, 2000);
 
         function checkNewOrders() {
             $.ajax({

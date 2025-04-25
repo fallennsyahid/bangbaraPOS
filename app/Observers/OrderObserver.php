@@ -31,7 +31,6 @@ class OrderObserver
                 'status' => $order->status,
                 'products' => json_encode($order->products),
             ]);
-
         }
     }
 
@@ -40,7 +39,7 @@ class OrderObserver
      */
     public function deleted(Order $order): void
     {
-        // 
+        //
     }
 
     /**

@@ -10,9 +10,6 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 
-
-
-
 class OrderAdminController extends Controller
 {
     /**
@@ -26,7 +23,8 @@ class OrderAdminController extends Controller
         return response()->json(["data" => $orders]);
     }
 
-    public function export() {
+    public function export()
+    {
         return Excel::download(new OrderExport, 'orders.xlsx');
     }
 
@@ -66,10 +64,10 @@ class OrderAdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-   public function updateStatus(Request $request, $orderId)
+    public function updateStatus(Request $request, $orderId)
     {
         $order = Order::findOrFail($orderId);
-        
+
         // Validasi status yang dipilih
         $validStatuses = ['Status', 'Processed', 'Completed', 'Cancelled'];
         if (!in_array($request->status, $validStatuses)) {
@@ -90,7 +88,7 @@ class OrderAdminController extends Controller
     }
 
 
-        public function bulkDelete(Request $request)
+    public function bulkDelete(Request $request)
     {
         // Ambil array ID dari request
         $ids = $request->input('ids');
@@ -113,7 +111,7 @@ class OrderAdminController extends Controller
 
 
 
-    
+
     /**
      * Remove the specified resource from storage.
      */

@@ -30,7 +30,7 @@ class CartController extends Controller
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
             'sauce' => 'nullable|string|in:barbaque,mushroom,blackpepper',
-            'hot_ice' => 'nullable|string|in:hot,ice',
+            'hot_ice' => 'nullable|string|in:hot,ice,biasa',
         ]);
 
         $sessionId = Session::getId();
@@ -119,17 +119,19 @@ class CartController extends Controller
     public function getCartQuantity()
     {
         $sessionId = Session::getId();
-        $quantity = Cart::where('session_id', $sessionId)->sum('quantity');
+        // Menghitung jumlah produk yang berbeda di keranjang berdasarkan product_id
+        $uniqueProductsCount = Cart::where('session_id', $sessionId)->distinct('product_id')->count('product_id');
 
-        return response()->json(['quantity' => $quantity]);
+        return response()->json(['quantity' => $uniqueProductsCount]);
     }
 
     public function getCartQuantityDesktop()
     {
         $sessionId = Session::getId();
-        $quantity = Cart::where('session_id', $sessionId)->sum('quantity');
+        // Menghitung jumlah produk yang berbeda di keranjang berdasarkan product_id
+        $uniqueProductsCount = Cart::where('session_id', $sessionId)->distinct('product_id')->count('product_id');
 
-        return response()->json(['quantity' => $quantity]);
+        return response()->json(['quantity' => $uniqueProductsCount]);
     }
 
     /**

@@ -91,17 +91,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let isMakanan = productCard.closest("#slider-content").children[0].contains(productCard);
             let isMinuman = productCard.closest("#slider-content").children[1].contains(productCard);
-            let isAirMineral = productName.toLowerCase().includes("air mineral");
+            let isAirMineral = /air\s*mineral/i.test(productName);
 
             if (isMakanan) {
                 pilihanSaus.classList.remove("hidden");
                 pilihanHotIce.classList.add("hidden");
             } else if (isMinuman) {
+                pilihanHotIce.classList.remove("hidden");
+
                 if (isAirMineral) {
-                    pilihanHotIce.classList.add("hidden");
+                    pilihanHotIce.querySelector("#hot").nextElementSibling.innerText = "Biasa";
+                    pilihanHotIce.querySelector("#hot").value = "biasa";
                 } else {
-                    pilihanHotIce.classList.remove("hidden");
+                    pilihanHotIce.querySelector("#hot").nextElementSibling.innerText = "Hot";
+                    pilihanHotIce.querySelector("#hot").value = "hot";
                 }
+
                 pilihanSaus.classList.add("hidden");
             } else {
                 pilihanSaus.classList.add("hidden");
@@ -150,28 +155,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let url = this.dataset.url;
         let selectedSauce = document.querySelector("input[name='sauce']:checked")?.value || "";
         let selectedHotIce = document.querySelector("input[name='hot_ice']:checked")?.value || "";
-
-        // if (!pilihanSaus.classList.contains("hidden") && !selectedSauce) {
-        //     Swal.fire({
-        //         icon: "warning",
-        //         title: "Pilih Saus",
-        //         text: "Silakan pilih saus terlebih dahulu sebelum melanjutkan!",
-        //         confirmButtonText: "OK",
-        //         confirmButtonColor: "#CC0000",
-        //     });
-        //     return;
-        // }
-
-        // if (!pilihanHotIce.classList.contains("hidden") && !selectedHotIce) {
-        //     Swal.fire({
-        //         icon: "warning",
-        //         title: "Pilih Penyajian",
-        //         text: "Silakan pilih penyajian terlebih dahulu sebelum melanjutkan!",
-        //         confirmButtonText: "OK",
-        //         confirmButtonColor: "#CC0000",
-        //     });
-        //     return;
-        // }
 
         let form = document.createElement("form");
         form.method = "POST";

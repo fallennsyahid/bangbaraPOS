@@ -18,10 +18,7 @@
 </head>
 
 <body x-data x-init="$refs.loading.classList.add('hidden')">
-    <div x-ref="loading"
-        class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
-        Loading....
-    </div>
+    <x-loading-animation></x-loading-animation>
     {{-- Hero Section Start --}}
     <section class="relative h-[50vh] header-cart">
         <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center">
@@ -224,13 +221,10 @@
                                 <label for="serve_option" class="font-semibold mt-6 mb-2">Opsi Penyajian</label>
                                 <select name="serve_option" id="serve_option" required
                                     class="w-3/4 border border-black rounded-lg font-medium py-2 px-2 focus:ring-gray-400 focus:border-gray-400">
-                                    <option value="-" disabled
-                                        {{ old('serve_option') == '-' ? 'selected' : '' }}>Pilih Opsi Penyajian
+                                    <option value="-" disabled selected>Pilih Opsi Penyajian
                                     </option>
-                                    <option value="dine-in" {{ old('serve_option') == 'dine-in' ? 'selected' : '' }}>
-                                        Dine In</option>
-                                    <option value="take-away"
-                                        {{ old('serve_option') == 'take-away' ? 'selected' : '' }}>Take Away</option>
+                                    <option value="dine-in">Dine In</option>
+                                    <option value="take-away">Take Away</option>
                                 </select>
                             </div>
 
@@ -247,34 +241,6 @@
                                     <option value="Debit">Debit</option>
                                 </select>
                             </div>
-
-                            <!-- File (Bukti Pembayaran) -->
-                            <div class="hidden relative" id="bukti-pembayaran">
-                                <label for="payment_photo" class="block mt-4 mb-2 font-semibold text-base">
-                                    Upload Bukti Pembayaran (Jika Non-Tunai)
-                                </label>
-                                <div class="flex items-center space-x-2 mb-4">
-                                    <label for="payment_photo"
-                                        class="flex bg-blue-500 text-white gap-2 px-4 py-2 rounded-lg cursor-pointer text-base hover:bg-blue-600 transition duration-200 ease-in">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-upload">
-                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                            <polyline points="17 8 12 3 7 8"></polyline>
-                                            <line x1="12" y1="3" x2="12" y2="15">
-                                            </line>
-                                        </svg>
-                                        Upload File
-                                    </label>
-                                    <span id="file-name" class="text-xs">Tidak ada file yang dipilih</span>
-                                </div>
-                                {{-- <input type="file" id="payment_photo" name="payment_photo" class="hidden"
-                                    accept="image/*" onchange="updateFileName(this)" /> --}}
-                            </div>
-
-                            <button class="px-4 py-2 bg-blue-500 rounded-lg text-white" id="pay-button">Bayar</button>
-
 
                             <!-- Submit Button -->
                             <div class="flex items-center border-b-2 border-gray-200 py-4">
