@@ -64,8 +64,7 @@
                                             Method</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Status</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
-                                            Photo</th>
+                                        
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Aksi</th>
                                     </tr>
@@ -90,19 +89,7 @@
                                                     {{ $history->status }}
                                                 </span>
                                             </td>
-                                            <td
-                                                class="px-4
-                                                    py-2 text-sm">
-                                                @if ($history->payment_method === 'nonTunai')
-                                                    <a href="{{ Storage::url($history->payment_photo) }}"
-                                                        target="_blank">
-                                                        <button
-                                                            class="bg-blue-500 text-white px-4 py-2 rounded-md text-xs">File</button>
-                                                    </a>
-                                                @else
-                                                    <p class="text-center">-</p>
-                                                @endif
-                                            </td>
+                                    
                                             <td class="px-4 py-2 text-sm flex justify-evenly items-center">
                                                 <a href="{{ route('staffHistories.show', $history->id) }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"

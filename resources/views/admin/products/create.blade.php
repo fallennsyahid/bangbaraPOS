@@ -77,6 +77,7 @@
                             <!-- Input Gambar Produk (Opsional) -->
                             <div class="mb-4">
                                 <label for="image" class="block text-sm font-medium mb-2">Product Image</label>
+                                <p class="text-red-700 text-xs p-2">the image must be 1181x1181</p>
                                 <input type="file" id="gambar_menu" name="gambar_menu"
                                     class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none" />
                             </div>
@@ -101,10 +102,6 @@
                             </button>
                         </form>
                     </div>
-
-
-
-
                 </main>
             </div>
 
@@ -115,5 +112,31 @@
     <!-- All javascript code in this project for now is just for demo DON'T RELY ON IT  -->
     <x-admin.js></x-admin.js>
 </body>
+<script>
+    document.getElementById('gambar_menu').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+
+        img.onload = function() {
+            if (img.width > 1181 || img.height > 1181) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Ukuran gambar tidak boleh lebih dari 1181px x 1181px.",
+                    showConfirmButton: true,
+                    customClass: {
+                        confirmButton: 'confirm-button',
+                    },
+                });
+                event.target.value = ''; // Reset input
+            }
+            URL.revokeObjectURL(img.src); // Hapus URL setelah digunakan
+        };
+    });
+</script>
+
 
 </html>

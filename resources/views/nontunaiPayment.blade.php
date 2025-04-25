@@ -32,19 +32,18 @@
             snap.pay('{{ $order->snap_token }}', {
                 // Optional
                 onSuccess: function(result) {
-                    /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    console.log("Payment success:", result);
+                    window.location.href = "{{ route('index') }}"; // Ganti sesuai rute halaman tujuan
                 },
                 // Optional
                 onPending: function(result) {
-                    /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    console.log("Payment pending:", result);
+                    window.location.href = "{{ route('index') }}"; // Bisa juga redirect di sini kalau mau
                 },
-                // Optional
                 onError: function(result) {
-                    /* You may add your own js here, this is just example */
-                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                }
+                    console.log("Payment error:", result);
+                    alert("Pembayaran gagal, silakan coba lagi.");
+                },
             });
         };
     </script>
