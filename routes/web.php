@@ -55,7 +55,8 @@ Route::post('/cart/update/{id}', [CartController::class, 'updateQuantity'])->nam
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
 Route::get('/cart/quantity', [CartController::class, 'getCartQuantity'])->name('cart.quantity');
 Route::get('/cart/quantity-desktop', [CartController::class, 'getCartQuantityDesktop'])->name('cart.quantity.desktop');
-
+Route::post('/midtrans/callback', [OrderController::class, 'midtransCallback']);
+Route::get('/payment-success', [OrderController::class, 'paymentSuccess'])->name('payment.success');
 
 // --- ROUTE ORDER ---
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
@@ -192,7 +193,7 @@ Route::get('/orders-stats', [AdminController::class, 'getOrdersStats']);
 Route::get('/hourly-orders-stats', [AdminController::class, 'getHourlyPaymentStats']);
 
 // --- UPDATE STATUS MELALUI GET ---
-Route::get('/orders/{id}/status', function ($id) {
+Route::patch('/orders/{id}/status', function ($id) {
     $order = Order::find($id);
     return response()->json([
         'status' => $order->status

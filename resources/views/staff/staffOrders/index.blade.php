@@ -24,7 +24,7 @@
 
 
                     <!-- Content -->
-                    <div class="flex flex-col items-center justify-center max-h-screen bg-prime px-4 py-4">
+                    <div class="flex flex-col items-center justify-center min-h-full bg-prime px-4 py-4">
                         <!-- Tombol View on GitHub -->
                         <!-- Tabel -->
                         {{-- <div class="flex justify-between w-full max-w-4xl mb-4"> --}}
@@ -255,95 +255,6 @@
                 })
             }
         };
-    </script>
-    <script>
-        let orderId = null;
-
-        function openModal(id) {
-            orderId = id;
-            document.getElementById("modalConfirm").classList.remove("hidden");
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add("hidden");
-        }
-
-        function updateStatus(status) {
-            fetch(/admin/staffOrders / $ {
-                    orderId
-                }
-                /status, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({
-                    status: status
-                })
-            })
-        .then(response => response.json())
-            .then(data => {
-                console.log(data); // Debugging: lihat apa yang dikembalikan
-                if (data.message) {
-                    // Menggunakan SweetAlert untuk menampilkan pesan sukses
-                    Swal.fire({
-                        title: 'Success',
-                        text: data.message,
-                        icon: 'success',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: '#fcd34d',
-                    });
-
-                    // Update status di UI
-                    const statusElement = document.getElementById(order - status - $ {
-                        orderId
-                    });
-                    if (statusElement) {
-                        // Hapus semua class status lama
-                        statusElement.classList.remove('bg-yellow-800', 'bg-amber-300', 'bg-red-600',
-                            'bg-green-500');
-
-                        // Tambahkan class status baru
-                        if (status === 'Processed') {
-                            statusElement.classList.add('bg-yellow-800', 'rounded-md', 'px-3', 'py-2',
-                                'text-center', 'text-white');
-                        } else if (status === 'Pending') {
-                            statusElement.classList.add('bg-amber-300', 'rounded-md', 'px-3', 'py-2', 'text-center',
-                                'text-white');
-                        } else if (status === 'Cancelled') {
-                            statusElement.classList.add('bg-red-600', 'rounded-md', 'px-3', 'py-2', 'text-center',
-                                'text-white');
-                        } else if (status === 'Completed') {
-                            statusElement.classList.add('bg-green-500', 'rounded-md', 'px-3', 'py-2', 'text-center',
-                                'text-white');
-                        }
-
-                        // Update status text
-                        statusElement.innerText = status;
-                    }
-                } else {
-                    // Menggunakan SweetAlert untuk menampilkan pesan gagal
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Status update failed',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                }
-                closeModal('modalConfirm'); // Menutup modal
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Menggunakan SweetAlert untuk menampilkan pesan error
-                Swal.fire({
-                    title: 'Error',
-                    text: error.message,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            });
-        }
     </script>
     {{-- DataTables --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"

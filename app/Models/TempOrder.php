@@ -3,27 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Order extends Model
+class TempOrder extends Model
 {
-
-    use HasFactory;
-
     protected $fillable = [
+        'order_id',
+        'session_id',
         'customer_name',
         'customer_phone',
         'request',
         'products',
         'total_price',
-        'status',
         'serve_option',
         'payment_method',
-        'session_id',
-        'snap_token',
-    ];
-
-    protected $casts = [
-        'products' => 'array',
     ];
 }

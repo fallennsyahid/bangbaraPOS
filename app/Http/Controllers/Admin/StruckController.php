@@ -39,10 +39,17 @@ class StruckController extends Controller
             $connector = new WindowsPrintConnector($printerName); // Ganti dengan nama printer Anda //menggunakan nama session
             $printer = new Printer($connector);
 
+            // Pusatkan dan tampilkan header
             $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->setTextSize(2, 2); // Perbesar teks nama restoran
+            $printer->setEmphasis(true); // Buat bold
+            $printer->text("Bangbara Steak\n");
+            $printer->setTextSize(1, 1); // Kembalikan ukuran normal
+            $printer->setEmphasis(false); // Matikan bold
+            $printer->text("Jl. Raya Laladon No.25, Laladon, Kec. Ciomas, Kabupaten Bogor, Jawa Barat\n");
+            $printer->text("Telp: (021) 12345678\n\n");           
+            $printer->setUnderline(1);
             $printer->text("===== STRUK PEMBAYARAN =====\n\n");
-            $printer->text("~~~~~   BangbaraPOS ~~~~~\n\n");
-
 
             $printer->setJustification(Printer::JUSTIFY_LEFT);
             $printer->text("Kasir   : " . $history->casier_name . "\n");
@@ -50,6 +57,7 @@ class StruckController extends Controller
             $printer->text("Tanggal : " . $history->created_at->format('d-m-Y H:i') . "\n");
             $printer->text("--------------------------------\n");
 
+            // Loop produk
             foreach ($products as $product) {
                 $printer->text($product['nama_menu'] . " x" . $product['quantity'] . "\n");
                 $printer->text("Rp " . number_format($product['price'], 0) . "\n");
@@ -58,7 +66,14 @@ class StruckController extends Controller
             $printer->text("--------------------------------\n");
             $printer->text("Total    : Rp " . number_format($history->total_price, 0) . "\n");
             $printer->text("Metode   : " . $history->payment_method . "\n");
-            $printer->text("Status   : " . $history->status . "\n");
+
+            // Tampilkan "DIBAYAR" jika status completed
+            if (strtolower($history->status) === 'completed') {
+                $printer->text("Status   : DIBAYAR\n");
+            } else {
+                $printer->text("Status   : " . $history->status . "\n");
+            }
+
             $printer->text("\nTerima kasih!\n\n");
 
             $printer->cut();

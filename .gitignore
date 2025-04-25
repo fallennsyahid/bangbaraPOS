@@ -17,3 +17,4 @@ yarn-error.log
 /vendor
 /node_modules
 .env
+/k6

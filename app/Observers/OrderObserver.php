@@ -32,7 +32,6 @@ class OrderObserver
                 'status' => $order->status,
                 'products' => json_encode($order->products),
             ]);
-            // $order->delete();
         }
     }
 

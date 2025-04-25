@@ -60,9 +60,17 @@ class DashboardController extends Controller
             ->orderBy('month')
             ->get();
 
+        $debit = History::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+            ->where('payment_method', 'Debit')
+            ->whereYear('created_at', $year)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
         // Inisialisasi array untuk 12 bulan (default 0)
         $tunaiData = array_fill(0, 12, 0);
         $nonTunaiData = array_fill(0, 12, 0);
+        $debitData = array_fill(0, 12, 0);
 
         foreach ($tunai as $item) {
             $index = $item->month - 1;
@@ -74,7 +82,12 @@ class DashboardController extends Controller
             $nonTunaiData[$index] = (int) $item->total;
         }
 
-        return view('staff.dashboard', compact('products', 'total_orders', 'year', 'years', 'histories', 'totalIncome', 'total_orders_completed', 'total_orders_cancelled', 'months', 'totals',  'tunaiData', 'nonTunaiData'));
+        foreach ($debit as $item) {
+            $index = $item->month - 1;
+            $debitData[$index] = (int) $item->total;
+        }
+
+        return view('staff.dashboard', compact('products', 'total_orders', 'year', 'years', 'histories', 'totalIncome', 'total_orders_completed', 'total_orders_cancelled', 'months', 'totals',  'tunaiData', 'nonTunaiData', 'debitData'));
     }
 
 
@@ -151,6 +164,8 @@ class DashboardController extends Controller
 
         $tunai = array_fill(0, 24, 0);
         $nonTunai = array_fill(0, 24, 0);
+        $debit = array_fill(0, 24, 0);
+    
 
         $orders = History::whereDate('created_at', $today)->get();
 
@@ -169,6 +184,7 @@ class DashboardController extends Controller
             'labels' => array_map(fn($h) => str_pad($h, 2, '0', STR_PAD_LEFT) . ':00', range(0, 23)),
             'tunai' => $tunai,
             'non_tunai' => $nonTunai,
+            'debit' => $debit,
         ]);
     }
 }

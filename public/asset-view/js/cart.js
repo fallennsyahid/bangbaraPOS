@@ -5,7 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
             let button = event.target.closest(".increase, .decrease");
             let id = button.getAttribute("data-id");
             let inputField = document.getElementById(`cart-item-${id}`);
-            let totalPriceField = document.getElementById(`cart-item-${id}-total-price`);
+            let totalPriceField = document.getElementById(
+                `cart-item-${id}-total-price`
+            );
             let cartItemDiv = inputField.closest(".group");
             let newQuantity = parseInt(inputField.value);
 
@@ -18,7 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                    "X-CSRF-TOKEN": document.querySelector(
+                        'meta[name="csrf-token"]'
+                    ).content,
                 },
                 body: JSON.stringify({
                     quantity: newQuantity,
@@ -31,14 +35,24 @@ document.addEventListener("DOMContentLoaded", function () {
                         cartItemDiv.remove();
                     } else {
                         inputField.value = data.quantity;
-                        totalPriceField.textContent = `Rp ${data.total.toLocaleString("id-ID", { minimumFractionDigits: 2 })}`;
+                        totalPriceField.textContent = `Rp ${data.total.toLocaleString(
+                            "id-ID",
+                            { minimumFractionDigits: 2 }
+                        )}`;
                     }
 
                     // Update total items & total harga
-                    document.getElementById("cart-total-items").textContent = `${data.totalItems} Items`;
-                    document.getElementById("cart-total-price").textContent = `Rp ${data.totalPrice.toLocaleString("id-ID", { minimumFractionDigits: 2 })}`;
+                    document.getElementById(
+                        "cart-total-items"
+                    ).textContent = `${data.totalItems} Items`;
+                    document.getElementById(
+                        "cart-total-price"
+                    ).textContent = `Rp ${data.totalPrice.toLocaleString(
+                        "id-ID",
+                        { minimumFractionDigits: 2 }
+                    )}`;
                 })
-                .catch(error => console.error("Fetch error:", error)); // Tangani error dari Fetch API
+                .catch((error) => console.error("Fetch error:", error)); // Tangani error dari Fetch API
         }
     });
 
@@ -69,6 +83,3 @@ document.addEventListener("DOMContentLoaded", function () {
     //     qrCode.classList.add("hidden");
     // });
 });
-
-
-

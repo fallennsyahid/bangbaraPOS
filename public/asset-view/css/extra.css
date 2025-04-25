@@ -92,3 +92,14 @@
     box-shadow: 0 0 10px 4px rgba(211, 47, 47, 0.4);
     transform: scale(1.02);
 }
+
+/* Loading Animation */
+.animation-round {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

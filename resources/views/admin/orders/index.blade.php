@@ -74,8 +74,6 @@
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Time</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
-                                            Photo</th>
-                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Aksi</th>
                                     </tr>
                                 </thead>
@@ -108,23 +106,8 @@
                                                 {{ $order->payment_method }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
-                                                {{-- <a href="https://wa.me/{{ $order->customer_phone }}"
-                                                class="hover:text-blue-400 hover:underline"
-                                                target="_blank">{{ $order->customer_phone }}</a> --}}
+
                                                 {{ $order->created_at->diffForHumans() }}
-                                            </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
-                                                @if ($order->payment_method === 'nonTunai')
-                                                    <a href="{{ Storage::url($order->payment_photo) }}"
-                                                        target="_blank">
-                                                        <button
-                                                            class="bg-[#2196F3] rounded-md px-4 py-2 font-semibold text-xs text-slate-950">
-                                                            <h6>File</h6>
-                                                        </button>
-                                                    </a>
-                                                @else
-                                                    <p class="text-zinc-950 text-2xl text-center mr-2">-</p>
-                                                @endif
                                             </td>
                                             <td class="px-6 py-4 flex items-center gap-3 mt-4">
 
@@ -424,7 +407,7 @@
         });
 
         // Cek order baru setiap 5 detik
-        setInterval(checkNewOrders, 5000);
+        setInterval(checkNewOrders, 2000);
 
         function checkNewOrders() {
             $.ajax({

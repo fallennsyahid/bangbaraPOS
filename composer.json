@@ -15,6 +15,7 @@
         "laravolt/avatar": "^6.1",
         "livewire/livewire": "^3.6",
         "maatwebsite/excel": "3.1.*",
+        "midtrans/midtrans-php": "^2.6",
         "mike42/escpos-php": "^4.0"
     },
     "require-dev": {

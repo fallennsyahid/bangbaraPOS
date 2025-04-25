@@ -23,10 +23,7 @@
 </head>
 
 <body x-data x-init="$refs.loading.classList.add('hidden')">
-    <div x-ref="loading"
-        class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-amber-300 bg-slate-950">
-        Loading....
-    </div>
+    <x-loading-animation></x-loading-animation>
     <!-- Header Start -->
     <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
         <div class="container mx-auto px-4">
@@ -576,6 +573,22 @@
 
 
 <x-sweet-alert></x-sweet-alert>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        if (localStorage.getItem("midtrans_payment_success") === "true") {
+            Swal.fire({
+                title: 'Berhasil!',
+                text: 'Pembayaran kamu berhasil!',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+            });
+
+            // Hapus flag agar tidak muncul terus
+            localStorage.removeItem("midtrans_payment_success");
+        }
+    });
+</script>
 
 <script src="{{ asset('asset-view/js/script.js') }}"></script>
 <script src="{{ asset('asset-view/js/popup.js') }}"></script>

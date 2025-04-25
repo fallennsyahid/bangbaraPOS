@@ -36,9 +36,17 @@ class StruckOrdersStaffController extends Controller
             $connector = new WindowsPrintConnector($printerName); // Ganti dengan nama printer Anda
             $printer = new Printer($connector);
 
+            // Pusatkan dan tampilkan header
             $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->setTextSize(2, 2); // Perbesar teks nama restoran
+            $printer->setEmphasis(true); // Buat bold
+            $printer->text("Bangbara Steak\n");
+            $printer->setTextSize(1, 1); // Kembalikan ukuran normal
+            $printer->setEmphasis(false); // Matikan bold
+            $printer->text("Jl. Raya Laladon No.25, Laladon, Kec. Ciomas, Kabupaten Bogor, Jawa Barat\n");
+            $printer->text("Telp: (021) 12345678\n\n");           
+            $printer->setUnderline(1);
             $printer->text("===== STRUK PEMESANAN =====\n\n");
-            $printer->text("~~~~~   BangbaraPOS ~~~~~\n\n");
 
 
             $printer->setJustification(Printer::JUSTIFY_LEFT);
