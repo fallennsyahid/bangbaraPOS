@@ -63,6 +63,7 @@ class StruckHistoryController extends Controller
             $printer->text("--------------------------------\n");
             $printer->text("Total    : Rp " . number_format($history->total_price, 0) . "\n");
             $printer->text("Metode   : " . $history->payment_method . "\n");
+            $printer->text("Layanan   : " . $history->serve_option . "\n");
             // Tampilkan "DIBAYAR" jika status completed
             if (strtolower($history->status) === 'completed') {
                 $printer->text("Status   : DIBAYAR\n");

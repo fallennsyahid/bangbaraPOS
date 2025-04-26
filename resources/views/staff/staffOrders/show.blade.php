@@ -40,6 +40,13 @@
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-900" readonly>
                             </div>
 
+                            <!-- Detail Kasir -->
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-semibold">Nama Kasir:</label>
+                                <input type="text" value="{{ $order->casier_name }}"
+                                    class="w-full p-2 border rounded-md bg-gray-100 text-zinc-900" readonly>
+                            </div>
+
                             <!-- Tabel Pesanan -->
                             <div class="overflow-x-auto shadow-md">
                                 <table class="table-auto border-collapse w-full text-left shadow-md rounded-md">
@@ -81,6 +88,13 @@
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Metode Pembayaran:</label>
                                 <input type="text" value="{{ $order->payment_method }}"
+                                    class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
+                            </div>
+
+                            <!-- Opsi Layanan -->
+                            <div class="mt-4">
+                                <label class="block text-gray-700 font-semibold">Layanan:</label>
+                                <input type="text" value="{{ $order->serve_option }}"
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
                             </div>
 

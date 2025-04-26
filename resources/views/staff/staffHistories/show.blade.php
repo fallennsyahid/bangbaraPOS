@@ -91,6 +91,13 @@
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
                             </div>
 
+                            <!-- Opsi layanan -->
+                            <div class="mt-4">
+                                <label class="block text-gray-700 font-semibold">Layanan:</label>
+                                <input type="text" value="{{ $history->serve_option }}"
+                                    class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
+                            </div>
+
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Phone Number:</label>
                                 <a href="https://wa.me/{{ $history->customer_phone }}" target="_blank">
