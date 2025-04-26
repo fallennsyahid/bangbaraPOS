@@ -90,6 +90,13 @@
                                     class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
                             </div>
 
+                            <!-- Opsi Layanan -->
+                            <div class="mt-4">
+                                <label class="block text-gray-700 font-semibold">Layanan:</label>
+                                <input type="text" value="{{ $history->serve_option }}"
+                                    class="w-full p-2 border rounded-md bg-gray-100 text-zinc-950" readonly>
+                            </div>
+
                             <div class="mt-4">
                                 <label class="block text-gray-700 font-semibold">Phone Number:</label>
                                 <a href="https://wa.me/{{ $history->customer_phone }}" target="_blank">
@@ -98,17 +105,7 @@
                                         readonly>
                                 </a>
                             </div>
-                            {{-- <div class="mt-11 flex justify-items-end">
-                                <form action="{{ route('print.struck', $history->id) }}" method="GET">
-                                    <button type="submit"
-                                        class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg flex items-center">
-                                        <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
-                                            class="w-5 h-5 inline-block mr-2">
-                                        Print
-                                    </button>
-                                </form>
-
-                            </div> --}}
+                            
                         </div>
 
 

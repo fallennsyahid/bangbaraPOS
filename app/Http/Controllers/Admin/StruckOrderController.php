@@ -63,6 +63,7 @@ class StruckOrderController extends Controller
             $printer->text("--------------------------------\n");
             $printer->text("Total    : Rp " . number_format($order->total_price, 0) . "\n");
             $printer->text("Metode   : " . $order->payment_method . "\n");
+            $printer->text("Layanan  : " . $order->serve_option . "\n");
             $printer->text("Status   : " . $order->status . "\n");
             $printer->text("\nTerima kasih!\n\n");
 

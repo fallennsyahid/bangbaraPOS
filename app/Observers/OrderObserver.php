@@ -29,6 +29,7 @@ class OrderObserver
                 'payment_method' => $order->payment_method,
                 'request' => $order->request,
                 'status' => $order->status,
+                'serve_option' => $order->serve_option,
                 'products' => json_encode($order->products),
             ]);
         }
