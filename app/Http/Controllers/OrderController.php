@@ -157,7 +157,7 @@ class OrderController extends Controller
                 'request' => $tempOrder->request,
                 'products' => $tempOrder->products,
                 'total_price' => $tempOrder->total_price,
-                'status' => 'Paid',
+                'status' => 'Processed',
                 'serve_option' => $tempOrder->serve_option,
                 'payment_method' => $tempOrder->payment_method,
                 'session_id' => $tempOrder->session_id,

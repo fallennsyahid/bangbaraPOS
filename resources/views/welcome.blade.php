@@ -8,11 +8,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description"
         content="BangbaraPos - Rasa Juara, Harga Bersahabat! Nikmati steak berkualitas dengan harga terjangkau.">
-    <title>BangbaraPos</title>
+    <title>{{ __('BangbaraPos') }}</title>
     <!-- CSS -->
     @vite('resources/css/app.css')
-    <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
-    <link rel="stylesheet" href="{{ asset('asset-view/css/slider.css') }}">
+    <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}?v={{ time() }}" />
+    <link rel="stylesheet" href="{{ asset('asset-view/css/slider.css') }}?v={{ time() }}">
     <!-- ICON WEB -->
     <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
     <!-- Font Awesome CDN -->
@@ -32,7 +32,7 @@
                 <div class="py-6">
                     <a href="#home" aria-label="Go to homepage">
                         <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="BangbaraPos Logo"
-                            width="150" />
+                            width="150" loading="lazy" />
                     </a>
                 </div>
 
@@ -43,25 +43,25 @@
                         class="hidden absolute top-full right-4 py-5 bg-black/80 backdrop-blur-xl shadow-2xl rounded-lg max-w-[250px] w-full lg:bg-transparent lg:static lg:block lg:max-w-none lg:shadow-none lg:rounded-none lg:w-auto lg:mx-auto">
                         <ul class="block lg:flex lg:gap-8">
                             <li class="group">
-                                <a href="#home"
+                                <a href="#home" tabindex="0"
                                     class="text-base text-white py-2 mx-4 flex font-medium relative group-hover:text-primary after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 after:transform after:-translate-x-1/2 group-hover:after:w-3/4">
                                     Home
                                 </a>
                             </li>
                             <li class="group">
-                                <a href="#menu"
+                                <a href="#menu" tabindex="1"
                                     class="text-base text-white py-2 mx-4 flex font-medium relative group-hover:text-primary after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 after:transform after:-translate-x-1/2 group-hover:after:w-3/4">
                                     Menu
                                 </a>
                             </li>
                             <li class="group">
-                                <a href="#about"
+                                <a href="#about" tabindex="2"
                                     class="text-base text-white py-2 mx-4 flex font-medium relative group-hover:text-primary after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 after:transform after:-translate-x-1/2 group-hover:after:w-3/4">
                                     About
                                 </a>
                             </li>
                             <li class="group">
-                                <a href="#contact"
+                                <a href="#contact" tabindex="3"
                                     class="text-base text-white py-2 mx-4 flex font-medium relative group-hover:text-primary after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 after:transform after:-translate-x-1/2 group-hover:after:w-3/4">
                                     Review
                                 </a>
@@ -76,7 +76,7 @@
                             <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Shopping Cart" width="40"
                                 class="hover:scale-110 transition duration-300 ease-in-out" />
 
-                            <span id="cart-quantity-badge" aria-label="Cart items count"
+                            <span id="cart-quantity-badge" aria-label="Cart items count" aria-live="polite"
                                 class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
                                 0
                             </span>
@@ -100,7 +100,7 @@
                         <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Shopping Cart" width="40"
                             class="hover:scale-110 transition duration-300 ease-in-out" />
 
-                        <span id="cart-quantity-badge-desktop" aria-label="Cart items count"
+                        <span id="cart-quantity-badge-desktop" aria-label="Cart items count" aria-live="polite"
                             class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
                             0
                         </span>
@@ -445,7 +445,9 @@
                 @foreach ($reviews as $review)
                     <div class="slide">
                         <div class="review">
-                            <p class="review-message">{{ $review->message }}</p>
+                            <div class="review-message-wrapper">
+                                <p class="review-message">{{ $review->message }}</p>
+                            </div>
                             <div class="review-footer">
                                 <p class="review-username">{{ $review->username }}</p>
                                 <p class="review-rating">
@@ -540,57 +542,10 @@
     <!-- Footer Section End -->
 </body>
 
-<script>
-    // Update Cart Quantity Badge
-    function updateCartQuantity() {
-        fetch("{{ route('cart.quantity') }}")
-            .then(response => response.json())
-            .then(data => {
-                const badge = document.getElementById('cart-quantity-badge');
-                badge.textContent = data.quantity;
-            })
-            .catch(error => console.error('Error fetching cart quantity:', error));
-    }
-
-    // Jalankan saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', updateCartQuantity);
-</script>
-
-<script>
-    function updateCartQuantityDekstop() {
-        fetch("{{ route('cart.quantity.desktop') }}")
-            .then(response => response.json())
-            .then(data => {
-                const badge = document.getElementById('cart-quantity-badge-desktop');
-                badge.textContent = data.quantity;
-            })
-            .catch(error => console.error('Error fetching cart quantity:', error));
-    }
-
-    // Jalankan saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', updateCartQuantityDekstop);
-</script>
-
-
 <x-sweet-alert></x-sweet-alert>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        if (localStorage.getItem("midtrans_payment_success") === "true") {
-            Swal.fire({
-                title: 'Berhasil!',
-                text: 'Pembayaran kamu berhasil!',
-                icon: 'success',
-                timer: 1500,
-                showConfirmButton: false,
-            });
+<x-view-js></x-view-js>
 
-            // Hapus flag agar tidak muncul terus
-            localStorage.removeItem("midtrans_payment_success");
-        }
-    });
-</script>
-
-<script src="{{ asset('asset-view/js/script.js') }}"></script>
-<script src="{{ asset('asset-view/js/popup.js') }}"></script>
+<script src="{{ asset('asset-view/js/script.js') }}" defer></script>
+<script src="{{ asset('asset-view/js/popup.js') }}" defer></script>
 
 </html>

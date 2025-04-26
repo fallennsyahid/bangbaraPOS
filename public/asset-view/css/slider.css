@@ -18,8 +18,10 @@
 
 .slide-track {
     display: flex;
-    width: calc(370px * 12); /* Adjust based on your total reviews count */
-    animation: scroll 40s linear infinite;
+    width: calc(370px * 12);
+    /*Adjustbasedonyourtotalreviewscount*/
+    animation: scroll 30s linear infinite;
+    -webkit-animation: scroll 30s linear infinite;
 }
 
 .slide-track:hover {
@@ -71,8 +73,15 @@
     -o-transform: translateZ(10px);
 }
 
+.review-message-wrapper {
+    border-top-right-radius: 8px;
+    overflow: hidden; /* agar radius tetap kelihatan meski ada scroll */
+    flex-grow: 1;
+    display: flex;
+}
+
 .review-message {
-    padding: 16px;
+    padding: 1rem;
     font-size: 16px;
     line-height: 1.5;
     overflow-y: auto;
@@ -81,6 +90,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-top-right-radius: 8px;
 }
 
 .review-footer {
@@ -121,8 +131,10 @@
     }
 
     .slide-track {
-        width: calc(250px * 12); /* sesuaikan dengan jumlah item */
-        animation: scroll-mobile 40s linear infinite;
+        width: calc(250px * 12);
+        /*sesuaikandenganjumlahitem*/
+        animation: scroll-mobile 30s liear infinite;
+        -webkit-animation: scroll-mobile 30s liear infinite;
     }
 
     @keyframes scroll-mobile {

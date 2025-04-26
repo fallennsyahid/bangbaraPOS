@@ -2,6 +2,7 @@
 @stack('scripts')
 
 <script>
+    // document.addEventListener("DOMContentLoaded", function() {
     @if (session('success'))
         Swal.fire({
             icon: 'success',
@@ -22,6 +23,19 @@
         });
     @endif
 
+    if (localStorage.getItem("midtrans_payment_success") === "true") {
+        Swal.fire({
+            title: 'Berhasil!',
+            text: 'Pembayaran kamu berhasil!',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false,
+        });
+
+        // Hapus flag agar tidak muncul terus
+        localStorage.removeItem("midtrans_payment_success");
+    }
+
     // @if (session('checkout_success') === 'tunai')
     //     Swal.fire({
     //         title: "Yeay! Pesananmu sudah terkirim",
@@ -39,4 +53,5 @@
     //         confirmButtonColor: "#CC0000"
     //     });
     // @endif
+    // });
 </script>
