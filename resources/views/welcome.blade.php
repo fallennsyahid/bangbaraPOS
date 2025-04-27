@@ -187,7 +187,7 @@
 
                                     <div
                                         class="product-card flex flex-col items-center
-                                    bg-white h-[21rem] w-48 md:h-[22rem] md:w-56 lg:h-[25rem] lg:w-64 rounded-md gap-3
+                                    bg-white h-[22rem] w-48 md:h-[23rem] md:w-56 lg:h-[25rem] lg:w-64 rounded-md gap-3
                                     transition duration-200 ease-in 
                                     {{ $isNonActive || $isClose ? 'bg-gray-300 pointer-events-none' : 'hover:-translate-y-2' }}">
 
@@ -226,7 +226,7 @@
                                             </div>
                                         </a>
 
-                                        <p class="text-text text-base sm:text-xl text-center">
+                                        <p class="text-text text-base sm:text-lg text-center">
                                             {{ $product->nama_menu }}</p>
                                         <h6 class="hidden">{{ $product->deskripsi_menu }}</h6>
                                         <span class="text-price font-alkatra text-base text-center">

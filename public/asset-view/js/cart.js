@@ -56,6 +56,55 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Validasi Input
+    const checkoutButton = document.getElementById('checkoutButton');
+    const requiredFields = [
+        document.getElementById('customer_name'),
+        document.getElementById('customer_phone'),
+        document.getElementById('serve_option'),
+        document.getElementById('metodePembayaran')
+    ];
+
+    function validateForm() {
+        let allFilled = true;
+        requiredFields.forEach(field => {
+            if (!field.value || field.value === "-") {
+                allFilled = false;
+            }
+        });
+
+        if (allFilled) {
+            checkoutButton.disabled = false;
+            checkoutButton.classList.remove(
+                'bg-red-400', 'cursor-not-allowed'
+            );
+            checkoutButton.classList.add(
+                'bg-red-600', 'cursor-pointer',
+                'hover:bg-red-700', 'hover:scale-105',
+                'active:bg-red-800', 'active:scale-100'
+            );
+        } else {
+            checkoutButton.disabled = true;
+            checkoutButton.classList.remove(
+                'bg-red-600', 'cursor-pointer',
+                'hover:bg-red-700', 'hover:scale-105',
+                'active:bg-red-800', 'active:scale-100'
+            );
+            checkoutButton.classList.add(
+                'bg-red-400', 'cursor-not-allowed'
+            );
+        }
+    }
+
+    // Cek saat input berubah
+    requiredFields.forEach(field => {
+        field.addEventListener('input', validateForm);
+        field.addEventListener('change', validateForm);
+    });
+
+    // Cek pertama kali
+    validateForm();
+
     // PAYMENT METHOD
     // const metodePembayaran = document.querySelector("#metodePembayaran");
     // const buktiPembayaran = document.getElementById("bukti-pembayaran");
@@ -82,4 +131,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // imagePayment.addEventListener("click", () => {
     //     qrCode.classList.add("hidden");
     // });
+
+    // function updateFileName(input) {
+    //     const fileName = input.files.length > 0 ? input.files[0].name : "Tidak ada file yang dipilih";
+    //     document.getElementById("file-name").textContent = fileName;
+    // }
 });
