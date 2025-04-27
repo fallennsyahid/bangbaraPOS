@@ -22,12 +22,18 @@ class OrderController extends Controller
     {
         $request->validate([
             'customer_name' => 'required',
-            'customer_phone' => 'required',
+            'customer_phone' => [
+                'required',
+                'regex:/^08[0-9]{8,13}$/'
+            ],
             'request' => 'nullable',
             'serve_option' => 'required|in:take-away,dine-in',
             'payment_method' => 'required|in:Tunai,nonTunai,Debit',
             'sauce' => 'nullable|string',
             'hot_ice' => 'nullable|string',
+        ], [
+            'customer_phone.required' => 'Mohon isi terlebih dahulu nomor telepon kamu!',
+            'customer_phone.regex' => 'Nomor telepon harus diawali dengan 08 dan terdiri dari 10 sampai 15 digit angka.',
         ]);
 
         $sessionId = Session::getId();

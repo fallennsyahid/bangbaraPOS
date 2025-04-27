@@ -244,7 +244,7 @@
 
                             <!-- Submit Button -->
                             <div class="flex items-center border-b-2 border-gray-200 py-4">
-                                <button type="submit"
+                                <button type="submit" id="checkoutButton" disabled
                                     class="py-2 px-4 w-full bg-red-600 rounded-lg text-white font-semibold cursor-pointer transition duration-300 ease-linear hover:bg-red-700 hover:scale-105 active:bg-red-800 active:scale-100">
                                     Checkout
                                 </button>
@@ -264,30 +264,12 @@
         </div>
     </section>
 
-
 </body>
 
+<script></script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    @if (session('error'))
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops!',
-            text: {!! json_encode(session('error')) !!},
-            confirmButtonText: "OK",
-            confirmButtonColor: "#CC0000",
-        });
-    @endif
-</script>
-
+<x-cart-sweetalert></x-cart-sweetalert>
 <script src="{{ asset('asset-view/js/cart.js') }}"></script>
-<script>
-    function updateFileName(input) {
-        const fileName = input.files.length > 0 ? input.files[0].name : "Tidak ada file yang dipilih";
-        document.getElementById("file-name").textContent = fileName;
-    }
-</script>
 
 
 </html>
