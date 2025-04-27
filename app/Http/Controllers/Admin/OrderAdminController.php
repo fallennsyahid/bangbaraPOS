@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
@@ -88,6 +87,7 @@ class OrderAdminController extends Controller
     }
 
 
+    
     public function bulkDelete(Request $request)
     {
         // Ambil array ID dari request
@@ -108,6 +108,7 @@ class OrderAdminController extends Controller
             return response()->json(['success' => false, 'message' => 'Failed to delete selected items.']);
         }
     }
+    
 
 
 
