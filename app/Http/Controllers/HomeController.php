@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Review;
 use App\Models\Store;
 use App\Models\Order;
+use App\Models\RestaurantLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,8 +24,9 @@ class HomeController extends Controller
         $categories = Category::with(['products', 'options'])->get();
         $reviews = Review::orderBy('created_at', 'desc')->take(5)->get();
         $store = Store::first();
+        $location = RestaurantLocation::first();
 
-        return view('welcome', compact('categories', 'reviews', 'store'));
+        return view('welcome', compact('categories', 'reviews', 'store', 'location'));
     }
 
     /**

@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->string('order_id')->unique()->after('id');
+        Schema::create('restaurant_locations', function (Blueprint $table) {
+            $table->id();
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn('order_id');
-        });
+        Schema::dropIfExists('restaurant_locations');
     }
 };

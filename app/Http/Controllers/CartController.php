@@ -24,44 +24,63 @@ class CartController extends Controller
     }
 
     // Tambah produk ke keranjang
-    public function addToCart(Request $request)
-    {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1',
-            'sauce' => 'nullable|string|in:barbaque,mushroom,blackpepper',
-            'hot_ice' => 'nullable|string|in:hot,ice,biasa',
+   public function addToCart(Request $request)
+{
+    $request->validate([
+        'product_id' => 'required|exists:products,id',
+        'quantity' => 'required|integer|min:1',
+        'sauce' => 'nullable|string|in:barbaque,mushroom,blackpepper',
+        'hot_ice' => 'nullable|string|in:hot,ice,biasa',
+        'latitude' => 'required|numeric',
+        'longitude' => 'required|numeric',
+    ]);
+
+
+    $sessionId = Session::getId();
+    $product_id = $request->product_id;
+    $quantity = $request->quantity;
+    $sauce = $request->sauce;
+    $hot_ice = $request->hot_ice;
+
+    $cartItem = Cart::where('session_id', $sessionId)
+        ->where('product_id', $product_id)
+        ->where('sauce', $sauce)
+        ->where('hot_ice', $hot_ice)
+        ->first();
+
+    if ($cartItem) {
+        $cartItem->increment('quantity', $quantity);
+    } else {
+        Cart::create([
+            'session_id' => $sessionId,
+            'product_id' => $product_id,
+            'quantity' => $quantity,
+            'sauce' => $sauce,
+            'hot_ice' => $hot_ice,
         ]);
-
-        $sessionId = Session::getId();
-        $product_id = $request->product_id;
-        $quantity = $request->quantity;
-        $sauce = $request->sauce;
-        $hot_ice = $request->hot_ice;
-
-
-        $cartItem = Cart::where('session_id', $sessionId)
-            ->where('product_id', $product_id)
-            ->where('sauce', $sauce)
-            ->where('hot_ice', $hot_ice)
-            ->first();
-
-        if ($cartItem) {
-            // Jika sudah ada, tambah quantity
-            $cartItem->increment('quantity', $quantity);
-        } else {
-            // Jika belum ada, buat entri baru
-            Cart::create([
-                'session_id' => $sessionId,
-                'product_id' => $product_id,
-                'quantity' => $quantity,
-                'sauce' => $sauce,
-                'hot_ice' => $hot_ice,
-            ]);
-        }
-
-        return redirect()->route('index#menu')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
     }
+
+    return redirect()->route('index#menu')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
+}
+
+/**
+ * Hitung jarak antara 2 titik koordinat (haversine formula)
+ */
+// private function calculateDistance($lat1, $lng1, $lat2, $lng2)
+// {
+//     $earthRadius = 6371; // radius bumi dalam kilometer
+
+//     $dLat = deg2rad($lat2 - $lat1);
+//     $dLng = deg2rad($lng2 - $lng1);
+
+//     $a = sin($dLat/2) * sin($dLat/2) +
+//          cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+//          sin($dLng/2) * sin($dLng/2);
+
+//     $c = 2 * atan2(sqrt($a), sqrt(1-$a));
+
+//     return $earthRadius * $c;
+// }
 
     // Hapus produk dari keranjang
     public function removeFromCart($id)

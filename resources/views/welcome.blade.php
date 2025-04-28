@@ -306,6 +306,8 @@
                             hover:shadow-md active:scale-95">
                             Blackpepper
                         </label>
+
+
                     </div>
                 </div>
 
@@ -329,6 +331,12 @@
                         </span>
                     </button>
                 </div>
+
+                <!-- Hidden field untuk lokasi -->
+                <input type="hidden" id="targetLatitude" value="{{ $location->latitude ?? 0 }}">
+                <input type="hidden" id="targetLongitude" value="{{ $location->longitude ?? 0 }}">
+
+
 
                 <button id="add-to-cart-modal"
                     class="bg-red-600 w-full px-4 py-2 font-marmelad text-white rounded-b-md mt-auto"
@@ -547,5 +555,23 @@
 
 <script src="{{ asset('asset-view/js/script.js') }}" defer></script>
 <script src="{{ asset('asset-view/js/popup.js') }}" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+            },
+            function (error) {
+                console.error('Error mendapatkan lokasi:', error);
+                alert('Gagal mendapatkan lokasi. Anda tidak dapat menambahkan produk ke keranjang.');
+            }
+        );
+    } else {
+        alert('Browser Anda tidak mendukung Geolocation.');
+    }
+});
+</script>
 
 </html>

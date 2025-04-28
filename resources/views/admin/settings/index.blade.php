@@ -65,6 +65,61 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Settings Location -->
+                    <h1 class="text-xl text-center font-semibold text-zinc-950 mb-4">Location Settings</h1>
+                    <div class="min-h-full mt-4 flex items-center justify-center bg-prime">
+                        <div class=" w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
+                            <div class="flex flex-col p-3 items-center space-y-6">
+                                
+                                <form action="{{ route('admin.setLocation') }}" method="POST"
+                                    class="flex flex-col items-center w-full">
+                                    @csrf
+                                    <!-- Set latitude -->
+                                    <label for="latitude">Set latitude</label>
+                                    <input type="text" placeholder="Set Latitude" name="latitude"
+                                        id="latitude" value="{{ $location->latitude ?? '' }}"
+                                        class="p-2 rounded-xl font-medium w-full border-2 border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
+                                    
+                                        <!-- Set latitude -->
+                                    <label for="longitude">Set longitude</label>
+                                    <input type="text" placeholder="Set Longitude" name="longitude"
+                                        id="longitude"  value="{{ $location->longitude ?? '' }}"
+                                        class="p-2 rounded-xl font-medium w-full border-2 border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
+
+                                        
+                                    <label for="location-update"
+                                        class="flex items-center justify-center gap-2 bg-yellow-400 py-2 px-4 mt-4 max-w-40 rounded-md text-white font-semibold cursor-pointer hover:bg-yellow-500 group">
+                                        <svg fill="#000000" width="30px" height="30px" viewBox="0 0 24 24"
+                                            id="update-alt" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg"
+                                            class="icon flat-line group-hover:rotate-180 transition duration-300">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                stroke-linejoin="round"></g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path id="primary" d="M5.07,8A8,8,0,0,1,20,12"
+                                                    style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                                </path>
+                                                <path id="primary-2" data-name="primary" d="M18.93,16A8,8,0,0,1,4,12"
+                                                    style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                                </path>
+                                                <polyline id="primary-3" data-name="primary" points="5 3 5 8 10 8"
+                                                    style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                                </polyline>
+                                                <polyline id="primary-4" data-name="primary" points="19 21 19 16 14 16"
+                                                    style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                                </polyline>
+                                            </g>
+                                        </svg>
+                                        Update
+                                    </label>
+                                    <input type="submit" value="Update" class="hidden" id="location-update">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
                     {{-- Template Excel --}}
                     <h1 class="text-xl text-center font-semibold text-zinc-950 mt-4 mb-2">Download Excel Format</h1>
                     <div class="min-h-full mt-4 flex items-center justify-center bg-prime">

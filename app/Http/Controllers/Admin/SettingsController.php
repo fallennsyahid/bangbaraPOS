@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Image;
+use App\Models\RestaurantLocation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,8 +18,8 @@ class SettingsController extends Controller
     {
         $user = Auth::user();
         $image = Image::first();
-
-        return view('admin.settings.index', compact('user', 'image'));
+        $location = RestaurantLocation::first();
+        return view('admin.settings.index', compact('user', 'image', 'location'));
     }
 
     // public function staffIndex()
