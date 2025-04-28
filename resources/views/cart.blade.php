@@ -28,7 +28,7 @@
                     Back /
                 </span>
                 <a href="{{ route('index') }}">
-                    <span class="text-rose-400 cursor-pointer text-xl lg:text-base hover:underline">Home</span></a>
+                    <span class="text-rose-500 cursor-pointer text-xl lg:text-base hover:underline">Home</span></a>
             </p>
         </div>
     </section>
@@ -184,7 +184,7 @@
                                 <label for="customer_name" class="block mb-2 font-medium text-base">
                                     Masukkan nama Anda
                                 </label>
-                                <input type="text" placeholder="contoh: Atas nama Rendi" id="customer_name"
+                                <input type="text" placeholder="Rendi Kurniawan" id="customer_name"
                                     name="customer_name"
                                     class="w-full border border-gray-300 rounded-lg pr-16 px-3 py-3 font-alkatra font-normal focus:ring-gray-400 focus:border-gray-400 focus:shadow-lg" />
 
@@ -192,8 +192,8 @@
                                 <label for="customer_phone" class="block mt-4 mb-2 font-medium text-base">
                                     Masukkan nomor telepon
                                 </label>
-                                <input type="number" placeholder="contoh: +62" id="customer_phone"
-                                    name="customer_phone" min="0" maxlength="15"
+                                <input type="number" placeholder="08xx" id="customer_phone" name="customer_phone"
+                                    min="0" maxlength="15"
                                     class="input-number w-full border border-gray-300 rounded-lg pr-16 px-3 py-3 font-alkatra font-normal focus:ring-gray-400 focus:border-gray-400 focus:shadow-lg" />
 
                                 <!-- Note -->
@@ -244,8 +244,8 @@
 
                             <!-- Submit Button -->
                             <div class="flex items-center border-b-2 border-gray-200 py-4">
-                                <button type="submit" id="checkoutButton" disabled
-                                    class="py-2 px-4 w-full bg-red-600 rounded-lg text-white font-semibold cursor-pointer transition duration-300 ease-linear hover:bg-red-700 hover:scale-105 active:bg-red-800 active:scale-100">
+                                <button type="button" id="checkoutButton" disabled
+                                    class="py-2 px-4 w-full bg-red-500 rounded-lg text-white font-semibold cursor-not-allowed transition duration-300 ease-linear">
                                     Checkout
                                 </button>
                             </div>
@@ -265,8 +265,6 @@
     </section>
 
 </body>
-
-<script></script>
 
 <x-cart-sweetalert></x-cart-sweetalert>
 <script src="{{ asset('asset-view/js/cart.js') }}"></script>

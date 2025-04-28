@@ -330,6 +330,9 @@
                     </button>
                 </div>
 
+                <input type="hidden" id="latitude" name="latitude">
+                <input type="hidden" name="longtitude" id="longtitude">
+
                 <button id="add-to-cart-modal"
                     class="bg-red-600 w-full px-4 py-2 font-marmelad text-white rounded-b-md mt-auto"
                     data-url="{{ route('cart.add') }}" data-id="" aria-label="Add to cart">

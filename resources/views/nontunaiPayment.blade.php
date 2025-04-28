@@ -48,10 +48,6 @@
             class="w-full py-3 bg-red-600 text-white text-lg font-bold rounded-lg uppercase hover:bg-red-700 transition duration-300">
             Bayar Sekarang
         </button>
-        <button onclick="history.back()"
-            class="w-full mt-4 py-3 bg-black text-white text-lg font-bold rounded-lg uppercase hover:bg-gray-800 transition duration-300">
-            Kembali ke Keranjang
-        </button>
         <pre id="result-json" class="hidden"></pre>
     </div>
 
