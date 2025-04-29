@@ -103,6 +103,7 @@ class OrderController extends Controller
             'total_price' => $totalPrice,
             'serve_option' => $request->serve_option,
             'payment_method' => $request->payment_method,
+            'status' => 'Pending',
         ]);
 
         if ($request->payment_method === 'nonTunai') {
@@ -128,7 +129,7 @@ class OrderController extends Controller
         $notif = new \Midtrans\Notification();
 
         $orderId = $notif->order_id;
-        $transactionStatus = $notif->transaction_status;
+        $transactionStatus = strtolower($notif->transaction_status); // langsung lowercase
         $paymentType = $notif->payment_type;
 
         $order = Order::where('order_id', $orderId)->first();
@@ -137,21 +138,15 @@ class OrderController extends Controller
             return response()->json(['message' => 'Order tidak ditemukan'], 404);
         }
 
-        // Cek status transaksi untuk QRIS, GoPay, atau ShopeePay
-        if (in_array($paymentType, ['qris', 'gopay', 'shopeepay'])) {
-            if ($transactionStatus == 'settlement') {
-                // Pembayaran berhasil (settlement)
-                $order->status = 'Processed';
-            } elseif ($transactionStatus == 'pending') {
-                // Pembayaran dalam status menunggu
-                $order->status = 'Pending';
-            } elseif (in_array($transactionStatus, ['expire', 'cancel', 'deny'])) {
-                // Pembayaran dibatalkan atau gagal
-                $order->status = 'Cancelled';
-            }
+        if (in_array($transactionStatus, ['capture', 'settlement'])) {
+            $order->status = 'Processed';
+        } elseif (in_array($transactionStatus, ['cancel', 'deny', 'expire'])) {
+            $order->status = 'Cancelled'; // perbaiki typo (Canceled vs Cancelled, samakan di DB kamu)
+        } elseif ($transactionStatus == 'pending') {
+            $order->status = 'Pending';
         }
 
-        $order->save();
+        $order->save(); // cukup save sekali di akhir
 
         return response()->json(['message' => 'Notification processed successfully']);
     }

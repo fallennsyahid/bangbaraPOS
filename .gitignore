@@ -18,3 +18,4 @@ yarn-error.log
 /node_modules
 .env
 /k6
+node_modules

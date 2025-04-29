@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class StruckController extends Controller
 {
-    
+
     public function print($id)
     {
         try {
@@ -46,15 +46,16 @@ class StruckController extends Controller
             $printer->text("Bangbara Steak\n");
             $printer->setTextSize(1, 1); // Kembalikan ukuran normal
             $printer->setEmphasis(false); // Matikan bold
-            $printer->text("Jl. Raya Laladon No.25, Laladon, Kec. Ciomas, Kabupaten Bogor, Jawa Barat\n");
-            $printer->text("Telp: (021) 12345678\n\n");           
+            $printer->text("Jl. Raya Laladon No.25, Laladon, Kec. Ciomas, Kabupaten Bogor,  Jawa Barat\n");
+            $printer->text("Telp: 0838-5718-5413\n\n");
             $printer->setUnderline(1);
             $printer->text("===== STRUK PEMBAYARAN =====\n\n");
 
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text("Kasir   : " . $history->casier_name . "\n");
-            $printer->text("Customer: " . $history->customer_name . "\n");
-            $printer->text("Tanggal : " . $history->created_at->format('d-m-Y H:i') . "\n");
+            $printer->text("No. Pesanan : " . $history->order_id . "\n");
+            $printer->text("Kasir       : " . $history->casier_name . "\n");
+            $printer->text("Customer    : " . $history->customer_name . "\n");
+            $printer->text("Tanggal     : " . $history->created_at->format('d-m-Y H:i') . "\n");
             $printer->text("--------------------------------\n");
 
             // Loop produk
@@ -66,7 +67,8 @@ class StruckController extends Controller
             $printer->text("--------------------------------\n");
             $printer->text("Total    : Rp " . number_format($history->total_price, 0) . "\n");
             $printer->text("Metode   : " . $history->payment_method . "\n");
-            $printer->text("Layanan   : " . $history->serve_option . "\n");
+            $printer->text("Layanan  : " . $history->serve_option . "\n");
+            $printer->text("Catatan  : " . $history->request . "\n");
 
             // Tampilkan "DIBAYAR" jika status completed
             if (strtolower($history->status) === 'completed') {

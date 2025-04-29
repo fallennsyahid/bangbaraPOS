@@ -22,14 +22,14 @@ class StaffController extends Controller
     public function index()
     {
         $users = User::where('id', '!=', Auth::user()->id)
-             ->where('usertype', 'staff')
-             ->get()
-             ->map(function ($user) {
-             $user->avatar = Auth::check() 
-             ? Avatar::create($user->name)->toBase64() 
-             : asset('default-avatar.png');
-             return $user;
-             });
+            ->where('usertype', 'staff')
+            ->get()
+            ->map(function ($user) {
+                $user->avatar = Auth::check()
+                    ? Avatar::create($user->name)->toBase64()
+                    : asset('default-avatar.png');
+                return $user;
+            });
         return view('admin.staffs.index', compact('users'));
     }
 
@@ -41,8 +41,9 @@ class StaffController extends Controller
         return view('admin.staffs.create');
     }
 
-    public function export() {
-    return Excel::download(new UserExport, 'users.xlsx');
+    public function export()
+    {
+        return Excel::download(new UserExport, 'users.xlsx');
     }
     /**
      * Store a newly created resource in storage.
@@ -64,12 +65,12 @@ class StaffController extends Controller
         // Generate Password
         $password = Str::random(8);
         $user =
-        User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'usertype' => $request->input('usertype'),
-            'password' => Hash::make($password),
-        ]);
+            User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'usertype' => $request->input('usertype'),
+                'password' => Hash::make($password),
+            ]);
 
         // Kirim email ke staff
         Mail::to($user->email)->send(new StaffCredentials($user->name, $user->email, $password));
@@ -103,20 +104,20 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $user = User::findOrFail($id);
+        $user = User::findOrFail($id);
 
-         $request->validate([
-        'name' => 'nullable|string|max:255',
-        'email' => 'nullable|email|unique:users,email,' . $user->id,
-        'usertype' => 'nullable|in:staff,admin',
-        'password' => 'nullable',
+        $request->validate([
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:users,email,' . $user->id,
+            'usertype' => 'nullable|in:staff,admin',
+            'password' => 'nullable',
         ]);
 
-        $existingData = User::where('email', $request->email)->first();
+        // $existingData = User::where('email', $request->email)->first();
 
-        if ($existingData) {
-            return redirect()->back()->with('error', 'Email is already exists.');
-        }
+        // if ($existingData) {
+        //     return redirect()->back()->with('error', 'Email is already exists.');
+        // }
 
 
         $user->name = $request->name;
@@ -127,12 +128,12 @@ class StaffController extends Controller
             $user->password = bcrypt($request->password);
         }
 
-    // Simpan perubahan ke database
-    if ($user->save()) {
-        return back()->with('success', 'Staff berhasil diperbarui!');
-    } else {
-        return back()->with('error', 'Gagal memperbarui staff, silakan coba lagi.');
-    }
+        // Simpan perubahan ke database
+        if ($user->save()) {
+            return back()->with('success', 'Staff berhasil diperbarui!');
+        } else {
+            return back()->with('error', 'Gagal memperbarui staff, silakan coba lagi.');
+        }
     }
 
     /**

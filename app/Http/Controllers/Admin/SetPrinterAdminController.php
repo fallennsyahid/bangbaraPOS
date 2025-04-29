@@ -15,6 +15,8 @@ class SetPrinterAdminController extends Controller
         
         return view('admin.settings.index', compact('printerName'));
     }
+
+    // Fungsi untuk set nama printer
     public function setPrinter(Request $request) {
         $request->validate([
             'printer_name' => 'string|required'

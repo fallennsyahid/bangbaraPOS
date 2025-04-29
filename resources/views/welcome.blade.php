@@ -261,9 +261,9 @@
 
     <!-- Popup Start -->
     <section id="popup">
-        <div class="hidden fixed z-[9999] left-0 top-0 w-full h-full overflow-auto justify-center items-center bg-black/60"
+        <div class="popup hidden fixed z-[9999] left-0 top-0 w-full h-full overflow-auto justify-center items-center bg-black/60"
             id="item-detail-modal" name="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
-            <div class="flex flex-col bg-white max-h-[90vh] w-[90%] max-w-[325px] md:max-w-[350px] lg:max-w-[375x] rounded-lg gap-2 overflow-hidden animation"
+            <div class="flex flex-col bg-white max-h-[90vh] w-[90%] max-w-[325px] md:max-w-[350px] lg:max-w-[375px] rounded-lg gap-2 overflow-hidden animation"
                 name="modal-container">
                 <a href="#"
                     class="close-icon absolute bg-white w-8 h-8 m-2 rounded-full flex items-center justify-center hover:scale-125 hover:rotate-90 transition duration-300"
@@ -288,14 +288,14 @@
                         <input type="radio" name="sauce" id="sauce-bbq" value="barbaque" class="hidden">
                         <label for="sauce-bbq"
                             class="py-1 px-2 border border-yellow-400 bg-yellow-200 cursor-pointer transition-all duration-200 ease-out shadow-sm text-sm text-gray-800 rounded 
-                            hover:shadow-md active:scale-95">
+                                hover:shadow-md active:scale-95">
                             Barbaque
                         </label>
 
                         <input type="radio" name="sauce" id="sauce-mushroom" value="mushroom" class="hidden">
                         <label for="sauce-mushroom"
                             class="py-1 px-2 border border-yellow-400 bg-yellow-200 cursor-pointer transition-all duration-200 ease-out shadow-sm text-sm text-gray-800 rounded 
-                            hover:shadow-md active:scale-95">
+                                hover:shadow-md active:scale-95">
                             Mushroom
                         </label>
 
@@ -303,9 +303,11 @@
                             class="hidden">
                         <label for="sauce-blackpepper"
                             class="py-1 px-2 border border-yellow-400 bg-yellow-200 cursor-pointer transition-all duration-200 ease-out shadow-sm text-sm text-gray-800 rounded 
-                            hover:shadow-md active:scale-95">
+                                hover:shadow-md active:scale-95">
                             Blackpepper
                         </label>
+
+
                     </div>
                 </div>
 
@@ -330,8 +332,10 @@
                     </button>
                 </div>
 
-                <input type="hidden" id="latitude" name="latitude">
-                <input type="hidden" name="longtitude" id="longtitude">
+                <!-- Hidden field untuk lokasi -->
+                <input type="hidden" id="targetLatitude" value="{{ $location->latitude ?? 0 }}">
+                <input type="hidden" id="targetLongitude" value="{{ $location->longitude ?? 0 }}">
+
 
                 <button id="add-to-cart-modal"
                     class="bg-red-600 w-full px-4 py-2 font-marmelad text-white rounded-b-md mt-auto"
@@ -548,7 +552,25 @@
 <x-sweet-alert></x-sweet-alert>
 <x-view-js></x-view-js>
 
-<script src="{{ asset('asset-view/js/script.js') }}" defer></script>
-<script src="{{ asset('asset-view/js/popup.js') }}" defer></script>
+<script src="{{ asset('asset-view/js/script.js') }}"></script>
+<script src="{{ asset('asset-view/js/popup.js') }}"></script>
+<script>
+    // document.addEventListener('DOMContentLoaded', function() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+            },
+            function(error) {
+                console.error('Error mendapatkan lokasi:', error);
+                alert('Gagal mendapatkan lokasi. Anda tidak dapat menambahkan produk ke keranjang.');
+            }
+        );
+    } else {
+        alert('Browser Anda tidak mendukung Geolocation.');
+    }
+    // });
+</script>
 
 </html>

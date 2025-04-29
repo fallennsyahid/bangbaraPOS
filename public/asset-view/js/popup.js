@@ -4,13 +4,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const closePopupBtn = document.querySelector(".close-icon");
     const addToCartButton = document.querySelector("#add-to-cart-modal");
     const quantityInput = document.querySelector("#modal-quantity");
-    const quantityButtons = document.querySelector('#quantity-button');
+    const quantityButtons = document.querySelector("#quantity-button");
     const decreaseQtyButton = document.querySelector("#decrease-qty");
     const increaseQtyButton = document.querySelector("#increase-qty");
     const pilihanSaus = document.getElementById("pilihan-saus");
     const modalContainer = document.querySelector("[name='modal-container']");
+    const targetLatitude = parseFloat(
+        document.getElementById("targetLatitude").value
+    );
+    const targetLongitude = parseFloat(
+        document.getElementById("targetLongitude").value
+    );
+    const toleranceMeters = 1000; // Toleransi jarak
 
-    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    let csrfToken = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
 
     // Elemen pilihan Hot/Ice
     const pilihanHotIce = document.createElement("div");
@@ -44,8 +53,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const sauceVisible = !pilihanSaus.classList.contains("hidden");
         const hotIceVisible = !pilihanHotIce.classList.contains("hidden");
 
-        const sauceChecked = document.querySelector("input[name='sauce']:checked");
-        const hotIceChecked = document.querySelector("input[name='hot_ice']:checked");
+        const sauceChecked = document.querySelector(
+            "input[name='sauce']:checked"
+        );
+        const hotIceChecked = document.querySelector(
+            "input[name='hot_ice']:checked"
+        );
 
         let enable = true;
 
@@ -59,8 +72,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Observe tampilan saus/hot-ice
     const observer = new MutationObserver(updateAddToCartButtonState);
-    observer.observe(pilihanSaus, { attributes: true, attributeFilter: ['class'] });
-    observer.observe(pilihanHotIce, { attributes: true, attributeFilter: ['class'] });
+    observer.observe(pilihanSaus, {
+        attributes: true,
+        attributeFilter: ["class"],
+    });
+    observer.observe(pilihanHotIce, {
+        attributes: true,
+        attributeFilter: ["class"],
+    });
 
     // Saat radio berubah
     document.addEventListener("change", function (e) {
@@ -77,7 +96,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const productId = btn.getAttribute("data-product-id");
             const productImage = productCard.querySelector("img").src;
             const productName = productCard.querySelector("p").innerText;
-            const productDescription = productCard.querySelector("h6").innerText;
+            const productDescription =
+                productCard.querySelector("h6").innerText;
 
             if (!productId) {
                 alert("Produk tidak ditemukan!");
@@ -89,8 +109,12 @@ document.addEventListener("DOMContentLoaded", function () {
             itemDetailModal.querySelector("p").innerText = productDescription;
             document.querySelector("#modal-product-id").value = productId;
 
-            let isMakanan = productCard.closest("#slider-content").children[0].contains(productCard);
-            let isMinuman = productCard.closest("#slider-content").children[1].contains(productCard);
+            let isMakanan = productCard
+                .closest("#slider-content")
+                .children[0].contains(productCard);
+            let isMinuman = productCard
+                .closest("#slider-content")
+                .children[1].contains(productCard);
             let isAirMineral = /air\s*mineral/i.test(productName);
 
             if (isMakanan) {
@@ -100,10 +124,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 pilihanHotIce.classList.remove("hidden");
 
                 if (isAirMineral) {
-                    pilihanHotIce.querySelector("#hot").nextElementSibling.innerText = "Biasa";
+                    pilihanHotIce.querySelector(
+                        "#hot"
+                    ).nextElementSibling.innerText = "Biasa";
                     pilihanHotIce.querySelector("#hot").value = "biasa";
                 } else {
-                    pilihanHotIce.querySelector("#hot").nextElementSibling.innerText = "Hot";
+                    pilihanHotIce.querySelector(
+                        "#hot"
+                    ).nextElementSibling.innerText = "Hot";
                     pilihanHotIce.querySelector("#hot").value = "hot";
                 }
 
@@ -114,8 +142,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             // Reset radio
-            document.querySelectorAll("input[name='sauce']").forEach(i => i.checked = false);
-            document.querySelectorAll("input[name='hot_ice']").forEach(i => i.checked = false);
+            document
+                .querySelectorAll("input[name='sauce']")
+                .forEach((i) => (i.checked = false));
+            document
+                .querySelectorAll("input[name='hot_ice']")
+                .forEach((i) => (i.checked = false));
 
             itemDetailModal.classList.remove("hidden");
             itemDetailModal.classList.add("flex");
@@ -150,91 +182,130 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     addToCartButton.onclick = function () {
-        let productId = itemDetailModal.querySelector("input[name='product_id']").value;
+        let productId = itemDetailModal.querySelector(
+            "input[name='product_id']"
+        ).value;
         let quantity = quantityInput.value;
         let url = this.dataset.url;
-        let selectedSauce = document.querySelector("input[name='sauce']:checked")?.value || "";
-        let selectedHotIce = document.querySelector("input[name='hot_ice']:checked")?.value || "";
+        let selectedSauce =
+            document.querySelector("input[name='sauce']:checked")?.value || "";
+        let selectedHotIce =
+            document.querySelector("input[name='hot_ice']:checked")?.value ||
+            "";
 
-        let form = document.createElement("form");
-        form.method = "POST";
-        form.action = url;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
 
-        let csrfInput = document.createElement("input");
-        csrfInput.type = "hidden";
-        csrfInput.name = "_token";
-        csrfInput.value = csrfToken;
-        form.appendChild(csrfInput);
+                    // Hitung jarak
+                    const distance = getDistanceFromLatLonInMeters(
+                        userLat,
+                        userLng,
+                        targetLatitude,
+                        targetLongitude
+                    );
 
-        let productInput = document.createElement("input");
-        productInput.type = "hidden";
-        productInput.name = "product_id";
-        productInput.value = productId;
-        form.appendChild(productInput);
+                    if (distance <= toleranceMeters) {
+                        // Submit form jika dalam jangkauan
+                        let form = document.createElement("form");
+                        form.method = "POST";
+                        form.action = url;
 
-        let quantityInputField = document.createElement("input");
-        quantityInputField.type = "hidden";
-        quantityInputField.name = "quantity";
-        quantityInputField.value = quantity;
-        form.appendChild(quantityInputField);
+                        let csrfInput = document.createElement("input");
+                        csrfInput.type = "hidden";
+                        csrfInput.name = "_token";
+                        csrfInput.value = document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content");
+                        form.appendChild(csrfInput);
 
-        if (!pilihanSaus.classList.contains("hidden")) {
-            let sauceInputField = document.createElement("input");
-            sauceInputField.type = "hidden";
-            sauceInputField.name = "sauce";
-            sauceInputField.value = selectedSauce;
-            form.appendChild(sauceInputField);
+                        let productInput = document.createElement("input");
+                        productInput.type = "hidden";
+                        productInput.name = "product_id";
+                        productInput.value = productId;
+                        form.appendChild(productInput);
+
+                        let quantityInput = document.createElement("input");
+                        quantityInput.type = "hidden";
+                        quantityInput.name = "quantity";
+                        quantityInput.value = quantity;
+                        form.appendChild(quantityInput);
+
+                        if (selectedSauce) {
+                            let sauceInput = document.createElement("input");
+                            sauceInput.type = "hidden";
+                            sauceInput.name = "sauce";
+                            sauceInput.value = selectedSauce;
+                            form.appendChild(sauceInput);
+                        }
+
+                        if (selectedHotIce) {
+                            let hotIceInput = document.createElement("input");
+                            hotIceInput.type = "hidden";
+                            hotIceInput.name = "hot_ice";
+                            hotIceInput.value = selectedHotIce;
+                            form.appendChild(hotIceInput);
+                        }
+
+                        // Tambahkan latitude dan longitude user
+                        let latitudeInput = document.createElement("input");
+                        latitudeInput.type = "hidden";
+                        latitudeInput.name = "latitude";
+                        latitudeInput.value = userLat;
+                        form.appendChild(latitudeInput);
+
+                        let longitudeInput = document.createElement("input");
+                        longitudeInput.type = "hidden";
+                        longitudeInput.name = "longitude";
+                        longitudeInput.value = userLng;
+                        form.appendChild(longitudeInput);
+
+                        document.body.appendChild(form);
+                        form.submit();
+                    } else {
+                        // Swal.fire({
+                        //     icon: "error",
+                        //     title: "Oops...",
+                        //     text: "Anda harus berada di area kerja untuk melakukan pemesanan!",
+                        //     customClass: {
+                        //         popup: 'z-[99999999]',
+                        //     }
+                        // });
+                        alert('Anda harus berada di restoran untuk melakukan pemesanan!');
+                    }
+                },
+                function (error) {
+                    // Swal.fire({
+                    //     icon: "error",
+                    //     title: "Oops...",
+                    //     text: "Gagal mendapatkan lokasi. Pastikan izin lokasi sudah aktif.",
+                    // });
+                    alert(
+                        "Gagal mendapatkan lokasi. Pastikan izin lokasi sudah aktif."
+                    );
+                }
+            );
+        } else {
+            alert("Browser tidak mendukung geolocation.");
         }
-
-        if (!pilihanHotIce.classList.contains("hidden")) {
-            let hotIceInputField = document.createElement("input");
-            hotIceInputField.type = "hidden";
-            hotIceInputField.name = "hot_ice";
-            hotIceInputField.value = selectedHotIce;
-            form.appendChild(hotIceInputField);
-        }
-
-        document.body.appendChild(form);
-        form.submit();
-
-        // const targetLatitude = -6.5568768;
-        // const targetLongitude = 106.7843584;
-        // const toleranceMeter = 10;
-
-        // if (navigator.geolocation) {
-        //     navigator.geolocation.getCurrentPosition(function (position) {
-        //         const userLat = position.coords.latitude;
-        //         const userLng = position.coords.longitude;
-
-        //         const distance = getDistanceFromLatLonInMeters(userLat, userLng, targetLatitude, targetLongitude);
-
-        //         if (distance <= toleranceMeter) {
-
-        //         } else {
-        //             alert("Anda tidak berada dalam jangkauan pengantaran.");
-        //         }
-        //     }, function (error) {
-        //         alert("Gagal mendapatkan lokasi Anda, pastikan izin lokasi diaktifkan.");
-        //     });
-        // } else {
-        //     alert("Geolocation tidak didukung oleh browser ini.");
-        // }
     };
 
-    // function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
-    //     const R = 6371000;
-    //     const dLat = deg2rad(lat2 - lat1);
-    //     const dLon = deg2rad(lon2 - lon1);
-    //     const a =
-    //         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    //         Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-    //         Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    //     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    //     const d = R * c;
-    //     return d;
-    // }
+    function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
+        const R = 6371000; // Radius bumi dalam meter
+        const dLat = deg2rad(lat2 - lat1);
+        const dLon = deg2rad(lon2 - lon1);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c; // Distance in meters
+        return distance;
+    }
 
-    // function deg2rad(deg) {
-    //     return deg * (Math.PI / 180);
-    // }
+    function deg2rad(deg) {
+        return deg * (Math.PI / 180);
+    }
 });

@@ -138,22 +138,22 @@
     <script>
         @if (session('error'))
             Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: '{{ session('error') }}',
-            customClass: {
-                confirmButton: 'confirm-button',
-            }
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+                customClass: {
+                    confirmButton: 'confirm-button',
+                }
             });
         @endif
 
-     @if (session('success'))
+        @if (session('success'))
             Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: {{ session('success') }},
-            showConfirmButton: false,
-            timer: 1500,
-        });
-    @endif
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        @endif
     </script>

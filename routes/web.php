@@ -33,6 +33,8 @@ use App\Http\Controllers\Admin\SetPrinterAdminController;
 use App\Http\Controllers\Staff\SetPrinterStaffController;
 use App\Http\Controllers\Staff\StruckOrdersStaffController;
 use App\Http\Controllers\Staff\SetPrinterController as StaffSetPrinterController;
+use App\Http\Controllers\Admin\SetLocationController;
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -235,6 +237,8 @@ Route::delete('/bulk-delete', [HistoryController::class, 'bulkDelete'])->name('h
 // Route Settings
 Route::resource('/admin/settings', SettingsController::class);
 Route::resource('/staff/staffSettings', StaffSettingsController::class);
+
+Route::post('/admin/settings/location', [SetLocationController::class, 'updateLocation'])->name('admin.setLocation');
 
 Route::post('/staff/settings/set-printer', [SetPrinterStaffController::class, 'setPrinter'])->name('staff.setPrinter');
 Route::post('/admin/settings/set-printer', [SetPrinterAdminController::class, 'setPrinter'])->name('admin.setPrinter');
