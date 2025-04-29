@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+// use Log as LOGS;
 use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Notifications\Notification;
 
 class OrderController extends Controller
 {
@@ -101,6 +103,7 @@ class OrderController extends Controller
             'total_price' => $totalPrice,
             'serve_option' => $request->serve_option,
             'payment_method' => $request->payment_method,
+            'status' => 'Pending',
         ]);
 
         if ($request->payment_method === 'nonTunai') {
@@ -121,6 +124,33 @@ class OrderController extends Controller
         return redirect()->route('index')->with('success', 'Silahkan pergi ke kasir untuk konfirmasi pembayaran!');
     }
 
+    public function callback(Request $request)
+    {
+        $notif = new \Midtrans\Notification();
+
+        $orderId = $notif->order_id;
+        $transactionStatus = strtolower($notif->transaction_status); // langsung lowercase
+        $paymentType = $notif->payment_type;
+
+        $order = Order::where('order_id', $orderId)->first();
+
+        if (!$order) {
+            return response()->json(['message' => 'Order tidak ditemukan'], 404);
+        }
+
+        if (in_array($transactionStatus, ['capture', 'settlement'])) {
+            $order->status = 'Processed';
+        } elseif (in_array($transactionStatus, ['cancel', 'deny', 'expire'])) {
+            $order->status = 'Cancelled'; // perbaiki typo (Canceled vs Cancelled, samakan di DB kamu)
+        } elseif ($transactionStatus == 'pending') {
+            $order->status = 'Pending';
+        }
+
+        $order->save(); // cukup save sekali di akhir
+
+        return response()->json(['message' => 'Notification processed successfully']);
+    }
+
     public function paymentSuccess()
     {
         $sessionId = Session::get('pending_cart_session_id');
@@ -134,48 +164,48 @@ class OrderController extends Controller
         return redirect()->route('index')->with('success', 'Pembayaran berhasil!');
     }
 
-    public function midtransCallback(Request $request)
-    {
-        Log::info('Callback masuk:', $request->all());
-        $serverKey = config('midtrans.serverKey');
-        $hashed = hash(
-            "sha512",
-            $request->order_id .
-                $request->status_code .
-                $request->gross_amount .
-                $serverKey
-        );
+    // public function midtransCallback(Request $request)
+    // {
+    //     Log::info('Callback masuk:', $request->all());
+    //     $serverKey = config('midtrans.serverKey');
+    //     $hashed = hash(
+    //         "sha512",
+    //         $request->order_id .
+    //             $request->status_code .
+    //             $request->gross_amount .
+    //             $serverKey
+    //     );
 
-        if ($hashed !== $request->signature_key) {
-            return response()->json(['message' => 'Invalid signature'], 403);
-        }
+    //     if ($hashed !== $request->signature_key) {
+    //         return response()->json(['message' => 'Invalid signature'], 403);
+    //     }
 
-        if (in_array($request->transaction_status, ['capture', 'settlement'])) {
-            $tempOrder = Order::where('order_id', $request->order_id)->first();
+    //     if (in_array($request->transaction_status, ['capture', 'settlement'])) {
+    //         $tempOrder = Order::where('order_id', $request->order_id)->first();
 
-            if (!$tempOrder) {
-                return response()->json(['message' => 'Order tidak ditemukan'], 404);
-            }
+    //         if (!$tempOrder) {
+    //             return response()->json(['message' => 'Order tidak ditemukan'], 404);
+    //         }
 
-            Order::create([
-                'customer_name' => $tempOrder->customer_name,
-                'customer_phone' => $tempOrder->customer_phone,
-                'request' => $tempOrder->request,
-                'products' => $tempOrder->products,
-                'total_price' => $tempOrder->total_price,
-                'status' => 'Processed',
-                'serve_option' => $tempOrder->serve_option,
-                'payment_method' => $tempOrder->payment_method,
-                'session_id' => $tempOrder->session_id,
-                'snap_token' => $request->input('token'),
-            ]);
+    //         Order::create([
+    //             'customer_name' => $tempOrder->customer_name,
+    //             'customer_phone' => $tempOrder->customer_phone,
+    //             'request' => $tempOrder->request,
+    //             'products' => $tempOrder->products,
+    //             'total_price' => $tempOrder->total_price,
+    //             'status' => 'Processed',
+    //             'serve_option' => $tempOrder->serve_option,
+    //             'payment_method' => $tempOrder->payment_method,
+    //             'session_id' => $tempOrder->session_id,
+    //             'snap_token' => $request->input('token'),
+    //         ]);
 
-            Cart::where('session_id', $tempOrder->session_id)->delete();
-            $tempOrder->delete(); // opsional: bersihkan temp order
-        }
+    //         Cart::where('session_id', $tempOrder->session_id)->delete();
+    //         $tempOrder->delete(); // opsional: bersihkan temp order
+    //     }
 
-        return response()->json(['message' => 'Callback received'], 200);
-    }
+    //     return response()->json(['message' => 'Callback received'], 200);
+    // }
 
     // public function hapusKeranjangSetelahPembayaran(Request $request)
     // {

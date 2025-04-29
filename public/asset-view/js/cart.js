@@ -66,18 +66,11 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
     function validateForm() {
-        let allFilled = true;
-        requiredFields.forEach(field => {
-            if (!field.value || field.value === "-") {
-                allFilled = false;
-            }
-        });
+        let allFilled = requiredFields.every(field => field.value && field.value !== "-");
 
         if (allFilled) {
             checkoutButton.disabled = false;
-            checkoutButton.classList.remove(
-                'bg-red-400', 'cursor-not-allowed'
-            );
+            checkoutButton.classList.remove('bg-red-400', 'cursor-not-allowed');
             checkoutButton.classList.add(
                 'bg-red-600', 'cursor-pointer',
                 'hover:bg-red-700', 'hover:scale-105',
@@ -90,9 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 'hover:bg-red-700', 'hover:scale-105',
                 'active:bg-red-800', 'active:scale-100'
             );
-            checkoutButton.classList.add(
-                'bg-red-400', 'cursor-not-allowed'
-            );
+            checkoutButton.classList.add('bg-red-400', 'cursor-not-allowed');
         }
     }
 
@@ -104,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Cek pertama kali
     validateForm();
+
 
     // PAYMENT METHOD
     // const metodePembayaran = document.querySelector("#metodePembayaran");

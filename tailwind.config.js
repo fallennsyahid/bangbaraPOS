@@ -47,6 +47,7 @@ module.exports = {
             ],
             // poppins: ['Poppins', 'sans-serif'],
             euphoria: ["Euphoria Script", 'cursive'],
+            cookie: ["Cookie", "cursive"],
         },
 
         extend: {

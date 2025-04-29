@@ -11,11 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalContainer = document.querySelector("[name='modal-container']");
     const targetLatitude = parseFloat(
         document.getElementById("targetLatitude").value
-    ); // Ambil koordinat dari hidden field
+    );
     const targetLongitude = parseFloat(
         document.getElementById("targetLongitude").value
-    ); // Ambil koordinat dari hidden field
-    const toleranceMeters = 500; // Toleransi jarak
+    );
+    const toleranceMeters = 1000; // Toleransi jarak
 
     let csrfToken = document
         .querySelector('meta[name="csrf-token"]')
@@ -265,12 +265,25 @@ document.addEventListener("DOMContentLoaded", function () {
                         document.body.appendChild(form);
                         form.submit();
                     } else {
+                        // Swal.fire({
+                        //     icon: "error",
+                        //     title: "Oops...",
+                        //     text: "Anda harus berada di area kerja untuk melakukan pemesanan!",
+                        //     customClass: {
+                        //         popup: 'z-[99999999]',
+                        //     }
+                        // });
                         alert(
-                            "Anda harus berada di area kerja untuk melakukan pemesanan!"
+                            "Anda harus berada di restoran untuk melakukan pemesanan!"
                         );
                     }
                 },
                 function (error) {
+                    // Swal.fire({
+                    //     icon: "error",
+                    //     title: "Oops...",
+                    //     text: "Gagal mendapatkan lokasi. Pastikan izin lokasi sudah aktif.",
+                    // });
                     alert(
                         "Gagal mendapatkan lokasi. Pastikan izin lokasi sudah aktif."
                     );
@@ -281,7 +294,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // Fungsi bantu hitung jarak antar koordinat (dalam meter)
     function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
         const R = 6371000; // Radius bumi dalam meter
         const dLat = deg2rad(lat2 - lat1);
@@ -293,8 +305,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 Math.sin(dLon / 2) *
                 Math.sin(dLon / 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const d = R * c;
-        return d;
+        const distance = R * c; // Distance in meters
+        return distance;
     }
 
     function deg2rad(deg) {

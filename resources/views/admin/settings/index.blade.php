@@ -71,23 +71,23 @@
                     <div class="min-h-full mt-4 flex items-center justify-center bg-prime">
                         <div class=" w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
                             <div class="flex flex-col p-3 items-center space-y-6">
-                                
+
                                 <form action="{{ route('admin.setLocation') }}" method="POST"
                                     class="flex flex-col items-center w-full">
                                     @csrf
                                     <!-- Set latitude -->
                                     <label for="latitude">Set latitude</label>
-                                    <input type="text" placeholder="Set Latitude" name="latitude"
-                                        id="latitude" value="{{ $location->latitude ?? '' }}"
-                                        class="p-2 rounded-xl font-medium w-full border-2 border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
-                                    
-                                        <!-- Set latitude -->
-                                    <label for="longitude">Set longitude</label>
-                                    <input type="text" placeholder="Set Longitude" name="longitude"
-                                        id="longitude"  value="{{ $location->longitude ?? '' }}"
+                                    <input type="text" placeholder="Set Latitude" name="latitude" id="latitude"
+                                        value="{{ $location->latitude ?? '' }}"
                                         class="p-2 rounded-xl font-medium w-full border-2 border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
 
-                                        
+                                    <!-- Set latitude -->
+                                    <label for="longitude">Set longitude</label>
+                                    <input type="text" placeholder="Set Longitude" name="longitude" id="longitude"
+                                        value="{{ $location->longitude ?? '' }}"
+                                        class="p-2 rounded-xl font-medium w-full border-2 border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
+
+
                                     <label for="location-update"
                                         class="flex items-center justify-center gap-2 bg-yellow-400 py-2 px-4 mt-4 max-w-40 rounded-md text-white font-semibold cursor-pointer hover:bg-yellow-500 group">
                                         <svg fill="#000000" width="30px" height="30px" viewBox="0 0 24 24"
@@ -106,7 +106,8 @@
                                                 <polyline id="primary-3" data-name="primary" points="5 3 5 8 10 8"
                                                     style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
                                                 </polyline>
-                                                <polyline id="primary-4" data-name="primary" points="19 21 19 16 14 16"
+                                                <polyline id="primary-4" data-name="primary"
+                                                    points="19 21 19 16 14 16"
                                                     style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
                                                 </polyline>
                                             </g>

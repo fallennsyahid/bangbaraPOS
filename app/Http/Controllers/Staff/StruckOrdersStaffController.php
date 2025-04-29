@@ -15,14 +15,14 @@ class StruckOrdersStaffController extends Controller
     {
         try {
 
-             $printerName = Auth::user()->printer_name;
+            $printerName = Auth::user()->printer_name;
 
-             if(!$printerName) {
+            if (!$printerName) {
                 return response()->json([
-                'status' => 'error',
-                'message' => 'Cannot set printer name'
-            ]);
-        }
+                    'status' => 'error',
+                    'message' => 'Cannot set printer name'
+                ]);
+            }
             $order = Order::findOrFail($id);
             $products = json_decode($order->products, true);
 
@@ -44,15 +44,16 @@ class StruckOrdersStaffController extends Controller
             $printer->setTextSize(1, 1); // Kembalikan ukuran normal
             $printer->setEmphasis(false); // Matikan bold
             $printer->text("Jl. Raya Laladon No.25, Laladon, Kec. Ciomas, Kabupaten Bogor,  Jawa Barat\n");
-            $printer->text("Telp: 0838-5718-5413\n\n");             
+            $printer->text("Telp: 0838-5718-5413\n\n");
             $printer->setUnderline(1);
             $printer->text("===== STRUK PEMESANAN =====\n\n");
 
 
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text("Kasir   : " . $order->casier_name . "\n");
-            $printer->text("Customer: " . $order->customer_name . "\n");
-            $printer->text("Tanggal : " . $order->created_at->format('d-m-Y H:i') . "\n");
+            // $printer->text("No. Pesanan : " . $order->order_id . "\n");
+            $printer->text("Kasir       : " . $order->casier_name . "\n");
+            $printer->text("Customer    : " . $order->customer_name . "\n");
+            $printer->text("Tanggal     : " . $order->created_at->format('d-m-Y H:i') . "\n");
             $printer->text("--------------------------------\n");
 
             foreach ($products as $product) {

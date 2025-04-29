@@ -15,7 +15,7 @@ class StruckHistoryController extends Controller
     {
         $printerName = Auth::user()->printer_name;
 
-        if(!$printerName) {
+        if (!$printerName) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Cannot set printer name'
@@ -45,14 +45,14 @@ class StruckHistoryController extends Controller
             $printer->setTextSize(1, 1); // Kembalikan ukuran normal
             $printer->setEmphasis(false); // Matikan bold
             $printer->text("Jl. Raya Laladon No.25, Laladon, Kec. Ciomas, Kabupaten Bogor,  Jawa Barat\n");
-            $printer->text("Telp: 0838-5718-5413\n\n");  ;           
+            $printer->text("Telp: 0838-5718-5413\n\n");;
             $printer->setUnderline(1);
             $printer->text("===== STRUK PEMBAYARAN =====\n\n");
 
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text("Kasir   : " . $history->casier_name . "\n");
-            $printer->text("Customer: " . $history->customer_name . "\n");
-            $printer->text("Tanggal : " . $history->created_at->format('d-m-Y H:i') . "\n");
+            $printer->text("Kasir       : " . $history->casier_name . "\n");
+            $printer->text("Customer    : " . $history->customer_name . "\n");
+            $printer->text("Tanggal     : " . $history->created_at->format('d-m-Y H:i') . "\n");
             $printer->text("--------------------------------\n");
 
             foreach ($products as $product) {
@@ -70,7 +70,8 @@ class StruckHistoryController extends Controller
                 $printer->text("Status   : DIBAYAR\n");
             } else {
                 $printer->text("Status   : " . $history->status . "\n");
-            }            $printer->text("\nTerima kasih!\n\n");
+            }
+            $printer->text("\nTerima kasih!\n\n");
 
             $printer->cut();
             $printer->close();
@@ -81,6 +82,6 @@ class StruckHistoryController extends Controller
                 'status' => 'error',
                 'message' => $e->getMessage()
             ]);
+        }
     }
-}
 }

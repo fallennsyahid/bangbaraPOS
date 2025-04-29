@@ -57,7 +57,7 @@ Route::post('/cart/update/{id}', [CartController::class, 'updateQuantity'])->nam
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
 Route::get('/cart/quantity', [CartController::class, 'getCartQuantity'])->name('cart.quantity');
 Route::get('/cart/quantity-desktop', [CartController::class, 'getCartQuantityDesktop'])->name('cart.quantity.desktop');
-Route::post('/midtrans/callback', [OrderController::class, 'midtransCallback']);
+Route::post('/midtrans/callback', [OrderController::class, 'callback']);
 Route::get('/payment-success', [OrderController::class, 'paymentSuccess'])->name('payment.success');
 
 // --- ROUTE ORDER ---

@@ -15,7 +15,25 @@
             icon: 'error',
             title: 'Oops...',
             text: '{{ $errors->first('customer_phone') }}',
-            confirmButtonText: 'Oke'
+            confirmButtonText: 'Oke',
+            confirmButtonColor: "#CC0000",
         });
     @endif
+
+    document.getElementById('checkoutButton').addEventListener('click', function(e) {
+        Swal.fire({
+            title: 'Cek Pesanan Anda',
+            text: 'Apakah Anda yakin ingin melanjutkan checkout?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Checkout',
+            cancelButtonText: 'Batal',
+            confirmButtonColor: '#CC0000',
+            cancelButtonColor: '#FFD700'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.closest('form').submit();
+            }
+        });
+    });
 </script>

@@ -44,15 +44,16 @@ class StruckOrderController extends Controller
             $printer->setTextSize(1, 1); // Kembalikan ukuran normal
             $printer->setEmphasis(false); // Matikan bold
             $printer->text("Jl. Raya Laladon No.25, Laladon, Kec. Ciomas, Kabupaten Bogor,  Jawa Barat\n");
-            $printer->text("Telp: 0838-5718-5413\n\n");             
-            $printer->setUnderline(1);            
+            $printer->text("Telp: 0838-5718-5413\n\n");
+            $printer->setUnderline(1);
             $printer->text("===== STRUK PEMESANAN =====\n\n");
 
 
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text("Kasir   : " . $order->casier_name . "\n");
-            $printer->text("Customer: " . $order->customer_name . "\n");
-            $printer->text("Tanggal : " . $order->created_at->format('d-m-Y H:i') . "\n");
+            // $printer->text("No. Pesanan : " . $order->order_id . "\n");
+            $printer->text("Kasir       : " . $order->casier_name . "\n");
+            $printer->text("Customer    : " . $order->customer_name . "\n");
+            $printer->text("Tanggal     : " . $order->created_at->format('d-m-Y H:i') . "\n");
             $printer->text("--------------------------------\n");
 
             foreach ($products as $product) {
@@ -77,6 +78,6 @@ class StruckOrderController extends Controller
                 'status' => 'error',
                 'message' => $e->getMessage()
             ]);
+        }
     }
-}
 }
