@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\History;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Store;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -17,15 +18,34 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
+     public function checkAutoUpdateStatus() {
+        $store = Store::first();
+        $currentHour = Carbon::now()->format('H'); // jam format 24 jam
+
+       if ($currentHour >= 10 && $currentHour < 21 && $store->status != 1) {
+            $store->status = 1; // buka
+            $store->save();
+        } elseif (($currentHour >= 21 || $currentHour < 10) && $store->status != 0) {
+            $store->status = 0; // tutup
+            $store->save();
+        }
+
+    }
+    
+
     // Controller (AdminController.php)
     public function dashboard(Request $request)
     {
+        // Untuk check update status toko
+        $this->checkAutoUpdateStatus();
+
         $products = Product::count();
         $total_orders_completed = History::where('status', 'Completed')->count();
         $total_orders_cancelled = History::where('status', 'Cancelled')->count();
         $total_orders = Order::count();
         $histories = History::count();
         $totalIncome = DB::table('histories')->sum('total_price');
+        $store = Store::first();
 
         $year = $request->input('year', date('Y')); // Default tahun sekarang
         $years = History::selectRaw('YEAR(created_at) as year')->distinct()->pluck('year');
@@ -102,7 +122,8 @@ class AdminController extends Controller
             'months',
             'totals',
             'tunaiData',
-            'nonTunaiData'
+            'nonTunaiData',
+            'store'
         ));
     }
 
@@ -112,21 +133,29 @@ class AdminController extends Controller
         // Mengambil data total orders per bulan
         $year = $request->input('year', date('Y')); // Ambil tahun dari request, default tahun sekarang
 
+        // Untuk array total untuk 12 bulan dengan nilai 0
+        $totals = array_fill(0, 12, 0);
+
+
         $history = History::selectRaw('MONTH(created_at) as month, SUM(total_price) as total')
             ->whereYear('created_at', $year) // Filter berdasarkan tahun
             ->groupBy('month')
             ->orderBy('month')
             ->get();
 
-        $months = $history->pluck('month')->map(function ($month) {
-            return Carbon::create()->month($month)->format('F');
-        });
+        // $months = $history->pluck('month')->map(function ($month) {
+        //     return Carbon::create()->month($month)->format('F');
+        // });
 
-        $totals = $history->pluck('total');
+        foreach ($history as $item) {
+            $totals[$item->month - 1] = $item->total;
+        }
+
+        // $totals = $history->pluck('total');
 
         // Ambil daftar tahun dari database
         return response()->json([
-            'months' => $months,
+            // 'months' => $months,
             'totals' => $totals,
         ]);
     }

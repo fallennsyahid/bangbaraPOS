@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const targetLongitude = parseFloat(
         document.getElementById("targetLongitude").value
     ); // Ambil koordinat dari hidden field
-    const toleranceMeters = 3400; // Toleransi jarak
+    const toleranceMeters = 500; // Toleransi jarak
 
     let csrfToken = document
         .querySelector('meta[name="csrf-token"]')

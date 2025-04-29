@@ -52,6 +52,8 @@ class StaffController extends Controller
         $request->validate([
             'name' => 'required|string|max:225',
             'email' => 'required|email|min:0',
+            'phone_number' => 'required|min:0',
+            'address' => 'required|string|min:0',
             'usertype' => 'required|in:staff',
         ]);
 
@@ -68,6 +70,8 @@ class StaffController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'usertype' => $request->input('usertype'),
+            'phone_number' => $request->input('phone_number'),
+            'address' => $request->input('address'),
             'password' => Hash::make($password),
         ]);
 
@@ -109,6 +113,8 @@ class StaffController extends Controller
         'name' => 'nullable|string|max:255',
         'email' => 'nullable|email|unique:users,email,' . $user->id,
         'usertype' => 'nullable|in:staff,admin',
+        'phone_number' => 'nullable|number',
+        'address' => 'nullable|string',
         'password' => 'nullable',
         ]);
 
