@@ -193,14 +193,13 @@
                                     Masukkan nomor telepon
                                 </label>
                                 <input type="number" placeholder="08xx" id="customer_phone" name="customer_phone"
-                                    min="0" maxlength="15"
                                     class="input-number w-full border border-gray-300 rounded-lg pr-16 px-3 py-3 font-alkatra font-normal focus:ring-gray-400 focus:border-gray-400 focus:shadow-lg" />
 
                                 <!-- Note -->
                                 <label for="request" class="block mt-4 mb-2 font-medium text-base">
                                     Catatan
                                 </label>
-                                <textarea name="request" id="request" rows="" placeholder="Ex. Medium Rare"
+                                <textarea name="request" id="request" placeholder="Ex. Medium Rare"
                                     class="w-full border border-gray-300 rounded-lg px-3 py-3 mb-4 focus:ring-1 focus:ring-gray-400 focus:border-gray-400"></textarea>
                                 <hr class="border-[1.5px] rounded-full border-black" />
 

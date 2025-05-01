@@ -265,15 +265,14 @@ document.addEventListener("DOMContentLoaded", function () {
                         document.body.appendChild(form);
                         form.submit();
                     } else {
-                        // Swal.fire({
-                        //     icon: "error",
-                        //     title: "Oops...",
-                        //     text: "Anda harus berada di area kerja untuk melakukan pemesanan!",
-                        //     customClass: {
-                        //         popup: 'z-[99999999]',
-                        //     }
-                        // });
-                        alert('Anda harus berada di restoran untuk melakukan pemesanan!');
+                        // alert('Anda harus berada di restoran untuk melakukan pemesanan!');
+                        itemDetailModal.classList.add("hidden");
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Anda harus berada di area restoran untuk melakukan pemesanan!",
+                            confirmButtonColor: '#CC0000'
+                        });
                     }
                 },
                 function (error) {

@@ -28,13 +28,14 @@
                     <div class="min-h-full mt-4 flex items-center justify-center bg-prime">
                         <div class=" w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
                             <div class="flex flex-col p-3 items-center">
-                                <p><strong>Current:</strong> {{ $user->printer_name ?? 'Not Set yet' }}</p>
+                                <p class="block pb-4 text-black"><strong>Current:</strong>
+                                    {{ $user->printer_name ?? 'Not Set yet' }}</p>
                                 <form action="{{ route('admin.setPrinter') }}" method="POST"
                                     class="flex flex-col items-center w-full">
                                     @csrf
                                     <input type="text" placeholder="Set Printer Name" name="printer_name"
                                         id="printer_name"
-                                        class="p-2 rounded-xl font-medium w-full border-2 border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
+                                        class="p-2 rounded-xl font-medium w-full border-2 text-black border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
                                     <label for="printer-update"
                                         class="flex items-center justify-center gap-2 bg-yellow-400 py-2 px-4 mt-4 max-w-40 rounded-md text-white font-semibold cursor-pointer hover:bg-yellow-500 group">
                                         <svg fill="#000000" width="30px" height="30px" viewBox="0 0 24 24"
@@ -67,7 +68,7 @@
                     </div>
 
                     <!-- Settings Location -->
-                    <h1 class="text-xl text-center font-semibold text-zinc-950 mb-4">Location Settings</h1>
+                    <h1 class="text-xl text-center font-semibold text-zinc-950 my-4">Location Settings</h1>
                     <div class="min-h-full mt-4 flex items-center justify-center bg-prime">
                         <div class=" w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
                             <div class="flex flex-col p-3 items-center space-y-6">
@@ -76,50 +77,99 @@
                                     class="flex flex-col items-center w-full">
                                     @csrf
                                     <!-- Set latitude -->
-                                    <label for="latitude">Set latitude</label>
+                                    <label for="latitude" class="text-black pb-2 font-medium">Set Latitude</label>
                                     <input type="text" placeholder="Set Latitude" name="latitude" id="latitude"
-                                        value="{{ $location->latitude ?? '' }}"
-                                        class="p-2 rounded-xl font-medium w-full border-2 border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
+                                        readonly value="{{ $location->latitude ?? '' }}"
+                                        class="p-2 rounded-xl font-medium w-full border-2 text-black border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
 
                                     <!-- Set latitude -->
-                                    <label for="longitude">Set longitude</label>
+                                    <label for="longitude" class="text-black py-2 font-medium">Set Longitude</label>
                                     <input type="text" placeholder="Set Longitude" name="longitude" id="longitude"
-                                        value="{{ $location->longitude ?? '' }}"
-                                        class="p-2 rounded-xl font-medium w-full border-2 border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
+                                        readonly value="{{ $location->longitude ?? '' }}"
+                                        class="p-2 rounded-xl font-medium w-full border-2 text-black border-yellow-300 text-center focus:outline-none focus:border-2 focus:border-yellow-400 focus:shadow-lg">
 
-
-                                    <label for="location-update"
-                                        class="flex items-center justify-center gap-2 bg-yellow-400 py-2 px-4 mt-4 max-w-40 rounded-md text-white font-semibold cursor-pointer hover:bg-yellow-500 group">
-                                        <svg fill="#000000" width="30px" height="30px" viewBox="0 0 24 24"
-                                            id="update-alt" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg"
-                                            class="icon flat-line group-hover:rotate-180 transition duration-300">
-                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                stroke-linejoin="round"></g>
-                                            <g id="SVGRepo_iconCarrier">
-                                                <path id="primary" d="M5.07,8A8,8,0,0,1,20,12"
-                                                    style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
-                                                </path>
-                                                <path id="primary-2" data-name="primary" d="M18.93,16A8,8,0,0,1,4,12"
-                                                    style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
-                                                </path>
-                                                <polyline id="primary-3" data-name="primary" points="5 3 5 8 10 8"
-                                                    style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
-                                                </polyline>
-                                                <polyline id="primary-4" data-name="primary"
-                                                    points="19 21 19 16 14 16"
-                                                    style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
-                                                </polyline>
-                                            </g>
-                                        </svg>
-                                        Update
-                                    </label>
+                                    {{-- Set Location --}}
+                                    <div class="flex items-center justify-center gap-4">
+                                        {{-- Set Update --}}
+                                        <label for="location-update"
+                                            class="flex items-center justify-center gap-2 bg-yellow-400 py-2 px-4 mt-4 max-w-40 rounded-md text-white font-semibold cursor-pointer hover:bg-yellow-500 group">
+                                            <svg fill="#000000" width="30px" height="30px" viewBox="0 0 24 24"
+                                                id="update-alt" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg"
+                                                class="icon flat-line group-hover:rotate-180 transition duration-300">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                    stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path id="primary" d="M5.07,8A8,8,0,0,1,20,12"
+                                                        style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                                    </path>
+                                                    <path id="primary-2" data-name="primary"
+                                                        d="M18.93,16A8,8,0,0,1,4,12"
+                                                        style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                                    </path>
+                                                    <polyline id="primary-3" data-name="primary"
+                                                        points="5 3 5 8 10 8"
+                                                        style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                                    </polyline>
+                                                    <polyline id="primary-4" data-name="primary"
+                                                        points="19 21 19 16 14 16"
+                                                        style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+                                                    </polyline>
+                                                </g>
+                                            </svg>
+                                            Update
+                                        </label>
+                                        {{-- Check Koordinat Location --}}
+                                        <button
+                                            class="text-white flex items-center gap-2 bg-red-600 py-2 px-4 mt-4 max-w-52 rounded-md font-semibold cursor-pointer hover:bg-red-700 group"
+                                            id="check-location">
+                                            <svg width="30px" height="30px" viewBox="0 0 192 192"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                class="icon flat-line group-hover:-translate-y-1 transition duration-300">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                    stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path stroke="#ffffff" stroke-width="12"
+                                                        d="M96 22a51.88 51.88 0 0 0-36.77 15.303A52.368 52.368 0 0 0 44 74.246c0 16.596 4.296 28.669 20.811 48.898a163.733 163.733 0 0 1 20.053 28.38C90.852 163.721 90.146 172 96 172c5.854 0 5.148-8.279 11.136-20.476a163.723 163.723 0 0 1 20.053-28.38C143.704 102.915 148 90.841 148 74.246a52.37 52.37 0 0 0-15.23-36.943A51.88 51.88 0 0 0 96 22Z">
+                                                    </path>
+                                                    <circle cx="96" cy="74" r="20" stroke="#ffffff"
+                                                        stroke-width="12"></circle>
+                                                </g>
+                                            </svg>
+                                            Check Location
+                                        </button>
+                                    </div>
                                     <input type="submit" value="Update" class="hidden" id="location-update">
                                 </form>
                             </div>
                         </div>
                     </div>
 
+                    <script>
+                        const checkLocationButton = document.getElementById('check-location');
+                        const latitudeInput = document.getElementById('latitude');
+                        const longitudeInput = document.getElementById('longitude');
+
+                        checkLocationButton.addEventListener('click', function(e) {
+                            e.preventDefault();
+
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition((position) => {
+                                    const latitude = position.coords.latitude;
+                                    const longitude = position.coords.longitude;
+
+                                    latitudeInput.value = latitude;
+                                    longitudeInput.value = longitude;
+
+                                }, (error) => {
+                                    alert('Gagal mendapatkan lokasi Anda. Pastikan izin lokasi diaktifkan.');
+                                });
+                            } else {
+                                alert('Geolocation tidak didukung oleh browser ini.');
+                            }
+                        });
+                    </script>
 
                     {{-- Template Excel --}}
                     <h1 class="text-xl text-center font-semibold text-zinc-950 mt-4 mb-2">Download Excel Format</h1>
