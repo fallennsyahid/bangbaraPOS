@@ -50,7 +50,7 @@ class StruckOrderController extends Controller
 
 
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text("No. Pesanan : " . $order->order_id . "\n");
+            // $printer->text("No. Pesanan : " . $order->order_id . "\n");
             $printer->text("Kasir       : " . $order->casier_name . "\n");
             $printer->text("Customer    : " . $order->customer_name . "\n");
             $printer->text("Tanggal     : " . $order->created_at->format('d-m-Y H:i') . "\n");

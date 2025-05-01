@@ -56,6 +56,8 @@
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Email</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
+                                            Phone</th>
+                                        <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Role</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Since</th>
@@ -79,6 +81,9 @@
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $user->email }}
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
+                                                {{ $user->phone_number }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $user->usertype }}

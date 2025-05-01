@@ -53,6 +53,8 @@ class StaffController extends Controller
         $request->validate([
             'name' => 'required|string|max:225',
             'email' => 'required|email|min:0',
+            'phone_number' => 'required|min:0',
+            'address' => 'required|string|min:0',
             'usertype' => 'required|in:staff',
         ]);
 
@@ -64,13 +66,14 @@ class StaffController extends Controller
 
         // Generate Password
         $password = Str::random(8);
-        $user =
-            User::create([
-                'name' => $request->input('name'),
-                'email' => $request->input('email'),
-                'usertype' => $request->input('usertype'),
-                'password' => Hash::make($password),
-            ]);
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'usertype' => $request->input('usertype'),
+            'phone_number' => $request->input('phone_number'),
+            'address' => $request->input('address'),
+            'password' => Hash::make($password),
+        ]);
 
         // Kirim email ke staff
         Mail::to($user->email)->send(new StaffCredentials($user->name, $user->email, $password));
@@ -106,11 +109,13 @@ class StaffController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $request->validate([
-            'name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:users,email,' . $user->id,
-            'usertype' => 'nullable|in:staff,admin',
-            'password' => 'nullable',
+         $request->validate([
+        'name' => 'nullable|string|max:255',
+        'email' => 'nullable|email|unique:users,email,' . $user->id,
+        'usertype' => 'nullable|in:staff,admin',
+        'phone_number' => 'nullable|number',
+        'address' => 'nullable|string',
+        'password' => 'nullable',
         ]);
 
         // $existingData = User::where('email', $request->email)->first();
@@ -123,6 +128,8 @@ class StaffController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->usertype = $request->usertype;
+        $user->phone_number = $request->phone_number;
+        $user->address = $request->address;
 
         if ($request->password) {
             $user->password = bcrypt($request->password);

@@ -43,12 +43,28 @@
                                     placeholder="Enter staff name" required />
                             </div>
 
-                            <!-- Input Harga -->
+                            <!-- Input Email -->
                             <div class="mb-4">
                                 <label for="price" class="block text-sm font-medium mb-2">Email</label>
                                 <input type="email" id="email" name="email" step="0.01"
                                     class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
                                     placeholder="Enter staff email" required />
+                            </div>
+
+                            <!-- Input no telp -->
+                            <div class="mb-4">
+                                <label for="phone_number" class="block text-sm font-medium mb-2">Telephone</label>
+                                <input type="number" id="phone_number" name="phone_number" step="0.01"
+                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                    placeholder="08xxxxx" required />
+                            </div>
+
+                            <!-- Input address -->
+                            <div class="mb-4">
+                                <label for="address" class="block text-sm font-medium mb-2">Address</label>
+                                <textarea id="address" name="address" rows="4"
+                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                    placeholder="Enter staff address" required></textarea>
                             </div>
 
                             <!-- Dropdown Kategori -->

@@ -16,7 +16,7 @@ class UserExport implements FromCollection, WithHeadings
     public function collection()
     {
         // Mengambil semua produk dari database
-        return User::all(['id', 'name', 'email', 'usertype', 'created_at']);
+        return User::all(['id', 'name', 'email', 'usertype', 'phone_number', 'address', 'created_at']);
        
     }
 
@@ -28,6 +28,6 @@ class UserExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         // Headings saat di excel nya
-        return ['ID', 'Name', 'Email', 'Role', 'Since'];
+        return ['ID', 'Name', 'Email', 'Role', 'Phone', 'Address', 'Since'];
     }
 }

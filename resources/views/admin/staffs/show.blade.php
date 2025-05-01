@@ -59,6 +59,14 @@
                                     <p class="text-gray-600">User Role</p>
                                     <p class="text-gray-900 font-medium">{{ $user->usertype }}</p>
                                 </div>
+                                <div>
+                                    <p class="text-gray-600">Phone Number</p>
+                                    <p class="text-gray-900 font-medium">{{ $user->phone_number }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Address</p>
+                                    <p class="text-gray-900 font-medium">{{ $user->address }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -24,8 +24,35 @@
                             Kelola data
                             dengan mudah dan efisien, {{ Auth::user()->name }} 👋!"</i>
 
-                        <x-admin.waButton></x-admin.waButton>
-                    </div>
+                    <!-- Toggle Ubah status -->
+                    <form action="{{ route('store.toggleStatus') }}" method="POST" id="status-form">
+                        @csrf
+                        <p class="p-1 font-semibold text-black">Change Status:</p>
+                        <button onclick="event.preventDefault(); confirmChange()"
+                            class="{{ $store->status == 1 ? 'bg-red-700 hover:bg-red-800' : 'bg-green-500 hover:bg-green-600' }} rounded-lg text-white px-4 py-2 transition-all ease-in-out duration-300">
+                            {{ $store->status ? 'Close Store' : 'Open Store' }}
+                        </button>
+                    </form>      
+                    
+                    <script>
+                        function confirmChange() {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: 'You will change the store status and customer access.',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#b91c1c',
+                                cancelButtonColor: '#facc15',
+                                confirmButtonText: 'Yes, change',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    document.getElementById('status-form').submit();
+                                }
+                            });
+                        }
+                    </script>
+                
+                </div>
 
                     <!-- Content -->
                     <div class="mt-2">
@@ -201,7 +228,7 @@
 
 
                 </main>
-                {{-- Chart Order --}}
+                <!-- {{-- Chart Bar --}} -->
                 <script>
                     const ctx = document.getElementById('orderChart').getContext('2d');
 
