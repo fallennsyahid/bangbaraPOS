@@ -265,17 +265,14 @@ document.addEventListener("DOMContentLoaded", function () {
                         document.body.appendChild(form);
                         form.submit();
                     } else {
-                        // Swal.fire({
-                        //     icon: "error",
-                        //     title: "Oops...",
-                        //     text: "Anda harus berada di area kerja untuk melakukan pemesanan!",
-                        //     customClass: {
-                        //         popup: 'z-[99999999]',
-                        //     }
-                        // });
-                        alert(
-                            "Anda harus berada di restoran untuk melakukan pemesanan!"
-                        );
+                        // alert('Anda harus berada di restoran untuk melakukan pemesanan!');
+                        itemDetailModal.classList.add("hidden");
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Anda harus berada di area restoran untuk melakukan pemesanan!",
+                            confirmButtonColor: '#CC0000'
+                        });
                     }
                 },
                 function (error) {
@@ -301,9 +298,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const a =
             Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.cos(deg2rad(lat1)) *
-                Math.cos(deg2rad(lat2)) *
-                Math.sin(dLon / 2) *
-                Math.sin(dLon / 2);
+            Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         const distance = R * c; // Distance in meters
         return distance;

@@ -52,7 +52,6 @@ class StruckController extends Controller
             $printer->text("===== STRUK PEMBAYARAN =====\n\n");
 
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            // $printer->text("No. Pesanan : " . $history->order_id . "\n");
             $printer->text("Kasir       : " . $history->casier_name . "\n");
             $printer->text("Customer    : " . $history->customer_name . "\n");
             $printer->text("Tanggal     : " . $history->created_at->format('d-m-Y H:i') . "\n");
