@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const targetLongitude = parseFloat(
         document.getElementById("targetLongitude").value
     );
-    const toleranceMeters = 1000; // Toleransi jarak
+    const toleranceMeters = 1000000; // Toleransi jarak
 
     let csrfToken = document
         .querySelector('meta[name="csrf-token"]')

@@ -50,7 +50,6 @@
                                 class="bg-red-700 text-white px-4 py-2 rounded-lg hidden">Delete
                                 Selected</button>
                         </div>
-                        {{-- </div> --}}
                         <div class="w-full max-w-6xl overflow-x-auto text-zinc-950">
 
                             <table class="table-auto border-collapse w-full text-left shadow-lg rounded-md"
@@ -88,7 +87,7 @@
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-950">#{{ $index + 1 }}
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-950">
+                                            <td id="customer-name-{{ $order->id }}" class="px-6 py-4 font-medium text-sm text-zinc-950">
                                                 {{ $order->customer_name }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm">
@@ -109,8 +108,11 @@
 
                                                 {{ $order->created_at->diffForHumans() }}
                                             </td>
+
+                                            <!-- Actions -->
                                             <td class="px-6 py-4 flex items-center gap-3 mt-4">
 
+                                                <!-- Detail button -->
                                                 <a href="{{ route('orders.show', $order->id) }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="30"
                                                         height="30" viewBox="0 0 24 24">
@@ -118,7 +120,8 @@
                                                             d="M12 17.8c4.034 0 7.686-2.25 9.648-5.8C19.686 8.45 16.034 6.2 12 6.2S4.314 8.45 2.352 12c1.962 3.55 5.614 5.8 9.648 5.8M12 5c4.808 0 8.972 2.848 11 7c-2.028 4.152-6.192 7-11 7s-8.972-2.848-11-7c2.028-4.152 6.192-7 11-7m0 9.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8" />
                                                     </svg>
                                                 </a>
-
+                                                
+                                                <!-- Update status button -->
                                                 @if ($order->status !== 'Completed' && $order->status !== 'Cancelled')
                                                     <svg id="order-status-{{ $order->id }}" class="cursor-pointer"
                                                         xmlns="http://www.w3.org/2000/svg" width="30" height="30"
@@ -136,6 +139,7 @@
                                                 @endif
 
 
+                                                <!-- Delete button -->
                                                 <form id="delete-form-{{ $order->id }}"
                                                     action="{{ route('orders.destroy', $order->id) }}" method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this category?');">
@@ -149,9 +153,10 @@
                                                             d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z" />
                                                     </svg>
                                                 </form>
-                                                {{-- ini untuk cetak struk --}}
-                                                <a href="javascript:void(0);"
-                                                    onclick="printReceipt({{ $order->id }})"><svg width="42"
+                                                
+                                                <!-- {{-- ini untuk cetak struk --}} -->
+                                                <a href="javascript:void(0)"
+                                                        onclick="printReceipt({{ $order->id }})"><svg width="42"
                                                         height="42" viewBox="0 0 42 42" fill="none"
                                                         xmlns="http://www.w3.org/2000/svg">
                                                         <path
@@ -169,6 +174,9 @@
                                                     </svg>
                                                 </a>
 
+                                                <!-- Button panggil pelanggan -->
+                                                <button onclick="panggilNama({{ $order->id }})">🔊</button>
+
 
                                             </td>
                                         </tr>
@@ -178,7 +186,7 @@
                             </table>
 
 
-                            <x-admin.success-alert></x-admin.success-alert>
+                            <!-- <x-admin.success-alert></x-admin.success-alert> -->
                         </div>
                     </div>
                 </main>
@@ -188,7 +196,7 @@
         </div>
     </div>
 
-    {{-- openModal --}}
+    <!-- Open Modal Content -->
     <div id="modalConfirm"
         class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4">
         <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white dark:bg-zinc-900 max-w-md">
@@ -221,7 +229,21 @@
 
     <!-- All javascript code in this project for now is just for demo DON'T RELY ON IT  -->
     <x-admin.js></x-admin.js>
-    {{-- Confirm Alert --}}
+    <!-- Script untuk panggil nama -->
+    <script>
+         function panggilNama(orderId) {
+            const customerCell = document.getElementById('customer-name-' + orderId);
+            const customerName = customerCell.textContent.trim();
+            const teks = "Atas nama " + customerName + ", Silahkan menuju ke kasir";
+            const suara = new SpeechSynthesisUtterance(teks);
+            suara.lang = 'id-ID'; // Bahasa Indonesia
+            suara.rate = 1;       // Kecepatan bicara
+            suara.pitch = 1;      // Nada suara
+            window.speechSynthesis.speak(suara);
+        }
+    </script>
+
+    <!--  Confirm Alert  -->
     <script>
         function confirmDelete(productId) {
             Swal.fire({
@@ -244,6 +266,8 @@
             });
         }
     </script>
+
+    <!-- Open Modal Script -->
     <script type="text/javascript">
         window.openModal = function(modalId) {
             document.getElementById(modalId).style.display = 'block'
@@ -267,11 +291,50 @@
             }
         };
     </script>
-    {{-- DataTables --}}
+
+    <!-- Script action access -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Ambil semua baris order
+            const rows = document.querySelectorAll('#orderTableBody tr');
+
+            rows.forEach(row => {
+                const orderId = row.dataset.category;
+                const statusEl = document.getElementById(`order-status-${orderId}`);
+                const status = statusEl?.innerText?.trim();
+
+                // Cek jika status adalah Pending, Cancelled, atau Completed
+                if (['Pending', 'Cancelled', 'Completed'].includes(status)) {
+                    // Nonaktifkan cetak struk
+                    const printBtn = row.querySelector(`a[onclick^="printReceipt"]`);
+                    if (printBtn) {
+                        printBtn.style.cursor = 'default';
+                        printBtn.style.pointerEvents = 'none';
+                        printBtn.style.opacity = '0.5';
+                        printBtn.title = 'Tidak dapat mencetak struk pada status ini';
+                    }
+
+                    // Nonaktifkan tombol panggil
+                    const panggilBtn = row.querySelector(`button[onclick^="panggilNama"]`);
+                    if (panggilBtn) {
+                        panggilBtn.disabled = true;
+                        panggilBtn.title = 'Tidak dapat memanggil pelanggan pada status ini';
+                        panggilBtn.style.opacity = '0.5';
+                        panggilBtn.style.cursor = 'not-allowed';
+                    }
+                }
+            });
+        });
+    </script>
+
+
+    <!-- {{-- DataTables --}} -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    <!-- {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}} -->
+
+    <!-- Update realtime table -->
     <script>
         let lastOrderTimestamp = null;
         let orderId = null;
@@ -279,6 +342,10 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             initializeEventListeners();
+            disableActionsBasedOnStatus();
+            applyOrderActionAccess();
+
+
 
             // Inisialisasi DataTable (jika belum)
             if (!$.fn.DataTable.isDataTable("#myTable")) {
@@ -291,6 +358,7 @@
                     "pageLength": 10
                 });
             }
+
 
             // Checkbox select-all dan select-item
             const allIds = @json($orders->pluck('id')); // Ganti jika ID diambil dari controller
@@ -409,6 +477,8 @@
         // Cek order baru setiap 5 detik
         setInterval(checkNewOrders, 2000);
 
+
+        // Fungsi untuk check new orders
         function checkNewOrders() {
             $.ajax({
                 url: "/orders/latest",
@@ -426,6 +496,7 @@
             });
         }
 
+        // Fungsi untuk update table
         function updateTable() {
             $.ajax({
                 url: "/admin/orders",
@@ -449,6 +520,8 @@
                     });
 
                     $(window).trigger('resize');
+                    disableActionsBasedOnStatus();
+                    applyOrderActionAccess();
                     initializeEventListeners();
                 },
                 error: function(xhr, status, error) {
@@ -457,6 +530,84 @@
             });
         }
 
+        // Fungsi untuk disable button
+        function disableActionsBasedOnStatus() {
+        const rows = document.querySelectorAll('#orderTableBody tr');
+
+        rows.forEach(row => {
+            const orderId = row.dataset.category;
+            const statusEl = document.getElementById(`order-status-${orderId}`);
+            const status = statusEl?.innerText?.trim();
+
+            if (['Pending', 'Cancelled', 'Completed'].includes(status)) {
+                const printBtn = row.querySelector(`a[onclick^="printReceipt"]`);
+                if (printBtn) {
+                    printBtn.style.cursor = 'default';
+                    printBtn.style.pointerEvents = 'none';
+                    printBtn.style.opacity = '0.5';
+                    printBtn.title = 'Tidak dapat mencetak struk pada status ini';
+                }
+
+                const panggilBtn = row.querySelector(`button[onclick^="panggilNama"]`);
+                if (panggilBtn) {
+                    panggilBtn.disabled = true;
+                    panggilBtn.title = 'Tidak dapat memanggil pelanggan pada status ini';
+                    panggilBtn.style.opacity = '0.5';
+                    panggilBtn.style.cursor = 'not-allowed';
+                }
+            }
+        });
+    }
+
+        // Realtime action access
+        function applyOrderActionAccess() {
+         const rows = document.querySelectorAll('#orderTableBody tr');
+
+            rows.forEach(row => {
+                const orderId = row.dataset.category;
+                const statusEl = document.getElementById(`order-status-${orderId}`);
+                const status = statusEl?.innerText?.trim();
+
+                if (['Pending', 'Cancelled', 'Completed'].includes(status)) {
+                    const printBtn = row.querySelector(`a[onclick^="printReceipt"]`);
+                    if (printBtn) {
+                        printBtn.style.cursor = 'default';
+                        printBtn.style.pointerEvents = 'none';
+                        printBtn.style.opacity = '0.5';
+                        printBtn.title = 'Tidak dapat mencetak struk pada status ini';
+                    }
+
+                    const panggilBtn = row.querySelector(`button[onclick^="panggilNama"]`);
+                    if (panggilBtn) {
+                        panggilBtn.disabled = true;
+                        panggilBtn.title = 'Tidak dapat memanggil pelanggan pada status ini';
+                        panggilBtn.style.opacity = '0.5';
+                        panggilBtn.style.cursor = 'not-allowed';
+                    }
+
+                } else {
+                    // Aktifkan kembali jika status bukan yang di-lock
+                    const printBtn = row.querySelector(`a[onclick^="printReceipt"]`);
+                    if (printBtn) {
+                        printBtn.style.cursor = 'pointer';
+                        printBtn.style.pointerEvents = 'auto';
+                        printBtn.style.opacity = '1';
+                        printBtn.title = '';
+                    }
+
+                    const panggilBtn = row.querySelector(`button[onclick^="panggilNama"]`);
+                    if (panggilBtn) {
+                        panggilBtn.disabled = false;
+                        panggilBtn.style.opacity = '1';
+                        panggilBtn.style.cursor = 'pointer';
+                        panggilBtn.title = '';
+                    }
+                }
+            });
+        }
+
+
+        // fungsi untuk inisialiasi
         function initializeEventListeners() {
             document.querySelectorAll('.delete-button').forEach(button => {
                 button.addEventListener('click', function() {
@@ -612,6 +763,8 @@
                 statusElement.className = `text-center ${statusClasses[newStatus] || ''}`;
                 statusElement.innerText = newStatus;
             }
+            applyOrderActionAccess();
+
         }
 
         function printReceipt(id) {

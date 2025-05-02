@@ -64,7 +64,6 @@
                                             Method</th>
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Status</th>
-                                        
                                         <th class="px-6 py-3 text-sm font-bold uppercase tracking-wide text-zinc-950">
                                             Aksi</th>
                                     </tr>
@@ -98,7 +97,9 @@
                                                             d="M12 17.8c4.034 0 7.686-2.25 9.648-5.8C19.686 8.45 16.034 6.2 12 6.2S4.314 8.45 2.352 12c1.962 3.55 5.614 5.8 9.648 5.8M12 5c4.808 0 8.972 2.848 11 7c-2.028 4.152-6.192 7-11 7s-8.972-2.848-11-7c2.028-4.152 6.192-7 11-7m0 9.8a2.8 2.8 0 1 0 0-5.6a2.8 2.8 0 0 0 0 5.6m0 1.2a4 4 0 1 1 0-8a4 4 0 0 1 0 8" />
                                                     </svg>
                                                 </a>
-                                                {{-- ini untuk cetak struk --}}
+
+                                                <!-- {{-- ini untuk cetak struk --}} -->
+                                                @if ($history->status == 'Completed')     
                                                 <a href="javascript:void(0);"
                                                     onclick="printReceipt({{ $history->id }})"><svg width="42"
                                                         height="42" viewBox="0 0 42 42" fill="none"
@@ -117,14 +118,19 @@
                                                             stroke="#9F6802" stroke-width="1.33333" />
                                                     </svg>
                                                 </a>
+                                                @endif
 
+                                                 <!-- Button panggil pelanggan -->
+                                                 @if ($history->status == 'Completed')
+                                                    <button onclick="panggilNama({{ $history->id }})">🔊</button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
-                                    {{-- <tr>
+                                    <!-- {{-- <tr>
                                             <td class="text-center py-4">No data available for the
                                                 selected filters.</td>
-                                        </tr> --}}
+                                        </tr> --}} -->
                                 </tbody>
                             </table>
 
@@ -141,6 +147,22 @@
 
     <!-- All javascript code in this project for now is just for demo DON'T RELY ON IT  -->
     <x-admin.js></x-admin.js>
+
+    
+    <!-- Script untuk panggil nama -->
+    <script>
+         function panggilNama(historyId) {
+            const customerCell = document.getElementById('customer-name-' + historyId);
+            const customerName = customerCell.textContent.trim();
+            const teks = "Atas nama " + customerName + ", Silahkan ambil pesanan di meja kasir";
+            const suara = new SpeechSynthesisUtterance(teks);
+            suara.lang = 'id-ID'; // Bahasa Indonesia
+            suara.rate = 1;       // Kecepatan bicara
+            suara.pitch = 1;      // Nada suara
+            window.speechSynthesis.speak(suara);
+        }
+    </script> 
+
     {{-- Confirm Alert --}}
     <script>
         function confirmDelete(productId) {

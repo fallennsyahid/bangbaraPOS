@@ -16,7 +16,7 @@
                 <h2 class="font-extrabold text-9xl text-gray-600 dark:text-gray-100">
                     <span class="sr-only">Error</span>419
                 </h2>
-                <p class="text-2xl md:text-3xl text-amber-300">Reload your browser</p>
+                <p class="text-2xl md:text-3xl text-amber-300">Page Expired, please change or reload the browser</p>
             </div>
         </div>
     </section>
