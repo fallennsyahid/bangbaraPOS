@@ -56,6 +56,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Check Input Phone Number
+    const inputNumber = document.getElementById('customer_phone');
+    inputNumber.addEventListener('input', function () {
+        // this.value = this.value.replace(/[^0-9]/g, '');
+
+        if (this.value.charAt(0) === '+') {
+            this.value = '+' + this.value.slice(1).replace(/[^0-9]/g, '');
+        } else {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        }
+
+        if (this.value.length > 15) {
+            this.value = this.value.slice(0, 15);
+        }
+    });
+
     // Validasi Input
     const checkoutButton = document.getElementById('checkoutButton');
     const requiredFields = [
@@ -95,6 +111,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Cek pertama kali
     validateForm();
+
+
 
 
     // PAYMENT METHOD

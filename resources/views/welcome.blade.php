@@ -22,62 +22,10 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<style>
-    .screen-widget {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        padding: 15px 50px;
-        background: #000;
-        border: 1px solid white;
-        border-bottom: none;
-        border-left: none;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .screen-widget::after {
-        position: absolute;
-        content: "screen: __";
-    }
-
-    @media (min-width: 640px) {
-        .screen-widget::after {
-            content: "screen: sm";
-        }
-    }
-
-    @media (min-width: 768px) {
-        .screen-widget::after {
-            content: "screen: md";
-        }
-    }
-
-    @media (min-width: 1024px) {
-        .screen-widget::after {
-            content: "screen: lg";
-        }
-    }
-
-    @media (min-width: 1280px) {
-        .screen-widget::after {
-            content: "screen: xl";
-        }
-    }
-
-    @media (min-width: 1536px) {
-        .screen-widget::after {
-            content: "screen: 2xl";
-        }
-    }
-</style>
-
 <body x-data x-init="$refs.loading.classList.add('hidden')">
     <x-loading-animation></x-loading-animation>
+    {{-- <span class="screen-widget"></span> --}}
     <!-- Header Start -->
-    <span class="screen-widget"></span>
     <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between">

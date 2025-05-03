@@ -31,7 +31,7 @@
                         <div class="min-h-full mt-4 flex items-center justify-center bg-prime">
                             <div class=" w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
                                 <div class="flex flex-col items-center">
-                                    <p class="pb-2"><strong>Current:</strong>
+                                    <p class="pb-2 text-zinc-950"><strong>Current:</strong>
                                         {{ $user->printer_name ?? 'Not Set yet' }}</p>
                                     <form action="{{ route('staff.setPrinter') }}" method="POST"
                                         class="flex flex-col items-center w-full">

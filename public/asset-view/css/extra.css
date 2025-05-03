@@ -103,3 +103,54 @@
         transform: rotate(360deg);
     }
 }
+
+/* Media Screen Check */
+.screen-widget {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 15px 50px;
+    background: #000;
+    border: 1px solid white;
+    border-bottom: none;
+    border-left: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.screen-widget::after {
+    position: absolute;
+    content: "screen: __";
+}
+
+@media (min-width: 640px) {
+    .screen-widget::after {
+        content: "screen: sm";
+    }
+}
+
+@media (min-width: 768px) {
+    .screen-widget::after {
+        content: "screen: md";
+    }
+}
+
+@media (min-width: 1024px) {
+    .screen-widget::after {
+        content: "screen: lg";
+    }
+}
+
+@media (min-width: 1280px) {
+    .screen-widget::after {
+        content: "screen: xl";
+    }
+}
+
+@media (min-width: 1536px) {
+    .screen-widget::after {
+        content: "screen: 2xl";
+    }
+}

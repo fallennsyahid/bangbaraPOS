@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 // use Log as LOGS;
 use App\Models\Cart;
+use Midtrans\Config;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Notifications\Notification;
-use Midtrans\Config;
 
 class OrderController extends Controller
 {
@@ -25,10 +26,7 @@ class OrderController extends Controller
     {
         $request->validate([
             'customer_name' => 'required',
-            'customer_phone' => [
-                'required',
-                'regex:/^08[0-9]{8,13}$/'
-            ],
+            'customer_phone' => 'required',
             'request' => 'nullable',
             'serve_option' => 'required|in:take-away,dine-in',
             'payment_method' => 'required|in:Tunai,nonTunai,Debit',
@@ -36,8 +34,29 @@ class OrderController extends Controller
             'hot_ice' => 'nullable|string',
         ], [
             'customer_phone.required' => 'Mohon isi terlebih dahulu nomor telepon kamu!',
-            'customer_phone.regex' => 'Nomor telepon harus diawali dengan 08 dan terdiri dari 10 sampai 15 digit angka.',
         ]);
+
+        $phone = $request->customer_phone;
+        if (preg_match('/^08/', $phone)) {
+            $phone = preg_replace('/^0/', '+62', $phone);
+        }
+
+        // Veriphone API
+        $response = Http::get('https://api.veriphone.io/v2/verify', [
+            'phone' => $phone,
+            'key' => env('VERIPHONE_API_KEY'),
+        ]);
+
+        dd($response->json());
+
+        $data = $response->json();
+
+        // Cek jika response tidak ok atau nomor telepon tidak valid
+        if (!$response->ok() || !$data['phone_valid']) {
+            return back()->withErrors([
+                'customer_phone' => 'Nomor telepon tidak valid atau tidak aktif.',
+            ])->withInput();
+        }
 
         $sessionId = Session::getId();
         $cartItems = Cart::with('product')->where('session_id', $sessionId)->get();
@@ -59,22 +78,15 @@ class OrderController extends Controller
             'category' => $item->product->category->nama_kategori,
         ])->toArray();
 
-
         // Konfigurasi Midtrans
-
-
         // Server Key
         \Midtrans\Config::$serverKey = config('midtrans.serverKey');
-
         // Develop midtrans mode
         \Midtrans\Config::$isProduction = false;
-
         // Sanitized type mode
         \Midtrans\Config::$isSanitized = true;
-
         // is3ds type mode
         \Midtrans\Config::$is3ds = true;
-
 
         // Params for midtrans item
         $params = [
@@ -107,10 +119,8 @@ class OrderController extends Controller
             ]
         ];
 
-        
         // Get snap token when order is created
         $snapToken = \Midtrans\Snap::getSnapToken($params);
-
 
         // Create order
         Order::create([

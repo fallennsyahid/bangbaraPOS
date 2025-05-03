@@ -196,9 +196,11 @@
                                 <label for="customer_phone" class="block mt-4 mb-2 font-medium text-base">
                                     Masukkan nomor telepon
                                 </label>
-                                <input type="number" placeholder="08xx" id="customer_phone" name="customer_phone"
-                                    class="input-number w-full border border-gray-300 rounded-lg pr-16 px-3 py-3 font-alkatra font-normal focus:ring-gray-400 focus:border-gray-400 focus:shadow-lg"
-                                    value="{{ old('customer_phone') }}" />
+                                <input type="tel" placeholder="+62xxxxxxxxxx" id="customer_phone"
+                                    name="customer_phone"
+                                    class="w-full border border-gray-300 rounded-lg pr-16 px-3 py-3 font-alkatra font-normal focus:ring-gray-400 focus:border-gray-400 focus:shadow-lg"
+                                    value="{{ old('customer_phone') }}" maxlength="15"
+                                    title="Nomor harus terdiri dari 10 hingga 15 digit angka!" />
                                 @error('customer_phone')
                                     <p class="text-red-500 text-sm my-1">{{ $message }}</p>
                                 @enderror
