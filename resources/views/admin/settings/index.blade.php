@@ -68,7 +68,7 @@
                     </div>
 
                     <!-- Settings Location -->
-                    <h1 class="text-xl text-center font-semibold text-zinc-950 my-4">Location Settings</h1>
+                    <h1 class="text-xl text-center font-semibold text-zinc-950 my-4">Restaurant Location Settings</h1>
                     <div class="min-h-full mt-4 flex items-center justify-center bg-prime">
                         <div class=" w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
                             <div class="flex flex-col p-3 items-center space-y-6">

@@ -186,21 +186,34 @@
                                 </label>
                                 <input type="text" placeholder="Rendi Kurniawan" id="customer_name"
                                     name="customer_name"
-                                    class="w-full border border-gray-300 rounded-lg pr-16 px-3 py-3 font-alkatra font-normal focus:ring-gray-400 focus:border-gray-400 focus:shadow-lg" />
+                                    class="w-full border border-gray-300 rounded-lg pr-16 px-3 py-3 font-alkatra font-normal focus:ring-gray-400 focus:border-gray-400 focus:shadow-lg"
+                                    value="{{ old('customer_name') }}" />
+                                @error('customer_name')
+                                    <p class="text-red-500 text-sm my-1">{{ $message }}</p>
+                                @enderror
 
                                 <!-- No Telp -->
                                 <label for="customer_phone" class="block mt-4 mb-2 font-medium text-base">
                                     Masukkan nomor telepon
                                 </label>
                                 <input type="number" placeholder="08xx" id="customer_phone" name="customer_phone"
-                                    class="input-number w-full border border-gray-300 rounded-lg pr-16 px-3 py-3 font-alkatra font-normal focus:ring-gray-400 focus:border-gray-400 focus:shadow-lg" />
+                                    class="input-number w-full border border-gray-300 rounded-lg pr-16 px-3 py-3 font-alkatra font-normal focus:ring-gray-400 focus:border-gray-400 focus:shadow-lg"
+                                    value="{{ old('customer_phone') }}" />
+                                @error('customer_phone')
+                                    <p class="text-red-500 text-sm my-1">{{ $message }}</p>
+                                @enderror
 
-                                <!-- Note -->
+                                <!-- Catatan -->
                                 <label for="request" class="block mt-4 mb-2 font-medium text-base">
                                     Catatan
                                 </label>
                                 <textarea name="request" id="request" placeholder="Ex. Medium Rare"
-                                    class="w-full border border-gray-300 rounded-lg px-3 py-3 mb-4 focus:ring-1 focus:ring-gray-400 focus:border-gray-400"></textarea>
+                                    class="w-full border border-gray-300 rounded-lg px-3 py-3 mb-4 focus:ring-1 focus:ring-gray-400 focus:border-gray-400">{{ old('request') }}</textarea>
+                                @error('request')
+                                    <p class="text-red-500 text-sm my-1">{{ $message }}</p>
+                                @enderror
+
+
                                 <hr class="border-[1.5px] rounded-full border-black" />
 
                                 <!-- Total -->
@@ -212,7 +225,6 @@
                                     </span>
                                 </div>
                                 <hr class="border-[1.5px] rounded-full border-black" />
-
                             </div>
 
                             {{-- Opsi Penyajian --}}
@@ -220,25 +232,40 @@
                                 <label for="serve_option" class="font-semibold mt-6 mb-2">Opsi Penyajian</label>
                                 <select name="serve_option" id="serve_option" required
                                     class="w-3/4 border border-black rounded-lg font-medium py-2 px-2 focus:ring-gray-400 focus:border-gray-400">
-                                    <option value="-" disabled selected>Pilih Opsi Penyajian
+                                    <option value="-" disabled
+                                        {{ old('serve_option') == null ? 'selected' : '' }}>
+                                        Pilih Opsi Penyajian
                                     </option>
-                                    <option value="dine-in">Dine In</option>
-                                    <option value="take-away">Take Away</option>
+                                    <option value="dine-in" {{ old('serve_option') == 'dine-in' ? 'selected' : '' }}>
+                                        Dine In</option>
+                                    <option value="take-away"
+                                        {{ old('serve_option') == 'take-away' ? 'selected' : '' }}>Take Away</option>
                                 </select>
+                                @error('serve_option')
+                                    <p class="text-red-500 text-sm my-1">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <!-- Metode Pembayaran -->
                             <div class="mb-4 flex flex-col">
-                                {{-- <h3 class="font-semibold mt-6 mb-2">Metode Pembayaran</h3> --}}
                                 <label for="metodePembayaran" class="font-semibold mt-6 mb-2">Metode
                                     Pembayaran</label>
                                 <select name="payment_method" id="metodePembayaran" required
                                     class="payment_method w-3/4 border border-black rounded-lg font-medium py-2 px-2 focus:ring-gray-400 focus:border-gray-400">
-                                    <option value="-" disabled selected>Pilih Opsi Pembayaran</option>
-                                    <option value="Tunai">Tunai</option>
-                                    <option value="nonTunai">Non-Tunai</option>
-                                    <option value="Debit">Debit</option>
+                                    <option value="-" disabled
+                                        {{ old('payment_method') == null ? 'selected' : '' }}>
+                                        Pilih Opsi Pembayaran
+                                    </option>
+                                    <option value="Tunai" {{ old('payment_method') == 'Tunai' ? 'selected' : '' }}>
+                                        Tunai</option>
+                                    <option value="nonTunai"
+                                        {{ old('payment_method') == 'nonTunai' ? 'selected' : '' }}>Non-Tunai</option>
+                                    <option value="Debit" {{ old('payment_method') == 'Debit' ? 'selected' : '' }}>
+                                        Debit</option>
                                 </select>
+                                {{-- @error('payment_method')
+                                    <p class="text-red-500 text-sm my-1">{{ $message }}</p>
+                                @enderror --}}
                             </div>
 
                             <!-- Submit Button -->

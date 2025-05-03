@@ -11,8 +11,8 @@
     <title>{{ __('BangbaraPos') }}</title>
     <!-- CSS -->
     @vite('resources/css/app.css')
-    <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}?v={{ time() }}" />
-    <link rel="stylesheet" href="{{ asset('asset-view/css/slider.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
+    <link rel="stylesheet" href="{{ asset('asset-view/css/slider.css') }}">
     <!-- ICON WEB -->
     <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
     <!-- Font Awesome CDN -->
@@ -22,9 +22,62 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
+<style>
+    .screen-widget {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        padding: 15px 50px;
+        background: #000;
+        border: 1px solid white;
+        border-bottom: none;
+        border-left: none;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .screen-widget::after {
+        position: absolute;
+        content: "screen: __";
+    }
+
+    @media (min-width: 640px) {
+        .screen-widget::after {
+            content: "screen: sm";
+        }
+    }
+
+    @media (min-width: 768px) {
+        .screen-widget::after {
+            content: "screen: md";
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .screen-widget::after {
+            content: "screen: lg";
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .screen-widget::after {
+            content: "screen: xl";
+        }
+    }
+
+    @media (min-width: 1536px) {
+        .screen-widget::after {
+            content: "screen: 2xl";
+        }
+    }
+</style>
+
 <body x-data x-init="$refs.loading.classList.add('hidden')">
     <x-loading-animation></x-loading-animation>
     <!-- Header Start -->
+    <span class="screen-widget"></span>
     <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between">
@@ -74,7 +127,7 @@
                         <!-- Cart Icon -->
                         <a href="{{ route('cart') }}" class="relative" aria-label="View shopping cart">
                             <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Shopping Cart" width="40"
-                                class="hover:scale-110 transition duration-300 ease-in-out" />
+                                class="hover:scale-110 transition duration-300 ease-in-out" loading="lazy" />
 
                             <span id="cart-quantity-badge" aria-label="Cart items count" aria-live="polite"
                                 class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
@@ -98,7 +151,7 @@
                     <!-- Cart Icon -->
                     <a href="{{ route('cart') }}" class="relative" aria-label="View shopping cart">
                         <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Shopping Cart" width="40"
-                            class="hover:scale-110 transition duration-300 ease-in-out" />
+                            class="hover:scale-110 transition duration-300 ease-in-out" loading="lazy" />
 
                         <span id="cart-quantity-badge-desktop" aria-label="Cart items count" aria-live="polite"
                             class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
@@ -145,7 +198,7 @@
             <div
                 class="flex items-center bg-primary mx-auto my-5 px-8 sm:px-12 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
                 <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="Menu book icon" width="120"
-                    class="mr-0 lg:mr-4 lg:scale-150" />
+                    class="mr-0 lg:mr-4 lg:scale-150" loading="lazy" />
                 <h1 class="font-euphoria text-shadow text-[2.5rem] lg:text-6xl text-white">
                     Menu Kami
                 </h1>
@@ -198,7 +251,7 @@
                                             aria-label="{{ $product->nama_menu }} details">
                                             <div class="relative group">
                                                 <img src="{{ asset('storage/' . $product->gambar_menu) }}"
-                                                    alt="{{ $product->nama_menu }}"
+                                                    alt="{{ $product->nama_menu }}" loading="lazy"
                                                     class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out 
                                                 group-hover:brightness-75 {{ $isNonActive ? 'opacity-50' : '' }} {{ $isClose ? 'opacity-50' : '' }}" />
                                                 @if ($isClose)
@@ -276,8 +329,8 @@
                     </svg>
                 </a>
                 <input type="hidden" id="modal-product-id" name="product_id" value="">
-                <img id="modal-image" src="{{ asset('asset-view/assets/png/food/1.png') }}" alt="Food"
-                    class="w-full object-cover rounded-t-lg overflow-hidden" />
+                <img id="modal-image" src="" alt="Food"
+                    class="w-full object-cover rounded-t-lg overflow-hidden" loading="lazy" />
                 <h1 id="modal-title" class="text-center font-alatsi text-2xl pb-2"></h1>
                 <p id="modal-description" class="text-center font-alatsi text-base px-4"></p>
 
@@ -353,15 +406,15 @@
         class="relative overflow-x-hidden bg-red-600 overflow-hidden min-h-[60vh] sm:min-h-[60vh] md:min-h-[50vh] lg:min-h-[50vh] xl:min-h-[70vh]">
         <!-- Gambar sebagai background di mobile -->
         <img src="{{ asset('asset-view/assets/svg/steak.svg') }}" alt="A plate with steak, fries, and vegetables"
-            class="absolute top-0 left-0 w-full h-full object-cover opacity-40 z-0 md:hidden" />
+            class="absolute top-0 left-0 w-full h-full object-cover opacity-40 z-0 md:hidden" loading="lazy" />
 
         <div class="relative z-10 flex justify-center items-center p-6 md:p-10 h-full">
             <div class="text-center max-w-6xl w-full">
                 <div class="flex flex-col items-center md:flex-row md:items-start">
                     <!-- Gambar normal di desktop/tablet -->
                     <img src="{{ asset('asset-view/assets/svg/steak.svg') }}"
-                        alt="A plate with steak, fries, and vegetables"
-                        class="hidden md:block w-full md:w-2/5 h-auto" />
+                        alt="A plate with steak, fries, and vegetables" class="hidden md:block w-full md:w-2/5 h-auto"
+                        loading="lazy" />
 
                     <!-- Teks konten -->
                     <div class="mt-6 md:mt-0 md:ml-6 text-white text-shadow-2">
@@ -434,7 +487,7 @@
                 </form>
                 <div class="hidden lg:flex lg:justify-center w-full lg:w-auto">
                     <img src="{{ asset('asset-view/assets/svg/contact.svg') }}" alt="Contact Illustration"
-                        class="contact-img w-72 sm:w-96 lg:w-[400px]" />
+                        class="contact-img w-72 sm:w-96 lg:w-[400px]" loading="lazy" />
                 </div>
             </div>
         </div>
@@ -500,7 +553,8 @@
             <div class="flex flex-wrap justify-between items-center lg:justify-between gap-y-10">
                 <!-- Logo -->
                 <a href="#navbarHeader" class="logo-footer flex justify-center lg:justify-start w-full lg:w-auto">
-                    <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="Logo" class="h-12" />
+                    <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="Logo" class="h-12"
+                        loading="lazy" />
                 </a>
 
                 <!-- Account -->
@@ -509,19 +563,19 @@
                     <div class="flex justify-center gap-4">
                         <a href="https://wa.me/+6283857185413" target="_blank">
                             <img src="{{ asset('asset-view/assets/svg/whatsapp_new.svg') }}" alt="WhatsApp"
-                                class="h-6 transition-transform duration-300 hover:scale-110" />
+                                class="h-6 transition-transform duration-300 hover:scale-110" loading="lazy" />
                         </a>
                         <a href="" target="_blank">
                             <img src="{{ asset('asset-view/assets/svg/instagram.svg') }}" alt="Instagram"
-                                class="h-6 transition-transform duration-300 hover:scale-110" />
+                                class="h-6 transition-transform duration-300 hover:scale-110" loading="lazy" />
                         </a>
                         <a href="https://www.tiktok.com/@bangbarasteak" target="_blank">
                             <img src="{{ asset('asset-view/assets/svg/tiktok.svg') }}" alt="TikTok"
-                                class="h-6 transition-transform duration-300 hover:scale-110" />
+                                class="h-6 transition-transform duration-300 hover:scale-110" loading="lazy" />
                         </a>
                         <a href="">
                             <img src="{{ asset('asset-view/assets/svg/facebook.svg') }}" alt="Facebook"
-                                class="h-6 transition-transform duration-300 hover:scale-110" />
+                                class="h-6 transition-transform duration-300 hover:scale-110" loading="lazy" />
                         </a>
                     </div>
                 </div>
@@ -540,7 +594,7 @@
                     <h3 class="font-bold text-white text-xl pb-3">Maps</h3>
                     <a href="https://maps.app.goo.gl/QJJSghdQJtVT7pj77" target="_blank" class="inline-block">
                         <img src="{{ asset('asset-view/assets/svg/maps.svg') }}" alt="Google Maps" width=""
-                            class="h-16 transition duration-300 ease-in-out hover:scale-110" />
+                            class="h-16 transition duration-300 ease-in-out hover:scale-110" loading="lazy" />
                     </a>
                 </div>
             </div>
@@ -552,25 +606,7 @@
 <x-sweet-alert></x-sweet-alert>
 <x-view-js></x-view-js>
 
-<script src="{{ asset('asset-view/js/script.js') }}"></script>
-<script src="{{ asset('asset-view/js/popup.js') }}"></script>
-<script>
-    // document.addEventListener('DOMContentLoaded', function() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            function(position) {
-                document.getElementById('latitude').value = position.coords.latitude;
-                document.getElementById('longitude').value = position.coords.longitude;
-            },
-            function(error) {
-                console.error('Error mendapatkan lokasi:', error);
-                alert('Gagal mendapatkan lokasi. Anda tidak dapat menambahkan produk ke keranjang.');
-            }
-        );
-    } else {
-        alert('Browser Anda tidak mendukung Geolocation.');
-    }
-    // });
-</script>
+<script src="{{ asset('asset-view/js/script.js') }}" defer></script>
+<script src="{{ asset('asset-view/js/popup.js') }}" defer></script>
 
 </html>

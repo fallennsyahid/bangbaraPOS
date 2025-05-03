@@ -36,5 +36,13 @@
             background-color: #fbbf24;
             color: white;
         }
+
+        .input-number::-webkit-inner-spin-button,
+        .input-number::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
+
+        }
     </style>
 </head>
