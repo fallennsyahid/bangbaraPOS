@@ -12,23 +12,24 @@ class StoreController extends Controller
         $store = Store::first();
 
         $store->status = $store->status == 1 ? 0 : 1;
+        $store->manual_override = true;
         $store->save();
 
         return redirect()->back()->with('success', 'Status toko berhasil diperbaharui');
     }
 
-    public function checkAutoUpdateStatus() {
-        $store = Store::first();
-        $currentHour = Carbon::now()->format('H'); // jam format 24 jam
+    // public function checkAutoUpdateStatus() {
+    //     $store = Store::first();
+    //     $currentHour = Carbon::now()->format('H'); // jam format 24 jam
 
-        if ($currentHour == 10 && $store->status != 1) {
-            $store->status = 1; // buka
-            $store->save();
-        } elseif ($currentHour == 23 && $store->status != 0) {
-            $store->status = 0; // tutup
-            $store->save();
-        }
-    }
+    //     if ($currentHour == 10 && $store->status != 1) {
+    //         $store->status = 1; // buka
+    //         $store->save();
+    //     } elseif ($currentHour == 23 && $store->status != 0) {
+    //         $store->status = 0; // tutup
+    //         $store->save();
+    //     }
+    // }
 
     }
 

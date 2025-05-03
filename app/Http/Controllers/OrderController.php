@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Notifications\Notification;
+use Midtrans\Config;
 
 class OrderController extends Controller
 {
@@ -58,26 +59,41 @@ class OrderController extends Controller
             'category' => $item->product->category->nama_kategori,
         ])->toArray();
 
+
         // Konfigurasi Midtrans
+
+
+        // Server Key
         \Midtrans\Config::$serverKey = config('midtrans.serverKey');
+
+        // Develop midtrans mode
         \Midtrans\Config::$isProduction = false;
+
+        // Sanitized type mode
         \Midtrans\Config::$isSanitized = true;
+
+        // is3ds type mode
         \Midtrans\Config::$is3ds = true;
 
+
+        // Params for midtrans item
         $params = [
             'transaction_details' => [
                 'order_id' => 'ORDER-' . time() . '-' . rand(), // unik, tidak pakai ID dari DB
                 'gross_amount' => $totalPrice,
             ],
+
             'item_details' => $cartItems->map(fn($item) => [
                 'id' => $item->product_id,
                 'price' => $item->product->harga_menu,
                 'quantity' => $item->quantity,
                 'name' => $item->product->nama_menu,
             ])->toArray(),
+
             'customer_details' => [
                 'first_name' => $request->customer_name,
             ],
+
             'custom_fields' => [
                 'session_id' => $sessionId,
                 'customer_name' => $request->customer_name,
@@ -91,8 +107,12 @@ class OrderController extends Controller
             ]
         ];
 
+        
+        // Get snap token when order is created
         $snapToken = \Midtrans\Snap::getSnapToken($params);
 
+
+        // Create order
         Order::create([
             'order_id' => $params['transaction_details']['order_id'],
             'session_id' => $sessionId,

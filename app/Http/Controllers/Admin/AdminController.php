@@ -18,26 +18,26 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-     public function checkAutoUpdateStatus() {
-        $store = Store::first();
-        $currentHour = Carbon::now()->format('H'); // jam format 24 jam
+    //  public function checkAutoUpdateStatus() {
+    //     $store = Store::first();
+    //     $currentHour = Carbon::now()->format('H'); // jam format 24 jam
 
-       if ($currentHour >= 10 && $currentHour < 21 && $store->status != 1) {
-            $store->status = 1; // buka
-            $store->save();
-        } elseif (($currentHour >= 21 || $currentHour < 10) && $store->status != 0) {
-            $store->status = 0; // tutup
-            $store->save();
-        }
+    //    if ($currentHour >= 10 && $currentHour < 21 && $store->status != 1) {
+    //         $store->status = 1; // buka
+    //         $store->save();
+    //     } elseif (($currentHour >= 21 || $currentHour < 10) && $store->status != 0) {
+    //         $store->status = 0; // tutup
+    //         $store->save();
+    //     }
 
-    }
+    // }
     
 
     // Controller (AdminController.php)
     public function dashboard(Request $request)
     {
         // Untuk check update status toko
-        $this->checkAutoUpdateStatus();
+        // $this->checkAutoUpdateStatus();
 
         $products = Product::count();
         $total_orders_completed = History::where('status', 'Completed')->count();
@@ -326,7 +326,7 @@ class AdminController extends Controller
         $endDate = $request->input('end_date');
 
         // Query dasar
-        $query = Order::where('status', 'Completed');
+        $query = History::where('status', 'Completed');
 
         // Jika ada parameter tanggal, terapkan filter
         if ($startDate && $endDate) {
@@ -335,13 +335,13 @@ class AdminController extends Controller
         }
 
         // Eksekusi query
-        $orders = $query->get();
+        $histories = $query->get();
 
         $productTotals = [];
 
-        foreach ($orders as $order) {
+        foreach ($histories as $history) {
             // Mengubah data JSON menjadi array
-            $products = json_decode($order->products, true);
+            $products = json_decode(json_decode($history->products, true), true);
 
             if (is_array($products)) {
                 foreach ($products as $product) {

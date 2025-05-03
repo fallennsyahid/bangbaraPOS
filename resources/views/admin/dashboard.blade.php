@@ -136,7 +136,7 @@
                         <div class="flex justify-center mt-4 py-4">
                             <select name="filter_year" id="filter_year"
                                 class="bg-[#FFFFFF] text-zinc-950 py-4 px-11 rounded-md shadow-lg">
-                                <option value="">All Time</option>
+                                <option value="">Select year</option>
                                 @foreach ($years as $y)
                                     <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>
                                         {{ $y }}</option>

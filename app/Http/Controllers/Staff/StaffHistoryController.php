@@ -16,7 +16,7 @@ class StaffHistoryController extends Controller
      */
     public function index()
     {
-        $histories = History::with('product')->whereDate('created_at', Carbon::today())->get();
+    $histories = History::with('product')->whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->get();
         return view('staff.staffHistories.index', compact('histories'));
     }
 

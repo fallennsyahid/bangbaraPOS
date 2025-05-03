@@ -110,7 +110,7 @@
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">
                                                 {{ $history->casier_name }}
                                             </td>
-                                            <td class="px-6 py-4 font-medium text-sm text-zinc-900">
+                                            <td id="customer-name-{{ $history->id }}" class="px-6 py-4 font-medium text-sm text-zinc-900">
                                                 {{ $history->customer_name }}
                                             </td>
                                             <td class="px-6 py-4 font-medium text-sm text-zinc-900">
@@ -174,6 +174,13 @@
                                                     </svg>
                                                 </a>
 
+                                                <!-- Button panggil pelanggan -->
+                                                 @if ($history->status == 'Completed')
+                                                    <button onclick="panggilNama({{ $history->id }})">🔊</button>
+                                                @endif
+
+
+
 
                                             </td>
 
@@ -226,6 +233,20 @@
             });
         }
     </script>
+
+    <!-- Script untuk panggil nama -->
+    <script>
+         function panggilNama(historyId) {
+            const customerCell = document.getElementById('customer-name-' + historyId);
+            const customerName = customerCell.textContent.trim();
+            const teks = "Atas nama " + customerName + ", Silahkan ambil pesanan di meja kasir";
+            const suara = new SpeechSynthesisUtterance(teks);
+            suara.lang = 'id-ID'; // Bahasa Indonesia
+            suara.rate = 1;       // Kecepatan bicara
+            suara.pitch = 1;      // Nada suara
+            window.speechSynthesis.speak(suara);
+        }
+    </script>     
 
     {{-- Script Print Struck --}}
     <script>
