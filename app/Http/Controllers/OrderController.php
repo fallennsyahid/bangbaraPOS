@@ -47,7 +47,7 @@ class OrderController extends Controller
             'key' => env('VERIPHONE_API_KEY'),
         ]);
 
-        dd($response->json());
+        // dd($response->json());
 
         $data = $response->json();
 
