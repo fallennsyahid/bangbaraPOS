@@ -1,0 +1,10 @@
+.header-cart {
+    background-image: url("../assets/webp/header.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.text-shadow-2 {
+    text-shadow: 0 3px 3px gray;
+}

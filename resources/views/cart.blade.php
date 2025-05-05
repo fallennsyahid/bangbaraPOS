@@ -8,7 +8,7 @@
     <title>BangbaraPos</title>
     <!-- CSS -->
     @vite(['resources/css/app.css'])
-    <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
+    <link rel="stylesheet" href="{{ asset('asset-view/css/cart.css') }}" />
 
     <!-- ICON WEB -->
     <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">

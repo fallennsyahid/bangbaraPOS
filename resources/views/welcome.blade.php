@@ -8,11 +8,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description"
         content="BangbaraPos - Rasa Juara, Harga Bersahabat! Nikmati steak berkualitas dengan harga terjangkau.">
-    <title>{{ __('BangbaraPos') }}</title>
+    <title>{{ __('BangbaraPOS') }}</title>
     <!-- CSS -->
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="{{ asset('asset-view/css/extra.css') }}" />
     <link rel="stylesheet" href="{{ asset('asset-view/css/slider.css') }}">
+    {{-- Header Image --}}
+    <link rel="preload" as="image" href="{{ asset('asset-view/assets/webp/header.webp') }}" type="image/webp">
     <!-- ICON WEB -->
     <link rel="shortcut icon" href="{{ asset('asset-view/assets/png/logo_bangbara.png') }}" type="image/x-icon">
     <!-- Font Awesome CDN -->
@@ -32,8 +34,8 @@
                 <!-- Logo -->
                 <div class="py-6">
                     <a href="#home" aria-label="Go to homepage">
-                        <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="BangbaraPos Logo"
-                            width="150" loading="lazy" />
+                        <img src="{{ asset('asset-view/assets/webp/logo-navbar.webp') }}" alt="Bangbara Logo"
+                            width="150" height="150" loading="lazy" />
                     </a>
                 </div>
 
@@ -72,10 +74,11 @@
 
                     <!-- Cart and Hamburger Menu -->
                     <div class="flex items-center space-x-4 lg:hidden">
-                        <!-- Cart Icon -->
+                        <!-- Cart Icon Mobile -->
                         <a href="{{ route('cart') }}" class="relative" aria-label="View shopping cart">
                             <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Shopping Cart" width="40"
-                                class="hover:scale-110 transition duration-300 ease-in-out" loading="lazy" />
+                                height="40px" class="hover:scale-110 transition duration-300 ease-in-out"
+                                loading="lazy" />
 
                             <span id="cart-quantity-badge" aria-label="Cart items count" aria-live="polite"
                                 class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
@@ -96,10 +99,10 @@
                 </div>
 
                 <div class="hidden lg:block lg:items-center lg:space-x-4">
-                    <!-- Cart Icon -->
+                    <!-- Cart Icon Desktop -->
                     <a href="{{ route('cart') }}" class="relative" aria-label="View shopping cart">
                         <img src="{{ asset('asset-view/assets/svg/cart.svg') }}" alt="Shopping Cart" width="40"
-                            class="hover:scale-110 transition duration-300 ease-in-out" loading="lazy" />
+                            height="40" class="hover:scale-110 transition duration-300 ease-in-out" loading="lazy" />
 
                         <span id="cart-quantity-badge-desktop" aria-label="Cart items count" aria-live="polite"
                             class="absolute -top-2 -right-2 bg-red-600 rounded-full px-2 py-0.5 text-xs font-bold shadow-md">
@@ -130,8 +133,8 @@
                         memuaskan, tanpa harus menguras dompet.
                     </p>
                     <a href="#menu"
-                        class="text-base sm:text-lg md:text-xl lg:text-2xl font-euphoria text-white bg-primary py-3 px-6 md:py-4 md:px-8 rounded-full shadow-lg hover:shadow-xl hover:opacity-80 transition duration-300 ease-in-out">Cek
-                        Selengkapnya
+                        class="text-base sm:text-lg md:text-xl lg:text-2xl font-euphoria text-white bg-primary py-3 px-6 md:py-4 md:px-8 rounded-full shadow-lg hover:shadow-xl hover:opacity-80 transition duration-300 ease-in-out">
+                        Cek Selengkapnya
                     </a>
                 </div>
             </div>
@@ -145,8 +148,8 @@
             <!-- Header -->
             <div
                 class="flex items-center bg-primary mx-auto my-5 px-8 sm:px-12 lg:px-16 text-center rounded-2xl shadow-md shadow-primary">
-                <img src="{{ asset('asset-view/assets/svg/book.svg') }}" alt="Menu book icon" width="120"
-                    class="mr-0 lg:mr-4 lg:scale-150" loading="lazy" />
+                <img src="{{ asset('asset-view/assets/webp/book.webp') }}" alt="Menu book icon" width="120"
+                    height="120" class="mr-0 lg:mr-4 lg:scale-150" loading="lazy" />
                 <h1 class="font-euphoria text-shadow text-[2.5rem] lg:text-6xl text-white">
                     Menu Kami
                 </h1>
@@ -199,7 +202,8 @@
                                             aria-label="{{ $product->nama_menu }} details">
                                             <div class="relative group">
                                                 <img src="{{ asset('storage/' . $product->gambar_menu) }}"
-                                                    alt="{{ $product->nama_menu }}" loading="lazy"
+                                                    alt="{{ $product->nama_menu }}" loading="lazy" width="100%"
+                                                    height="100%"
                                                     class="overflow-hidden rounded-t-md transition-all duration-300 ease-in-out 
                                                 group-hover:brightness-75 {{ $isNonActive ? 'opacity-50' : '' }} {{ $isClose ? 'opacity-50' : '' }}" />
                                                 @if ($isClose)
@@ -277,7 +281,7 @@
                     </svg>
                 </a>
                 <input type="hidden" id="modal-product-id" name="product_id" value="">
-                <img id="modal-image" src="" alt="Food"
+                <img id="modal-image" src="" alt="Food" width="100%" height="100%"
                     class="w-full object-cover rounded-t-lg overflow-hidden" loading="lazy" />
                 <h1 id="modal-title" class="text-center font-alatsi text-2xl pb-2"></h1>
                 <p id="modal-description" class="text-center font-alatsi text-base px-4"></p>
@@ -351,25 +355,22 @@
 
     <!-- About Section Start -->
     <section id="about"
-        class="relative overflow-x-hidden bg-red-600 overflow-hidden min-h-[60vh] sm:min-h-[60vh] md:min-h-[50vh] lg:min-h-[50vh] xl:min-h-[70vh]">
-        <!-- Gambar sebagai background di mobile -->
-        <img src="{{ asset('asset-view/assets/svg/steak.svg') }}" alt="A plate with steak, fries, and vegetables"
-            class="absolute top-0 left-0 w-full h-full object-cover opacity-40 z-0 md:hidden" loading="lazy" />
+        class="about-img relative overflow-x-hidden bg-red-600 overflow-hidden min-h-[60vh] sm:min-h-[60vh] md:min-h-[50vh] lg:min-h-[50vh] xl:min-h-[70vh]">
 
         <div class="relative z-10 flex justify-center items-center p-6 md:p-10 h-full">
             <div class="text-center max-w-6xl w-full">
                 <div class="flex flex-col items-center md:flex-row md:items-start">
                     <!-- Gambar normal di desktop/tablet -->
-                    <img src="{{ asset('asset-view/assets/svg/steak.svg') }}"
+                    <img src="{{ asset('asset-view/assets/webp/steak.webp') }}" width="100%" height="100%"
                         alt="A plate with steak, fries, and vegetables" class="hidden md:block w-full md:w-2/5 h-auto"
                         loading="lazy" />
 
                     <!-- Teks konten -->
-                    <div class="mt-6 md:mt-0 md:ml-6 text-white text-shadow-2">
-                        <h1 class="about-title text-4xl sm:text-5xl lg:text-6xl font-euphoria text-shadow mb-4 ">
+                    <div class="mt-6 md:mt-0 md:ml-6 text-white flex flex-col items-center">
+                        <h1 class="about-title text-7xl lg:text-6xl font-euphoria text-shadow mb-4">
                             Tentang Kami
                         </h1>
-                        <p class="leading-relaxed pt-4 text-base sm:text-lg md:text-xl lg:text-2xl ">
+                        <p class="leading-relaxed pt-4 text-lg lg:text-2xl text-shadow">
                             Bangbara adalah tempat makan yang menghadirkan steak dan chicken
                             katsu dengan cita rasa istimewa. Dengan bahan berkualitas dan harga
                             yang terjangkau, Bangbara menjadi pilihan tepat untuk menikmati
@@ -434,8 +435,9 @@
                     </div>
                 </form>
                 <div class="hidden lg:flex lg:justify-center w-full lg:w-auto">
-                    <img src="{{ asset('asset-view/assets/svg/contact.svg') }}" alt="Contact Illustration"
-                        class="contact-img w-72 sm:w-96 lg:w-[400px]" loading="lazy" />
+                    <img src="{{ asset('asset-view/assets/webp/contact.webp') }}" alt="Contact Illustration"
+                        class="contact-img w-72 sm:w-96 lg:w-[400px]" loading="lazy" width="100%"
+                        height="100%" />
                 </div>
             </div>
         </div>
@@ -502,7 +504,7 @@
                 <!-- Logo -->
                 <a href="#navbarHeader" class="logo-footer flex justify-center lg:justify-start w-full lg:w-auto">
                     <img src="{{ asset('asset-view/assets/svg/logo-navbar.svg') }}" alt="Logo" class="h-12"
-                        loading="lazy" />
+                        width="100%" height="100%" loading="lazy" />
                 </a>
 
                 <!-- Account -->
@@ -511,19 +513,18 @@
                     <div class="flex justify-center gap-4">
                         <a href="https://wa.me/+6283857185413" target="_blank">
                             <img src="{{ asset('asset-view/assets/svg/whatsapp_new.svg') }}" alt="WhatsApp"
+                                height="100%" width="100%"
                                 class="h-6 transition-transform duration-300 hover:scale-110" loading="lazy" />
                         </a>
-                        <a href="" target="_blank">
+                        <a href="https://www.instagram.com/bangbarasteak/" target="_blank">
                             <img src="{{ asset('asset-view/assets/svg/instagram.svg') }}" alt="Instagram"
+                                height="100%" width="100%"
                                 class="h-6 transition-transform duration-300 hover:scale-110" loading="lazy" />
                         </a>
                         <a href="https://www.tiktok.com/@bangbarasteak" target="_blank">
-                            <img src="{{ asset('asset-view/assets/svg/tiktok.svg') }}" alt="TikTok"
-                                class="h-6 transition-transform duration-300 hover:scale-110" loading="lazy" />
-                        </a>
-                        <a href="">
-                            <img src="{{ asset('asset-view/assets/svg/facebook.svg') }}" alt="Facebook"
-                                class="h-6 transition-transform duration-300 hover:scale-110" loading="lazy" />
+                            <img src="{{ asset('asset-view/assets/svg/tiktok.svg') }}" alt="TikTok" height="100%"
+                                width="100%" class="h-6 transition-transform duration-300 hover:scale-110"
+                                loading="lazy" />
                         </a>
                     </div>
                 </div>
@@ -541,8 +542,9 @@
                 <div class="maps-footer w-full sm:w-auto text-center mt-6">
                     <h3 class="font-bold text-white text-xl pb-3">Maps</h3>
                     <a href="https://maps.app.goo.gl/QJJSghdQJtVT7pj77" target="_blank" class="inline-block">
-                        <img src="{{ asset('asset-view/assets/svg/maps.svg') }}" alt="Google Maps" width=""
-                            class="h-16 transition duration-300 ease-in-out hover:scale-110" loading="lazy" />
+                        <img src="{{ asset('asset-view/assets/webp/maps.webp') }}" alt="Google Maps" width="100%"
+                            height="100%" class="h-16 transition duration-300 ease-in-out hover:scale-110"
+                            loading="lazy" />
                     </a>
                 </div>
             </div>
