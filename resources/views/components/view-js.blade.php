@@ -1,5 +1,5 @@
 <script>
-    // Update Cart Quantity Badge
+    // Quantity Badge Update for Mobile
     function updateCartQuantity() {
         fetch("{{ route('cart.quantity') }}")
             .then(response => response.json())
@@ -10,9 +10,7 @@
             .catch(error => console.error('Error fetching cart quantity:', error));
     }
 
-    // Jalankan saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', updateCartQuantity);
-
+    // Quantity Badge Update for Desktop
     function updateCartQuantityDekstop() {
         fetch("{{ route('cart.quantity.desktop') }}")
             .then(response => response.json())
@@ -23,6 +21,14 @@
             .catch(error => console.error('Error fetching cart quantity:', error));
     }
 
-    // Jalankan saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', updateCartQuantityDekstop);
+    // Jalankan sesuai kondisi
+    document.addEventListener('DOMContentLoaded', function() {
+        const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+
+        if (isDesktop) {
+            updateCartQuantityDekstop();
+        } else {
+            updateCartQuantity();
+        }
+    });
 </script>
