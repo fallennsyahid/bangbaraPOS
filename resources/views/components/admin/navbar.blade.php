@@ -66,7 +66,7 @@
             </button>
 
             <!-- Notification button -->
-            <div id="notif-navbar" class="z-10" x-data="notificationComponent()" x-init="fetchNotifications(); setInterval(() => fetchNotifications(), 7000)">
+            <div id="notif-navbar" class="z-10" x-data="notificationComponent()" x-init="fetchNotifications();">
                 <button @click="open = !open"
                         class="relative p-2 transition-colors duration-200 rounded-full text-white bg-yellow-300 dark:bg-red-700 hover:bg-red-700 dark:hover:text-light dark:hover:bg-amber-300">
                     <span class="sr-only">Open Notification panel</span>
@@ -101,64 +101,72 @@
                 </div>
             </div>
 
-           <script>
-            function notificationComponent() {
-                return {
-                    notifCount: 0, // Untuk jumlah notifikasi
-                    notifications: [], // Untuk data notifikasi
-                    open: false, // Untuk menampilkan/menyembunyikan panel
-                    lastCheckTime: null, // Simpan waktu terakhir cek notifikasi
-                    initialized: false, // Tandai apakah sudah pertama kali inisialisasi
-                    fetchNotifications() {
-                        // URL untuk mendapatkan notifikasi, sertakan lastCheckTime untuk menghindari duplikasi
-                        let url = '/notifications';
-                        if (this.lastCheckTime) {
-                            url += '?since=' + encodeURIComponent(this.lastCheckTime);
+            <script>
+                function notificationComponent() {
+                    return {
+                        notifCount: 0,
+                        notifications: [],
+                        open: false,
+                        lastOrderId: 0,
+                        initialized: false,
+
+                        init() {
+                            this.fetchNotifications(); // mulai polling pertama kali
+                        },
+
+                        fetchNotifications() {
+                            let url = '/notifications';
+                            if (this.lastOrderId > 0) {
+                                url += '?last_id=' + this.lastOrderId;
+                            }
+
+                            fetch(url)
+                                .then(response => response.json())
+                                .then(data => {
+                                    let newOrders = data.orders;
+
+                                    // Jika ada order baru
+                                    if (newOrders.length > 0) {
+                                        this.notifCount += newOrders.length;
+                                        this.notifications = [...newOrders, ...this.notifications];
+
+                                        // Ambil ID tertinggi
+                                        this.lastOrderId = data.latest_id;
+
+                                        if (this.initialized) {
+                                            this.playNotificationSound();
+                                            this.triggerNotificationAnimation();
+                                        }
+                                    }
+
+                                    this.initialized = true;
+
+                                    // Langsung lanjut fetch lagi tanpa delay
+                                    this.fetchNotifications();
+                                })
+                                .catch(error => {
+                                    console.error('❌ Error polling notifikasi:', error);
+                                    // Jika error, tunggu 5 detik lalu coba lagi
+                                    setTimeout(() => this.fetchNotifications(), 5000);
+                                });
+                        },
+
+                        playNotificationSound() {
+                            let audio = new Audio('/asset-admin/public/sounds/notif.wav');
+                            audio.play().catch(err => console.error('Error playing sound:', err));
+                        },
+
+                        triggerNotificationAnimation() {
+                            let notifButton = document.querySelector('#notif-navbar button');
+                            if (notifButton) {
+                                notifButton.classList.add('animate-bounce');
+                                setTimeout(() => notifButton.classList.remove('animate-bounce'), 5000);
+                            }
                         }
-
-                        fetch(url)
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log('Data Notifikasi:', data); // Debugging
-
-                                let oldCount = this.notifCount;
-
-                                // Cek jika ada notifikasi baru masuk
-                                if (this.initialized && data.count > oldCount) {
-                                    this.playNotificationSound(); // 🔊 Mainkan suara
-                                    this.triggerNotificationAnimation(); // ✨ Animasi masuk
-                                }
-
-                                // Tandai pemanggilan selesai
-                                this.initialized = true;
-
-                                // Update data Alpine.js
-                                this.notifCount = data.count;
-                                this.notifications = data.orders;
-
-                                // Update lastCheckTime ke waktu saat ini
-                                this.lastCheckTime = new Date().toISOString();
-                            })
-                            .catch(error => console.error('Error fetching notifications:', error));
-                    },
-                    playNotificationSound() {
-                        let audio = new Audio('/asset-admin/public/sounds/notif.wav'); // ✅ Perbaikan path suara
-                        audio.play().catch(err => console.error('Error playing sound:', err));
-                    },
-                    triggerNotificationAnimation() {
-                        let notifButton = document.querySelector('#notif-navbar button');
-
-                        if (notifButton) { // ✅ Pastikan elemen ditemukan sebelum ditambahkan animasi
-                            notifButton.classList.add('animate-bounce');
-
-                            setTimeout(() => {
-                                notifButton.classList.remove('animate-bounce');
-                            }, 5000);
-                        }
-                    }
-                };
-            }
+                    };
+                }
             </script>
+
 
 
             <!-- User avatar button -->

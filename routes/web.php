@@ -138,27 +138,30 @@ Route::get('histories/filter', [HistoryController::class, 'filter'])->name('hist
 
 Route::get('/notifications', function (Request $request) {
     $lastId = $request->query('last_id');
+    $timeout = 15; // detik
+    $start = time();
 
-    $query = Order::where('status', 'Pending');
+    do {
+        $query = Order::where('status', 'Pending');
 
-    if ($lastId) {
-        $query->where('id', '>', $lastId);
-    } else {
-        // Ambil pesanan hari ini jika tidak ada last_id
-        $query->whereDate('created_at', Carbon::today());
-    }
+        if ($lastId) {
+            $query->where('id', '>', $lastId);
+        } else {
+            $query->whereDate('created_at', Carbon::today());
+        }
 
-    $orders = $query->latest()->take(5)->get([
-        'id',
-        'customer_name',
-        'status',
-        'total_price',
-        'created_at'
-    ]);
+        $orders = $query->latest()->take(5)->get();
+
+        if ($orders->count() > 0) {
+            break;
+        }
+
+        usleep(500000); // tunggu 0.5 detik sebelum cek lagi
+    } while (time() - $start < $timeout);
 
     return response()->json([
         'count'     => $orders->count(),
-        'latest_id' => $orders->max('id'),
+        'latest_id' => $orders->max('id') ?? $lastId,
         'orders'    => $orders->map(fn($order) => [
             'id'            => $order->id,
             'customer_name' => $order->customer_name,
@@ -217,11 +220,11 @@ Route::get('/get-histories', [HistoryController::class, 'getHistories']);
 // });
 
 
-// Route::get('/get-total-orders-today', function () {
-//     return response()->json([
-//         'total_orders' => Order::whereDate('created_at', Carbon::today())->count(),
-//     ]);
-// });
+Route::get('/get-total-orders-today', function () {
+    return response()->json([
+        'total_orders' => Order::whereDate('created_at', Carbon::today())->count(),
+    ]);
+});
 
 Route::get('/get-orders', function () {
     $orders = Order::with('product')
