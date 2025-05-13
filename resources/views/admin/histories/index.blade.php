@@ -25,8 +25,85 @@
 
                     <!-- Content -->
                     <div class="flex flex-col items-center justify-center min-h-full bg-prime px-4 py-4">
+                        {{-- Card Status --}}
+                        <div class="px-4 pb-4 max-w-6xl w-full">
+                            <div class="border-2 border-gray-400 bg-thead rounded-lg shadow-lg p-6">
+                                {{-- Status --}}
+                                <div class="grid grid-cols-2 md:grid-cols-2 gap-4 mb-6">
+                                    {{-- Completed --}}
+                                    <div
+                                        class="flex flex-col items-center justify-center gap-2 p-4 bg-tbody rounded-lg shadow-md">
+                                        <svg width="64px" height="64px" viewBox="0 0 1024.00 1024.00" fill="#000000"
+                                            class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                            stroke="#000000" stroke-width="30.72">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                stroke-linejoin="round"></g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path
+                                                    d="M824.8 1003.2H203.2c-12.8 0-25.6-2.4-37.6-7.2-11.2-4.8-21.6-12-30.4-20.8-8.8-8.8-16-19.2-20.8-30.4-4.8-12-7.2-24-7.2-37.6V260c0-12.8 2.4-25.6 7.2-37.6 4.8-11.2 12-21.6 20.8-30.4 8.8-8.8 19.2-16 30.4-20.8 12-4.8 24-7.2 37.6-7.2h94.4v48H203.2c-26.4 0-48 21.6-48 48v647.2c0 26.4 21.6 48 48 48h621.6c26.4 0 48-21.6 48-48V260c0-26.4-21.6-48-48-48H730.4v-48H824c12.8 0 25.6 2.4 37.6 7.2 11.2 4.8 21.6 12 30.4 20.8 8.8 8.8 16 19.2 20.8 30.4 4.8 12 7.2 24 7.2 37.6v647.2c0 12.8-2.4 25.6-7.2 37.6-4.8 11.2-12 21.6-20.8 30.4-8.8 8.8-19.2 16-30.4 20.8-11.2 4.8-24 7.2-36.8 7.2z"
+                                                    fill=""></path>
+                                                <path
+                                                    d="M752.8 308H274.4V152.8c0-32.8 26.4-60 60-60h61.6c22.4-44 67.2-72.8 117.6-72.8 50.4 0 95.2 28.8 117.6 72.8h61.6c32.8 0 60 26.4 60 60v155.2m-430.4-48h382.4V152.8c0-6.4-5.6-12-12-12H598.4l-5.6-16c-12-33.6-43.2-56-79.2-56s-67.2 22.4-79.2 56l-5.6 16H334.4c-6.4 0-12 5.6-12 12v107.2zM432.8 792c-6.4 0-12-2.4-16.8-7.2L252.8 621.6c-4.8-4.8-7.2-10.4-7.2-16.8s2.4-12 7.2-16.8c4.8-4.8 10.4-7.2 16.8-7.2s12 2.4 16.8 7.2L418.4 720c4 4 8.8 5.6 13.6 5.6s10.4-1.6 13.6-5.6l295.2-295.2c4.8-4.8 10.4-7.2 16.8-7.2s12 2.4 16.8 7.2c9.6 9.6 9.6 24 0 33.6L449.6 784.8c-4.8 4-11.2 7.2-16.8 7.2z"
+                                                    fill=""></path>
+                                            </g>
+                                        </svg>
+                                        <span class="text-white text-lg font-semibold">{{ $total_histories_completed }}</span>
+                                    </div>
+                                    {{-- Canceled --}}
+                                    <div
+                                        class="flex flex-col items-center justify-center gap-2 p-4 bg-tbody rounded-lg shadow-md">
+                                        <svg width="64px" height="64px" viewBox="0 0 512 512" fill="#000000">
+                                            <path
+                                                d="M213.333333,1.42108547e-14 C331.15408,1.42108547e-14 426.666667,95.5125867 426.666667,213.333333 C426.666667,331.15408 331.15408,426.666667 213.333333,426.666667 C95.5125867,426.666667 4.26325641e-14,331.15408 4.26325641e-14,213.333333 C4.26325641e-14,95.5125867 95.5125867,1.42108547e-14 213.333333,1.42108547e-14 Z M42.6666667,213.333333 C42.6666667,307.589931 119.076736,384 213.333333,384 C252.77254,384 289.087204,370.622239 317.987133,348.156908 L78.5096363,108.679691 C56.044379,137.579595 42.6666667,173.894198 42.6666667,213.333333 Z M213.333333,42.6666667 C173.894198,42.6666667 137.579595,56.044379 108.679691,78.5096363 L348.156908,317.987133 C370.622239,289.087204 384,252.77254 384,213.333333 C384,119.076736 307.589931,42.6666667 213.333333,42.6666667 Z" />
+                                        </svg>
+                                        <span class="text-white text-lg font-semibold">{{ $total_histories_cancelled }}</span>
+                                    </div>
+                                </div>
 
-                        <div class="p-2 w-full max-w-6xl ">
+                                {{-- Status Description --}}
+                                <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
+                                    {{-- Complete --}}
+                                    <span class="flex items-center text-black text-sm font-medium">
+                                        <svg width="32px" height="32px" viewBox="0 0 1024.00 1024.00" fill="#000000"
+                                            class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                            stroke="#000000" stroke-width="30.72">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                stroke-linejoin="round"></g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path
+                                                    d="M824.8 1003.2H203.2c-12.8 0-25.6-2.4-37.6-7.2-11.2-4.8-21.6-12-30.4-20.8-8.8-8.8-16-19.2-20.8-30.4-4.8-12-7.2-24-7.2-37.6V260c0-12.8 2.4-25.6 7.2-37.6 4.8-11.2 12-21.6 20.8-30.4 8.8-8.8 19.2-16 30.4-20.8 12-4.8 24-7.2 37.6-7.2h94.4v48H203.2c-26.4 0-48 21.6-48 48v647.2c0 26.4 21.6 48 48 48h621.6c26.4 0 48-21.6 48-48V260c0-26.4-21.6-48-48-48H730.4v-48H824c12.8 0 25.6 2.4 37.6 7.2 11.2 4.8 21.6 12 30.4 20.8 8.8 8.8 16 19.2 20.8 30.4 4.8 12 7.2 24 7.2 37.6v647.2c0 12.8-2.4 25.6-7.2 37.6-4.8 11.2-12 21.6-20.8 30.4-8.8 8.8-19.2 16-30.4 20.8-11.2 4.8-24 7.2-36.8 7.2z"
+                                                    fill=""></path>
+                                                <path
+                                                    d="M752.8 308H274.4V152.8c0-32.8 26.4-60 60-60h61.6c22.4-44 67.2-72.8 117.6-72.8 50.4 0 95.2 28.8 117.6 72.8h61.6c32.8 0 60 26.4 60 60v155.2m-430.4-48h382.4V152.8c0-6.4-5.6-12-12-12H598.4l-5.6-16c-12-33.6-43.2-56-79.2-56s-67.2 22.4-79.2 56l-5.6 16H334.4c-6.4 0-12 5.6-12 12v107.2zM432.8 792c-6.4 0-12-2.4-16.8-7.2L252.8 621.6c-4.8-4.8-7.2-10.4-7.2-16.8s2.4-12 7.2-16.8c4.8-4.8 10.4-7.2 16.8-7.2s12 2.4 16.8 7.2L418.4 720c4 4 8.8 5.6 13.6 5.6s10.4-1.6 13.6-5.6l295.2-295.2c4.8-4.8 10.4-7.2 16.8-7.2s12 2.4 16.8 7.2c9.6 9.6 9.6 24 0 33.6L449.6 784.8c-4.8 4-11.2 7.2-16.8 7.2z"
+                                                    fill=""></path>
+                                            </g>
+                                        </svg>
+                                        = Completed
+                                    </span>
+                                    {{-- Cancel --}}
+                                    <span class="flex items-center text-black text-sm font-medium">
+                                        <svg width="32px" height="32px" viewBox="0 0 512 512" fill="#000000">
+                                            <path
+                                                d="M213.333333,1.42108547e-14 C331.15408,1.42108547e-14 426.666667,95.5125867 426.666667,213.333333 C426.666667,331.15408 331.15408,426.666667 213.333333,426.666667 C95.5125867,426.666667 4.26325641e-14,331.15408 4.26325641e-14,213.333333 C4.26325641e-14,95.5125867 95.5125867,1.42108547e-14 213.333333,1.42108547e-14 Z M42.6666667,213.333333 C42.6666667,307.589931 119.076736,384 213.333333,384 C252.77254,384 289.087204,370.622239 317.987133,348.156908 L78.5096363,108.679691 C56.044379,137.579595 42.6666667,173.894198 42.6666667,213.333333 Z M213.333333,42.6666667 C173.894198,42.6666667 137.579595,56.044379 108.679691,78.5096363 L348.156908,317.987133 C370.622239,289.087204 384,252.77254 384,213.333333 C384,119.076736 307.589931,42.6666667 213.333333,42.6666667 Z" />
+                                        </svg>
+                                        = Canceled
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+                        <div class="mb-4 mt-3 flex justify-between w-full max-h-full max-w-6xl">
+                            <a href="#" id="exportExcel"
+                                class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg mt-20 self-start">
+                                <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
+                                    class="w-5 h-5 inline-block mr-2">
+                                Export
+                            </a>
+                            <div class="p-2">
                             <h2 class="text-xl font-semibold text-gray-800 mb-4">Pilih Periode</h2>
 
                             <form id="filterForm" class="space-y-4">
@@ -46,24 +123,22 @@
                                         <input type="date" id="periode_akhir" name="periode_akhir"
                                             class="text-white mt-1 block w-48 px-3 py-2 border border-[#CC0000] bg-[#CC0000] rounded-md shadow-sm">
                                     </div>
-                                </div>
-
-                                <button type="submit"
-                                    class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md">
-                                    Filter
-                                </button>
-                            </form>
+                                    <button type="submit"
+                                        class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 mt-6 px-4 rounded-lg shadow-md">
+                                        Filter
+                                    </button>
+                                </form>
+                            </div>
 
                         </div>
-                        <div class="mb-4 mt-3 flex justify-between w-full max-w-6xl">
-                            <a href="#" id="exportExcel"
-                                class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 shadow-lg">
-                                <img src="{{ asset('asset-view/assets/svg/export.svg') }}"
-                                    class="w-5 h-5 inline-block mr-2">
-                                Export
-                            </a>
                             <button id="bulkDeleteButton"
-                                class="bg-red-700 text-white px-4 py-2 rounded-lg hidden">Delete
+                                class="bg-red-700 text-white px-4 py-2 rounded-lg hidden self-end">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                        viewBox="0 0 24 24" class="inline-block">
+                                        <path fill="red"
+                                            d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z" />
+                                </svg>
+                                Delete
                                 Selected</button>
 
                         </div>
@@ -156,6 +231,8 @@
                                                 </form>
 
                                                 {{-- ini untuk cetak struk --}}
+
+                                                @if ($history->status == 'Completed')
                                                 <a href="javascript:void(0);"
                                                     onclick="printReceipt('{{ $history->id }}')"><svg width="42"
                                                         height="42" viewBox="0 0 42 42" fill="none"
@@ -174,6 +251,7 @@
                                                             stroke="#9F6802" stroke-width="1.33333" />
                                                     </svg>
                                                 </a>
+                                                @endif
 
                                                 <!-- Button panggil pelanggan -->
                                                 @if ($history->status == 'Completed')

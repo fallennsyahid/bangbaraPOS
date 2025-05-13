@@ -8,6 +8,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
+use App\Events\StatusUpdated;
 
 class OrderAdminController extends Controller
 {
@@ -21,6 +22,8 @@ class OrderAdminController extends Controller
         return view('admin.orders.index', compact('orders', 'statusOptions'));
         return response()->json(["data" => $orders]);
     }
+
+
 
     public function export()
     {
@@ -83,7 +86,20 @@ class OrderAdminController extends Controller
         // Simpan perubahan 
         $order->save();
 
-        return response()->json(['message' => 'Order status updated successfully']);
+        $statusCounts = [
+            'pending' => Order::where('status', 'Pending')->count(),
+            'processed' => Order::where('status', 'Processed')->count(),
+            'completed' => Order::where('status', 'Completed')->count(),
+            'canceled' => Order::where('status', 'Cancelled')->count(),
+        ];
+
+        broadcast(new StatusUpdated($statusCounts))->toOthers();
+
+
+        return response()->json([
+         'message' => 'Order status updated successfully',
+         'statusCounts' => $statusCounts
+        ]);
     }
 
 
