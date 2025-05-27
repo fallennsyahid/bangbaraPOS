@@ -74,8 +74,26 @@
                                                 class="block text-sm font-medium text-gray-700">Usertype</label>
                                             <input type="text" name="usertype" id="usertype"
                                                 value="{{ old('usertype', $user->usertype) }}"
-                                                class="w-full px-4 py-2 text-gray-900 bg-gray-100 border border-gray-400 rounded-md focus:ring focus:ring-yellow-500"
+                                                class="w-full px-4 py-2 text-gray-900 bg-gray-100 border border-gray-400 rounded-md"
                                                 readonly>
+                                        </div>
+
+                                        <!-- Input Phone Number -->
+                                        <div class="mb-4">
+                                            <label for="phone_number"
+                                                class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                            <input type="text" name="phone_number" id="phone_number"
+                                                value="{{ old('phone_number', $user->phone_number) }}"
+                                                class="w-full px-4 py-2 text-gray-900 bg-gray-100 border border-gray-400 rounded-md focus:ring focus:ring-yellow-500">
+                                        </div>
+
+                                        <!-- Input Address -->
+                                        <div class="mb-4">
+                                            <label for="address"
+                                                class="block text-sm font-medium text-gray-700">Address</label>
+                                            <input type="text" name="address" id="address"
+                                                value="{{ old('address', $user->address) }}"
+                                                class="w-full px-4 py-2 text-gray-900 bg-gray-100 border border-gray-400 rounded-md focus:ring focus:ring-yellow-500">
                                         </div>
 
                                         <!-- Tombol Update Profile -->

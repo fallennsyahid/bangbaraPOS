@@ -35,64 +35,65 @@
                             <h2 class="text-2xl font-bold text-center mb-6 text-zinc-950">Add
                                 Product</h2>
 
-                            <!-- Input Nama Produk -->
-                            <div class="mb-4">
-                                <label for="name" class="block text-sm font-medium mb-2">Product Name</label>
-                                <input type="text" id="nama_menu" name="nama_menu"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    placeholder="Enter product name" required />
-                            </div>
-
-                            <!-- Input Deskripsi Produk -->
-                            <div class="mb-4">
-                                <label for="description" class="block text-sm font-medium mb-2">Product
-                                    Description</label>
-                                <textarea id="deskripsi_menu" name="deskripsi_menu" rows="4"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    placeholder="Enter product description"></textarea>
-                            </div>
-
-                            <!-- Input Harga -->
-                            <div class="mb-4">
-                                <label for="price" class="block text-sm font-medium mb-2">Price</label>
-                                <input type="number" id="harga_menu" name="harga_menu" step="0.01"
-                                    class="input-number w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    placeholder="Enter product price" required />
-                            </div>
-
-                            <!-- Dropdown Kategori -->
-                            <div class="mb-4">
-                                <label for="category_id" class="block text-sm font-medium mb-2">Category</label>
-                                <select id="category_id" name="category_id"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    required>
-                                    <option value="">Select a Category</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" class="text-zinc-950">
-                                            {{ $category->nama_kategori }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Input Gambar Produk (Opsional) -->
-                            <div class="mb-4">
-                                <label for="image" class="block text-sm font-medium mb-2">Product Image</label>
-                                <p class="text-red-700 text-xs p-2">the image must be 1181x1181</p>
-                                <input type="file" id="gambar_menu" name="gambar_menu"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none" />
-                            </div>
-
-                            <div class="mb-4">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                <!-- Input Nama Produk -->
                                 <div class="mb-4">
-                                    <label for="status_produk" class="block text-sm font-medium mb-2">Product
-                                        Status</label>
-                                    <select id="status_produk" name="status_produk"
-                                        class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none">
-                                        <option value="Active">Active</option>
-                                        <option value="Non-active">Non-active</option>
+                                    <label for="name" class="block text-sm font-medium mb-2">Product Name</label>
+                                    <input type="text" id="nama_menu" name="nama_menu"
+                                        class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                        placeholder="Enter product name" required />
+                                </div>
+
+                                <!-- Input Harga -->
+                                <div class="mb-4">
+                                    <label for="price" class="block text-sm font-medium mb-2">Price</label>
+                                    <input type="number" id="harga_menu" name="harga_menu" step="0.01"
+                                        class="input-number w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                        placeholder="Enter product price" required />
+                                </div>
+
+                                <!-- Input Deskripsi Produk -->
+                                <div class="mb-4">
+                                    <label for="description" class="block text-sm font-medium mb-2">Product
+                                        Description</label>
+                                    <textarea id="deskripsi_menu" name="deskripsi_menu" rows="4"
+                                        class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                        placeholder="Enter product description"></textarea>
+                                </div>
+
+                                <!-- Input Gambar Produk (Opsional) -->
+                                <div class="mb-4">
+                                    <label for="image" class="block text-sm font-medium mb-2">Product Image</label>
+                                    <input type="file" id="gambar_menu" name="gambar_menu"
+                                        class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none" />
+                                    <p class="text-red-700 text-xs p-2">The Image Must be 1181x1181</p>
+                                </div>
+
+                                <!-- Dropdown Kategori -->
+                                <div class="mb-4">
+                                    <label for="category_id" class="block text-sm font-medium mb-2">Category</label>
+                                    <select id="category_id" name="category_id"
+                                        class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                        required>
+                                        <option value="">Select a Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}" class="text-zinc-950">
+                                                {{ $category->nama_kategori }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
+                                <div class="mb-4">
+                                    <div class="mb-4">
+                                        <label for="status_produk" class="block text-sm font-medium mb-2">Product
+                                            Status</label>
+                                        <select id="status_produk" name="status_produk"
+                                            class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none">
+                                            <option value="Active">Active</option>
+                                            <option value="Non-active">Non-active</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Tombol Submit -->
