@@ -38,82 +38,84 @@
                                 Edit
                                 Product</h2>
 
-                            <!-- Input Nama Produk -->
-                            <div class="mb-4">
-                                <label for="name" class="block text-sm font-medium mb-2">Product Name</label>
-                                <input type="text" id="nama_menu" name="nama_menu"
-                                    value="{{ old('nama_menu', $product->nama_menu) }}"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    placeholder="Enter product name" required />
-                            </div>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                <!-- Input Nama Produk -->
+                                <div class="mb-4">
+                                    <label for="name" class="block text-sm font-medium mb-2">Product Name</label>
+                                    <input type="text" id="nama_menu" name="nama_menu"
+                                        value="{{ old('nama_menu', $product->nama_menu) }}"
+                                        class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                        placeholder="Enter product name" required />
+                                </div>
 
-                            <!-- Input Deskripsi Produk -->
-                            <div class="mb-4">
-                                <label for="description" class="block text-sm font-medium mb-2">Product
-                                    Description</label>
-                                <textarea id="deskripsi_menu" name="deskripsi_menu" rows="4"
-                                    value="{{ old('deskripsi_menu', $product->deskripsi_menu) }}"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    placeholder="Enter product description">{{ old('deskripsi_menu', $product->deskripsi_menu) }}</textarea>
-                            </div>
+                                <!-- Input Harga -->
+                                <div class="mb-4">
+                                    <label for="price" class="block text-sm font-medium mb-2">Price</label>
+                                    <input type="number" id="harga_menu" name="harga_menu" step="0.01"
+                                        value="{{ old('harga_menu', $product->harga_menu) }}"
+                                        class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                        placeholder="Enter product price" required />
+                                </div>
 
-                            <!-- Input Harga -->
-                            <div class="mb-4">
-                                <label for="price" class="block text-sm font-medium mb-2">Price</label>
-                                <input type="number" id="harga_menu" name="harga_menu" step="0.01"
-                                    value="{{ old('harga_menu', $product->harga_menu) }}"
-                                    class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    placeholder="Enter product price" required />
-                            </div>
+                                <!-- Input Deskripsi Produk -->
+                                <div class="mb-4">
+                                    <label for="description" class="block text-sm font-medium mb-2">Product
+                                        Description</label>
+                                    <textarea id="deskripsi_menu" name="deskripsi_menu" rows="4"
+                                        value="{{ old('deskripsi_menu', $product->deskripsi_menu) }}"
+                                        class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                        placeholder="Enter product description">{{ old('deskripsi_menu', $product->deskripsi_menu) }}</textarea>
+                                </div>
 
-                            <!-- Dropdown Kategori -->
-                            <div class="mb-4">
-                                <label for="category_id" class="block text-sm font-medium mb-2">Category</label>
-                                <select id="category_id" name="category_id"
-                                    class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    required>
-                                    <option value="">Select a Category</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                            {{ old('category_id', $product->category_id ?? '') == $category->id ? 'selected' : '' }}>
-                                            {{ $category->nama_kategori }}
+                                <!-- Input Gambar Produk (Opsional) -->
+                                <div class="mb-4">
+                                    <label for="image" class="block text-sm font-medium mb-2">Product Image</label>
+
+                                    <!-- Input File -->
+                                    <input type="file" id="gambar_menu" name="gambar_menu"
+                                        class="w-full px-4 py-2 mb-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none" />
+
+                                    <!-- Pratinjau Gambar Lama -->
+                                    @if (!empty($product->gambar_menu))
+                                        <div class="mb-2">
+                                            <img src="{{ asset('storage/' . $product->gambar_menu) }}"
+                                                alt="Current Product Image" class="w-32 h-32 object-cover rounded-md">
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <!-- Dropdown Kategori -->
+                                <div class="mb-4">
+                                    <label for="category_id" class="block text-sm font-medium mb-2">Category</label>
+                                    <select id="category_id" name="category_id"
+                                        class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                        required>
+                                        <option value="">Select a Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}"
+                                                {{ old('category_id', $product->category_id ?? '') == $category->id ? 'selected' : '' }}>
+                                                {{ $category->nama_kategori }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="mb-4">
+                                    <label for="status_produk" class="block text-sm font-medium mb-2">Product
+                                        Status</label>
+                                    <select id="status_produk" name="status_produk"
+                                        class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none">
+                                        <option value="Active"
+                                            {{ old('status_produk', $product->status_produk) === 'active' ? 'selected' : '' }}>
+                                            Active
                                         </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Input Gambar Produk (Opsional) -->
-                            <div class="mb-4">
-                                <label for="image" class="block text-sm font-medium mb-2">Product Image</label>
-
-                                <!-- Pratinjau Gambar Lama -->
-                                @if (!empty($product->gambar_menu))
-                                    <div class="mb-2">
-                                        <img src="{{ asset('storage/' . $product->gambar_menu) }}"
-                                            alt="Current Product Image" class="w-32 h-32 object-cover rounded-md">
-                                    </div>
-                                @endif
-
-                                <!-- Input File -->
-                                <input type="file" id="gambar_menu" name="gambar_menu"
-                                    class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none" />
-                            </div>
-
-
-                            <div class="mb-4">
-                                <label for="status_produk" class="block text-sm font-medium mb-2">Product
-                                    Status</label>
-                                <select id="status_produk" name="status_produk"
-                                    class="w-full px-4 py-2 text-gray-900  bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none">
-                                    <option value="Active"
-                                        {{ old('status_produk', $product->status_produk) === 'active' ? 'selected' : '' }}>
-                                        Active
-                                    </option>
-                                    <option value="Non-active"
-                                        {{ old('status_produk', $product->status_produk) === 'Non-active' ? 'selected' : '' }}>
-                                        Non-active
-                                    </option>
-                                </select>
+                                        <option value="Non-active"
+                                            {{ old('status_produk', $product->status_produk) === 'Non-active' ? 'selected' : '' }}>
+                                            Non-active
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
 
 

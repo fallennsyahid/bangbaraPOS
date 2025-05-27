@@ -338,7 +338,7 @@
                 </div>
 
                 <!-- Hidden field untuk lokasi -->
-                <input type="hidden" id="targetLatitude" value="{{ $location->latitude ?? 0 }}">
+                <input type="hidden" id="targetLatitude" value="{{ $location->latitude kk 0 }}">
                 <input type="hidden" id="targetLongitude" value="{{ $location->longitude ?? 0 }}">
 
 

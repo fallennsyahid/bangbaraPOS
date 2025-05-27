@@ -35,28 +35,41 @@
                             <h2 class="text-2xl font-bold text-center mb-6 text-zinc-950">Add
                                 Staff</h2>
 
-                            <!-- Input Nama Staff -->
-                            <div class="mb-4">
-                                <label for="name" class="block text-sm font-medium mb-2">Name</label>
-                                <input type="text" id="name" name="name"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    placeholder="Enter staff name" required />
-                            </div>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                <!-- Input Nama Staff -->
+                                <div class="mb-4">
+                                    <label for="name" class="block text-sm font-medium mb-2">Name</label>
+                                    <input type="text" id="name" name="name"
+                                        class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                        placeholder="Enter staff name" required />
+                                </div>
 
-                            <!-- Input Email -->
-                            <div class="mb-4">
-                                <label for="price" class="block text-sm font-medium mb-2">Email</label>
-                                <input type="email" id="email" name="email" step="0.01"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    placeholder="Enter staff email" required />
-                            </div>
+                                <!-- Input Email -->
+                                <div class="mb-4">
+                                    <label for="price" class="block text-sm font-medium mb-2">Email</label>
+                                    <input type="email" id="email" name="email" step="0.01"
+                                        class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                        placeholder="Enter staff email" required />
+                                </div>
 
-                            <!-- Input no telp -->
-                            <div class="mb-4">
-                                <label for="phone_number" class="block text-sm font-medium mb-2">Telephone</label>
-                                <input type="number" id="phone_number" name="phone_number" step="0.01"
-                                    class="input-number w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    placeholder="08xxxxx" required />
+                                <!-- Input no telp -->
+                                <div class="mb-4">
+                                    <label for="phone_number" class="block text-sm font-medium mb-2">Telephone</label>
+                                    <input type="number" id="phone_number" name="phone_number" step="0.01"
+                                        class="input-number w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                        placeholder="08xxxxx" required />
+                                </div>
+
+                                <!-- Dropdown Kategori -->
+                                <div class="mb-4">
+                                    <label for="usertype" class="block text-sm font-medium mb-2">Role</label>
+                                    <select id="usertype" name="usertype"
+                                        class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                        required>
+                                        <option value="">Select a Role</option>
+                                        <option value="staff">Staff</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <!-- Input address -->
@@ -67,16 +80,6 @@
                                     placeholder="Enter staff address" required></textarea>
                             </div>
 
-                            <!-- Dropdown Kategori -->
-                            <div class="mb-4">
-                                <label for="usertype" class="block text-sm font-medium mb-2">Role</label>
-                                <select id="usertype" name="usertype"
-                                    class="w-full px-4 py-2 text-gray-900 bg-yellow-50 border border-yellow-400 dark:border-yellow-500 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
-                                    required>
-                                    <option value="">Select a Role</option>
-                                    <option value="staff">Staff</option>
-                                </select>
-                            </div>
                             <!-- Tombol Submit -->
                             <button type="submit"
                                 class="w-full bg-yellow-500 mt-5 text-white font-bold py-2 px-4 rounded-md hover:bg-yellow-600 dark:hover:bg-yellow-400 focus:ring-2 focus:ring-yellow-500 focus:outline-none">
