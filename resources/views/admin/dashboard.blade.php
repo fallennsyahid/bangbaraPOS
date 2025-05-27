@@ -286,7 +286,7 @@
 
     <!-- All javascript code in this project for now is just for demo DON'T RELY ON IT  -->
     <x-admin.js></x-admin.js>
-    <script>
+    <!-- <script>
         function fetchOrders() {
             fetch('/get-total-orders')
                 .then(response => response.json())
@@ -297,7 +297,7 @@
         }
 
         setInterval(fetchOrders, 5000);
-    </script>
+    </script> -->
     {{-- best seller data --}}
 
     <script>

@@ -9,4 +9,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
     // untuk memanggil command fitur tutup/buka otomatis
-    Schedule::command('auto:toggle-store-status')->everyMinute();
+    Schedule::command('update:store-status')->everyMinute();

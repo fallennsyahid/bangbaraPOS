@@ -26,10 +26,11 @@ class HistoryController extends Controller
         
     }
 
-
+        $total_histories_completed = History::where('status', 'Completed')->count(); // Hitung total histories
+        $total_histories_cancelled = History::where('status', 'Cancelled')->count(); // Hitung total histories
         $histories = $query->orderBy('created_at', 'desc')->get(); // Ambil data hasil filter
         $allIds = History::pluck('id')->toArray(); // Ambil semua ID
-        return view('admin.histories.index', compact('histories', 'allIds')); // Pastikan `history.index` adalah view yang benar
+        return view('admin.histories.index', compact('histories', 'allIds', 'total_histories_completed', 'total_histories_cancelled')); // Pastikan `history.index` adalah view yang benar
     
     }
 

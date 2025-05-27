@@ -19,9 +19,11 @@
                 class="inline-block text-xl font-bold tracking-wider uppercase text-slate-950 dark:text-light">
             </span>
             <span> | </span>
-            <h2 @php $store = \App\Models\Store::first(); @endphp
-                class="{{ $store && $store->status == 1 ? 'text-green-500' : 'text-red-700' }} font-semibold">
-                {{ $store && $store->status ? 'Open' : 'Close' }}
+             <h2 @php
+                    $status = DB::table('stores')->where('id', 1)->value('status');
+                @endphp
+                class="{{ $status == 1 ? 'text-green-500' : 'text-red-700' }} font-semibold">
+                {{ $status == 1 ? 'Open' : 'Close' }}
             </h2>
         </div>
 
@@ -64,16 +66,13 @@
                 </div>
             </button>
 
-            <!-- Notification button -->
-            <div id="notif-navbar" class="z-10" x-data="notificationComponent()" x-init="fetchNotifications();
-            setInterval(() => fetchNotifications(), 5000)">
+          <!-- Notification button -->
+            <div id="notif-navbar" class="z-10" x-data="notificationComponent()" x-init="fetchNotifications();">
                 <button @click="open = !open"
-                    class="relative p-2 transition-colors duration-200 rounded-full text-white bg-yellow-300 dark:bg-red-700 hover:bg-red-700 dark:hover:text-light dark:hover:bg-amber-300">
+                        class="relative p-2 transition-colors duration-200 rounded-full text-white bg-yellow-300 dark:bg-red-700 hover:bg-red-700 dark:hover:text-light dark:hover:bg-amber-300">
                     <span class="sr-only">Open Notification panel</span>
-                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                     </svg>
 
                     <!-- Badge Notifikasi -->
@@ -90,11 +89,9 @@
                             <p class="text-gray-500 text-sm">Tidak ada notifikasi baru.</p>
                         </template>
                         <template x-for="notif in notifications" :key="notif.id">
-                            <a :href="'{{ route('staffOrders.show', '') }}' + '/' + notif.id"
-                                class="block p-2 border-b hover:bg-slate-100">
-                                {{-- <a href="{{ route('notification.index') }}" class="block p-2 border-b hover:bg-slate-100"> --}}
-                                <p class="text-sm font-semibold text-gray-400">Order #<span x-text="notif.id"></span>
-                                </p>
+                            <a :href="'{{ route('orders.show', '') }}' + '/' + notif.id"
+                            class="block p-2 border-b hover:bg-slate-100">
+                                <p class="text-sm font-semibold text-gray-400">Order #<span x-text="notif.id"></span></p>
                                 <p class="text-xs text-gray-600">Nama: <span x-text="notif.customer_name"></span></p>
                                 <p class="text-xs text-gray-600">Status: <span x-text="notif.status"></span></p>
                                 <p class="text-xs text-gray-600">Total: Rp<span x-text="notif.total_price"></span></p>
@@ -111,47 +108,69 @@
                         notifCount: 0,
                         notifications: [],
                         open: false,
+                        lastOrderId: 0,
+                        initialized: false,
+
+                        init() {
+                            this.fetchNotifications(); // mulai polling pertama kali
+                        },
+
                         fetchNotifications() {
-                            fetch('/notifications')
+                            let url = '/notifications';
+                            if (this.lastOrderId > 0) {
+                                url += '?last_id=' + this.lastOrderId;
+                            }
+
+                            fetch(url)
                                 .then(response => response.json())
                                 .then(data => {
-                                    console.log('Data Notifikasi:', data); // Debugging
+                                    let newOrders = data.orders;
 
-                                    let oldCount = this.notifCount;
+                                    // Jika ada order baru
+                                    if (newOrders.length > 0) {
+                                        this.notifCount += newOrders.length;
+                                        this.notifications = [...newOrders, ...this.notifications];
 
-                                    // Cek jika ada notifikasi baru masuk
-                                    if (this.initialized && data.count > oldCount) {
-                                        this.playNotificationSound(); // 🔊 Mainkan suara
-                                        this.triggerNotificationAnimation(); // ✨ Animasi masuk
+                                        // Ambil ID tertinggi
+                                        this.lastOrderId = data.latest_id;
+
+                                        if (this.initialized) {
+                                            this.playNotificationSound();
+                                            this.triggerNotificationAnimation();
+                                        }
                                     }
 
-                                    // tandai pemanggilan selesai
                                     this.initialized = true;
 
-                                    // Update data Alpine.js
-                                    this.notifCount = data.count;
-                                    this.notifications = data.orders;
+                                    // Langsung lanjut fetch lagi tanpa delay
+                                    this.fetchNotifications();
                                 })
-                                .catch(error => console.error('Error fetching notifications:', error));
+                                .catch(error => {
+                                    console.error('❌ Error polling notifikasi:', error);
+                                    // Jika error, tunggu 5 detik lalu coba lagi
+                                    setTimeout(() => this.fetchNotifications(), 5000);
+                                });
                         },
+
                         playNotificationSound() {
-                            let audio = new Audio('/asset-admin/public/sounds/notif.wav'); // ✅ Perbaikan path suara
+                            let audio = new Audio('/asset-admin/public/sounds/notif.wav');
                             audio.play().catch(err => console.error('Error playing sound:', err));
                         },
+
                         triggerNotificationAnimation() {
                             let notifButton = document.querySelector('#notif-navbar button');
-
-                            if (notifButton) { // ✅ Pastikan elemen ditemukan sebelum ditambahkan animasi
+                            if (notifButton) {
                                 notifButton.classList.add('animate-bounce');
-
-                                setTimeout(() => {
-                                    notifButton.classList.remove('animate-bounce');
-                                }, 1000);
+                                setTimeout(() => notifButton.classList.remove('animate-bounce'), 5000);
                             }
                         }
                     };
                 }
             </script>
+
+
+
+
 
             <!-- User avatar button -->
             <div class="relative" x-data="{ open: false }">
@@ -244,20 +263,19 @@
                     </div>
                 </button>
 
-                <!-- Notification button with panel -->
-                <div id="notif-navbar" class="z-10" x-data="notificationComponent()" x-init="fetchNotifications();
-                setInterval(() => fetchNotifications(), 5000)">
+               <!-- Notification button -->
+               <div id="notif-navbar" class="z-10" x-data="notificationComponent()">
                     <button @click="open = !open"
-                        class="relative p-2 transition-colors duration-200 rounded-full text-white bg-yellow-300 dark:bg-red-700 hover:bg-red-700 dark:hover:text-light dark:hover:bg-amber-300">
+                            class="relative p-2 transition-colors duration-200 rounded-full text-white bg-yellow-300 dark:bg-red-700 hover:bg-red-700 dark:hover:text-light dark:hover:bg-amber-300">
                         <span class="sr-only">Open Notification panel</span>
-                        <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                         </svg>
+
                         <!-- Badge Notifikasi -->
                         <span x-show="notifCount > 0" x-text="notifCount"
-                            class="absolute top-0 right-0 -mt-1 -mr-1 px-2 py-1 text-xs text-white bg-red-600 rounded-full"></span>
+                            class="absolute top-0 right-0 -mt-1 -mr-1 px-2 py-1 text-xs text-white bg-red-600 rounded-full">
+                        </span>
                     </button>
 
                     <!-- Panel Notifikasi -->
@@ -269,20 +287,18 @@
                             </template>
                             <template x-for="notif in notifications" :key="notif.id">
                                 <a :href="'{{ route('orders.show', '') }}' + '/' + notif.id"
-                                    class="block p-2 border-b hover:bg-slate-100">
-                                    <p class="text-sm font-semibold text-gray-400">Order #<span
-                                            x-text="notif.id"></span></p>
-                                    <p class="text-xs text-gray-600">Nama: <span x-text="notif.customer_name"></span>
-                                    </p>
+                                class="block p-2 border-b hover:bg-slate-100">
+                                    <p class="text-sm font-semibold text-gray-400">Order #<span x-text="notif.id"></span></p>
+                                    <p class="text-xs text-gray-600">Nama: <span x-text="notif.customer_name"></span></p>
                                     <p class="text-xs text-gray-600">Status: <span x-text="notif.status"></span></p>
-                                    <p class="text-xs text-gray-600">Total: Rp<span x-text="notif.total_price"></span>
-                                    </p>
+                                    <p class="text-xs text-gray-600">Total: Rp<span x-text="notif.total_price"></span></p>
                                     <p class="text-xs text-gray-400" x-text="notif.created_at"></p>
                                 </a>
                             </template>
                         </div>
                     </div>
                 </div>
+
 
                 <!-- User avatar button -->
                 <div class="relative" x-data="{ open: false }">

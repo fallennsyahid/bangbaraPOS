@@ -1,9 +1,9 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Carbon as Enter;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
@@ -20,11 +20,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Admin\OrderAdminController;
-use App\Http\Controllers\Admin\SetPrinterController;
 use App\Http\Controllers\Admin\StruckOrderController;
 use App\Http\Controllers\Staff\StaffOrdersController;
 use App\Http\Controllers\Admin\AdminProfileController;
-use App\Http\Controllers\Admin\PaymentImageController;
 use App\Http\Controllers\Staff\StaffHistoryController;
 use App\Http\Controllers\Staff\StaffProfileController;
 use App\Http\Controllers\Staff\StaffSettingsController;
@@ -32,7 +30,6 @@ use App\Http\Controllers\Staff\StruckHistoryController;
 use App\Http\Controllers\Admin\SetPrinterAdminController;
 use App\Http\Controllers\Staff\SetPrinterStaffController;
 use App\Http\Controllers\Staff\StruckOrdersStaffController;
-use App\Http\Controllers\Staff\SetPrinterController as StaffSetPrinterController;
 use App\Http\Controllers\Admin\SetLocationController;
 
 // Route::get('/', function () {
@@ -138,30 +135,40 @@ Route::patch('/admin/orders/{order}/status', [OrderAdminController::class, 'upda
 Route::get('histories/filter', [HistoryController::class, 'filter'])->name('histories.filter');
 
 // --- NOTIFIKASI ---
-Route::get('/notifications', function () {
-    $orders = Order::where('status', 'Pending')
-        ->whereDate('created_at', Enter::today())
-        ->latest()
-        ->take(5)
-        ->get([
-            'id',
-            'customer_name',
-            'status',
-            'total_price',
-            'created_at'
-        ]);
+
+Route::get('/notifications', function (Request $request) {
+    $lastId = $request->query('last_id');
+    $timeout = 15; // detik
+    $start = time();
+
+    do {
+        $query = Order::where('status', 'Pending');
+
+        if ($lastId) {
+            $query->where('id', '>', $lastId);
+        } else {
+            $query->whereDate('created_at', Carbon::today());
+        }
+
+        $orders = $query->latest()->take(5)->get();
+
+        if ($orders->count() > 0) {
+            break;
+        }
+
+        usleep(500000); // tunggu 0.5 detik sebelum cek lagi
+    } while (time() - $start < $timeout);
 
     return response()->json([
-        'count'  => $orders->count(),
-        'orders' => $orders->map(function ($order) {
-            return [
-                'id'            => $order->id,
-                'customer_name' => $order->customer_name,
-                'status'        => $order->status,
-                'total_price'   => $order->total_price,
-                'created_at'    => $order->created_at->diffForHumans()
-            ];
-        })
+        'count'     => $orders->count(),
+        'latest_id' => $orders->max('id') ?? $lastId,
+        'orders'    => $orders->map(fn($order) => [
+            'id'            => $order->id,
+            'customer_name' => $order->customer_name,
+            'status'        => $order->status,
+            'total_price'   => number_format($order->total_price, 0, ',', '.'),
+            'created_at'    => $order->created_at->diffForHumans(),
+        ]),
     ]);
 });
 
@@ -206,16 +213,19 @@ Route::patch('/orders/{id}/status', function ($id) {
 Route::get('/get-histories', [HistoryController::class, 'getHistories']);
 
 // --- TOTAL ORDERS API ---
-Route::get('/get-total-orders', function () {
-    return response()->json([
-        'total_orders' => Order::count(),
-    ]);
-});
+// Route::get('/get-total-orders', function () {
+//     return response()->json([
+//         'total_orders' => Order::count(),
+//     ]);
+// });
+
+
 Route::get('/get-total-orders-today', function () {
     return response()->json([
         'total_orders' => Order::whereDate('created_at', Carbon::today())->count(),
     ]);
 });
+
 Route::get('/get-orders', function () {
     $orders = Order::with('product')
         ->orderBy('created_at', 'desc')

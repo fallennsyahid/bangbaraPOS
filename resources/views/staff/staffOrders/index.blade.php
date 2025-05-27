@@ -459,7 +459,7 @@
         });
 
         // Cek order baru setiap 5 detik
-        setInterval(checkNewOrders, 2000);
+        setInterval(checkNewOrders, 10000);
 
 
         // Fungsi untuk check new orders
