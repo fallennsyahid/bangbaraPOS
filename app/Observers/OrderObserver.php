@@ -22,6 +22,7 @@ class OrderObserver
     {
         if ($order->status === 'Completed' || $order->status === 'Cancelled') {
             History::create([
+                'order_id' => $order->order_id,
                 'casier_name' => $order->casier_name,
                 'customer_name' => $order->customer_name,
                 'customer_phone' => $order->customer_phone,

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 // use Log as LOGS;
 use App\Models\Cart;
-use Midtrans\Config;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -36,27 +35,27 @@ class OrderController extends Controller
             'customer_phone.required' => 'Mohon isi terlebih dahulu nomor telepon kamu!',
         ]);
 
-        // $phone = $request->customer_phone;
-        // if (preg_match('/^08/', $phone)) {
-        //     $phone = preg_replace('/^0/', '+62', $phone);
-        // }
+        $phone = $request->customer_phone;
+        if (preg_match('/^08/', $phone)) {
+            $phone = preg_replace('/^0/', '+62', $phone);
+        }
 
-        // // Veriphone API
-        // $response = Http::get('https://api.veriphone.io/v2/verify', [
-        //     'phone' => $phone,
-        //     'key' => env('VERIPHONE_API_KEY'),
-        // ]);
+        // Veriphone API
+        $response = Http::get('https://api.veriphone.io/v2/verify', [
+            'phone' => $phone,
+            'key' => env('VERIPHONE_API_KEY'),
+        ]);
 
         // dd($response->json());
 
-        // $data = $response->json();
+        $data = $response->json();
 
         // Cek jika response tidak ok atau nomor telepon tidak valid
-        // if (!$response->ok() || !$data['phone_valid']) {
-        //     return back()->withErrors([
-        //         'customer_phone' => 'Nomor telepon tidak valid atau tidak aktif.',
-        //     ])->withInput();
-        // }
+        if (!$response->ok() || !$data['phone_valid']) {
+            return back()->withErrors([
+                'customer_phone' => 'Nomor telepon tidak valid atau tidak aktif.',
+            ])->withInput();
+        }
 
         $sessionId = Session::getId();
         $cartItems = Cart::with('product')->where('session_id', $sessionId)->get();
