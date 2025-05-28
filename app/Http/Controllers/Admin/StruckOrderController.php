@@ -53,6 +53,7 @@ class StruckOrderController extends Controller
             // $printer->text("No. Pesanan : " . $order->order_id . "\n");
             $printer->text("Kasir       : " . $order->casier_name . "\n");
             $printer->text("Customer    : " . $order->customer_name . "\n");
+            $printer->text("No. Pesanan    : " . $order->order_id . "\n");
             $printer->text("Tanggal     : " . $order->created_at->format('d-m-Y H:i') . "\n");
             $printer->text("--------------------------------\n");
 
