@@ -43,7 +43,7 @@
                 <div class="flex items-center">
                     <!-- Navigation Menu -->
                     <nav id="nav-menu" aria-label="Main navigation"
-                        class="hidden absolute top-full right-4 py-5 bg-black/80 backdrop-blur-xl shadow-2xl rounded-lg max-w-[250px] w-full lg:bg-transparent lg:static lg:block lg:max-w-none lg:shadow-none lg:rounded-none lg:w-auto lg:mx-auto">
+                        class="hidden absolute top-full right-4 py-5 shadow-2xl rounded-lg max-w-[250px] w-full lg:bg-transparent lg:static lg:block lg:max-w-none lg:shadow-none lg:rounded-none lg:w-auto lg:mx-auto">
                         <ul class="block lg:flex lg:gap-8">
                             <li class="group">
                                 <a href="#home" tabindex="0"
@@ -338,7 +338,7 @@
                 </div>
 
                 <!-- Hidden field untuk lokasi -->
-                <input type="hidden" id="targetLatitude" value="{{ $location->latitude kk 0 }}">
+                <input type="hidden" id="targetLatitude" value="{{ $location->latitude ?? 0 }}">
                 <input type="hidden" id="targetLongitude" value="{{ $location->longitude ?? 0 }}">
 
 

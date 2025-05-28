@@ -136,41 +136,41 @@ Route::get('histories/filter', [HistoryController::class, 'filter'])->name('hist
 
 // --- NOTIFIKASI ---
 
-Route::get('/notifications', function (Request $request) {
-    $lastId = $request->query('last_id');
-    $timeout = 15; // detik
-    $start = time();
+// Route::get('/notifications', function (Request $request) {
+//     $lastId = $request->query('last_id');
+//     $timeout = 15; // detik
+//     $start = time();
 
-    do {
-        $query = Order::where('status', 'Pending');
+//     do {
+//         $query = Order::where('status', 'Pending');
 
-        if ($lastId) {
-            $query->where('id', '>', $lastId);
-        } else {
-            $query->whereDate('created_at', Carbon::today());
-        }
+//         if ($lastId) {
+//             $query->where('id', '>', $lastId);
+//         } else {
+//             $query->whereDate('created_at', Carbon::today());
+//         }
 
-        $orders = $query->latest()->take(5)->get();
+//         $orders = $query->latest()->take(5)->get();
 
-        if ($orders->count() > 0) {
-            break;
-        }
+//         if ($orders->count() > 0) {
+//             break;
+//         }
 
-        usleep(500000); // tunggu 0.5 detik sebelum cek lagi
-    } while (time() - $start < $timeout);
+//         usleep(500000); // tunggu 0.5 detik sebelum cek lagi
+//     } while (time() - $start < $timeout);
 
-    return response()->json([
-        'count'     => $orders->count(),
-        'latest_id' => $orders->max('id') ?? $lastId,
-        'orders'    => $orders->map(fn($order) => [
-            'id'            => $order->id,
-            'customer_name' => $order->customer_name,
-            'status'        => $order->status,
-            'total_price'   => number_format($order->total_price, 0, ',', '.'),
-            'created_at'    => $order->created_at->diffForHumans(),
-        ]),
-    ]);
-});
+//     return response()->json([
+//         'count'     => $orders->count(),
+//         'latest_id' => $orders->max('id') ?? $lastId,
+//         'orders'    => $orders->map(fn($order) => [
+//             'id'            => $order->id,
+//             'customer_name' => $order->customer_name,
+//             'status'        => $order->status,
+//             'total_price'   => number_format($order->total_price, 0, ',', '.'),
+//             'created_at'    => $order->created_at->diffForHumans(),
+//         ]),
+//     ]);
+// });
 
 // Route::resource('/admin/notification', NotificationContrller::class);
 
